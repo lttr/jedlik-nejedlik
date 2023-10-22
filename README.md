@@ -1,75 +1,31 @@
-# Nuxt 3 Minimal Starter
+# jedlik-nejedlik
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is an education site, that I'm building for my wife.
 
-## Setup
+## Planned features
 
-Make sure to install the dependencies:
+- A website devided into sections based on target audience
+- A members section behind auth for bonus content
+- A newsletter subscription field
+- A contact form with protection against spam
+- A workflow for authoring articles, needs dedicated UI but does not need to be
+  localized
+- An integration with some sort of forms for doing surveys
+- A very simple e-shop, checkout workflow
+- A simple video course authoring workflow
 
-```bash
-# npm
-npm install
+## Possible technologies and services
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Open props for base styling layer
+- HeadlessUI for base components layer
+- Postcss for using modern CSS
+- Prettier, eslint, stylelint for keeping the codebase in shape
+- Nuxt as an application framework
+- Sanity as a headless CMS
+- Mux for video
+- Supabase for database and auth
+- Mailchimp for email management
+- GoPay for payments
+- Netlify for hosting
+- Sentry for error tracking
+- Plausible for analytics
