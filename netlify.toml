@@ -1,0 +1,4 @@
+[build]
+  base = "web/"
+  command = "pnpm run build"
+  publish = ".nuxt/dist"
