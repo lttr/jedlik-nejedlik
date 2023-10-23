@@ -7,6 +7,8 @@ export default defineNuxtConfig({
   },
   sanity: {
     projectId: "oppngufr",
+    apiVersion: "2023-10-23",
     dataset: "production",
+    useCdn: false,
   },
 });

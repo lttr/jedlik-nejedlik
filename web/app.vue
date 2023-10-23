@@ -1,3 +1,5 @@
 <template>
-  <div>Jedlík - Nejedlík</div>
+  <NuxtPage />
 </template>
+
+<script setup lang="ts"></script>
