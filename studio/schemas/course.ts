@@ -1,18 +1,18 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "post",
-  title: "Příspěvek",
+  name: "course",
+  title: "Kurz",
   type: "document",
   fields: [
     defineField({
       name: "title",
-      title: "Titulek",
+      title: "Název",
       type: "string",
     }),
     defineField({
       name: "slug",
-      title: "Titulek v URL adrese",
+      title: "Název v URL adrese",
       type: "slug",
       options: {
         source: "title",
@@ -45,8 +45,8 @@ export default defineType({
       type: "datetime",
     }),
     defineField({
-      name: "body",
-      title: "Text",
+      name: "description",
+      title: "Popis",
       type: "blockContent",
     }),
   ],
