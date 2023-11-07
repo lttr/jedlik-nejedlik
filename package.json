@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "pnpm -F web run dev",
     "dev:all": "pnpm -r run dev",
-    "dev:studio": "pnpm -F studio run dev"
+    "dev:studio": "pnpm -F studio run dev",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.0.2"
   }
 }

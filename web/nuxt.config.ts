@@ -11,4 +11,4 @@ export default defineNuxtConfig({
     dataset: "production",
     useCdn: false,
   },
-});
+})

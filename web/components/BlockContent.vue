@@ -3,5 +3,5 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{ blocks: any[] }>();
+defineProps<{ blocks: any[] }>()
 </script>

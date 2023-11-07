@@ -6,7 +6,11 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      prettier:
+        specifier: ^3.0.2
+        version: 3.0.3
 
   studio:
     dependencies:
