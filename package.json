@@ -6,7 +6,9 @@
     "dev": "pnpm -F web run dev",
     "dev:all": "pnpm -r run dev",
     "dev:studio": "pnpm -F studio run dev",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "pnpm -r run lint",
+    "typecheck": "pnpm -r run typeckeck"
   },
   "devDependencies": {
     "prettier": "^3.0.2"
