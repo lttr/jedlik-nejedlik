@@ -13,15 +13,16 @@
     "typecheck": "nuxt typecheck"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
+    "@nuxt/devtools": "^1.0.8",
     "@nuxt/eslint-config": "^0.2.0",
-    "@sanity/types": "^3.18.1",
-    "eslint": "^8.6.0",
-    "nuxt": "^3.8.0",
-    "vue": "^3.3.6",
+    "@sanity/types": "^3.29.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "nuxt": "^3.10.1",
+    "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@nuxtjs/sanity": "^1.8.1"
+    "@nuxtjs/sanity": "^1.8.3"
   }
 }
