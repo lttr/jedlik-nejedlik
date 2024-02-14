@@ -1,5 +1,7 @@
 # jedlik-nejedlik
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/db58e9bb-6a29-44cc-bc4c-dbc625f0e105/deploy-status)](https://app.netlify.com/sites/jedlik-nejedlik/deploys)
+
 This is an education site, that I'm building for my wife.
 
 ## Planned features
