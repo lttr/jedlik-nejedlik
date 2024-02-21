@@ -1,0 +1,11 @@
+:root {
+  --font-family-body: "Noto Sans", sans-serif;
+  --brand-color: violet;
+  --link-color: darkviolet;
+  --link-color-visited: var(--link-color);
+  --font-weight-headings: 600;
+}
+
+a[href] {
+  text-decoration: underline;
+}

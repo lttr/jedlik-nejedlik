@@ -1,7 +1,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ["@lttr/puleo"],
-  modules: ["@nuxtjs/sanity"],
+  css: ["@lttr/puleo", "~/assets/css/main.css"],
+  modules: ["@nuxtjs/google-fonts", "@nuxtjs/sanity"],
+  googleFonts: {
+    families: {
+      "Noto Sans": [400, 600],
+    },
+    preload: true,
+    download: true,
+  },
   nitro: {
     preset: "netlify-edge",
   },
