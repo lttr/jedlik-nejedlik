@@ -9,6 +9,9 @@ export default defineNuxtConfig({
     preload: true,
     download: true,
   },
+  postcssConfig: {
+    filesWithGlobals: ["./node_modules/open-props/media.min.css"],
+  },
   nitro: {
     preset: "netlify-edge",
   },
