@@ -1,9 +1,15 @@
 :root {
   --font-family-body: "Noto Sans", sans-serif;
-  --brand-color: violet;
+  --brand-color: var(--blue-6);
+  --brand-color-dim: var(--blue-10);
+  --brand-color-bright: var(--blue-2);
   --link-color: darkviolet;
   --link-color-visited: var(--link-color);
   --font-weight-headings: 600;
+}
+
+:is(html, body, #__nuxt) {
+  height: 100%;
 }
 
 a[href] {

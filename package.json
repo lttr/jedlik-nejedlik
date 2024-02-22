@@ -8,7 +8,7 @@
     "dev:studio": "pnpm -F studio run dev",
     "format": "prettier --write .",
     "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typeckeck"
+    "typecheck": "pnpm -r run typecheck"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
