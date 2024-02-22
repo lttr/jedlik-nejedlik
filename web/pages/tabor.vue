@@ -17,7 +17,7 @@
       </section>
 
       <section>
-        <a href="" class="cta small block-link">Přihlaste se zde</a>
+        <a href="" class="cta small p-block-link">Přihlaste se zde</a>
       </section>
 
       <section class="p-flow">
@@ -38,16 +38,16 @@
         </p>
         <div class="images p-switcher">
           <img
+            class="p-image-cover"
             src="/img/tabor/foto-deti.jpg"
             width="500"
             height="355"
-            crossorigin="anonymous"
           />
           <img
+            class="p-image-cover"
             src="/img/tabor/stob-foto-kurz.jpg"
             width="768"
             height="512"
-            crossorigin="anonymous"
           />
         </div>
 
@@ -125,7 +125,7 @@
       </section>
 
       <section>
-        <a href="" class="cta small block-link">Přihlaste se zde</a>
+        <a href="" class="cta small p-block-link">Přihlaste se zde</a>
       </section>
 
       <section class="p-flow">
@@ -171,7 +171,7 @@
             Více na
             <a href="https://www.stob.cz">www.stob.cz</a>
           </p>
-          <a class="block-link" href="https://www.stob.cz">
+          <a class="p-block-link" href="https://www.stob.cz">
             <img
               class="logo-stob"
               src="/img/stob.png"
@@ -239,7 +239,6 @@ section {
 .images {
   > img {
     max-width: 44ch;
-    object-fit: cover;
   }
 }
 
@@ -267,7 +266,14 @@ section {
   width: 100px;
 }
 
-.block-link {
+.p-image-cover {
+  /* force all images to fill their containers */
+  width: 100%;
+  /* maintain image aspect ratio by hiding parts of the image if necessary */
+  object-fit: cover;
+}
+
+.p-block-link {
   /* let it behave like a block, but do not take up all available inline space,
    * like display: block */
   display: inline-block;
