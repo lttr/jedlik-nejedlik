@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <img class="bg bg1" src="/tabor/wave1.svg" />
-    <img class="bg bg2" src="/tabor/wave2.svg" />
-    <img class="bg bg3" src="/tabor/wave3.svg" />
+    <img class="bg bg1" src="/img/tabor/wave1.svg" />
+    <img class="bg bg2" src="/img/tabor/wave2.svg" />
+    <img class="bg bg3" src="/img/tabor/wave3.svg" />
     <div class="camp p-container p-flow">
       <h1 class="h1">Příměstský tábor</h1>
       <h2 class="h2">Stobíkův zdravý týden</h2>
@@ -38,13 +38,13 @@
         </p>
         <div class="images p-switcher">
           <img
-            src="/tabor/foto-deti.jpg"
+            src="/img/tabor/foto-deti.jpg"
             width="500"
             height="355"
             crossorigin="anonymous"
           />
           <img
-            src="/tabor/stob-foto-kurz.jpg"
+            src="/img/tabor/stob-foto-kurz.jpg"
             width="768"
             height="512"
             crossorigin="anonymous"
@@ -174,7 +174,7 @@
           <a class="block-link" href="https://www.stob.cz">
             <img
               class="logo-stob"
-              src="/stob.png"
+              src="/img/stob.png"
               alt="logo společnosti STOB"
               width="591"
               height="591"
@@ -252,7 +252,7 @@ section {
   text-decoration: none;
 
   &:hover {
-    background-color: var(--brand-color-dim);
+    background-color: darkviolet;
   }
 
   &.small {
