@@ -15,10 +15,28 @@ export default defineNuxtConfig({
   nitro: {
     preset: "netlify-edge",
   },
+  experimental: {
+    componentIslands: true,
+  },
   sanity: {
     projectId: "oppngufr",
     apiVersion: "2023-10-23",
     dataset: "production",
     useCdn: false,
+  },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: "cs",
+      },
+      link: [
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "48x48",
+          href: "/favicon.png",
+        },
+      ],
+    },
   },
 })
