@@ -4,37 +4,51 @@
     <img class="bg bg2" src="/img/tabor/wave2.svg" />
     <img class="bg bg3" src="/img/tabor/wave3.svg" />
     <div class="camp p-container p-flow">
-      <h1 class="h1">Příměstský tábor</h1>
-      <h2 class="h2">Stobíkův zdravý týden</h2>
+      <h1 class="h1">
+        Příměstský tábor <br />
+        <div>pro děti s nadváhou 12. &ndash; 16. srpna 2024</div>
+      </h1>
+      <h2 class="h2">Stobíkův zdravý týden &ndash; Třebechovice pod Orebem</h2>
 
       <section class="perex">
         <p>
-          Trpí Vaše dítě nadváhou nebo obezitou? Musíte chodit v čase prázdnin
-          do práce a chcete, aby Vaše dítě trávilo čas smysluplným způsobem a
-          ještě udělalo něco pro své zdraví? Přihlaste Vaše dítko na příměstský
-          tábor, který bere ohledy na specifika dětí s nadváhou či obezitou.
+          <b>Trpí Vaše dítě nadváhou nebo obezitou?</b> Musíte chodit v čase
+          prázdnin do práce a chcete, aby Vaše dítě trávilo čas smysluplným
+          způsobem a ještě udělalo něco pro své zdraví?
+          <b>Přihlaste Vaše dítko na příměstský tábor, který bere ohledy</b> na
+          specifika dětí s nadváhou či obezitou.
         </p>
       </section>
 
       <section>
-        <a href="" class="cta small p-block-link">Přihlaste se zde</a>
+        <a :href="formLink" class="cta small p-block-link">Přihlaste se zde</a>
       </section>
 
       <section class="p-flow">
         <p>
-          Věděli jste, že mnoho dětí s nadváhou a obezitou nechce jezdit na
-          tábory a podobné aktivity, protože mají strach, že se stanou terčem
-          posměchu od ostatních dětí? Nebo že nezvládnout podávat takové
-          sportovní výkony jako děti bez kilogramů navíc?
+          Věděli jste, že <b>mnoho dětí s nadváhou</b> a obezitou
+          <b>nechce jezdit na tábory</b> a podobné aktivity, protože mají
+          strach, že se stanou terčem posměchu od ostatních dětí? Nebo že
+          nezvládnout podávat takové sportovní výkony jako děti bez kilogramů
+          navíc?
         </p>
         <p>
-          S námi nemusí mít Vaše dítě žádné obavy. Program je sestaven podle
-          ověřené metodiky společnosti STOB obezitě, která v České republice
-          úspěšně pomáhá svým klientům s přebytečnými kilogramy již 30 let. Více
-          o STOBu a jejích metodách ZDE. Instruktorky mají bohaté zkušenosti v
-          oblasti práce s dětmi s nadváhou, a to nejen po výživové stránce, ale
-          také po pedagogické, psychologické či pohybové. Více o instruktorkách
-          si můžete přečíst ZDE.
+          <b
+            >S námi nemusí mít Vaše dítě žádné obavy. Program je sestaven podle
+            ověřené metodiky společnosti STOB</b
+          >
+          obezitě, která v České republice úspěšně pomáhá svým klientům s
+          přebytečnými kilogramy již 30 let.
+          <b>Více o STOBu a jejích metodách</b>&nbsp;<a
+            href="https://www.stob.cz/cs/home"
+            >ZDE</a
+          >.
+          <b
+            >Instruktorky mají bohaté zkušenosti v oblasti práce s dětmi s
+            nadváhou</b
+          >, a to nejen po výživové stránce, ale také po pedagogické,
+          psychologické či pohybové. Více o instruktorkách si můžete přečíst
+          <a href="#instruktorky">níže</a>.
         </p>
         <div class="images p-switcher">
           <img
@@ -45,24 +59,31 @@
           />
           <img
             class="p-image-cover"
-            src="/img/tabor/stob-foto-kurz.jpg"
-            width="768"
-            height="512"
+            src="/img/tabor/foto-deti-2.jpg"
+            width="500"
+            height="355"
           />
         </div>
 
         <p>
-          Na táboře si formou her a kreativních aktivit děti osvojí základy
-          zdravého životního stylu. Mnoho věcí si vyzkouší prakticky a spoustu
-          vhodných potravin ochutnají v rámci obědů a svačinek, které jsou
-          součástí programu. Nebude chybět ani pohyb, který bude pro děti
-          bezpečný jak fyzicky, tak psychicky. V dětech budeme vzbuzovat zájem o
-          různé sportovní činnosti a budeme je vystavovat takovým pohybovým
-          aktivitám, při nichž budou moct zažívat radost.
+          Na táboře si formou her a kreativních aktivit
+          <b>děti osvojí základy zdravého životního stylu</b>. Mnoho věcí si
+          <b>vyzkouší prakticky a spoustu vhodných potravin ochutnají</b> v
+          rámci obědů a svačinek, které jsou součástí programu.
+          <b
+            >Nebude chybět ani pohyb, který bude pro děti bezpečný jak fyzicky,
+            tak psychicky.</b
+          >
+          V dětech budeme vzbuzovat zájem o různé sportovní činnosti a budeme je
+          vystavovat takovým pohybovým aktivitám, při nichž budou moct zažívat
+          radost.
         </p>
         <p>
-          Cílem tábora není redukce hmotnosti, ale osvojení si takových návyků
-          zdravého životního stylu, které pomohou zastavit další růst hmotnosti.
+          <b
+            >Cílem tábora není redukce hmotnosti, ale osvojení si takových
+            návyků zdravého životního stylu, které pomohou zastavit další růst
+            hmotnosti.</b
+          >
           Pokud není obezita dítěte závažná a není lékařem indikováno jinak,
           nemělo by dítě cíleně svou hmotnost redukovat.
         </p>
@@ -72,10 +93,35 @@
           dítěte v kolektivu.
         </p>
         <p>
-          Při ukončení tábora rodiče dostanou doporučení, jak pokračovat v
-          upevňování zdravých návyků svých dětí.
+          <b
+            >Při ukončení tábora rodiče dostanou doporučení, jak pokračovat v
+            upevňování zdravých návyků svých dětí.</b
+          >
         </p>
       </section>
+
+      <h4>Organizační záležitosti</h4>
+      <p>
+        Tábor je určen <b>pro děti od 1. do 5. třídy s nadváhou či obezitou</b>.
+        Kapacita je omezena na max. 20 dětí. Nejste si jistí, zda je tábor pro
+        Vaše dítko? Konkaktujte nás.
+      </p>
+      <p>Termín konání: <b>12. – 16. srpna 2024</b></p>
+      <p>
+        O Vaše dítě se postaráme v čase od 7:30 do 16:00. Společný program
+        probíhá od 8:15 do 15:30. V době, kdy ještě neprobíhá společný program
+        (hlavní hry atd.), nabídneme dětem různé možnosti zabavení.
+      </p>
+      <p>
+        Místo konání: Na Stavě 801, 503 46 Třebechovice pod Orebem &ndash;
+        komplex skautských kluboven naproti ZŠ Třebechovice
+      </p>
+
+      <p>
+        Chcete se na něco zeptat? Kontaktujte nás na mailové adrese
+        <a href="mailto:taborstobik@seznam.cz">taborstobik@seznam.cz</a> nebo na
+        telefonním čísle <b>732 651 959</b>
+      </p>
 
       <section class="p-flow">
         <h4>Cena</h4>
@@ -85,9 +131,10 @@
           svačina) a je konečná.
         </p>
         <p>
-          Mnohé pojišťovny na tábory a sportovní aktivity přispívají různě velké
-          finanční prostředky. Zjistěte si, zda se to týká i Vaší pojišťovny.
-          Doklad o zaplacení předáme všem účastníkům první den tábora.
+          <b>Mnohé pojišťovny na tábory a sportovní aktivity přispívají</b>
+          různě velké finanční prostředky. Zjistěte si, zda se to týká i Vaší
+          pojišťovny. Doklad o zaplacení předáme všem účastníkům první den
+          tábora.
         </p>
 
         <h4>Storno poplatky</h4>
@@ -99,40 +146,23 @@
           Storno poplatek Vám nebude účtován, seženete-li za své dítě
           náhradníka.
         </p>
-
-        <h4>Organizační záležitosti</h4>
-        <p>
-          Tábor je určen pro děti od 1. do 5. třídy s nadváhou či obezitou.
-          Kapacita je omezena na max. 20 dětí. Nejste si jistí, zda je tábor pro
-          Vaše dítko? Konkaktujte nás.
-        </p>
-        <p>Termín konání: <b>12. – 16. srpna 2024</b></p>
-        <p>
-          O Vaše dítě se postaráme v čase od 7:30 do 16:00. Společný program
-          probíhá od 8:15 do 15:30. V době, kdy ještě neprobíhá společný program
-          (hlavní hry atd.), nabídneme dětem různé možnosti zabavení.
-        </p>
-        <p>
-          Místo konání: Na Stavě 801, 503 46 Třebechovice pod Orebem &ndash;
-          komplex skautských kluboven naproti ZŠ Třebechovice
-        </p>
-
-        <p>
-          Chcete se na něco zeptat? Kontaktujte nás na mailové adrese
-          <a href="mailto:taborstobik@seznam.cz">taborstobik@seznam.cz</a> nebo
-          na telefonním čísle <b>XXXX</b>
-        </p>
       </section>
 
       <section>
-        <a href="" class="cta small p-block-link">Přihlaste se zde</a>
+        <a :href="formLink" class="cta small p-block-link">Přihlaste se zde</a>
       </section>
 
       <section class="p-flow">
-        <h3>Instruktorky</h3>
+        <h3 id="instruktorky">Instruktorky</h3>
 
         <div class="instructors p-cluster">
           <div class="p-flow">
+            <img
+              class="p-image-cover"
+              src="/img/tabor/Zdeňka%20Trummová.jpg"
+              width="444"
+              height="333"
+            />
             <h4>Mgr. Zdeňka Trummová</h4>
             <p class="p-secondary-text-regular">
               Učím druhé, jak mají pečovat o svoje zdraví s lehkostí a
@@ -149,6 +179,12 @@
           </div>
 
           <div class="p-flow">
+            <img
+              class="p-image-cover"
+              src="/img/tabor/Zuzana Chadimová.jpg"
+              width="499"
+              height="374"
+            />
             <h4>Bc. Zuzana Chadimová</h4>
             <p class="p-secondary-text-regular">
               Jsem vystudovaná nutriční terapeutka se soukromou praxí v Opočně.
@@ -186,7 +222,9 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const formLink = "https://forms.gle/8CbNchQdMp5X1K8K6"
+</script>
 
 <style scoped>
 .page {
@@ -227,6 +265,10 @@
   font-size: var(--font-size-5);
 }
 
+.h1 > div {
+  font-size: var(--font-size-4);
+}
+
 .h2 {
   margin-top: var(--space-4);
   color: var(--color-grape);
@@ -258,8 +300,21 @@ section {
     font-size: var(--font-size-0);
   }
 }
+
 .instructors {
   align-items: start;
+  --cluster-space: var(--space-4);
+}
+
+.instructors > * {
+  display: grid;
+  place-items: center;
+}
+
+.instructors img {
+  max-width: 300px;
+  border-radius: var(--radius-round);
+  aspect-ratio: 1;
 }
 
 .logo-stob {
