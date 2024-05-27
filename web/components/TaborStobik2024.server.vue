@@ -20,6 +20,7 @@
         </p>
       </section>
 
+      <section class=""><h2>Přihlašování do 23. 6. 2024</h2></section>
       <section>
         <a :href="formLink" class="cta small p-block-link">Přihlaste se zde</a>
       </section>
@@ -127,7 +128,11 @@
 
       <section class="p-flow">
         <h4>Cena</h4>
-        <p>Cena příměstského tábora <b>3500,-</b></p>
+        <p>
+          Cena příměstského tábora <b>3500,-</b> (Pro pojištěnce 211 příspěvek
+          <b>2000,-</b>)
+        </p>
+
         <p>
           Cena zahrnuje program včetně všech materiálů + stravu (svačina, oběd,
           svačina) a je konečná.
