@@ -1,6 +1,6 @@
 <template>
   <section v-if="posts">
-    <PostCard v-for="post in posts" :key="post._id" :post="post" />
+    <PostCard v-for="post of posts" :key="post._id" :post="post" />
   </section>
 </template>
 
