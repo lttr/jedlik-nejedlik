@@ -1,11 +1,16 @@
 :root {
-  --font-family-body: "Noto Sans", sans-serif;
+  --font-family-body: "Poppins", sans-serif;
   --brand-color: var(--blue-6);
   --brand-color-dim: var(--blue-10);
   --brand-color-bright: var(--blue-2);
   --link-color: darkviolet;
   --link-color-visited: var(--link-color);
   --font-weight-headings: 600;
+}
+
+body {
+  /* For Nuxt Fonts module to pick up the font automatically */
+  font-family: "Poppins";
 }
 
 :is(html, body, #__nuxt) {

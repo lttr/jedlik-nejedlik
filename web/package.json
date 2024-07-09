@@ -3,12 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck"
+    "postinstall": "nuxi prepare",
+    "preview": "nuxi preview",
+    "typecheck": "nuxi typecheck"
   },
   "dependencies": {
     "@lttr/puleo": "^0.1.0",
@@ -19,7 +21,7 @@
     "@lttr/nuxt-config-postcss": "^0.0.7",
     "@nuxt/devtools": "^1.3.9",
     "@nuxt/eslint": "^0.3.13",
-    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxt/fonts": "^0.7.1",
     "@sanity/types": "^3.49.0",
     "eslint": "^9.6.0",
     "nuxt": "^3.12.3",

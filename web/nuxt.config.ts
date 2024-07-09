@@ -3,25 +3,13 @@ export default defineNuxtConfig({
   css: ["@lttr/puleo", "~/assets/css/main.css"],
   modules: [
     "@lttr/nuxt-config-postcss",
-    "@nuxtjs/google-fonts",
     "@nuxtjs/sanity",
     "@nuxt/eslint",
+    "@nuxt/fonts",
   ],
 
   lttrConfigPostcss: {
     filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
-  },
-
-  googleFonts: {
-    families: {
-      "Noto Sans": [400, 600],
-    },
-    preload: true,
-    download: true,
-  },
-
-  nitro: {
-    preset: "netlify-edge",
   },
 
   experimental: {
