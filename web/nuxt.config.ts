@@ -1,7 +1,16 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["@lttr/puleo", "~/assets/css/main.css"],
-  modules: ["@nuxtjs/google-fonts", "@nuxtjs/sanity", "@nuxt/eslint"],
+  modules: [
+    "@lttr/nuxt-config-postcss",
+    "@nuxtjs/google-fonts",
+    "@nuxtjs/sanity",
+    "@nuxt/eslint",
+  ],
+
+  lttrConfigPostcss: {
+    filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
+  },
 
   googleFonts: {
     families: {
@@ -9,10 +18,6 @@ export default defineNuxtConfig({
     },
     preload: true,
     download: true,
-  },
-
-  postcssConfig: {
-    filesWithGlobals: ["./node_modules/open-props/media.min.css"],
   },
 
   nitro: {

@@ -55,18 +55,18 @@ importers:
   web:
     dependencies:
       '@lttr/puleo':
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: ^0.1.0
+        version: 0.1.0
       '@nuxtjs/sanity':
         specifier: ^1.11.4
         version: 1.11.4(magicast@0.3.4)(rollup@4.18.1)
     devDependencies:
-      '@csstools/postcss-global-data':
-        specifier: ^2.1.1
-        version: 2.1.1(postcss@8.4.39)
       '@lttr/nuxt-config-eslint':
         specifier: ^0.2.0
         version: 0.2.0(vue-eslint-parser@9.4.3(eslint@9.6.0))
+      '@lttr/nuxt-config-postcss':
+        specifier: ^0.0.7
+        version: 0.0.8(magicast@0.3.4)(rollup@4.18.1)
       '@nuxt/devtools':
         specifier: ^1.3.9
         version: 1.3.9(rollup@4.18.1)(vite@5.3.3(@types/node@20.14.10)(stylus@0.63.0)(terser@5.31.1))
@@ -85,21 +85,6 @@ importers:
       nuxt:
         specifier: ^3.12.3
         version: 3.12.3(@parcel/watcher@2.4.1)(@types/node@20.14.10)(encoding@0.1.13)(eslint@9.6.0)(ioredis@5.4.1)(magicast@0.3.4)(meow@13.2.0)(optionator@0.9.4)(rollup@4.18.1)(stylus@0.63.0)(terser@5.31.1)(typescript@5.5.3)(vite@5.3.3(@types/node@20.14.10)(stylus@0.63.0)(terser@5.31.1))
-      open-props:
-        specifier: ^1.7.5
-        version: 1.7.5
-      postcss-combine-duplicated-selectors:
-        specifier: ^10.0.3
-        version: 10.0.3(postcss@8.4.39)
-      postcss-dark-theme-class:
-        specifier: ^1.3.0
-        version: 1.3.0(postcss@8.4.39)
-      postcss-import:
-        specifier: ^16.1.0
-        version: 16.1.0(postcss@8.4.39)
-      postcss-preset-env:
-        specifier: ^9.6.0
-        version: 9.6.0(postcss@8.4.39)
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -1804,8 +1789,11 @@ packages:
   '@lttr/nuxt-config-eslint@0.2.0':
     resolution: {integrity: sha512-NBx6tMDyySlQKXQ6u2kMqWgG1mWqjylFNNEGInXni3HI06pkMHuF2HTcFZddVgClRHGxRhcSi9201XcEdH5jiA==}
 
-  '@lttr/puleo@0.0.4':
-    resolution: {integrity: sha512-C4CWYEkpG6JbiXIZ1b8czvsg0St0Nr70tESMOizKB9GUV0wf+MebG9ZtBlFC4GK4tgWbg3EcqUXHCTFvWuvSow==}
+  '@lttr/nuxt-config-postcss@0.0.8':
+    resolution: {integrity: sha512-OS+I4pN8R1bip8XjifbhgmHfn/9Jt1TKxemhd1HDKxpEk+1YqiobVkK18+Yb/39MwI9RE1Pvo/xZ7FaKV6DhhA==}
+
+  '@lttr/puleo@0.1.0':
+    resolution: {integrity: sha512-J9G/myFr25AMSnyEgnvmC20oOZ3wddwnhovL0y557c3ex2s6F3/AMdLZiUdaEkLRhWDpMwSODXWe4fBMV44q1w==}
 
   '@mapbox/node-pre-gyp@1.0.11':
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
@@ -3735,8 +3723,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.4.818:
-    resolution: {integrity: sha512-eGvIk2V0dGImV9gWLq8fDfTTsCAeMDwZqEPMr+jMInxZdnp9Us8UpovYpRCf9NQ7VOFgrN2doNSgvISbsbNpxA==}
+  electron-to-chromium@1.4.820:
+    resolution: {integrity: sha512-kK/4O/YunacfboFEk/BDf7VO1HoPmDudLTJAU9NmXIOSjsV7qVIX3OrI4REZo0VmdqhcpUcncQc6N8Q3aEXlHg==}
 
   emoji-regex@10.3.0:
     resolution: {integrity: sha512-QpLs9D9v9kArv4lfDEgg1X/gN5XLnf/A6l9cs8SPZLRZR3ZkY9+kwIQTxm+fsSej5UMYGE8fdoaZVIBlqG0XTw==}
@@ -5014,9 +5002,9 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
-  lru-cache@10.4.0:
-    resolution: {integrity: sha512-bfJaPTuEiTYBu+ulDaeQ0F+uLmlfFkMgXj4cbwfuMSjgObGMzb55FMMbDvbRU0fAHZ4sLGkz2mKwcMg8Dvm8Ww==}
-    engines: {node: '>=18'}
+  lru-cache@10.4.2:
+    resolution: {integrity: sha512-voV4dDrdVZVNz84n39LFKDaRzfwhdzJ7akpyXfTMxCgRUp07U3lcJUXRlhTKP17rgt09sUzLi5iCitpEAr+6ug==}
+    engines: {node: 14 || 16 || 18 || 20 || >=22}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -9180,7 +9168,23 @@ snapshots:
       - supports-color
       - vue-eslint-parser
 
-  '@lttr/puleo@0.0.4':
+  '@lttr/nuxt-config-postcss@0.0.8(magicast@0.3.4)(rollup@4.18.1)':
+    dependencies:
+      '@csstools/postcss-global-data': 2.1.1(postcss@8.4.39)
+      '@nuxt/kit': 3.12.3(magicast@0.3.4)(rollup@4.18.1)
+      cssnano: 7.0.4(postcss@8.4.39)
+      open-props: 1.7.5
+      postcss: 8.4.39
+      postcss-combine-duplicated-selectors: 10.0.3(postcss@8.4.39)
+      postcss-dark-theme-class: 1.3.0(postcss@8.4.39)
+      postcss-import: 16.1.0(postcss@8.4.39)
+      postcss-preset-env: 9.6.0(postcss@8.4.39)
+    transitivePeerDependencies:
+      - magicast
+      - rollup
+      - supports-color
+
+  '@lttr/puleo@0.1.0':
     dependencies:
       open-props: 1.7.5
 
@@ -9499,7 +9503,7 @@ snapshots:
       '@portabletext/types': 2.0.13
       '@sanity/client': 6.20.1(debug@4.3.5)
       '@sanity/core-loader': 1.6.20(@sanity/client@6.20.1)
-      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1)
+      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1(debug@4.3.5))
       '@sanity/visual-editing': 1.8.22(@sanity/client@6.20.1)
       chalk: 5.3.0
       defu: 6.1.4
@@ -9960,11 +9964,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/presentation@1.16.0(@sanity/client@6.20.1)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@sanity/presentation@1.16.0(@sanity/client@6.20.1(debug@4.3.5))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@sanity/client': 6.20.1(debug@4.3.5)
       '@sanity/icons': 3.3.0(react@18.3.1)
-      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1)
+      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1(debug@4.3.5))
       '@sanity/ui': 2.6.1(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
@@ -9983,7 +9987,7 @@ snapshots:
       - react-is
       - styled-components
 
-  '@sanity/preview-url-secret@1.6.18(@sanity/client@6.20.1)':
+  '@sanity/preview-url-secret@1.6.18(@sanity/client@6.20.1(debug@4.3.5))':
     dependencies:
       '@sanity/client': 6.20.1(debug@4.3.5)
       '@sanity/uuid': 3.0.2
@@ -10096,7 +10100,7 @@ snapshots:
 
   '@sanity/visual-editing@1.8.22(@sanity/client@6.20.1)':
     dependencies:
-      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1)
+      '@sanity/preview-url-secret': 1.6.18(@sanity/client@6.20.1(debug@4.3.5))
       '@vercel/stega': 0.1.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -11013,7 +11017,7 @@ snapshots:
   browserslist@4.23.1:
     dependencies:
       caniuse-lite: 1.0.30001640
-      electron-to-chromium: 1.4.818
+      electron-to-chromium: 1.4.820
       node-releases: 2.0.14
       update-browserslist-db: 1.1.0(browserslist@4.23.1)
 
@@ -11690,7 +11694,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.4.818: {}
+  electron-to-chromium@1.4.820: {}
 
   emoji-regex@10.3.0: {}
 
@@ -13272,7 +13276,7 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
-  lru-cache@10.4.0: {}
+  lru-cache@10.4.2: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -13980,7 +13984,7 @@ snapshots:
 
   path-scurry@1.11.1:
     dependencies:
-      lru-cache: 10.4.0
+      lru-cache: 10.4.2
       minipass: 7.1.2
 
   path-to-regexp@6.2.2: {}
@@ -14886,7 +14890,7 @@ snapshots:
       '@sanity/logos': 2.1.12(@sanity/color@3.0.6)(react@18.3.1)
       '@sanity/migrate': 3.49.0
       '@sanity/mutator': 3.49.0
-      '@sanity/presentation': 1.16.0(@sanity/client@6.20.1)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      '@sanity/presentation': 1.16.0(@sanity/client@6.20.1(debug@4.3.5))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/schema': 3.49.0(debug@4.3.5)
       '@sanity/telemetry': 0.7.9(react@18.3.1)
       '@sanity/types': 3.49.0(debug@4.3.5)
@@ -15729,7 +15733,7 @@ snapshots:
       destr: 2.0.3
       h3: 1.12.0
       listhen: 1.7.2
-      lru-cache: 10.4.0
+      lru-cache: 10.4.2
       mri: 1.2.0
       node-fetch-native: 1.6.4
       ofetch: 1.3.4
