@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/sanity",
     "@nuxt/eslint",
     "@nuxt/fonts",
+    "@nuxtjs/seo",
   ],
 
   lttrConfigPostcss: {
@@ -28,14 +29,6 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: "cs",
       },
-      link: [
-        {
-          rel: "icon",
-          type: "image/png",
-          sizes: "48x48",
-          href: "/favicon.png",
-        },
-      ],
     },
   },
 
