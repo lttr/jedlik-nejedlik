@@ -296,13 +296,13 @@ section {
 .cta {
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-2);
-  background-color: var(--color-purple);
+  background-color: var(--brand-color);
   color: white;
   font-size: var(--font-size-2);
   text-decoration: none;
 
   &:hover {
-    background-color: darkviolet;
+    background-color: var(--brand-color-dim);
   }
 
   &.small {
