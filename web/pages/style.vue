@@ -6,16 +6,10 @@
     <section>
       <h2>Logo</h2>
       <div class="p-cluster">
-        <img
-          class="logo"
-          src="/img/logo-twoline.svg"
-          alt="logo jedlik nejedlik"
-        />
-        <img
-          class="logo"
-          src="/img/logo-oneline.svg"
-          alt="logo jedlik nejedlik"
-        />
+        <SvgoLogoTwoline class="logo" />
+        <SvgoLogoOneline class="logo" />
+        <SvgoLogomark class="logomark" />
+        <SvgoLogomark class="logomark-inside" />
       </div>
     </section>
     <section class="p-flow">
@@ -68,15 +62,27 @@
     </section>
     <section class="p-flow">
       <h2>Obrázky</h2>
+      <div class="svgs p-cluster">
+        <SvgoHruska />
+        <SvgoBoruvky />
+        <SvgoJablko />
+        <SvgoJahoda />
+        <SvgoStopka />
+        <SvgoMrkev />
+        <SvgoSpirala />
+      </div>
+    </section>
+    <section class="p-flow">
+      <h2>Ikony</h2>
       <div class="p-cluster">
-        <img class="ilustration" src="/img/boruvky.svg" alt="" />
-        <img class="ilustration" src="/img/hruska.svg" alt="" />
-        <img class="ilustration" src="/img/jablko.svg" alt="" />
-        <img class="ilustration" src="/img/jahoda.svg" alt="" />
-        <img class="ilustration" src="/img/kytka.svg" alt="" />
-        <img class="ilustration" src="/img/logomark.svg" alt="" />
-        <img class="ilustration" src="/img/mrkev.svg" alt="" />
-        <img class="ilustration" src="/img/spirala.svg" alt="" />
+        <Icon name="uil:arrow-right" />
+        <Icon name="uil:arrow-left" />
+        <Icon name="uil:multiply" />
+        <Icon name="uil:bars" />
+        <Icon name="uil:file-download" />
+        <Icon name="uil:shopping-cart" />
+        <Icon name="uil:facebook" />
+        <Icon name="uil:instagram" />
       </div>
     </section>
     <section class="p-flow">
@@ -152,7 +158,22 @@ section > h2:first-child {
 }
 
 .logo {
-  max-width: 300px;
+  width: 300px;
+  padding: var(--space-4);
+}
+
+.logomark {
+  width: 100px;
+  padding: var(--space-4);
+  margin: var(--space-4);
+}
+
+.logomark-inside {
+  width: 100px;
+  padding: var(--space-4);
+  margin: var(--space-4);
+  color: var(--color-peach);
+  background-color: var(--color-navy);
 }
 
 .colors {
@@ -177,8 +198,13 @@ section > h2:first-child {
   border: var(--border-4);
 }
 
-.ilustration {
-  max-width: 200px;
+.svgs {
+  max-width: 70ch;
+}
+
+.svgs > * {
+  width: 170px;
+  max-height: 200px;
 }
 
 .card {

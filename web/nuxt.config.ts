@@ -7,7 +7,15 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@nuxtjs/seo",
+    "@nuxt/icon",
+    "nuxt-svgo",
   ],
+
+  svgo: {
+    autoImportPath: "./assets/svgs/",
+    // Don't wrap svg files inside module provided icon component
+    defaultImport: "component",
+  },
 
   lttrConfigPostcss: {
     filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
