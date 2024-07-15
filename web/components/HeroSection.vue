@@ -1,5 +1,5 @@
 <template>
-  <section class="hero p-switcher p-container">
+  <section class="hero p-switcher">
     <div>
       <h1>Aby každé jídlo bylo radost</h1>
       <p class="subheading">

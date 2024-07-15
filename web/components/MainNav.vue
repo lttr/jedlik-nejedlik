@@ -1,6 +1,6 @@
 <template>
-  <nav class="main-nav">
-    <div class="nav-wrapper p-container">
+  <nav class="main-nav p-page-layout">
+    <div class="nav-wrapper">
       <SvgoLogoOneline class="logo" />
       <ul class="links p-cluster">
         <li>

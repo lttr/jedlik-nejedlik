@@ -1,19 +1,16 @@
 <template>
   <div>
-    <header>
-      <div class="top-line p-secondary-text-regular p-container">
+    <header class="p-page-layout">
+      <div class="top-line p-secondary-text-regular p-content">
         <Icon name="uil:facebook" />
         <Icon name="uil:instagram" />
         <span>#jedliknejedlik</span>
       </div>
 
-      <MainNav />
+      <MainNav class="p-full" />
     </header>
-    <main class="p-stack">
+    <main class="p-page-layout p-stack">
       <HeroSection />
-      <section>
-        <h2>Neco</h2>
-      </section>
     </main>
     <footer></footer>
   </div>

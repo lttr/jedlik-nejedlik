@@ -1,3 +1,5 @@
+@import "./layout.css";
+
 /* Brand */
 :root {
   --font-family-body: "Poppins", sans-serif;
@@ -33,7 +35,7 @@
   /* --font-weight-body-bold: var(--font-weight-6); */
   /* --font-weight-body: var(--font-weight-4); */
   /* --font-weight-buttons: var(--font-weight-6); */
-  --font-weight-headings: var(--font-weight-4);
+  /* --font-weight-headings: var(--font-weight-6); */
   /* --font-weight-light: var(--font-weight-3); */
   /* --line-height-body: var(--font-lineheight-3); */
   /* --line-height-headings: var(--font-lineheight-1); */
