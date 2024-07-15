@@ -55,9 +55,11 @@
       </p>
       <h3>Nadpis třetí úrovně</h3>
       <div class="p-cluster">
-        <span class="tag p-additional-text-regular">jedlík</span>
-        <span class="tag p-additional-text-regular">nejedlík</span>
-        <span class="tag p-additional-text-regular">labužník</span>
+        Morbi dictum, sem sit amet aliquam euismod, odio tortor pellentesque
+        odio, ac ultrices enim nibh sed quam. Integer tortor velit, condimentum
+        a, vestibulum eget, sagittis nec, neque. Aenean est urna, bibendum et,
+        imperdiet at, rhoncus in, arcu. In hac habitasse platea dictumst.
+        Vestibulum blandit dignissim dui. Maecenas vitae.
       </div>
     </section>
     <section class="p-flow">
@@ -93,8 +95,19 @@
       </div>
     </section>
     <section class="p-flow">
-      <h2>Karta</h2>
-      <div class="card p-stack">
+      <h2>Tagy</h2>
+      <div class="p-cluster">
+        <Chip to="/">online</Chip>
+        <Chip to="/">labužník</Chip>
+      </div>
+    </section>
+    <section class="p-flow">
+      <h2>Karta - článek</h2>
+      <ArticleCard v-bind="exampleCard" />
+    </section>
+    <section class="p-flow">
+      <h2>Karta - kontakt</h2>
+      <div class="contacts-card p-stack">
         <h3>Jedlík nejedlík</h3>
         <section class="p-flow">
           <div>
@@ -146,6 +159,19 @@ const colors2 = [
   "brand-color-bright",
   "color-midnight",
 ]
+
+const exampleCard = {
+  image: "/child-placeholder.webp",
+  to: "/",
+  tags: [
+    { text: "jedlík", to: "/" },
+    { text: "nejedlík", to: "/" },
+  ],
+  title: "Jedlík nejedlík",
+  text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
+  ctaText: "Přihlásit se",
+  headingLevel: "h2" as const,
+}
 </script>
 
 <style scoped>
@@ -192,12 +218,6 @@ section > h2:first-child {
   max-width: var(--size-content-2);
 }
 
-.tag {
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-default);
-  border: var(--border-4);
-}
-
 .svgs {
   max-width: 70ch;
 }
@@ -207,7 +227,7 @@ section > h2:first-child {
   max-height: 200px;
 }
 
-.card {
+.contacts-card {
   padding-block: var(--space-6);
   padding-inline: var(--space-5);
   max-width: var(--size-content-2);
