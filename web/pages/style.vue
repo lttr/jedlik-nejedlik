@@ -106,6 +106,10 @@
       <ArticleCard v-bind="exampleCard" />
     </section>
     <section class="p-flow">
+      <h2>Karta - přednáška</h2>
+      <LectureCard v-bind="exampleCard" />
+    </section>
+    <section class="p-flow">
       <h2>Karta - kontakt</h2>
       <div class="contacts-card p-stack">
         <h3>Jedlík nejedlík</h3>

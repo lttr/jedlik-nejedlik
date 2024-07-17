@@ -5,19 +5,21 @@
     </NuxtLink>
 
     <div class="content p-stack">
-      <NuxtLink :to class="title-link">
-        <component :is="headingLevel" class="title p-heading-4">{{
-          title
-        }}</component>
-      </NuxtLink>
       <ul class="p-cluster">
         <li v-for="tag of tags" :key="tag.to">
           <Chip :to="tag.to">{{ tag.text }}</Chip>
         </li>
       </ul>
+      <NuxtLink :to class="title-link">
+        <component :is="headingLevel" class="title p-heading-4">{{
+          title
+        }}</component>
+      </NuxtLink>
       <p class="p-secondary-text-regular">
         {{ text }}
       </p>
+
+      <button class="cta p-secondary">{{ ctaText }}</button>
     </div>
   </div>
 </template>
@@ -34,6 +36,7 @@ export interface Card {
   tags: Tag[]
   title: string
   text: string
+  ctaText: string
   headingLevel: "h1" | "h2" | "h3"
 }
 
@@ -41,12 +44,6 @@ defineProps<Card>()
 </script>
 
 <style scoped>
-:where(ul, li) {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
 .card {
   max-width: 35ch;
   box-shadow: var(--shadow-4);
@@ -77,5 +74,16 @@ defineProps<Card>()
 
 .title {
   font-weight: var(--font-weight-headings);
+}
+
+.cta {
+  width: 100%;
+}
+
+ul,
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 </style>
