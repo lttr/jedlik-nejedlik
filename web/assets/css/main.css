@@ -8,9 +8,11 @@
   --color-peach: #ffe8d6;
   --color-forest-green: #2e4d17;
   --color-pale-blue: #abc2ff;
+  --color-dull-blue: #aec0e4;
   --color-light-lime: #e0f096;
   --color-orange-soda: #fa702b;
   --color-midnight: #22284f;
+  --color-star: #ffbc57;
 
   --brand-color: var(--color-navy);
   --brand-color-dim: #010837;

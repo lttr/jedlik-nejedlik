@@ -15,10 +15,10 @@
    * something like 12 columns grid possible and aligned with other values in
    * this system. */
   --content-max-width: var(--grid-max-width);
-  --popout-factor: 1.2;
-  --inset-factor: 0.8;
-  --popout-max-width: calc(var(--grid-max-width) * var(--popout-factor));
-  --inset-max-width: calc(var(--grid-max-width) * var(--inset-factor));
+  /* --popout-factor: 1.2; */
+  /* --inset-factor: 0.8; */
+  --popout-max-width: calc(var(--grid-max-width) + 4 * var(--grid-gutter));
+  --inset-max-width: calc(var(--grid-max-width) - 4 * var(--grid-gutter));
 
   /** TRACK SIZES **/
   /* Track sizes represent a fraction, that is subtracted from the available space. */
@@ -79,6 +79,10 @@
 .p-inset-end {
   grid-column-end: inset-end;
 }
+.p-inset-padded {
+  grid-column: inset;
+  padding-inline: calc(2 * var(--minimum-content-padding));
+}
 
 .p-content {
   grid-column: content;
@@ -88,6 +92,18 @@
 }
 .p-content-end {
   grid-column-end: content-end;
+}
+.p-content-padded {
+  grid-column: content;
+  padding-inline: calc(2 * var(--minimum-content-padding));
+}
+
+@media (--sm-n-below) {
+  .p-content-padded {
+    grid-column: full;
+    border-radius: 0;
+    padding-inline: var(--minimum-content-padding);
+  }
 }
 
 .p-popout {
@@ -99,15 +115,24 @@
 .p-popout-end {
   grid-column-end: popout-end;
 }
+.p-popout-padded {
+  grid-column: popout;
+  padding-inline: calc(2 * var(--minimum-content-padding));
+}
 
 .p-full {
   grid-column: full;
+  border-radius: 0;
 }
 .p-full-start {
   grid-column-start: full-start;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 .p-full-end {
   grid-column-end: full-end;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 /* Applies the page layout onto itself.

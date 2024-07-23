@@ -19,7 +19,6 @@
 .hero {
   --switcher-treshold: 90ch;
   margin-top: var(--space-9);
-  width: 100%;
 }
 
 .subheading {

@@ -9,8 +9,14 @@
 
       <MainNav class="p-full" />
     </header>
-    <main class="p-page-layout p-stack">
+    <main class="main p-page-layout p-stack">
       <HeroSection />
+      <LecturesSection class="p-full-end" />
+      <IndividualSection />
+      <ExpertsSection />
+      <BlogSection />
+      <TestimonialsSection />
+      <AboutUsSection />
     </main>
     <footer></footer>
   </div>
@@ -25,5 +31,9 @@
   align-items: center;
   gap: var(--space-2);
   padding-block: var(--space-3);
+}
+
+.main {
+  --stack-space: var(--space-8);
 }
 </style>

@@ -50,6 +50,7 @@ defineProps<Card>()
 .card {
   max-width: 35ch;
   box-shadow: var(--shadow-4);
+  background-color: var(--bg-color-body);
 }
 
 .content {
