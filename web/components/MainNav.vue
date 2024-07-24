@@ -1,7 +1,7 @@
 <template>
   <nav class="main-nav p-page-layout">
     <div class="nav-wrapper">
-      <SvgoLogoOneline class="logo" />
+      <SiteLogo />
       <ul class="links p-cluster">
         <li>
           <NuxtLink class="link" to="/seminare">Semináře</NuxtLink>
@@ -46,12 +46,6 @@
       flex-direction: column;
     }
   }
-}
-
-.logo {
-  height: 1.5rem;
-  width: auto;
-  min-width: 13ch;
 }
 
 .links {

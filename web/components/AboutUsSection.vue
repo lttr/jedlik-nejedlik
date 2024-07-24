@@ -23,6 +23,7 @@
   justify-content: space-between;
   --cluster-space: var(--space-6);
   margin-bottom: var(--space-5);
+  position: relative;
 }
 
 .column {
@@ -45,8 +46,8 @@
 .stopka {
   position: absolute;
   width: 6ch;
-  left: -3rem;
-  top: 2rem;
+  left: calc(3rem + 20vw);
+  bottom: -2rem;
   stroke-width: 0.6rem;
 }
 </style>

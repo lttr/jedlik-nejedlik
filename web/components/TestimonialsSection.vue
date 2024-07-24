@@ -31,6 +31,6 @@ const exampleTestimonial = {
   position: absolute;
   width: 10rem;
   bottom: 3rem;
-  left: -5rem;
+  left: -4rem;
 }
 </style>
