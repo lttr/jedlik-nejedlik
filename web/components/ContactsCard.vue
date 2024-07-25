@@ -32,7 +32,7 @@
   max-width: var(--size-content-2);
   border-radius: var(--radius-4);
   box-shadow: var(--shadow-4);
-
+  background: var(--bg-color-body);
   font-size: var(--font-size--1);
 
   h3 {
