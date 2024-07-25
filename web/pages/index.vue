@@ -1,27 +1,25 @@
 <template>
-  <main>
-    <div class="p-stack p-center">
-      <div>
-        <SvgoLogoOneline class="logo" />
-      </div>
-      <div>
-        <NuxtLink to="/tabor">Tábor</NuxtLink>
-      </div>
-    </div>
-  </main>
+  <div>
+    <Header class="p-page-layout" />
+    <main class="main p-page-layout p-stack">
+      <HeroSection />
+      <LecturesSection class="p-full-end" />
+      <IndividualSection />
+      <ExpertsSection />
+      <BlogSection />
+      <TestimonialsSection />
+      <AboutUsSection />
+      <FaqSection class="p-inset-padded" />
+      <ContactsSection />
+    </main>
+    <Footer class="p-page-layout p-full" />
+  </div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped>
-.logo {
-  width: 300px;
-  height: auto;
-}
-
-main {
-  height: 100vh;
-  display: grid;
-  place-content: center;
+.main {
+  --stack-space: var(--space-8);
 }
 </style>
