@@ -9,7 +9,13 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "@nuxt/icon",
     "nuxt-svgo",
+    "@nuxtjs/plausible",
   ],
+
+  plausible: {
+    ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
+    apiHost: "https://plausible.lttr.cz",
+  },
 
   svgo: {
     autoImportPath: "./assets/svgs/",

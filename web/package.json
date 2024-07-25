@@ -24,6 +24,7 @@
     "@nuxt/eslint": "^0.3.13",
     "@nuxt/fonts": "^0.7.1",
     "@nuxt/icon": "^1.0.0",
+    "@nuxtjs/plausible": "^1.0.0",
     "@nuxtjs/seo": "2.0.0-rc.11",
     "@sanity/types": "^3.49.0",
     "eslint": "^9.6.0",
