@@ -12,6 +12,13 @@ export default defineNuxtConfig({
     "@nuxtjs/plausible",
   ],
 
+  site: {
+    url: "https://example.com",
+    name: "Jedlík-nejedlík",
+    description: "Aby každé jídlo bylo radost",
+    defaultLocale: "cs",
+  },
+
   plausible: {
     ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
     apiHost: "https://plausible.lttr.cz",
@@ -36,14 +43,6 @@ export default defineNuxtConfig({
     apiVersion: "2023-10-23",
     dataset: "production",
     useCdn: false,
-  },
-
-  app: {
-    head: {
-      htmlAttrs: {
-        lang: "cs",
-      },
-    },
   },
 
   compatibilityDate: "2024-07-08",
