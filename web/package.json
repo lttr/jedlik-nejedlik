@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@iconify-json/uil": "^1.1.8",
-    "@lttr/nuxt-config-eslint": "^0.2.0",
+    "@lttr/nuxt-config-eslint": "^0.3.0",
     "@lttr/nuxt-config-postcss": "^0.0.7",
     "@nuxt/devtools": "^1.3.9",
     "@nuxt/eslint": "^0.3.13",
