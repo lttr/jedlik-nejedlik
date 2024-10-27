@@ -1,6 +1,8 @@
 <template>
-  <div>
+  <div class="p-layout-wrapper">
+    <Header class="header p-page-layout" />
     <slot></slot>
+    <Footer class="p-page-layout" />
   </div>
 </template>
 
@@ -12,4 +14,8 @@ useHead({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.header {
+  margin-bottom: var(--space-6);
+}
+</style>

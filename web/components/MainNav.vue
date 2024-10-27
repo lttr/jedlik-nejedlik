@@ -1,7 +1,8 @@
 <template>
   <nav class="main-nav p-page-layout">
     <div class="nav-wrapper">
-      <SiteLogo />
+      <NuxtLink class="link" to="/"><SiteLogo /></NuxtLink>
+
       <ul class="links p-cluster">
         <li>
           <NuxtLink class="link" to="/seminare">Semináře</NuxtLink>
@@ -52,18 +53,21 @@
   --cluster-space: var(--space-1);
   list-style-type: none;
   padding-inline-start: 0;
+
+  .link {
+    display: flex;
+    font-size: var(--font-size--1);
+    padding-inline: var(--space-3);
+
+    &:hover {
+      background-color: var(--color-pale-blue);
+      border-radius: var(--radius-default);
+    }
+  }
 }
 
 .link {
   color: var(--brand-color);
-  font-size: var(--font-size--1);
-  display: flex;
   text-decoration: none;
-  padding-inline: var(--space-3);
-
-  &:hover {
-    background-color: var(--color-pale-blue);
-    border-radius: var(--radius-default);
-  }
 }
 </style>
