@@ -22,6 +22,7 @@ interface Article {
   cover: string
   perex: string
   title: string
+  image: string
   id: string
 }
 

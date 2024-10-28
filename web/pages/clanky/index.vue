@@ -51,7 +51,8 @@ const articles = computed(() => {
   })
 })
 const { getItems } = useDirectusItems()
-useAsyncData(async () => {})
+// TODO
+// useAsyncData(async () => {})
 const results = await getItems<Article>({
   collection: "articles",
   params: {
