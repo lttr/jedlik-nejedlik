@@ -4,14 +4,16 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm -F web run dev",
-    "dev:all": "pnpm -r run dev",
-    "dev:studio": "pnpm -F studio run dev",
     "format": "prettier --write .",
     "lint": "pnpm -r run lint",
     "lint:fix": "eslint --fix",
+    "start": "node web/.output/server/index.mjs",
     "typecheck": "pnpm -r run typecheck"
   },
-  "packageManager": "pnpm@9.5.0+sha256.dbdf5961c32909fb030595a9daa1dae720162e658609a8f92f2fa99835510ca5",
+  "engines": {
+    "node": "22"
+  },
+  "packageManager": "pnpm@9.5.0",
   "devDependencies": {
     "prettier": "^3.3.2"
   }

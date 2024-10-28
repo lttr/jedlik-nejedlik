@@ -13,9 +13,6 @@
     "preview": "nuxi preview",
     "typecheck": "nuxi typecheck"
   },
-  "engines": {
-    "node": "22"
-  },
   "dependencies": {
     "@lttr/puleo": "^0.2.1"
   },
