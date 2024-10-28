@@ -1,12 +1,12 @@
 <template>
   <footer class="footer">
     <SiteLogo class="logo" />
-    <div class="p-stack">
-      <p>123 456 789</p>
-      <div><a href="/">O nás</a></div>
-      <div><a href="/">FAQ</a></div>
-      <SocialLinks />
-    </div>
+    <!-- <div class="p-stack"> -->
+    <!--   <p>123 456 789</p> -->
+    <!--   <div><a href="/">O nás</a></div> -->
+    <!--   <div><a href="/">FAQ</a></div> -->
+    <!--   <SocialLinks /> -->
+    <!-- </div> -->
   </footer>
 </template>
 
