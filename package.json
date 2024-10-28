@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm -F web run dev",
+    "build": "pnpm -r run build",
     "format": "prettier --write .",
     "lint": "pnpm -r run lint",
     "lint:fix": "eslint --fix",

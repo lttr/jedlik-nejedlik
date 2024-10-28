@@ -9,8 +9,9 @@ providers = ["node"]
 [variables]
 NIXPACKS_NODE_VERSION = '22'
 
-# Start command -> the start script in package.json
-# [start]
-# cmd = "node .output/server/index.mjs"
-
 # Package manager -> depending on the lockfile detected
+
+# Build command -> the build script in package.json
+
+# Start command -> the start script in package.json
+
