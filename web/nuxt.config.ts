@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "nuxt-svgo",
     "@nuxtjs/plausible",
+    "nuxt-directus",
   ],
 
   site: {
@@ -16,6 +17,10 @@ export default defineNuxtConfig({
     name: "Jedlík-nejedlík",
     description: "Aby každé jídlo bylo radost",
     defaultLocale: "cs",
+  },
+
+  directus: {
+    url: "https://obsah-jedlika.lttr.cz",
   },
 
   plausible: {

@@ -1,12 +1,70 @@
 <template>
-  <section v-if="posts">
-    <PostCard v-for="post of posts" :key="post._id" :post="post" />
-  </section>
+  <main class="main p-page-layout">
+    <div class="p-stack">
+      <h1>Články</h1>
+      <ArticleCard
+        v-for="article of articles"
+        :key="article.id"
+        class="post"
+        v-bind="article"
+      />
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
-import { type Post } from "~/types/Post"
+const exampleCard = {
+  image: "/child-placeholder.webp",
+  to: "/",
+  tags: [
+    { text: "jedlík", to: "/" },
+    { text: "nejedlík", to: "/" },
+  ],
+  title: "Jedlík nejedlík",
+  text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
+  ctaText: "Přihlásit se",
+  headingLevel: "h2" as const,
+}
 
-const query = groq`*[ _type == "post" && defined(slug.current) ] | order(_createdAt desc)`
-const { data: posts } = await useSanityQuery<Post[]>(query)
+interface Article {
+  cover: string
+  perex: string
+  title: string
+  id: string
+}
+
+function getImageUrl(cover: string) {
+  const directusApi = "https://obsah-jedlika.lttr.cz"
+  return `${directusApi}/assets/${cover}`
+}
+
+const articles = computed(() => {
+  return results.map((article) => {
+    return {
+      ...exampleCard,
+      id: article.id,
+      image: getImageUrl(article.cover),
+      title: article.title,
+      text: article.perex,
+      to: `/clanky/${article.id}`,
+    }
+  })
+})
+const { getItems } = useDirectusItems()
+useAsyncData(async () => {})
+const results = await getItems<Article>({
+  collection: "articles",
+  params: {
+    fields: ["id", "title", "perex", "cover"],
+    filter: {
+      status: { _eq: "published" },
+    },
+  },
+})
 </script>
+
+<style scoped>
+.main {
+  margin-bottom: var(--space-6);
+}
+</style>

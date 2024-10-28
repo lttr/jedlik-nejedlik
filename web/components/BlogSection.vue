@@ -7,10 +7,10 @@
       <div class="posts-wrapper p-center">
         <div class="posts p-switcher">
           <ArticleCard
-            v-for="x of 3"
-            :key="x"
+            v-for="article of articles"
+            :key="article.id"
             class="post"
-            v-bind="exampleCard"
+            v-bind="article"
           />
         </div>
         <button class="cta">Všechny články</button>
@@ -33,6 +33,41 @@ const exampleCard = {
   ctaText: "Přihlásit se",
   headingLevel: "h2" as const,
 }
+
+interface Article {
+  cover: string
+  perex: string
+  title: string
+  id: string
+}
+
+function getImageUrl(cover: string) {
+  const directusApi = "https://obsah-jedlika.lttr.cz"
+  return `${directusApi}/assets/${cover}`
+}
+
+const articles = computed(() => {
+  return results.map((article) => {
+    return {
+      ...exampleCard,
+      id: article.id,
+      image: getImageUrl(article.cover),
+      title: article.title,
+      text: article.perex,
+    }
+  })
+})
+
+const { getItems } = useDirectusItems()
+const results = await getItems<Article>({
+  collection: "articles",
+  params: {
+    fields: ["id", "title", "perex", "cover"],
+    filter: {
+      status: { _eq: "published" },
+    },
+  },
+})
 </script>
 
 <style scoped>

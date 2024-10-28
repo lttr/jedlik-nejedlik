@@ -1,25 +1,61 @@
 <template>
-  <section class="post">
-    <div v-if="post">
-      <h1>{{ post.title }}</h1>
-      <p>{{ post.excerpt }}</p>
-      <p>{{ formatDate(post._createdAt) }}</p>
-      <div v-if="post.body">
-        <BlockContent :blocks="post.body" />
-      </div>
-    </div>
-  </section>
+  <main class="main p-page-layout p-stack">
+    <ArticleCard :key="article.id" class="post" v-bind="article" />
+  </main>
 </template>
 
 <script setup lang="ts">
-import type { Post } from "~/types/Post"
+const exampleCard = {
+  image: "/child-placeholder.webp",
+  to: "/",
+  tags: [
+    { text: "jedlík", to: "/" },
+    { text: "nejedlík", to: "/" },
+  ],
+  title: "Jedlík nejedlík",
+  text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
+  ctaText: "Přihlásit se",
+  headingLevel: "h2" as const,
+}
 
-const route = useRoute()
+interface Article {
+  cover: string
+  perex: string
+  title: string
+  id: string
+}
 
-const query = groq`*[ _type == "post" && slug.current == $slug][0]`
-const { data: post } = await useSanityQuery<Post>(query, {
-  slug: route.params.slug,
+function getImageUrl(cover: string) {
+  const directusApi = "https://obsah-jedlika.lttr.cz"
+  return `${directusApi}/assets/${cover}`
+}
+
+const article = computed(() => {
+  if (!result.value) {
+    return
+  }
+  return {
+    ...exampleCard,
+    id: result.value.id,
+    image: getImageUrl(result.value.cover),
+    title: result.value.title,
+    text: result.value.perex,
+  }
+})
+const { getItemById } = useDirectusItems()
+
+const slug = useRoute().params.slug
+
+const { data: result } = await useAsyncData(async () => {
+  return getItemById<Article>({
+    collection: "articles",
+    id: Array.isArray(slug) ? slug[0] : slug,
+  })
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.main {
+  padding-block: var(--space-6);
+}
+</style>
