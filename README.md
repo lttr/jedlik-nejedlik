@@ -23,7 +23,7 @@ This is an education site, that I'm building for my wife.
 - Postcss for using modern CSS
 - Prettier, eslint, stylelint for keeping the codebase in shape
 - Nuxt as an application framework
-- Sanity as a headless CMS
+- Directus as a headless CMS
 - Mux for video
 - Supabase for database and auth
 - Mailchimp for email management

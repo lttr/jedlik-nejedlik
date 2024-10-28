@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   css: ["@lttr/puleo", "~/assets/css/main.css"],
   modules: [
     "@lttr/nuxt-config-postcss",
-    "@nuxtjs/sanity",
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@nuxtjs/seo",
@@ -36,13 +35,6 @@ export default defineNuxtConfig({
 
   experimental: {
     componentIslands: true,
-  },
-
-  sanity: {
-    projectId: "oppngufr",
-    apiVersion: "2023-10-23",
-    dataset: "production",
-    useCdn: false,
   },
 
   compatibilityDate: "2024-07-08",
