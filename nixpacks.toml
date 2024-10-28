@@ -9,6 +9,15 @@ providers = ["node"]
 [variables]
 NIXPACKS_NODE_VERSION = '22'
 
+[phases.install]
+onlyIncludeFiles = [
+  ".npmrc",
+  "package.json",
+  "pnpm-lock.yaml",
+  "pnpm-workspace.yaml",
+  "./web/package.json",
+]
+
 # Package manager -> depending on the lockfile detected
 
 # Build command -> the build script in package.json
