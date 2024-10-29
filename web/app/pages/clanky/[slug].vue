@@ -1,6 +1,11 @@
 <template>
   <main class="main p-page-layout p-stack">
-    <ArticleCard :key="article.id" class="post" v-bind="article" />
+    <ArticleCard
+      v-if="article"
+      :key="article.id"
+      class="post"
+      v-bind="article"
+    />
   </main>
 </template>
 
