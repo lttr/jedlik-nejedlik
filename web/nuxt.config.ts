@@ -1,6 +1,15 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   css: ["@lttr/puleo", "~/assets/css/main.css"],
+
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
+
   modules: [
     "@lttr/nuxt-config-postcss",
     "@nuxt/eslint",
