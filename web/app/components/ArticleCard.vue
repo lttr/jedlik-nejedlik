@@ -12,7 +12,7 @@
       </NuxtLink>
       <ul class="p-cluster">
         <li v-for="tag of tags" :key="tag.to">
-          <Tag :to="tag.to">{{ tag.text }}</Tag>
+          <TagLink :to="tag.to">{{ tag.text }}</TagLink>
         </li>
       </ul>
       <p class="p-secondary-text-regular">

@@ -1,17 +1,4 @@
 export default defineNuxtConfig({
-  compatibilityDate: "2024-10-18",
-  future: { compatibilityVersion: 4 },
-  devtools: { enabled: true },
-
-  css: ["@lttr/puleo", "~/assets/css/main.css"],
-
-  components: [
-    {
-      path: "~/components",
-      pathPrefix: false,
-    },
-  ],
-
   modules: [
     "@lttr/nuxt-config-postcss",
     "@nuxt/eslint",
@@ -23,6 +10,19 @@ export default defineNuxtConfig({
     "nuxt-directus",
   ],
 
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
+
+  devtools: {
+    enabled: true,
+  },
+
+  css: ["@lttr/puleo", "~/assets/css/main.css"],
+
   site: {
     url: "https://example.com",
     name: "Jedlík-nejedlík",
@@ -30,8 +30,30 @@ export default defineNuxtConfig({
     defaultLocale: "cs",
   },
 
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  experimental: {
+    componentIslands: true,
+  },
+
+  compatibilityDate: "2024-10-18",
+
   directus: {
     url: "https://obsah-jedlika.lttr.cz",
+  },
+
+  eslint: {
+    config: {
+      nuxt: {
+        sortConfigKeys: true,
+      },
+    },
+  },
+
+  lttrConfigPostcss: {
+    filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
   },
 
   plausible: {
@@ -43,13 +65,5 @@ export default defineNuxtConfig({
     autoImportPath: "./assets/svgs/",
     // Don't wrap svg files inside module provided icon component
     defaultImport: "component",
-  },
-
-  lttrConfigPostcss: {
-    filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
-  },
-
-  experimental: {
-    componentIslands: true,
   },
 })

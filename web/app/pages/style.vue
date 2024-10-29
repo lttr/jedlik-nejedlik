@@ -97,8 +97,8 @@
     <section class="p-flow">
       <h2>Tagy</h2>
       <div class="p-cluster">
-        <Tag to="/">online</Tag>
-        <Tag to="/">labužník</Tag>
+        <TagLink to="/">online</TagLink>
+        <TagLink to="/">labužník</TagLink>
       </div>
     </section>
     <section class="p-flow">
