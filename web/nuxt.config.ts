@@ -1,4 +1,6 @@
 export default defineNuxtConfig({
+  compatibilityDate: "2024-10-18",
+  future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
 
   css: ["@lttr/puleo", "~/assets/css/main.css"],
@@ -50,6 +52,4 @@ export default defineNuxtConfig({
   experimental: {
     componentIslands: true,
   },
-
-  compatibilityDate: "2024-07-08",
 })
