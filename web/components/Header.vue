@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="top-line p-secondary-text-regular p-content">
-      <!-- <SocialLinks /> -->
+      <SocialLinks />
     </div>
 
     <MainNav class="p-full" />

@@ -3,31 +3,31 @@
     <div class="nav-wrapper">
       <NuxtLink class="link" to="/"><SiteLogo /></NuxtLink>
 
-      <!-- <ul class="links p-cluster"> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/seminare">Semináře</NuxtLink> -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/poradenstvi" -->
-      <!--       >Individuální poradenství</NuxtLink -->
-      <!--     > -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/odbornici">Pro odborníky</NuxtLink> -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/blog">Blog</NuxtLink> -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/o-nas">O nás</NuxtLink> -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink> -->
-      <!--   </li> -->
-      <!--   <li> -->
-      <!--     <NuxtLink class="link" to="/faq">FAQ</NuxtLink> -->
-      <!--   </li> -->
-      <!-- </ul> -->
+      <ul class="links p-cluster">
+        <li>
+          <NuxtLink class="link" to="/seminare">Semináře</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/poradenstvi"
+            >Individuální poradenství</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink class="link" to="/odbornici">Pro odborníky</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/blog">Blog</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/o-nas">O nás</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/faq">FAQ</NuxtLink>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
