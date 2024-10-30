@@ -1,7 +1,6 @@
 import { readItem, readItems } from "@directus/sdk"
-import { directus } from "./directus"
 import { getImageUrl } from "~/utils/directus"
-import type { Card } from "~/types/articles"
+import { directus } from "./directus"
 
 export interface Article {
   cover: string
@@ -18,7 +17,7 @@ export async function useArticle(slug: string) {
       return await directus.request(readItem("articles", slug))
     },
     {
-      transform: (input): Omit<Card, "headingLevel"> => {
+      transform: (input) => {
         return {
           id: input.id,
           title: input.title,
@@ -35,16 +34,35 @@ export async function useArticle(slug: string) {
   )
 }
 
-export const useArticles = () => {
-  return useAsyncData("articles", async () => {
-    const result = await directus.request(
-      readItems("articles", {
-        fields: ["id", "title", "perex", "cover"],
-        filter: {
-          status: { _eq: "published" },
-        },
-      }),
-    )
-    return result
-  })
+export async function useArticles() {
+  return useAsyncData(
+    "articles",
+    async () => {
+      return await directus.request(
+        readItems("articles", {
+          fields: ["id", "title", "perex", "cover"],
+          filter: {
+            status: { _eq: "published" },
+          },
+        }),
+      )
+    },
+    {
+      transform: (input) => {
+        return input.map((item) => {
+          return {
+            id: item.id,
+            title: item.title,
+            text: item.perex,
+            image: getImageUrl(item.cover),
+            tags: [
+              { text: "jedlík", to: "/" },
+              { text: "nejedlík", to: "/" },
+            ],
+            to: `/clanky/${item.id}`,
+          }
+        })
+      },
+    },
+  )
 }
