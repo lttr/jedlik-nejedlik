@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "nuxt-svgo",
     "@nuxtjs/plausible",
-    "nuxt-directus",
   ],
 
   components: [
@@ -39,10 +38,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: "2024-10-18",
-
-  directus: {
-    url: "https://obsah-jedlika.lttr.cz",
-  },
 
   eslint: {
     config: {

@@ -26,20 +26,8 @@ const exampleCard = {
   headingLevel: "h2" as const,
 }
 
-interface Article {
-  cover: string
-  perex: string
-  title: string
-  id: string
-}
-
-function getImageUrl(cover: string) {
-  const directusApi = "https://obsah-jedlika.lttr.cz"
-  return `${directusApi}/assets/${cover}`
-}
-
 const articles = computed(() => {
-  return results.map((article) => {
+  return results.value?.map((article) => {
     return {
       ...exampleCard,
       id: article.id,
@@ -50,18 +38,15 @@ const articles = computed(() => {
     }
   })
 })
-const { getItems } = useDirectusItems()
-// TODO
-// useAsyncData(async () => {})
-const results = await getItems<Article>({
-  collection: "articles",
-  params: {
-    fields: ["id", "title", "perex", "cover"],
-    filter: {
-      status: { _eq: "published" },
-    },
-  },
-})
+
+const { data: results } = useArticles()
+
+if (!results.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: "Page Not Found",
+  })
+}
 </script>
 
 <style scoped>
