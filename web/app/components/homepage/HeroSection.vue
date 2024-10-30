@@ -7,13 +7,20 @@
         dolor. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
     </div>
-    <div class="ilustrations">
-      <SvgoBoruvky class="boruvky" />
-      <SvgoHruska class="hruska" />
-      <SvgoJablko class="jablko" />
+    <div>
+      <NuxtImg :src="data?.image" :alt="data?.label" width="770" height="400" />
     </div>
+    <!-- <div class="ilustrations"> -->
+    <!--   <SvgoBoruvky class="boruvky" /> -->
+    <!--   <SvgoHruska class="hruska" /> -->
+    <!--   <SvgoJablko class="jablko" /> -->
+    <!-- </div> -->
   </section>
 </template>
+
+<script lang="ts" setup>
+const { data } = await useKeyImage(1)
+</script>
 
 <style scoped>
 .hero {
@@ -26,26 +33,26 @@
   max-width: var(--size-content-2);
 }
 
-.ilustrations {
-  display: grid;
-  height: 30rem;
-  margin-block: var(--space-2-3);
-
-  > * {
-    grid-area: 1 / 1;
-  }
-
-  @media (--md-n-below) {
-    height: auto;
-    display: flex;
-    justify-content: start;
-    gap: var(--space-6);
-
-    > * {
-      grid-area: initial;
-    }
-  }
-}
+/* .ilustrations { */
+/*   display: grid; */
+/*   height: 30rem; */
+/*   margin-block: var(--space-2-3); */
+/**/
+/*   > * { */
+/*     grid-area: 1 / 1; */
+/*   } */
+/**/
+/*   @media (--md-n-below) { */
+/*     height: auto; */
+/*     display: flex; */
+/*     justify-content: start; */
+/*     gap: var(--space-6); */
+/**/
+/*     > * { */
+/*       grid-area: initial; */
+/*     } */
+/*   } */
+/* } */
 
 .boruvky {
   width: 9rem;

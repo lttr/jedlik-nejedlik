@@ -1,3 +1,5 @@
+const DIRECTUS_URL = "https://obsah-jedlika.lttr.cz"
+
 export default defineNuxtConfig({
   modules: [
     "@lttr/nuxt-config-postcss",
@@ -7,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "nuxt-svgo",
     "@nuxtjs/plausible",
+    "@nuxt/image",
   ],
 
   components: [
@@ -44,6 +47,14 @@ export default defineNuxtConfig({
       nuxt: {
         sortConfigKeys: true,
       },
+    },
+  },
+
+  image: {
+    domains: [DIRECTUS_URL],
+    provider: "directus",
+    directus: {
+      baseURL: `${DIRECTUS_URL}/assets`,
     },
   },
 
