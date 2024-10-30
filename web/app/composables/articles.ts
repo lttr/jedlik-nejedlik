@@ -7,7 +7,7 @@ export interface Article {
   perex: string
   title: string
   image: string
-  id: string
+  id: number
 }
 
 export async function useArticle(slug: string) {

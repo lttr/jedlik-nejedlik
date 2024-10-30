@@ -23,7 +23,10 @@
 </template>
 
 <script lang="ts" setup>
-const exampleCard = {
+import type { Card } from "~/types/articles"
+
+const exampleCard: Card = {
+  id: 1,
   image: "/child-placeholder.webp",
   to: "/",
   tags: [
@@ -32,7 +35,6 @@ const exampleCard = {
   ],
   title: "Jedlík nejedlík",
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
-  ctaText: "Přihlásit se",
   headingLevel: "h2" as const,
 }
 </script>

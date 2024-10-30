@@ -19,7 +19,7 @@
         {{ text }}
       </p>
 
-      <button class="cta p-secondary">{{ ctaText }}</button>
+      <button class="cta p-secondary">Call to action</button>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@ export interface Tag {
 }
 
 export interface Card {
-  id: string
+  id: number
   image: string
   to: string
   tags: Tag[]
