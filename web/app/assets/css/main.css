@@ -27,6 +27,7 @@
   --button-height-default: 3rem;
   --radius-default: var(--radius-round);
   --radius-4: 2rem;
+  --input-radius: var(--radius-4);
 
   @media (--OSdark) {
     --link-color: var(--brand-color-bright);

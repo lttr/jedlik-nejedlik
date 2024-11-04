@@ -1,20 +1,27 @@
 <template>
-  <section class="hero p-switcher">
+  <section class="hero p-padded-end">
     <div>
-      <h1>Aby každé jídlo bylo radost</h1>
-      <p class="subheading">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id
-        dolor. Ut enim ad minim veniam, quis nostrud exercitation.
-      </p>
+      <div class="switcher p-switcher">
+        <h1 class="heading">Aby každé jídlo bylo radost</h1>
+        <NuxtImg
+          class="image"
+          :src="data?.image"
+          :alt="data?.label"
+          width="770"
+          height="500"
+        />
+      </div>
     </div>
-    <div>
-      <NuxtImg :src="data?.image" :alt="data?.label" width="770" height="400" />
-    </div>
-    <!-- <div class="ilustrations"> -->
-    <!--   <SvgoBoruvky class="boruvky" /> -->
-    <!--   <SvgoHruska class="hruska" /> -->
-    <!--   <SvgoJablko class="jablko" /> -->
-    <!-- </div> -->
+
+    <p class="subheading">
+      Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty ke
+      zdravému vztahu k jídlu napříč rodinou. Vycházíme z konceptu výživy a
+      výchovy v propojení. Věříme, že jídlo je naučená dovednost a vždy existuje
+      způsob, jak se projíst ke spokojenosti u stolu. Zároveň vycházíme z
+      odborných výživových poznatků, které opakovaně prokazují, že strava a
+      zdravý životní styl jsou základními nástroji zdraví - na tom, co naše děti
+      jedí, záleží.
+    </p>
   </section>
 </template>
 
@@ -24,66 +31,23 @@ const { data } = await useKeyImage(1)
 
 <style scoped>
 .hero {
-  --switcher-treshold: 90ch;
-  margin-top: var(--space-9);
+  margin-top: var(--space-4-6);
+}
+
+.switcher {
+  --switcher-treshold: 29ch;
+}
+
+.heading {
+  max-width: var(--size-header-1);
+}
+
+.image {
+  max-width: min(var(--size-content-3), 100%);
 }
 
 .subheading {
   margin-top: var(--space-6);
-  max-width: var(--size-content-2);
-}
-
-/* .ilustrations { */
-/*   display: grid; */
-/*   height: 30rem; */
-/*   margin-block: var(--space-2-3); */
-/**/
-/*   > * { */
-/*     grid-area: 1 / 1; */
-/*   } */
-/**/
-/*   @media (--md-n-below) { */
-/*     height: auto; */
-/*     display: flex; */
-/*     justify-content: start; */
-/*     gap: var(--space-6); */
-/**/
-/*     > * { */
-/*       grid-area: initial; */
-/*     } */
-/*   } */
-/* } */
-
-.boruvky {
-  width: 9rem;
-  transform: translate(1rem, 2rem);
-
-  @media (--md-n-below) {
-    width: auto;
-    max-width: 6rem;
-    transform: rotate(-15deg);
-  }
-}
-
-.hruska {
-  width: 12rem;
-  transform: translate(16rem, -5rem) rotate(-33deg);
-
-  @media (--md-n-below) {
-    width: auto;
-    max-width: 8rem;
-    transform: rotate(-15deg);
-  }
-}
-
-.jablko {
-  width: 16rem;
-  transform: translate(4rem, 12rem) rotate(-15deg);
-
-  @media (--md-n-below) {
-    width: auto;
-    max-width: 8rem;
-    transform: rotate(-15deg);
-  }
+  max-width: var(--size-content-3);
 }
 </style>

@@ -10,7 +10,7 @@ export interface Article {
   id: number
 }
 
-export async function useKeyImage(id: string) {
+export async function useKeyImage(id: number) {
   return await useAsyncData(`key-image-${id}`, async () => {
     return await directus.request(readItem("key_images", id))
   })

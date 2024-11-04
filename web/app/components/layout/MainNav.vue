@@ -5,27 +5,19 @@
 
       <ul class="links p-cluster">
         <li>
-          <NuxtLink class="link" to="/seminare">Semináře</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink class="link" to="/poradenstvi"
-            >Individuální poradenství</NuxtLink
-          >
-        </li>
-        <li>
-          <NuxtLink class="link" to="/odbornici">Pro odborníky</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink class="link" to="/blog">Blog</NuxtLink>
-        </li>
-        <li>
           <NuxtLink class="link" to="/o-nas">O nás</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
+          <NuxtLink class="link" to="/pro-rodice">Pro rodiče</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/faq">FAQ</NuxtLink>
+          <NuxtLink class="link" to="/akce">Akce</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
       </ul>
     </div>
