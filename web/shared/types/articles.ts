@@ -6,9 +6,8 @@ export interface Tag {
 export interface Card {
   id: number
   image: string
-  to: string
   tags: Tag[]
-  title: string
   text: string
-  headingLevel: "h1" | "h2" | "h3"
+  title: string
+  to: string
 }

@@ -1,10 +1,11 @@
 <template>
   <main class="main p-page-layout">
     <HeroSection />
+    <ParentsSection />
     <LecturesSection class="p-full-end" />
-    <IndividualSection />
     <ExpertsSection />
     <BlogSection />
+    <IndividualSection />
     <TestimonialsSection />
     <AboutUsSection />
     <FaqSection class="p-inset-padded" />
@@ -12,9 +13,7 @@
   </main>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .main {

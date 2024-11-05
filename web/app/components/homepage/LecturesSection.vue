@@ -5,16 +5,15 @@
       <div class="column p-stack">
         <h2>Semináře a&nbsp;přednášky</h2>
         <p class="description">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id
-          dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. ntum ipsum.
+          Vzdělávání nás baví, a proto pořádáme přednášky, besedy, webináře,
+          kurzy a akce na míru.
         </p>
         <button class="cta">Všechny semináře</button>
       </div>
       <div class="events-wrapper">
         <div class="events">
-          <LectureCard class="event" v-bind="exampleCard" />
-          <LectureCard class="event" v-bind="exampleCard" />
+          <LectureCard class="event" v-bind="exampleCard" heading-level="h2" />
+          <LectureCard class="event" v-bind="exampleCard" heading-level="h2" />
         </div>
       </div>
     </div>
@@ -23,8 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Card } from "~/types/articles"
-
 const exampleCard: Card = {
   id: 1,
   image: "/child-placeholder.webp",
@@ -35,7 +32,6 @@ const exampleCard: Card = {
   ],
   title: "Jedlík nejedlík",
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
-  headingLevel: "h2" as const,
 }
 </script>
 
@@ -62,7 +58,7 @@ const exampleCard: Card = {
 
 .spirala {
   position: absolute;
-  transform: rotate(180deg) translateY(8ex);
+  transform: rotate(180deg) translateY(6ex) translateX(3rem);
   width: 8ch;
   stroke-width: 0.6rem;
 }

@@ -103,11 +103,11 @@
     </section>
     <section class="p-flow">
       <h2>Karta - článek</h2>
-      <ArticleCard v-bind="exampleCard" />
+      <ArticleCard v-bind="exampleCard" heading-level="h3" />
     </section>
     <section class="p-flow">
       <h2>Karta - přednáška</h2>
-      <LectureCard v-bind="exampleCard" />
+      <LectureCard v-bind="exampleCard" heading-level="h3" />
     </section>
     <section class="p-flow">
       <h2>Karta - kontakt</h2>
@@ -128,8 +128,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Card } from "~/types/articles"
-
 const colors1 = [
   "color-navy",
   "color-peach",
@@ -155,7 +153,6 @@ const exampleCard: Card = {
   ],
   title: "Jedlík nejedlík",
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
-  headingLevel: "h2" as const,
 }
 </script>
 

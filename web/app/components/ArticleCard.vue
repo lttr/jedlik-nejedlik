@@ -23,9 +23,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { Card } from "~/types/articles"
-
-defineProps<Card>()
+defineProps<{
+  id: number
+  image: string
+  tags: Tag[]
+  text: string
+  title: string
+  to: string
+  headingLevel: "h1" | "h2" | "h3"
+}>()
 </script>
 
 <style scoped>

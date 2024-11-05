@@ -1,5 +1,4 @@
 import { readItem, readItems } from "@directus/sdk"
-import { getImageUrl } from "~/utils/directus"
 import { directus } from "./directus"
 
 export interface Article {
@@ -26,13 +25,13 @@ export async function useArticle(slug: string) {
       transform: (input) => {
         return {
           id: input.id,
-          title: input.title,
-          text: input.perex,
           image: getImageUrl(input.cover),
           tags: [
             { text: "jedlík", to: "/" },
             { text: "nejedlík", to: "/" },
           ],
+          text: input.perex,
+          title: input.title,
           to: `/clanky/${input.id}`,
         }
       },

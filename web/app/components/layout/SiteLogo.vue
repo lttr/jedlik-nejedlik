@@ -7,7 +7,7 @@
 <style scoped>
 .logo {
   height: 1.5rem;
-  width: auto;
+  width: fit-content;
   min-width: 13ch;
 }
 </style>

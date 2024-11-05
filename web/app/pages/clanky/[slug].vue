@@ -11,8 +11,14 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const { data: article } = await useArticle(route.params.slug as string)
+const article = ref<Card>()
+const route = useRoute("clanky-slug")
+if (typeof route.params.slug === "string") {
+  const { data } = await useArticle(route.params.slug)
+  if (data) {
+    article.value = data.value
+  }
+}
 
 if (!article.value) {
   throw createError({
