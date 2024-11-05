@@ -1,5 +1,5 @@
 <template>
-  <main class="main p-page-layout p-stack">
+  <PageWrapper>
     <ArticleCard
       v-if="article"
       :key="article.id"
@@ -7,7 +7,7 @@
       heading-level="h2"
       v-bind="article"
     />
-  </main>
+  </PageWrapper>
 </template>
 
 <script setup lang="ts">
@@ -22,8 +22,4 @@ if (!article.value) {
 }
 </script>
 
-<style scoped>
-.main {
-  padding-block: var(--space-6);
-}
-</style>
+<style scoped></style>

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <PageWrapper>
     <h1>Kontakt</h1>
-  </div>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup></script>

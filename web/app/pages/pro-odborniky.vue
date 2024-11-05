@@ -1,5 +1,5 @@
 <template>
-  <div class="p-page-layout">
+  <PageWrapper>
     <h1>Výživa a výchova v propojení</h1>
     <p>
       Milí odborníci, vítejte na stránkách projektu i poradny Jedlík-nejedlík.
@@ -46,14 +46,9 @@
         <li>Soňa Procházková</li>
       </ul>
     </section>
-  </div>
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup></script>
 
-<style scoped>
-.p-page-layout {
-  row-gap: var(--space-7);
-  margin-bottom: var(--space-7);
-}
-</style>
+<style scoped></style>

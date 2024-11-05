@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <PageWrapper>
+    <!-- /// -->
+  </PageWrapper>
 </template>
 
 <script lang="ts" setup></script>

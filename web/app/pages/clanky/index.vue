@@ -1,5 +1,5 @@
 <template>
-  <main class="main p-page-layout">
+  <PageWrapper>
     <div class="p-stack">
       <h1>Články</h1>
       <ArticleCard
@@ -10,7 +10,7 @@
         v-bind="article"
       />
     </div>
-  </main>
+  </PageWrapper>
 </template>
 
 <script setup lang="ts">
@@ -24,8 +24,4 @@ if (!articles.value) {
 }
 </script>
 
-<style scoped>
-.main {
-  margin-bottom: var(--space-6);
-}
-</style>
+<style scoped></style>
