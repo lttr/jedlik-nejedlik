@@ -1,7 +1,9 @@
 <template>
   <nav class="main-nav p-page-layout">
     <div class="nav-wrapper">
-      <NuxtLink class="link" to="/"><SiteLogo /></NuxtLink>
+      <NuxtLink class="link" to="/" aria-label="Home">
+        <SiteLogo />
+      </NuxtLink>
 
       <ul class="links p-cluster">
         <li>
@@ -17,7 +19,7 @@
           <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
+          <NuxtLink class="link" to="/kontakt"> odborníky</NuxtLink>
         </li>
       </ul>
     </div>
