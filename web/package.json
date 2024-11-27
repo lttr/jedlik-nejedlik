@@ -15,25 +15,25 @@
   },
   "dependencies": {
     "@directus/sdk": "^18.0.0",
-    "@lttr/puleo": "^0.2.1"
+    "@lttr/puleo": "^0.3.0"
   },
   "devDependencies": {
     "@iconify-json/uil": "^1.2.1",
     "@lttr/nuxt-config-eslint": "^0.3.0",
     "@lttr/nuxt-config-postcss": "^0.0.8",
-    "@nuxt/devtools": "^1.6.0",
-    "@nuxt/eslint": "^0.6.1",
+    "@nuxt/devtools": "^1.6.1",
+    "@nuxt/eslint": "^0.7.2",
     "@nuxt/fonts": "^0.10.2",
-    "@nuxt/icon": "^1.6.1",
+    "@nuxt/icon": "^1.8.2",
     "@nuxt/image": "^1.8.1",
-    "@nuxtjs/plausible": "^1.0.3",
-    "@nuxtjs/seo": "2.0.0-rc.23",
+    "@nuxtjs/plausible": "^1.2.0",
+    "@nuxtjs/seo": "2.0.2",
     "@total-typescript/ts-reset": "^0.6.1",
-    "eslint": "^9.13.0",
-    "nuxt": "^3.14.0",
-    "nuxt-svgo": "^4.0.6",
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5",
-    "vue-tsc": "^2.1.8"
+    "eslint": "^9.15.0",
+    "nuxt": "^3.14.1592",
+    "nuxt-svgo": "^4.0.9",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "vue-tsc": "^2.1.10"
   }
 }
