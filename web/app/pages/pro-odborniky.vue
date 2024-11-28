@@ -1,15 +1,53 @@
 <template>
   <PageWrapper>
-    <h1>Výživa a výchova v propojení</h1>
-    <p>
-      Milí odborníci, vítejte na stránkách projektu i poradny Jedlík-nejedlík.
-      Bližší informace o soukromé poradně naleznete
-      <NuxtLink to="/o-nas">zde</NuxtLink>. V této sekci vás chceme seznámit s
-      hlavní misí celého projektu.
-    </p>
+    <article class="prose">
+      <h1>Výživa a výchova v propojení</h1>
 
-    <section class="p-flow">
-      <h2>S kým spolupracujeme</h2>
+      <p class="p-base-text-bold">
+        Milí odborníci, vítejte na stránkách projektu Jedlík-nejedlík.
+      </p>
+
+      <p>
+        Věříme, že prevence je základním krokem pro eliminaci nárůstu dětské
+        nadváhy a obezity na jedné straně a poruch příjmu potravy na straně
+        druhé.
+      </p>
+
+      <p>
+        Proto přicházíme s konceptem výživy a výchovy v propojení jako nástrojem
+        prevence, který si klade za cíl připravit rodiče na výchovné situace
+        okolo jídla tak, aby je zvládnul. Rodič, který ustojí dětská
+        <i>&bdquo;blééé, fuj, nechci apod.&ldquo;</i>, nerezignuje při prvním
+        nezdaru na výživová doporučení a bude schopen podporovat zdravý životní
+        styl u svých dětí dlouhodobě.
+      </p>
+
+      <div class="p-flow">
+        <h2 class="p-base-text-bold">Naše cíle jsou:</h2>
+        <ul>
+          <li>
+            poskytovat rodičům odborné a profesně provázané poradenství k
+            tématům nejedlictví, nadváhy, obezity a zdravého životního stylu u
+            dětí i rodiny jako celku.
+          </li>
+          <li>
+            vytvářet prostor pro prezentaci odborníků a odborných pracovišť,
+            které poskytují poradenství ve výše uvedených oblastech
+          </li>
+          <li>
+            otevírat prostor pro spolupráci odborníků, kteří chtějí táhnout v
+            uvedených oblastech za jeden provaz
+          </li>
+          <li>
+            poskytovat odborníkům možnost dalšího vzdělávání v
+            pedagogicko-psychologických tématech v kontextu výživy
+          </li>
+          <li>umožňovat pravidelná intervizní setkání</li>
+        </ul>
+      </div>
+
+      <h2>Chcete s námi spolupracovat?</h2>
+
       <p>
         Zabýváte se tématem dětské výživy, psychologie či výchovy? Patříte mezi
         odborníky a máte pocit, že by naše spolupráce mohla být prospěšná dětem
@@ -18,16 +56,26 @@
         formuláře, ozveme se vám.
       </p>
 
-      <CooperationForm />
+      <p>
+        <NuxtImg
+          class="content-image"
+          sizes="90vw sm:800px"
+          loading="lazy"
+          :src="image?.id"
+          :width="image?.width"
+          :height="image?.height"
+        />
+      </p>
 
       <p>
         Jste v oboru začátečník nebo teprve dokončujete studia? Pokud vám jde o
-        stejné hodnoty, není to překážka. Všichni jsme někdy začínali. Pro
-        Jedlíka-nejedlíka není podstatné, kolik toho víte nebo kolik děláte
-        chyb, ale to, jestli chybu umíte přiznat, poučit se z ní a lidsky či
-        odborně na ni vyrůst. Kvalita a odbornost je pro nás zásadní, nikdy ale
-        nechceme pod tíhou titulů zpychnout. Jedlík-nejedlík staví na hodnotách
-        lidskosti, laskavosti a přijetí, ať už směrem k rodičům nebo odborníkům.
+        stejné hodnoty, není to překážka. Pro Jedlíka-nejedlíka je podstatné,
+        zda ke své profesi přistupujete zodpovědně a uděláte-li chybu, umíte ji
+        přiznat a lidsky či odborně na ni vyrůst. Kvalita a odbornost je pro nás
+        zásadní, zároveň si zakládáme na hodnotách lidskosti, laskavosti a
+        přijetí, ať už směrem k rodičům nebo odborníkům. Nejste si jistí, jestli
+        vaše odbornost stačí?
+        <NuxtLink to="#kontaktni-formular">Kontaktujte nás.</NuxtLink>
       </p>
 
       <h2>S kým nespolupracujeme</h2>
@@ -39,16 +87,85 @@
         stravy a nemáme zájem se jimi stát.
       </p>
 
-      <h2>Odborníci, kteří projektu Jedlík-nejedlík věří a podporují nás</h2>
-      <ul>
-        <li>Soňa Procházková</li>
-        <li>Soňa Procházková</li>
-        <li>Soňa Procházková</li>
-      </ul>
-    </section>
+      <hr />
+
+      <h2>Odborníci, se kterými dlouhodobě spolupracujeme</h2>
+
+      <p>
+        Projekt Jedlík-nejedlík funguje na bázi mezioborové spolupráce. V
+        současnosti aktivně spolupracujeme s těmito odborníky:
+      </p>
+
+      <div class="experts p-stack">
+        <BiographyExpert v-for="bio of biographies" :key="bio.name" :bio />
+      </div>
+
+      <hr />
+
+      <p>
+        <strong>
+          Poskytujete rodičům poradenství v oblasti prevence či intervence
+          dětské nadváhy, obezity, ppp či zdravého životního stylu? Dejte o sobě
+          vědět.
+        </strong>
+      </p>
+
+      <p>
+        Chceme, aby rodiče řešili obtíže svých dětí s odborníky. Aktuálně
+        pracujeme na zveřejnění interaktivní mapy, ve které budou zanesena
+        všechna odborná pracoviště, projekty či soukromé poradny odborníků,
+        kteří se věnují oblasti dětské výživy či tématům, která s danou
+        problematikou souvisí (zejména nutriční terapeut, lékař, dětský
+        psycholog, psychoterapeut, klinický logoped, ergoterapeut,
+        fyzioterapeut).
+      </p>
+
+      <p>
+        Chcete být součástí mapy a být tak blíž rodinám, kteří vaše služby
+        hledají? Vyplňte kontaktní formulář a my se vám ozveme. Na kvalitě nám
+        záleží. Zanesení do mapy je zpoplatněno manipulačním poplatkem a dále
+        doložením vaší odbornosti.
+      </p>
+
+      <CooperationForm id="kontaktni-formular" class="coop-form p-not-prose" />
+
+      <h2>Vzdělávání pro odbornou veřejnost</h2>
+      <p>
+        Organizace Jedlík-nejedlík nabízí možnost dalšího vzdělávání, které je
+        určeno pro odbornou veřejnost zaměřující se na oblast dětské výživy a
+        práci s rodiči.
+        <!-- TODO odkaz  -->
+        Více informací ZDE.
+      </p>
+
+      <p>
+        Chcete se nás na něco zeptat?
+        <NuxtLink to="/kontakt">Využijte kontaktní formulář.</NuxtLink>
+      </p>
+    </article>
   </PageWrapper>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const { data: image } = await useDirectusImage(
+  "212768cd-d1c1-4dc6-a1c8-a121a69efb2c",
+)
 
-<style scoped></style>
+const { data: biographies } = await useBiographyExpert()
+</script>
+
+<style scoped>
+.experts {
+  --stack-space: var(--space-7);
+  margin-block: var(--space-7);
+}
+
+.content-image {
+  margin-block: var(--space-7);
+}
+
+.coop-form {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+</style>
