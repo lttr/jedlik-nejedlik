@@ -57,14 +57,7 @@
       </p>
 
       <p>
-        <NuxtImg
-          class="content-image"
-          sizes="90vw sm:800px"
-          loading="lazy"
-          :src="image?.id"
-          :width="image?.width"
-          :height="image?.height"
-        />
+        <ContentImg :image />
       </p>
 
       <p>
@@ -157,10 +150,6 @@ const { data: biographies } = await useBiographyExpert()
 <style scoped>
 .experts {
   --stack-space: var(--space-7);
-  margin-block: var(--space-7);
-}
-
-.content-image {
   margin-block: var(--space-7);
 }
 

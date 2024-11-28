@@ -19,7 +19,7 @@
           <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/kontakt"> odborníky</NuxtLink>
+          <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
       </ul>
     </div>
