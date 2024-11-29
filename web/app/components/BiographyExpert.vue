@@ -1,16 +1,7 @@
 <template>
   <div class="biography-expert p-switcher">
     <div>
-      <NuxtImg
-        v-if="bio.photo"
-        :src="bio.photo.id"
-        :width="bio.photo.width"
-        :height="bio.photo.height"
-        sizes="400px"
-        loading="lazy"
-        alt="bio.description"
-        class="photo"
-      />
+      <ProfileImg v-if="bio.photo" :image="bio.photo" />
     </div>
     <div class="texts p-flow">
       <p class="p-heading-4">
@@ -27,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-interface BiographyExpert {
+export interface BiographyExpert {
   name: string
   description?: string
   photo?: Image
@@ -43,11 +34,6 @@ defineProps<{
 .biography-expert {
   --cluster-space: var(--space-6);
   align-items: center;
-}
-
-.photo {
-  border-radius: var(--radius-round);
-  max-width: 30ch;
 }
 
 .description {

@@ -1,7 +1,7 @@
 <template>
   <NuxtImg
-    class="content-image"
-    sizes="90vw sm:800px"
+    class="profile-image"
+    sizes="400px"
     :loading
     :src="image.id"
     :width="image.width"
@@ -26,7 +26,8 @@ const { loading = "lazy", alt = "" } = defineProps<{
 </script>
 
 <style scoped>
-.content-image {
-  margin-block: var(--space-7);
+.profile-image {
+  border-radius: var(--radius-round);
+  max-width: 30ch;
 }
 </style>

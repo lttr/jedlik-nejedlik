@@ -20,7 +20,7 @@ export interface Image {
 }
 
 export async function useDirectusImage(id: string): Promise<{
-  data: Ref<Image | null>
+  data: Ref<Image>
 }> {
   return await useAsyncData(`image-${id}`, async () => {
     return await directus.request(readFile(id))

@@ -22,7 +22,7 @@
         přednáškovou činnost, která poskytuje veřejnosti relevantní informace o
         výživě a výchově. Tyto přednášky mají zejména edukativní a preventivní
         charakter. Více naleznete v sekci
-        <NuxtLink to="/akce">Akce</NuxtLink>.
+        <NuxtLink to="/pro-rodice">Pro rodiče</NuxtLink>.
       </p>
       <p v-if="presentation1">
         <ContentImg :image="presentation1" />
@@ -53,6 +53,16 @@
       <p v-if="presentation3">
         <ContentImg :image="presentation3" />
       </p>
+
+      <h2>Tým projektu Jedlík-nejedlík</h2>
+      <p>
+        Za celým vznikem projektu Jedlík-nejedlík stojí kromě zakladatelky
+        Zdeňky také tým dalších třech lidí, bez nichž by nic z naší činnosti
+        nemohlo fungovat nad rámec lokálního působení.
+      </p>
+      <p v-if="team">
+        <ContentImg :image="team" />
+      </p>
     </article>
   </PageWrapper>
 </template>
@@ -68,6 +78,10 @@ const { data: presentation2 } = await useDirectusImage(
 
 const { data: presentation3 } = await useDirectusImage(
   "212768cd-d1c1-4dc6-a1c8-a121a69efb2c",
+)
+
+const { data: team } = await useDirectusImage(
+  "6e0075d1-3ba7-4bb5-8b3f-b71c218c39bd",
 )
 </script>
 

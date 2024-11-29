@@ -18,6 +18,7 @@
     "@lttr/puleo": "^0.3.0"
   },
   "devDependencies": {
+    "@iconify-json/logos": "^1.2.3",
     "@iconify-json/uil": "^1.2.1",
     "@lttr/nuxt-config-eslint": "^0.3.0",
     "@lttr/nuxt-config-postcss": "^0.0.8",

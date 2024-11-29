@@ -13,10 +13,10 @@
           <NuxtLink class="link" to="/pro-rodice">Pro rodiče</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/akce">Akce</NuxtLink>
+          <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
+          <NuxtLink class="link" to="/podcast">Podcast</NuxtLink>
         </li>
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>

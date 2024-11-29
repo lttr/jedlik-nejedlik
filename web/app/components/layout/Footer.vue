@@ -9,7 +9,7 @@
         <ul class="unstyled">
           <li><NuxtLink class="link" to="/o-nas">O nás</NuxtLink></li>
           <li><NuxtLink class="link" to="/pro-rodice">Pro rodiče</NuxtLink></li>
-          <li><NuxtLink class="link" to="/akce">Akce</NuxtLink></li>
+          <li><NuxtLink class="link" to="/podcast">Podcast</NuxtLink></li>
           <li>
             <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
           </li>
