@@ -2,32 +2,23 @@
   <section class="hero p-padded-end">
     <div>
       <div class="switcher p-switcher">
-        <h1 class="heading">Aby každé jídlo bylo radost</h1>
-        <NuxtImg
-          class="image"
-          :src="data?.image"
-          :alt="data?.label"
-          width="770"
-          height="500"
-        />
+        <h1 class="heading">Zdraví na talíři, pohoda u stolu</h1>
       </div>
     </div>
 
     <p class="subheading">
       Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty ke
       zdravému vztahu k jídlu napříč rodinou. Vycházíme z konceptu výživy a
-      výchovy v propojení. Věříme, že jídlo je naučená dovednost a vždy existuje
-      způsob, jak se projíst ke spokojenosti u stolu. Zároveň vycházíme z
-      odborných výživových poznatků, které opakovaně prokazují, že strava a
-      zdravý životní styl jsou základními nástroji zdraví - na tom, co naše děti
-      jedí, záleží.
+      výchovy v propojení. Jídlo je naučená dovednost a věříme, že vždy existuje
+      způsob, jak se projíst k větší spokojenosti u stolu a zároveň nerezignovat
+      na výživu. Vycházíme z odborných výživových poznatků, které opakovaně
+      prokazují, že strava a zdravý životní styl jsou základními nástroji zdraví
+      - <strong>na tom, co naše děti jedí, záleží</strong>.
     </p>
   </section>
 </template>
 
-<script lang="ts" setup>
-const { data } = await useKeyImage(1)
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 .hero {
@@ -42,12 +33,9 @@ const { data } = await useKeyImage(1)
   max-width: var(--size-header-1);
 }
 
-.image {
-  max-width: min(var(--size-content-3), 100%);
-}
-
 .subheading {
   margin-top: var(--space-6);
   max-width: var(--size-content-3);
+  text-wrap: pretty;
 }
 </style>

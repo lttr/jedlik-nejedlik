@@ -9,7 +9,7 @@
       </p>
       <p class="description">{{ bio.description }}</p>
       <p>
-        <NuxtLink v-if="bio.url" external to="bio.url">{{
+        <NuxtLink v-if="bio.url" external :to="bio.url">{{
           displayUrl(bio.url)
         }}</NuxtLink>
       </p>

@@ -1,15 +1,15 @@
 <template>
   <main class="main p-page-layout">
     <HeroSection />
-    <ParentsSection />
-    <LecturesSection class="p-full-end" />
-    <ExpertsSection />
-    <BlogSection />
-    <IndividualSection />
-    <TestimonialsSection />
-    <AboutUsSection />
-    <FaqSection class="p-inset-padded" />
-    <ContactsSection />
+    <!-- <ParentsSection /> -->
+    <!-- <LecturesSection class="p-full-end" /> -->
+    <!-- <ExpertsSection /> -->
+    <!-- <BlogSection /> -->
+    <!-- <IndividualSection /> -->
+    <!-- <TestimonialsSection /> -->
+    <!-- <AboutUsSection /> -->
+    <!-- <FaqSection class="p-inset-padded" /> -->
+    <!-- <ContactsSection /> -->
   </main>
 </template>
 
