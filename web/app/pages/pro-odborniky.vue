@@ -126,9 +126,8 @@
       <p>
         Organizace Jedlík-nejedlík nabízí možnost dalšího vzdělávání, které je
         určeno pro odbornou veřejnost zaměřující se na oblast dětské výživy a
-        práci s rodiči.
-        <!-- TODO odkaz  -->
-        Více informací ZDE.
+        práci s rodiči. Více informací
+        <NuxtLink to="/vzdelavani-pro-odborniky">ZDE</NuxtLink>.
       </p>
 
       <p>
