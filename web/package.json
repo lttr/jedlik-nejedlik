@@ -14,27 +14,27 @@
     "typecheck": "nuxi typecheck"
   },
   "dependencies": {
-    "@directus/sdk": "^18.0.0",
-    "@lttr/puleo": "^0.3.0"
+    "@directus/sdk": "^18.0.3",
+    "@lttr/puleo": "^0.5.0"
   },
   "devDependencies": {
-    "@iconify-json/logos": "^1.2.3",
-    "@iconify-json/uil": "^1.2.1",
+    "@iconify-json/logos": "^1.2.4",
+    "@iconify-json/uil": "^1.2.3",
     "@lttr/nuxt-config-eslint": "^0.3.0",
     "@lttr/nuxt-config-postcss": "^0.0.8",
-    "@nuxt/devtools": "^1.6.1",
-    "@nuxt/eslint": "^0.7.2",
-    "@nuxt/fonts": "^0.10.2",
-    "@nuxt/icon": "^1.8.2",
-    "@nuxt/image": "^1.8.1",
+    "@nuxt/devtools": "^1.7.0",
+    "@nuxt/eslint": "^0.7.5",
+    "@nuxt/fonts": "^0.10.3",
+    "@nuxt/icon": "^1.10.3",
+    "@nuxt/image": "^1.9.0",
     "@nuxtjs/plausible": "^1.2.0",
     "@nuxtjs/seo": "2.0.2",
     "@total-typescript/ts-reset": "^0.6.1",
-    "eslint": "^9.15.0",
-    "nuxt": "^3.14.1592",
-    "nuxt-svgo": "^4.0.9",
+    "eslint": "^9.17.0",
+    "nuxt": "^3.15.1",
+    "nuxt-svgo": "^4.0.11",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^2.2.0"
   }
 }
