@@ -9,12 +9,6 @@ export interface Article {
   id: number
 }
 
-export async function useKeyImage(id: number) {
-  return await useAsyncData(`key-image-${id}`, async () => {
-    return await directus.request(readItem("key_images", id))
-  })
-}
-
 export async function useArticle(slug: string) {
   return await useAsyncData(
     `article-${slug}`,

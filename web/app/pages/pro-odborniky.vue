@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <article class="prose">
+    <article class="p-prose">
       <h1>Výživa a výchova v propojení</h1>
 
       <p class="p-base-text-bold">

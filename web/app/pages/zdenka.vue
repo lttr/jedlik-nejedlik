@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <article class="prose">
+    <article class="p-prose">
       <h1>Zdeňka Trummová</h1>
       <p>Připravujeme.</p>
     </article>

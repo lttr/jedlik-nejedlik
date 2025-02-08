@@ -5,11 +5,11 @@ export default defineNuxtConfig({
     "@lttr/nuxt-config-postcss",
     "@nuxt/eslint",
     "@nuxt/fonts",
-    "@nuxtjs/seo",
     "@nuxt/icon",
-    "nuxt-svgo",
-    "@nuxtjs/plausible",
     "@nuxt/image",
+    "@nuxtjs/plausible",
+    "@nuxtjs/seo",
+    "nuxt-svgo",
   ],
 
   components: [
@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   css: ["@lttr/puleo", "~/assets/css/main.css"],
 
   site: {
-    url: "https://example.com",
+    url: "https://www.jedlik-nejedlik.cz",
     name: "Jedlík-nejedlík",
     description: "Aby každé jídlo bylo radost",
     defaultLocale: "cs",

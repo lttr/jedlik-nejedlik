@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <article class="prose">
+    <article class="p-prose">
       <h1>Vzdělávání pro odborníky</h1>
       <p>
         Vzdělávání nás baví a je běžnou součástí naší činnosti, ať už na straně
@@ -24,8 +24,15 @@
         setkání. Počet míst je omezen na 10 účastníků.
       </p>
 
+      <h2>Odběr novinek pro odborníky</h2>
+      <p>
+        Chcete, aby vám žádné setkání neuteklo? Přihlašte se k odběru novinek
+        pro odborníky.
+      </p>
+
       <!--     TODO Formulář -->
       <!-- Chcete, aby vám žádné setkání neuteklo? Přihlašte se k odběru novinek - FORMULÁŘ. (Pouze pro odborníky - Jméno, mail, odbornost a dotaz ,,Pokud je nějaké téma, které by vás zajímalo na kulatém stole otevřít, napište jej do poznámky, zvážíme jeho zařazení do harmonogramu.” -->
+      <NewsletterForm />
 
       <p>
         Nejbližší kulatý stůl: 26. ledna 2025 od 18:30 hodin<br />

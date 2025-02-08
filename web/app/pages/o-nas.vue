@@ -1,6 +1,6 @@
 <template>
   <PageWrapper>
-    <article class="prose">
+    <article class="p-prose">
       <h1>O nás</h1>
       <p>
         Jedlík-nejedlík je nezisková organizace, která vznikla v roce 2023 jako
@@ -63,6 +63,9 @@
       <p v-if="team">
         <ContentImg :image="team" />
       </p>
+
+      <h2>Kontaktní formulář</h2>
+      <div class="contact-form"></div>
     </article>
   </PageWrapper>
 </template>
