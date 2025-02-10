@@ -30,9 +30,7 @@
         pro odborníky.
       </p>
 
-      <!--     TODO Formulář -->
-      <!-- Chcete, aby vám žádné setkání neuteklo? Přihlašte se k odběru novinek - FORMULÁŘ. (Pouze pro odborníky - Jméno, mail, odbornost a dotaz ,,Pokud je nějaké téma, které by vás zajímalo na kulatém stole otevřít, napište jej do poznámky, zvážíme jeho zařazení do harmonogramu.” -->
-      <NewsletterForm />
+      <NewsletterForExpertsForm class="form p-not-prose" />
 
       <p>
         Nejbližší kulatý stůl: 26. ledna 2025 od 18:30 hodin<br />
@@ -106,4 +104,9 @@ const { data: image1 } = await useDirectusImage(
 )
 </script>
 
-<style scoped></style>
+<style scoped>
+.form {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+</style>

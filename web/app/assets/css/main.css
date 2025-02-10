@@ -27,8 +27,8 @@
   --link-color: var(--brand-color-bright);
   --button-height-default: 3rem;
   --radius-default: var(--radius-round);
-  --radius-4: 2rem;
   --form-gap: var(--space-5);
+  --radius-4: 2rem;
   --input-radius: var(--radius-4);
   --input-padding-inline: var(--space-4);
   --line-height-body: var(--font-lineheight-4);
@@ -60,6 +60,17 @@ hr {
   > * {
     margin-block: 0;
   }
+}
+
+/* Forms */
+textarea {
+  border-radius: var(--radius-3);
+}
+
+input,
+textarea {
+  width: 100%;
+  max-width: initial;
 }
 
 /* alerts */

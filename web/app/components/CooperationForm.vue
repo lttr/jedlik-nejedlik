@@ -87,9 +87,16 @@ async function onSubmit(event: Event) {
   margin-inline: auto;
   padding: var(--space-6);
   border-radius: var(--radius-4);
+
+  @media (--sm-n-below) {
+    border-radius: var(--radius-0);
+    border-inline: none;
+    box-shadow: none;
+    padding-inline: var(--space-2);
+  }
 }
 
-.form {
+form {
   max-width: 30ch;
   margin-inline: auto;
 }
