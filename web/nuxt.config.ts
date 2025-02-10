@@ -60,7 +60,8 @@ export default defineNuxtConfig({
   },
 
   lttrConfigPostcss: {
-    filesWithGlobals: ["./node_modules/@lttr/puleo/output/media.css"],
+    // Since we're in a monorepo, we need to use the relative path
+    filesWithGlobals: ["../node_modules/@lttr/puleo/output/media.css"],
   },
 
   plausible: {
