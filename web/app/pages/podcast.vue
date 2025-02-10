@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper>
+  <PageWrapper class="p-flow">
     <div class="header">
       <div class="p-flow">
         <h1>Podcast</h1>
@@ -14,7 +14,9 @@
           </NuxtLink>
         </p>
       </div>
-      <NuxtImg v-if="podcastLogo" :src="podcastLogo.id" alt="" class="logo" />
+      <NuxtLink href="https://www.forendors.cz/jedliknejedlik">
+        <NuxtImg v-if="podcastLogo" :src="podcastLogo.id" alt="" class="logo" />
+      </NuxtLink>
     </div>
 
     <h2>Bonusy pro předplatitele</h2>
@@ -29,7 +31,12 @@
       </div>
       <div class="bonus">
         <h3>Plná verze podcastu</h3>
-        <p>Zajímá vás k danému tématu víc? Plnou verzi najdete na Forendors.</p>
+        <p>
+          Zajímá vás k danému tématu víc? Plnou verzi najdete na
+          <NuxtLink href="https://www.forendors.cz/jedliknejedlik"
+            >Forendors</NuxtLink
+          >.
+        </p>
       </div>
       <div class="bonus">
         <h3>Pravidelná podcast poradna</h3>

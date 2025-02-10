@@ -52,6 +52,10 @@ body {
   grid-auto-rows: max-content;
 }
 
+.p-prose {
+  --size-measure: var(--measure);
+}
+
 hr {
   margin-block: var(--space-7);
 }

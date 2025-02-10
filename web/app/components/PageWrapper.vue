@@ -1,8 +1,15 @@
 <template>
-  <main class="p-page-layout">
+  <component :is="element" :class="{ 'p-page-layout': isPageLayout }">
     <slot></slot>
-  </main>
+  </component>
 </template>
+
+<script setup lang="ts">
+const { rootElement: element = "div", isPageLayout = true } = defineProps<{
+  rootElement?: string
+  isPageLayout?: boolean
+}>()
+</script>
 
 <style scoped>
 main {

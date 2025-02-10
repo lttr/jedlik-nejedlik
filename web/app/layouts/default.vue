@@ -1,7 +1,9 @@
 <template>
   <div class="p-layout-wrapper">
     <Header class="header p-page-layout" />
-    <slot></slot>
+    <main>
+      <slot></slot>
+    </main>
     <Footer class="p-page-layout" />
   </div>
 </template>
