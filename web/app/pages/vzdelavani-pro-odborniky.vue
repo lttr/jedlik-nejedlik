@@ -74,7 +74,7 @@
     </ul>
 
     <p>
-      Termín: 24. května 2025<br />
+      Termín: 4. října 2025<br />
       Místo: Hradec Králové <br />
       Cena: 2800,- <br />
       Čas: 9:00 - 17:00 (pauza 45 minut na oběd)<br />

@@ -3,7 +3,10 @@
     <div class="p-switcher">
       <section class="p-stack">
         <SiteLogo class="logo" />
-        <p>123 456 789</p>
+        <p class="p-secondary-text-regular">
+          Kontakt:<br />
+          <a class="link" href="tel:732651959">732 651 959</a>
+        </p>
       </section>
       <section class="p-stack">
         <ul class="unstyled">
@@ -12,6 +15,11 @@
           <li><NuxtLink class="link" to="/podcast">Podcast</NuxtLink></li>
           <li>
             <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink class="link" to="/vzdelavani-pro-odborniky"
+              >Vzdělávání pro odborníky</NuxtLink
+            >
           </li>
           <li><NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink></li>
         </ul>
