@@ -1,5 +1,9 @@
 <template>
-  <component :is="element" :class="{ 'p-page-layout': isPageLayout }">
+  <component
+    :is="element"
+    :class="{ 'p-page-layout': isPageLayout }"
+    class="page-wrapper"
+  >
     <slot></slot>
   </component>
 </template>
@@ -12,8 +16,9 @@ const { rootElement: element = "div", isPageLayout = true } = defineProps<{
 </script>
 
 <style scoped>
-main {
-  row-gap: var(--space-7);
+.page-wrapper {
+  /* TODO this was useful on homepage */
+  /* row-gap: var(--space-7); */
   margin-bottom: var(--space-7);
 }
 </style>
