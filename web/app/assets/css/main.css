@@ -56,6 +56,11 @@ body {
   --size-measure: var(--measure);
 }
 
+/* Add br, it is missing in Puleo */
+.p-prose br {
+  margin-block-start: revert;
+}
+
 hr {
   margin-block: var(--space-7);
 }
