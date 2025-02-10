@@ -48,32 +48,27 @@
         <button
           type="submit"
           class="p-button-brand"
-          :disabled="shouldDisableSubmit"
+          :disabled="isPendingOrSuccess"
         >
-          {{ success ? "Odesláno" : "Odeslat" }}
+          {{ isSuccess ? "Odesláno" : "Odeslat" }}
         </button>
       </div>
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
-      <div v-if="success" class="success-message">Děkujeme!</div>
+      <div v-if="isSuccess" class="success-message">Děkujeme!</div>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-const { status, error, execute, data } = await useCooperationForm()
+import { useCooperationForm } from "~/composables/cooperation-form"
 
-const shouldDisableSubmit = computed(() => {
-  return ["pending", "success"].includes(status.value)
-})
-
-const success = computed(() => status.value === "success")
+const { execute, error, isSuccess, isPendingOrSuccess } = useCooperationForm()
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement
-  data.value = new FormData(form)
-  await execute()
-  if (success.value) {
+  await execute(new FormData(form))
+  if (isSuccess.value) {
     form.reset()
   }
 }

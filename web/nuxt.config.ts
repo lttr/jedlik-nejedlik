@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@nuxtjs/plausible",
     "@nuxtjs/seo",
     "nuxt-svgo",
+    "@vueuse/nuxt",
   ],
 
   components: [
