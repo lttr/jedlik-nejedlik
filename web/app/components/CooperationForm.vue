@@ -61,8 +61,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useCooperationForm } from "~/composables/cooperation-form"
-
 const { execute, error, isSuccess, isPendingOrSuccess } = useCooperationForm()
 
 async function onSubmit(event: Event) {

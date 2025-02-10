@@ -35,14 +35,14 @@
         <button
           type="submit"
           class="p-button-brand"
-          :disabled="shouldDisableSubmit"
+          :disabled="isPendingOrSuccess"
         >
-          {{ success ? "Odesláno" : "Přihlásit k odběru" }}
+          {{ isSuccess ? "Odesláno" : "Přihlásit k odběru" }}
         </button>
       </div>
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
-      <div v-if="success" class="success-message">
+      <div v-if="isSuccess" class="success-message">
         Děkujeme za přihlášení k odběru!
       </div>
     </form>
@@ -50,19 +50,13 @@
 </template>
 
 <script lang="ts" setup>
-const { status, error, execute } = await useNewsletterForExpertsForm()
-
-const shouldDisableSubmit = computed(() => {
-  return ["pending", "success"].includes(status.value)
-})
-
-const success = computed(() => status.value === "success")
+const { execute, error, isSuccess, isPendingOrSuccess } =
+  useNewsletterExpertsForm()
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement
-  // const formData = new FormData(form)
-  await execute()
-  if (success.value) {
+  await execute(new FormData(form))
+  if (isSuccess.value) {
     form.reset()
   }
 }
