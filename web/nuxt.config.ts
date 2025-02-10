@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   site: {
     url: "https://www.jedlik-nejedlik.cz",
     name: "Jedlík-nejedlík",
-    description: "Aby každé jídlo bylo radost",
+    description: "Výživa a výchova v propojení",
     defaultLocale: "cs",
   },
 

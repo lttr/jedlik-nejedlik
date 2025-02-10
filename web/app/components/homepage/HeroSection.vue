@@ -2,7 +2,7 @@
   <section class="hero p-padded-end">
     <div>
       <div class="switcher p-switcher">
-        <h1 class="heading">Zdraví na talíři, pohoda u stolu</h1>
+        <h1 class="heading">Výživa a výchova v propojení</h1>
       </div>
     </div>
 
