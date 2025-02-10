@@ -31,14 +31,51 @@
     <NewsletterExpertsForm class="form p-not-prose" />
 
     <p>
-      Nejbližší kulatý stůl: 26. ledna 2025 od 18:30 hodin<br />
-      Téma: Dítě a jeho emoce při nastavování hranic z pohledu rodiče <br />
-      Odborníci: Domlouváme<br />
+      Nejbližší kulatý stůl: 15. května 2025 od 18:30 hodin<br />
+      Téma: Mezioborová spolupráce bezpečně a kompetentně <br />
+      Odborníci: Zdeňka Trummová + host <br />
       Délka: 90 minut<br />
-      Cena: 350,-<br />
+      Cena: 199,-<br />
     </p>
 
     <h2>Semináře</h2>
+
+    <h3>AI pro výživové poradce</h3>
+
+    <p>
+      <em>
+        V tuto chvíli je obsazeno, ale je možné hlásit se jako náhradník
+        prostřednictvím mailu info@jedlik-nejedlik.cz
+      </em>
+    </p>
+
+    <img
+      alt=""
+      src="https://9a8131b5d7.clvaw-cdnwnd.com/cb6b7a3a848b26be106c4a37f11c2b26/200000205-69d4169d44/vyziva_poradci.webp?ph=9a8131b5d7"
+    />
+
+    <p>
+      Seminář je vhodný pro všechny nutriční terapeuty a výživové poradce, kteří
+      chtějí ve své praxi používat umělou inteligenci funkčně a bezpečně.
+      Školení se zaměří i na to, jak může AI usnadnit praxi okolo jídla našim
+      klientům.
+    </p>
+
+    <p>
+      Lektor: RNDr. Vojtěch Krmíček, PhD. <br />
+      Počet účastníků: 18 <br />
+      <NuxtLink
+        href="https://www.digitalnidovednosti.cz/ai-pro-vyzivove-poradce/"
+        >Přihlašování na stránkách lektora</NuxtLink
+      >
+    </p>
+
+    <p>
+      Termín: 24. - 25. května 2025 <br />
+      Místo: Hradec Králové<br />
+      Cena: 2160,-<br />
+      Čas: 8:30 - 17:00 (pauza 45 minut na oběd)
+    </p>
 
     <h3>Výživa a výchova v propojení - pro odborníky</h3>
 
