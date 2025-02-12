@@ -20,3 +20,11 @@ export function useNewsletterExpertsForm() {
   }
   return useAsyncRequest<FormData>(asyncRequest, possibleError)
 }
+
+export function usePodcastQuestionForm() {
+  async function asyncRequest(data: FormData) {
+    const item = objectFromFormData(data)
+    await directus.request(createItem("podcast_question_form", item))
+  }
+  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+}

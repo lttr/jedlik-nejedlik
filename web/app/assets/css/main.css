@@ -74,6 +74,10 @@ hr {
 /* Forms */
 textarea {
   border-radius: var(--radius-3);
+
+  /* TODO general border, needs for more elements probably*/
+  border-width: 1px;
+  border-color: var(--surface-0);
 }
 
 input,

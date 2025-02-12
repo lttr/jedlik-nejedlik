@@ -50,6 +50,8 @@
       </div>
     </div>
 
+    <PodcastQuestionForm class="form p-not-prose" />
+
     <h2>Kdo pro vás podcast připravuje?</h2>
 
     <div class="authors p-stack p-center">
@@ -138,5 +140,9 @@ const { data: podcastLogo } = await useDirectusImage(
     flex-basis: var(--size-content-2);
     flex-grow: 1;
   }
+}
+
+.form {
+  margin-block: var(--space-7);
 }
 </style>

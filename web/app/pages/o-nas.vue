@@ -63,9 +63,6 @@
       <p v-if="team">
         <ContentImg :image="team" />
       </p>
-
-      <h2>Kontaktní formulář</h2>
-      <div class="contact-form"></div>
     </article>
   </PageWrapper>
 </template>
