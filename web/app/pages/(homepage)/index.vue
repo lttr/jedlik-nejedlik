@@ -18,5 +18,6 @@
 <style scoped>
 .main {
   row-gap: var(--space-8);
+  padding-bottom: var(--space-8);
 }
 </style>
