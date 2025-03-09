@@ -1,5 +1,13 @@
 <template>
   <PageWrapper root-element="article" class="p-prose">
+    <p class="p-center intro">
+      Stránky vznikají. Informace k individuálnímu poradenství najdete na
+      stránkách Zdeňky Trummové
+      <NuxtLink to="https://www.okolokuchyne.cz" class="p-heading-3"
+        >www.okolokuchyne.cz</NuxtLink
+      >
+    </p>
+
     <h1 class="p-base-text-bold">Webinář ke světovému dni obezity zdarma</h1>
 
     <h2 class="p-heading-2">
@@ -54,5 +62,9 @@
 <style scoped>
 h2 {
   margin-top: var(--space-2);
+}
+
+.intro {
+  margin-bottom: var(--space-7);
 }
 </style>
