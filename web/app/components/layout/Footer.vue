@@ -28,7 +28,8 @@
         </ul>
       </section>
       <section class="p-stack">
-        <SocialLinks />
+        Sledujte nás
+        <SocialLinks class="p-heading-3" />
       </section>
     </div>
   </footer>

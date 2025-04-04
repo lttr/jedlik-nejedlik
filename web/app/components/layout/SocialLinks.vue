@@ -1,13 +1,19 @@
 <template>
-  <div class="social-links">
+  <div class="p-cluster">
     <NuxtLink
       class="link"
       to="https://www.facebook.com/profile.php?id=100092040743458"
     >
-      <Icon name="uil:facebook" />
+      <Icon name="bi:facebook" />
     </NuxtLink>
     <NuxtLink class="link" to="https://www.instagram.com/jedlik_nejedlik/">
-      <Icon name="uil:instagram" />
+      <Icon name="bi:instagram" />
+    </NuxtLink>
+    <NuxtLink
+      class="link"
+      to="https://open.spotify.com/show/7DdV5v4nOSVHLWij5Y9a0p"
+    >
+      <Icon name="bi:spotify" class="podcast-platform" />
     </NuxtLink>
   </div>
 </template>
@@ -15,10 +21,8 @@
 <script lang="ts" setup></script>
 
 <style scoped>
-.social-links {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.link {
+  color: currentColor;
 }
 
 .link:visited {

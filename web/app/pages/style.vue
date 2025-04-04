@@ -10,6 +10,7 @@
         <SvgoLogoOneline class="logo" />
         <SvgoLogomark class="logomark" />
         <SvgoLogomark class="logomark-inside" />
+        <SvgoLogomarkCircle class="logomark-circle" />
       </div>
     </section>
     <section class="p-flow">
@@ -182,6 +183,11 @@ section > h2:first-child {
   margin: var(--space-4);
   color: var(--color-peach);
   background-color: var(--color-navy);
+}
+
+.logomark-circle {
+  width: 100px;
+  margin: var(--space-4);
 }
 
 .colors {

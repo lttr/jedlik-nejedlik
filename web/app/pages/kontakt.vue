@@ -1,7 +1,29 @@
 <template>
   <PageWrapper>
     <h1>Kontakt</h1>
-    <div class="hero p-switcher">
+    <section class="p-switcher">
+      <div class="email-block p-center p-cluster">
+        <SvgoLogomarkCircle class="logomark-circle" />
+        <a href="mailto:info@jedlik-nejedlik.cz">info@jedlik-nejedlik.cz</a>
+      </div>
+
+      <div class="p-stack">
+        <h2 class="p-heading-3">Fakturační adresa</h2>
+        <address>
+          Jedlík-nejedlík, z. s.<br />
+          K Lesu 334<br />
+          50009 Hradec Králové<br />
+          IČO: 19971192
+        </address>
+      </div>
+    </section>
+    <hr />
+    <section class="sledujte-nas">
+      <h2 class="p-heading-3 p-center">Sledujte nás</h2>
+      <SocialLinks class="p-heading-3" />
+    </section>
+    <hr />
+    <section class="hero p-switcher">
       <figure>
         <ProfileImg :image="zdenkaPhoto" />
         <figcaption class="p-heading-4">Zdeňka Trummová</figcaption>
@@ -17,7 +39,7 @@
           zprávu v kontaktním formuláři a já se vám brzy ozvu.
         </p>
       </div>
-    </div>
+    </section>
 
     <div class="contacts p-flow">
       <p class="name p-base-text-bold">Zdeňka Trummová</p>
@@ -34,10 +56,6 @@
       <p>
         <a href="mailto:zdenka.trummova@seznam.cz">zdenka.trummova@seznam.cz</a>
       </p>
-
-      <p>
-        <SocialLinks class="social-links" />
-      </p>
     </div>
   </PageWrapper>
 </template>
@@ -49,6 +67,10 @@ const { data: zdenkaPhoto } = await useDirectusImage(
 </script>
 
 <style scoped>
+h1 {
+  margin-bottom: var(--space-4);
+}
+
 figure {
   display: flex;
   flex-direction: column;
@@ -74,20 +96,41 @@ figure {
 }
 
 .contacts {
+  max-width: var(--size-content-2);
+  margin-block: var(--space-4);
+
   > * {
     --flow-space: 0.7em;
   }
-  max-width: var(--size-content-2);
-}
 
-.social-links {
-  font-size: var(--font-size-4);
-  color: var(--link-color);
+  a {
+    color: var(--text-color-1);
+    text-decoration: underline;
+  }
 }
 
 @media (--md-n-above) {
   .name {
     visibility: hidden;
+  }
+}
+
+address {
+  font-style: normal;
+}
+
+.sledujte-nas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.email-block {
+  justify-content: center;
+
+  a {
+    color: var(--text-color-1);
+    text-decoration: underline;
   }
 }
 </style>

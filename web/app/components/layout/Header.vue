@@ -15,5 +15,6 @@
   display: flex;
   justify-content: end;
   padding-block: var(--space-3);
+  font-size: var(--font-size-0);
 }
 </style>
