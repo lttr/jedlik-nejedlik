@@ -25,11 +25,25 @@
               účastníky
             </p>
           </div>
-          <p class="webinar-description">
-            Naučte se připravovat svačiny na cesty, vyhnout se pastím při výběru
-            jídla a vybírat vhodné restaurace. Webinář pokrývá praktické tipy
-            pro cestování s dětmi i dospělými.
-          </p>
+          <div class="webinar-description">
+            <p>
+              Jezdíte rádi v létě na výlety? Ať už se jedná o krátký výlet z domu nebo 
+              dvoutýdenní dovolenou, možná taky řešíte, co s sebou na cesty k jídlu. 
+              Přihlašte na webinář a dozvíte se spoustu praktických tipů, které v létě 
+              určitě využijete!
+            </p>
+            <p><strong>Co se ve společném čase dozvíte?</strong></p>
+            <ul>
+              <li>že svačinkování není věda</li>
+              <li>jak z výletu vytěžit maximum, ať už si nesu svačinku v batohu nebo si ji koupím cestou</li>
+              <li>čemu se v rámci svačinek vyhnout a proč</li>
+              <li>proč neodměňovat děti ani sebe na výletě jídlem a co může být lepší odměna</li>
+              <li>10 nejčastějších jídelních pastí výletníka</li>
+              <li>praktické rady jak na svačinky</li>
+              <li>jak si vybrat v restauraci</li>
+              <li>a samozřejmě i RECEPTY! svačinky na výlety které zasytí</li>
+            </ul>
+          </div>
           <NuxtLink
             class="p-button p-button-brand"
             href="https://form.simpleshop.cz/xKQ4W/buy/"
@@ -49,11 +63,22 @@
               účastníky
             </p>
           </div>
-          <p class="webinar-description">
-            Zjednodušte si každodenní vaření, naučte se lépe organizovat kuchyň
-            a snižovat plýtvání jídlem. Praktické rady pro rodiče, kteří hledají
-            inspiraci pro každodenní menu.
-          </p>
+          <div class="webinar-description">
+            <p>
+              Otázka, kterou občas řekne každá máma. Svačinky, polívčičky, obědy, večeře… 
+              Nevíte, co pořád vařit, přitom máte doma mnoho kuchařek, plnou lednici jídla 
+              a ještě ta hromada inspirace na internetu? Nebo máte naopak stále prázdnou 
+              spíž a už vás nebaví jíst jen chleba?
+            </p>
+            <p><strong>Po webináři budete vědět:</strong></p>
+            <ul>
+              <li>jak si usnadnit každodenní kolotoč okolo kuchyně</li>
+              <li>jaké suroviny mít vždy doma</li>
+              <li>jak neplýtvat jídlem a poradit si se zbytky</li>
+              <li>jak přemýšlet nad vařením, ať už jsem nebo nejsem plánovací typ</li>
+              <li>a hlavně – JAK SE NEUVAŘIT V KUCHYNI</li>
+            </ul>
+          </div>
           <NuxtLink
             class="p-button p-button-brand"
             href="https://form.simpleshop.cz/KmB6/buy/"
@@ -61,6 +86,7 @@
             Koupit webinář
           </NuxtLink>
         </div>
+
       </div>
     </section>
 
