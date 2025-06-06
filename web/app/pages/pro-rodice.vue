@@ -11,26 +11,69 @@
     </section>
 
     <section class="p-stack">
-      <h2>Kurzy a webináře</h2>
+      <h2>Webináře</h2>
 
       <div class="p-stack">
-        <div class="p-cluster">
-          Webinář Jídlo na cesty pro děti a dospělé (odkaz na formulář)
-          <NuxtLink class="p-button p-button-brand" href="https://form.simpleshop.cz/xKQ4W/buy/">
-            Koupit
+        <div class="webinar-card">
+          <h3>Jídlo na cesty pro děti i dospělé</h3>
+          <div class="webinar-details">
+            <p><strong>Datum:</strong> 19. června 2025 v 18:30</p>
+            <p><strong>Délka:</strong> 90-120 minut</p>
+            <p><strong>Cena:</strong> 299 Kč</p>
+            <p>
+              <strong>Formát:</strong> Online webinář se záznamem pro všechny
+              účastníky
+            </p>
+          </div>
+          <p class="webinar-description">
+            Naučte se připravovat svačiny na cesty, vyhnout se pastím při výběru
+            jídla a vybírat vhodné restaurace. Webinář pokrývá praktické tipy
+            pro cestování s dětmi i dospělými.
+          </p>
+          <NuxtLink
+            class="p-button p-button-brand"
+            href="https://form.simpleshop.cz/xKQ4W/buy/"
+          >
+            Koupit webinář
           </NuxtLink>
         </div>
 
-        <div class="p-cluster">
-          Webinář Co mám pořád vařit pro děti a dospělé (odkaz na formulář)
-          <NuxtLink class="p-button p-button-brand" href="https://form.simpleshop.cz/KmB6/buy/">
-            Koupit
+        <div class="webinar-card">
+          <h3>A co mám pořád vařit?</h3>
+          <div class="webinar-details">
+            <p><strong>Datum:</strong> 24. června 2025 v 18:30</p>
+            <p><strong>Délka:</strong> 90-120 minut</p>
+            <p><strong>Cena:</strong> 299 Kč</p>
+            <p>
+              <strong>Formát:</strong> Online webinář se záznamem pro všechny
+              účastníky
+            </p>
+          </div>
+          <p class="webinar-description">
+            Zjednodušte si každodenní vaření, naučte se lépe organizovat kuchyň
+            a snižovat plýtvání jídlem. Praktické rady pro rodiče, kteří hledají
+            inspiraci pro každodenní menu.
+          </p>
+          <NuxtLink
+            class="p-button p-button-brand"
+            href="https://form.simpleshop.cz/KmB6/buy/"
+          >
+            Koupit webinář
           </NuxtLink>
         </div>
+      </div>
+    </section>
 
+    <section class="p-stack">
+      <h2>Kurzy</h2>
+      <div class="webinar-card">
         <div class="p-cluster">
-          Kurz zdravého (ne)hubnutí v Hradci Králové (odkaz na informace o kurzu)
-          <NuxtLink class="p-button p-button-brand" href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-zakladni">
+          Kurz zdravého (ne)hubnutí v Hradci Králové (odkaz na informace o
+          kurzu)
+          <NuxtLink
+            class="p-button p-button-brand"
+            href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-zakladni"
+          >
             Koupit
           </NuxtLink>
         </div>
@@ -48,5 +91,26 @@ h2 {
 
 .intro {
   margin-bottom: var(--space-7);
+}
+
+.webinar-card {
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.webinar-card h3 {
+  margin-bottom: var(--space-3);
+}
+
+.webinar-details {
+  margin-bottom: var(--space-3);
+}
+
+.webinar-details p {
+  margin-bottom: var(--space-1);
+}
+
+.webinar-description {
+  margin-bottom: var(--space-4);
 }
 </style>
