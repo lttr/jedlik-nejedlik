@@ -28,6 +28,20 @@
         </ul>
       </section>
       <section class="p-stack">
+        <ul class="unstyled">
+          <li>
+            <NuxtLink class="link" to="/obchodni-podminky"
+              >Obchodní podmínky</NuxtLink
+            >
+          </li>
+          <li>
+            <NuxtLink class="link" to="/zasady-zpracovani-osobnich-udaju"
+              >Zásady zpracování osobních údajů</NuxtLink
+            >
+          </li>
+        </ul>
+      </section>
+      <section class="p-stack">
         Sledujte nás
         <SocialLinks class="p-heading-3" />
       </section>
