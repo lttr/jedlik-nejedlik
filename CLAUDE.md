@@ -14,11 +14,18 @@ All commands use `pnpm` as the package manager (pnpm@10.17.1, Node 22).
 
 - `nr dev` - Start development server (runs web package dev script)
 - `nr build` - Build all packages for production
+- `nr verify` - Verify code (linting, formatting, tests) - **run before commits**
 - `nr typecheck` - Run TypeScript type checking across all packages
 - `nr lint` - Run ESLint across all packages
 - `nr lint:fix` - Fix ESLint issues
 - `nr format` - Format code with Prettier
 - `nr start` - Start production server (runs node web/.output/server/index.mjs)
+
+### Custom slash commands:
+
+- `/verify` - Run verification and fix errors automatically
+- `/commit [message]` - Create git commit with intelligent message generation
+- `/gst` - Clean, scannable git status
 
 ### Web package commands (from web/ directory):
 
@@ -65,7 +72,7 @@ All commands use `pnpm` as the package manager (pnpm@10.17.1, Node 22).
 - **@lttr/nuxt-config-postcss** - PostCSS configuration
 - **nuxt-svgo** - SVG components from `./assets/svgs/`
 - **@nuxtjs/seo** - SEO module
-- **@nuxtjs/plausible** - Analytics (ignores localhost and test domain)
+- **@nuxtjs/plausible** - Analytics (custom host: `plausible.lttr.cz`, ignores localhost and `jedlik-nejedlik-test.lttr.cz`)
 - **@nuxt/icon** - Icon components using Iconify
 - **@vueuse/nuxt** - Vue composition utilities
 
@@ -106,5 +113,5 @@ File-based routing in `web/app/pages/`:
 - Shared types defined in `web/shared/types/`
 - Directus URL constant defined in both `nuxt.config.ts` and `shared/utils/directus.ts`
 - Uses TypeScript with `@total-typescript/ts-reset` for improved type definitions
-- technical documentation is located in `.agents/docs/`
-
+- Technical documentation is located in `.agents/docs/`
+- PostCSS configured to use Puleo media queries from monorepo node_modules
