@@ -27,6 +27,9 @@ const biographyExpertRequest = () =>
         "photo.height",
         "photo.description",
       ],
+      filter: {
+        status: { _eq: "published" },
+      },
     }),
   ) as Promise<BiographyExpert[]>
 
