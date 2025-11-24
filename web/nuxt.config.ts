@@ -52,6 +52,15 @@ export default defineNuxtConfig({
     },
   },
 
+  fonts: {
+    families: [
+      {
+        name: "Poppins",
+        weights: ["400", "600", "700"],
+      },
+    ],
+  },
+
   image: {
     domains: [DIRECTUS_URL],
     provider: "directus",
