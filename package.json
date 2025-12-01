@@ -8,6 +8,7 @@
     "format": "prettier --write .",
     "lint": "pnpm -r run lint",
     "lint:fix": "eslint --fix",
+    "verify": "pnpm -r run verify",
     "start": "node web/.output/server/index.mjs",
     "typecheck": "pnpm -r run typecheck"
   },

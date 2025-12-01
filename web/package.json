@@ -11,7 +11,8 @@
     "start": "node .output/server/index.mjs",
     "postinstall": "nuxi prepare",
     "preview": "nuxi preview",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "verify": "pnpm run format && pnpm run lint:fix && pnpm run typecheck"
   },
   "dependencies": {
     "@directus/sdk": "^18.0.3",
