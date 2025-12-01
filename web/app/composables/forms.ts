@@ -28,3 +28,11 @@ export function usePodcastQuestionForm() {
   }
   return useAsyncRequest<FormData>(asyncRequest, possibleError)
 }
+
+export function useWaitlistObesityCourseForm() {
+  async function asyncRequest(data: FormData) {
+    const item = objectFromFormData(data)
+    await directus.request(createItem("waitlist_obesity_course_form", item))
+  }
+  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+}
