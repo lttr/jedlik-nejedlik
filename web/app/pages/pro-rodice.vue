@@ -326,55 +326,6 @@
   color: var(--text-2);
 }
 
-.webinar-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.webinar-icon {
-  font-size: var(--font-size-5);
-  color: var(--brand-color);
-}
-
-.webinar-header h3 {
-  margin: 0;
-  font-size: var(--font-size-2);
-}
-
-.webinar-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  font-size: var(--font-size-0);
-  color: var(--text-2);
-}
-
-.webinar-meta span {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.webinar-meta .price {
-  color: var(--color-forest-green);
-  font-weight: var(--font-weight-6);
-}
-
-.webinar-description {
-  flex-grow: 1;
-}
-
-.webinar-description details {
-  margin-top: var(--space-2);
-}
-
-.webinar-description summary {
-  cursor: pointer;
-  color: var(--link-color);
-  font-weight: var(--font-weight-5);
-}
-
 .webinar-card .p-button {
   align-self: flex-start;
 }
