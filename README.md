@@ -31,3 +31,12 @@ This is an education site, that I'm building for my wife.
 - Netlify for hosting
 - Sentry for error tracking
 - Plausible for analytics
+
+## MCP Integration
+
+Directus supports [Model Context Protocol (MCP)](https://directus.io/docs/guides/ai/mcp) for AI-assisted content management. Example for Claude Code:
+
+```bash
+claude mcp add --transport http directus https://<your-domain>/mcp \
+  --header "Authorization: Bearer <your-mcp-user-token>"
+```
