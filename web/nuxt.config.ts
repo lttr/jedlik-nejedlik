@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   experimental: {
     componentIslands: true,
     typedPages: true,
+    typescriptPlugin: true,
   },
 
   compatibilityDate: "2025-12-01",

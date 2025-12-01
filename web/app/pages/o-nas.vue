@@ -1,18 +1,24 @@
 <template>
   <PageWrapper>
-    <article class="p-prose">
+    <article class="p-flow">
       <h1>O nás</h1>
+
       <p>
         Jedlík-nejedlík je nezisková organizace, která vznikla v roce 2023 jako
         vyústění soukromých i pracovních aktivit zakladatelky Zdeňky Trummové,
         které rozvíjela od roku 2017. Zdeňka je celoživotně aktivní skaut a
-        původní profesí pedagog. Od útlého dětství bojovala s vlastní obezitou.
-        Když během výkonu učitelského povolání viděla, kolik dětí a rodin se
-        potýká se stejným problémem jako ona, rozhodla se být aktivní v rámci
-        prevence dětské nadváhy a obezity na lokální úrovni. Jak se ze záliby
-        stal společensky prospěšný projekt a pedagog se profesionalizoval v
-        oboru nutrice, se dočtete <NuxtLink to="/zdenka">ZDE</NuxtLink>.
+        původní profesí pedagog.
       </p>
+      <p>
+        Od útlého dětství bojovala s vlastní obezitou. Když během výkonu
+        učitelského povolání viděla, kolik dětí a rodin se potýká se stejným
+        problémem jako ona, rozhodla se být aktivní v rámci prevence dětské
+        nadváhy a obezity na lokální úrovni. Jak se ze záliby stal společensky
+        prospěšný projekt a pedagog se profesionalizoval v oboru nutrice, se
+        dočtete <NuxtLink to="/zdenka">ZDE</NuxtLink>.
+      </p>
+
+      <MediaSection />
 
       <h2>Jedlík-nejedlík působí na 3 základních úrovních</h2>
 
@@ -84,5 +90,3 @@ const { data: team } = await useDirectusImage(
   "6e0075d1-3ba7-4bb5-8b3f-b71c218c39bd",
 )
 </script>
-
-<style scoped></style>
