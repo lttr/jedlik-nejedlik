@@ -33,16 +33,12 @@ export default defineNuxtConfig({
     defaultLocale: "cs",
   },
 
-  future: {
-    compatibilityVersion: 4,
-  },
-
   experimental: {
     componentIslands: true,
     typedPages: true,
   },
 
-  compatibilityDate: "2024-10-18",
+  compatibilityDate: "2025-12-01",
 
   eslint: {
     config: {
