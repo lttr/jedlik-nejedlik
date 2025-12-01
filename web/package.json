@@ -15,30 +15,30 @@
     "verify": "pnpm run format && pnpm run lint:fix && pnpm run typecheck"
   },
   "dependencies": {
-    "@directus/sdk": "^18.0.3",
-    "@lttr/puleo": "^0.5.0"
+    "@directus/sdk": "^20.2.0",
+    "@lttr/puleo": "^0.8.1"
   },
   "devDependencies": {
-    "@iconify-json/bi": "^1.2.2",
-    "@iconify-json/logos": "^1.2.4",
+    "@iconify-json/bi": "^1.2.6",
+    "@iconify-json/logos": "^1.2.10",
     "@iconify-json/uil": "^1.2.3",
-    "@lttr/nuxt-config-eslint": "^0.3.0",
+    "@lttr/nuxt-config-eslint": "^0.4.0",
     "@lttr/nuxt-config-postcss": "^0.0.8",
-    "@nuxt/devtools": "^1.7.0",
-    "@nuxt/eslint": "^0.7.5",
-    "@nuxt/fonts": "^0.10.3",
-    "@nuxt/icon": "^1.10.3",
-    "@nuxt/image": "^1.9.0",
-    "@nuxtjs/plausible": "^1.2.0",
-    "@nuxtjs/seo": "2.0.2",
+    "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint": "^1.11.0",
+    "@nuxt/fonts": "^0.12.1",
+    "@nuxt/icon": "^2.1.0",
+    "@nuxt/image": "^2.0.0",
+    "@nuxtjs/plausible": "^2.0.1",
+    "@nuxtjs/seo": "3.2.2",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@vueuse/core": "^12.5.0",
-    "@vueuse/nuxt": "^12.5.0",
-    "eslint": "^9.17.0",
+    "@vueuse/core": "^14.1.0",
+    "@vueuse/nuxt": "^14.1.0",
+    "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
-    "nuxt-svgo": "^4.0.11",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vue-tsc": "^2.2.0"
+    "nuxt-svgo": "^4.2.6",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3",
+    "vue-tsc": "^3.1.5"
   }
 }
