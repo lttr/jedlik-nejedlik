@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxtjs/seo",
     "nuxt-svgo",
     "@vueuse/nuxt",
+    "@dxup/nuxt",
   ],
 
   components: [
