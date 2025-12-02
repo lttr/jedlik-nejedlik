@@ -59,9 +59,7 @@
       <BiographyExpert :bio="anicka" />
     </div>
 
-    <p>
-      <ContentImg v-if="podcastPhoto" :image="podcastPhoto" />
-    </p>
+    <ContentImg v-if="podcastPhoto" :image="podcastPhoto" />
   </PageWrapper>
 </template>
 

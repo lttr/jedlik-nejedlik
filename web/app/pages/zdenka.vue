@@ -10,15 +10,15 @@
         odborníky na celorepublikové úrovni.
       </p>
 
-      <figure class="rozhlas-image">
-        <a
-          href="https://www.mujrozhlas.cz/na-nedelni-vlne-hradce-kralove/zdenka-trummova-se-v-mladi-hodne-prala-s-obezitou-ted-sama-pomaha"
-          target="_blank"
-          rel="noopener"
-          class="p-button"
-        >
-          Poslechnout
-        </a>
+      <a
+        href="https://www.mujrozhlas.cz/na-nedelni-vlne-hradce-kralove/zdenka-trummova-se-v-mladi-hodne-prala-s-obezitou-ted-sama-pomaha"
+        target="_blank"
+        rel="noopener"
+        class="p-button"
+      >
+        Poslechnout
+      </a>
+      <figure>
         <ContentImg
           :image="{
             id: '87f4fbac-54f2-45b1-968c-e63cbe7080bd',

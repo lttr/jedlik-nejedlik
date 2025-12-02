@@ -79,9 +79,7 @@
 
     <h3>Výživa a výchova v propojení - pro odborníky</h3>
 
-    <p v-if="presentation2" class="p-popout">
-      <ContentImg :image="presentation2" />
-    </p>
+    <ContentImg v-if="presentation2" :image="presentation2" class="p-popout" />
 
     <p>
       Seminář je vhodný pro všechny nutriční terapeuty a výživové poradce, kteří

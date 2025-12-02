@@ -30,9 +30,7 @@
         charakter. Více naleznete v sekci
         <NuxtLink to="/pro-rodice">Pro rodiče</NuxtLink>.
       </p>
-      <p v-if="presentation1">
-        <ContentImg :image="presentation1" />
-      </p>
+      <ContentImg v-if="presentation1" :image="presentation1" />
 
       <h3>Soukromá poradna Jedlík-nejedlík</h3>
       <p>
@@ -43,9 +41,7 @@
         potravy. Poradenství probíhá osobně nebo online. Více informací o našich
         službách najdete <NuxtLink to="/pro-rodice">ZDE</NuxtLink>.
       </p>
-      <p v-if="presentation2">
-        <ContentImg :image="presentation2" />
-      </p>
+      <ContentImg v-if="presentation2" :image="presentation2" />
 
       <h3>Odborná činnost</h3>
       <p>
@@ -56,9 +52,7 @@
         spolupráce důležitá. Jste odborník? Více informací o naší odborné
         činnosti najdete <NuxtLink to="/pro-odborniky">ZDE</NuxtLink>.
       </p>
-      <p v-if="presentation3">
-        <ContentImg :image="presentation3" />
-      </p>
+      <ContentImg v-if="presentation3" :image="presentation3" />
 
       <h2>Tým projektu Jedlík-nejedlík</h2>
       <p>
@@ -66,9 +60,7 @@
         Zdeňky také tým dalších třech lidí, bez nichž by nic z naší činnosti
         nemohlo fungovat nad rámec lokálního působení.
       </p>
-      <p v-if="team">
-        <ContentImg :image="team" />
-      </p>
+      <ContentImg v-if="team" :image="team" />
     </article>
   </PageWrapper>
 </template>
