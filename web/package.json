@@ -19,6 +19,8 @@
     "@lttr/puleo": "^0.8.1"
   },
   "devDependencies": {
+    "@dxup/nuxt": "^0.2.2",
+    "@dxup/unimport": "^0.1.2",
     "@iconify-json/bi": "^1.2.6",
     "@iconify-json/logos": "^1.2.10",
     "@iconify-json/uil": "^1.2.3",
