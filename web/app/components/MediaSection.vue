@@ -149,7 +149,7 @@ const { data: media3 } = await useDirectusImage(
   margin-block: 0;
 }
 
-.media-visual :deep(.content-image) {
+.media-visual {
   margin-block: var(--space-5);
 }
 
