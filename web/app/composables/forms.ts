@@ -36,3 +36,11 @@ export function useWaitlistObesityCourseForm() {
   }
   return useAsyncRequest<FormData>(asyncRequest, possibleError)
 }
+
+export function useNewsletterParentsForm() {
+  async function asyncRequest(data: FormData) {
+    const item = objectFromFormData(data)
+    await directus.request(createItem("newsletter_parents_form", item))
+  }
+  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+}
