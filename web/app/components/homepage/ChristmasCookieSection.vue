@@ -9,7 +9,7 @@
           bez starostí a bez výčitek. I na návštěvách!
         </p>
         <div class="p-cluster">
-          <NuxtLink to="/vanocni-cukrovi" class="cta p-button"
+          <NuxtLink to="/ebook-vanocni-cukrovi" class="cta p-button"
             >Koupit e-knihu</NuxtLink
           >
           <NuxtLink to="/o-nas" class="link p-button">O nás</NuxtLink>
