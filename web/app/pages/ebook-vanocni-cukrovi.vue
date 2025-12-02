@@ -398,6 +398,7 @@ useSeoMeta({
   background-color: var(--color-burgundy-red);
   color: white;
   padding-block: var(--space-8);
+  margin-top: calc(-1 * var(--space-6));
 }
 
 .hero-content {
@@ -444,16 +445,12 @@ useSeoMeta({
 }
 
 .hero-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transform: scale(1.3) translateX(3rem);
 }
 
 .cookie-svg {
   width: 100%;
-  max-width: 400px;
   height: auto;
-  transform: scale(1.2);
 }
 
 /* CTA Buttons */
@@ -782,11 +779,11 @@ useSeoMeta({
 
   .hero-image {
     order: -1;
+    transform: scale(1.4) translateY(2vw) translateX(-9vw);
   }
 
   .cookie-svg {
-    max-width: 280px;
-    transform: scale(1);
+    max-width: 25rem;
   }
 
   .contents-grid {
