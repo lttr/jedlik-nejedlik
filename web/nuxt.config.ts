@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     componentIslands: true,
     typedPages: true,
     typescriptPlugin: true,
+    viewTransition: true,
   },
 
   compatibilityDate: "2025-12-01",
