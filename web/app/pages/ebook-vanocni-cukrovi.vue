@@ -77,10 +77,7 @@
     <section class="preview-section p-full-bg">
       <div class="section-content">
         <h2 class="section-title">Nahlédněte dovnitř</h2>
-        <p class="preview-intro">
-          Ukázky z e-booku vám pomohou udělat si představu o obsahu a grafickém
-          zpracování.
-        </p>
+        <p class="preview-intro">Podívejte se na několik ukázek z e-booku.</p>
         <div class="preview-grid">
           <div
             v-for="(image, index) of previewImages"
@@ -854,7 +851,7 @@ useSeoMeta({
 
 .preview-thumbnail {
   display: block;
-  width: 180px;
+  width: 220px;
   aspect-ratio: 1240 / 1753;
   padding: 0;
   border: none;
@@ -873,6 +870,11 @@ useSeoMeta({
   box-shadow: var(--shadow-5);
 }
 
+.preview-thumbnail:focus-visible {
+  outline: 2px solid var(--color-burgundy-red);
+  outline-offset: 2px;
+}
+
 .preview-thumbnail :deep(img) {
   display: block;
   width: 100%;
@@ -883,6 +885,7 @@ useSeoMeta({
 /* Lightbox */
 .lightbox {
   border: none;
+  border-radius: 0;
   background: transparent;
   max-width: 100vw;
   max-height: 100vh;
@@ -891,7 +894,8 @@ useSeoMeta({
 }
 
 .lightbox::backdrop {
-  background: rgb(0 0 0 / 90%);
+  background: rgb(255 255 255 / 80%);
+  backdrop-filter: blur(8px);
 }
 
 .lightbox-content {
@@ -913,8 +917,6 @@ useSeoMeta({
   max-width: 100%;
   max-height: 85vh;
   object-fit: contain;
-  border-radius: var(--radius-3);
-  box-shadow: var(--shadow-5);
 }
 
 .lightbox-close {
@@ -924,7 +926,7 @@ useSeoMeta({
   width: 44px;
   height: 44px;
   border: none;
-  background: rgb(255 255 255 / 90%);
+  background: var(--surface-1);
   border-radius: var(--radius-round);
   cursor: pointer;
   display: flex;
@@ -933,6 +935,7 @@ useSeoMeta({
   font-size: var(--font-size-3);
   color: var(--text-color-1);
   transition: background 0.15s ease;
+  box-shadow: var(--shadow-2);
 }
 
 .lightbox-close:hover {
@@ -943,7 +946,7 @@ useSeoMeta({
   width: 48px;
   height: 48px;
   border: none;
-  background: rgb(255 255 255 / 90%);
+  background: var(--surface-1);
   border-radius: var(--radius-round);
   cursor: pointer;
   display: flex;
@@ -955,6 +958,7 @@ useSeoMeta({
     background 0.15s ease,
     opacity 0.15s ease;
   flex-shrink: 0;
+  box-shadow: var(--shadow-2);
 }
 
 .lightbox-nav:hover:not(:disabled) {
@@ -966,16 +970,23 @@ useSeoMeta({
   cursor: not-allowed;
 }
 
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible {
+  outline: 2px solid var(--color-burgundy-red);
+  outline-offset: 2px;
+}
+
 .lightbox-counter {
   position: absolute;
   bottom: var(--space-2);
   left: 50%;
   transform: translateX(-50%);
-  color: white;
+  color: var(--text-color-2);
   font-size: var(--font-size--1);
-  background: rgb(0 0 0 / 50%);
+  background: var(--surface-1);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-round);
+  box-shadow: var(--shadow-2);
 }
 
 @media (--sm-n-below) {
