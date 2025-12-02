@@ -48,7 +48,7 @@ async function onSubmit(event: Event) {
 .form-wrapper {
   max-width: var(--size-content-2);
   box-shadow: var(--shadow-4);
-  border: 2px solid var(--brand-color);
+  border: var(--border-3);
   margin-inline: auto;
   padding: var(--space-6);
   border-radius: var(--radius-3);
