@@ -35,8 +35,8 @@
         </h2>
 
         <p class="call-to-action">
-          Ozvěte se mi na email či níže uvedené telefonní číslo nebo zanechte
-          zprávu v kontaktním formuláři a já se vám brzy ozvu.
+          Ozvěte se mi na email nebo zanechte zprávu v kontaktním formuláři a já
+          se vám brzy ozvu.
         </p>
       </div>
     </section>
@@ -50,11 +50,7 @@
       </p>
 
       <p>
-        <a href="tel:732651959">732 651 959</a>
-      </p>
-
-      <p>
-        <a href="mailto:zdenka.trummova@seznam.cz">zdenka.trummova@seznam.cz</a>
+        <a href="mailto:zdenka@jedlik-nejedlik.cz">zdenka@jedlik-nejedlik.cz</a>
       </p>
     </div>
   </PageWrapper>
