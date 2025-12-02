@@ -2,8 +2,8 @@
   <PageSection class="p-flow">
     <h2>Pro rodiče</h2>
     <p>
-      Pomáháme dětem s nadváhou, obezitou a nejedlictvím, a podporujeme zdravý
-      životní styl v rodinách.
+      Pomáháme rodičům vytvářet zdravé návyky u dětí a budovat jejich pozitivní
+      vztah k jídlu.
     </p>
     <p>
       Věříme, každý rodič může svému dítěti zajistit správnou výživu, pokud má
