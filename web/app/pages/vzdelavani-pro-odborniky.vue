@@ -124,7 +124,7 @@
     <p>Konference Co vše dítě živí 19. - 20. dubna 2024</p>
     <p>Konference Obezitologie a bariatrie 21. - 22. listopadu 2024</p>
     <p>Přednáška Výživa a výchova v propojení 11. září 2024</p>
-    <ContentImg :image="image1" />
+    <ContentImg v-if="image1" :image="image1" />
   </PageWrapper>
 </template>
 

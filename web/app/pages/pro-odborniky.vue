@@ -55,7 +55,7 @@
     </p>
 
     <p>
-      <ContentImg :image />
+      <ContentImg v-if="image" :image />
     </p>
 
     <p>
