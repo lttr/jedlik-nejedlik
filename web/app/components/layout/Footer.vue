@@ -1,9 +1,9 @@
 <template>
   <footer class="footer">
     <div class="p-switcher">
-      <section class="p-stack">
+      <section>
         <SiteLogo class="logo" />
-        <p class="p-secondary-text-regular">
+        <p class="contact p-secondary-text-regular">
           Kontakt:<br />
           <a class="link" href="mailto:info@jedlik-nejedlik.cz"
             >info@jedlik-nejedlik.cz</a
@@ -12,7 +12,7 @@
         </p>
       </section>
       <section class="p-stack">
-        <ul class="unstyled">
+        <ul class="unstyled p-stack">
           <li><NuxtLink class="link" to="/o-nas">O nás</NuxtLink></li>
           <li><NuxtLink class="link" to="/pro-rodice">Pro rodiče</NuxtLink></li>
           <li><NuxtLink class="link" to="/podcast">Podcast</NuxtLink></li>
@@ -28,7 +28,7 @@
         </ul>
       </section>
       <section class="p-stack">
-        <ul class="unstyled">
+        <ul class="unstyled p-stack">
           <li>
             <NuxtLink class="link" to="/obchodni-podminky"
               >Obchodní podmínky</NuxtLink
@@ -41,7 +41,7 @@
           </li>
         </ul>
       </section>
-      <section class="p-stack">
+      <section class="social-links">
         Sledujte nás
         <SocialLinks class="p-heading-3" />
       </section>
@@ -56,6 +56,20 @@
   color: var(--text-color-1-inverse);
   background-color: var(--color-midnight);
   padding-block: var(--space-9);
+  line-height: var(--font-lineheight-2);
+}
+
+.contact {
+  margin-top: var(--space-4);
+  line-height: var(--font-lineheight-4);
+}
+
+.social-links {
+  line-height: var(--font-lineheight-4);
+}
+
+.p-stack {
+  --stack-space: var(--space-2);
 }
 
 .link {
