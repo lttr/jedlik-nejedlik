@@ -21,7 +21,7 @@
       <div class="media-item">
         <div class="media-item-content">
           <h3>iDNES – Rozstřel</h3>
-          <p>Proč děti přibírají a jak nastavovat hranice bez stresu</p>
+          <p>Proč děti přibírají - rozhovor lékaře doplněný osobním příběhem</p>
         </div>
         <a
           href="https://tv.idnes.cz/rozstrel/rozstrel-jan-bozensky-a-zdenka-trummova-cely-zaznam.V240304_173616_idnestv_krr"
