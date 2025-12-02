@@ -10,9 +10,8 @@
             Rodičovský průvodce dlouhodobou pohodou okolo vánočního mlsání.
           </p>
           <p class="hero-benefit">
-            58stránkový e-book, který vám pomůže prožít Vánoce bez hádek, stresu
-            a zbytečného přejídání — a zároveň podporovat zdravý vztah dítěte k
-            jídlu.
+            Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
+            hádek okolo cukroví. I na návštěvách!
           </p>
           <div class="hero-cta">
             <a
@@ -83,26 +82,31 @@
           zpracování.
         </p>
         <div class="preview-grid">
-          <button
-            v-for="(image, index) in previewImages"
+          <div
+            v-for="(image, index) of previewImages"
             :key="image.id"
             class="preview-thumbnail"
+            role="button"
+            tabindex="0"
             @click="openLightbox(index)"
+            @keydown.enter="openLightbox(index)"
+            @keydown.space.prevent="openLightbox(index)"
           >
             <NuxtImg
               :src="image.id"
               provider="directus"
-              width="300"
-              height="424"
+              width="200"
+              height="283"
               :alt="`Ukázka z e-booku - strana ${index + 1}`"
               loading="lazy"
             />
-          </button>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Lightbox Dialog -->
+    <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/no-static-element-interactions -->
     <dialog
       ref="lightboxDialog"
       class="lightbox"
@@ -111,16 +115,16 @@
       <div class="lightbox-content" @click.stop>
         <button
           class="lightbox-close"
-          @click="closeLightbox"
           aria-label="Zavřít"
+          @click="closeLightbox"
         >
           <Icon name="mdi:close" />
         </button>
         <button
           class="lightbox-nav lightbox-prev"
-          @click="prevImage"
           :disabled="currentImageIndex === 0"
           aria-label="Předchozí"
+          @click="prevImage"
         >
           <Icon name="mdi:chevron-left" />
         </button>
@@ -135,9 +139,9 @@
         </div>
         <button
           class="lightbox-nav lightbox-next"
-          @click="nextImage"
           :disabled="currentImageIndex === previewImages.length - 1"
           aria-label="Další"
+          @click="nextImage"
         >
           <Icon name="mdi:chevron-right" />
         </button>
@@ -322,6 +326,63 @@
 
 <script setup lang="ts">
 const purchaseUrl = "https://form.simpleshop.cz/gN5Qq/buy/"
+
+const previewImages = [
+  { id: "7677b758-7907-4b7b-a7e2-5f121ed3abbc" },
+  { id: "1c865708-d38d-420f-8c65-33bc6f91f60a" },
+  { id: "92a7e957-0b44-4db3-ade4-19f68a8db6d9" },
+]
+
+const lightboxDialog = ref<HTMLDialogElement | null>(null)
+const currentImageIndex = ref(0)
+
+const currentImage = computed(() => previewImages[currentImageIndex.value])
+
+function openLightbox(index: number) {
+  currentImageIndex.value = index
+  lightboxDialog.value?.showModal()
+}
+
+function closeLightbox() {
+  lightboxDialog.value?.close()
+}
+
+function closeLightboxOnBackdrop(event: MouseEvent) {
+  if (event.target === lightboxDialog.value) {
+    closeLightbox()
+  }
+}
+
+function nextImage() {
+  if (currentImageIndex.value < previewImages.length - 1) {
+    currentImageIndex.value++
+  }
+}
+
+function prevImage() {
+  if (currentImageIndex.value > 0) {
+    currentImageIndex.value--
+  }
+}
+
+onMounted(() => {
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (!lightboxDialog.value?.open) {
+      return
+    }
+    if (e.key === "ArrowRight") {
+      nextImage()
+    }
+    if (e.key === "ArrowLeft") {
+      prevImage()
+    }
+    if (e.key === "Escape") {
+      closeLightbox()
+    }
+  }
+  window.addEventListener("keydown", handleKeydown)
+  onUnmounted(() => window.removeEventListener("keydown", handleKeydown))
+})
 
 useSeoMeta({
   title: "Cukroví s dětmi a v pohodě | E-book",
@@ -759,6 +820,174 @@ useSeoMeta({
 
   .price {
     font-size: var(--font-size-6);
+  }
+
+  .preview-grid {
+    gap: var(--space-3);
+  }
+
+  .preview-thumbnail {
+    width: 140px;
+  }
+}
+
+/* Preview Section */
+.preview-section {
+  background-color: var(--surface-1);
+  padding-block: var(--section-padding);
+}
+
+.preview-intro {
+  text-align: center;
+  max-width: var(--size-content-2);
+  margin-inline: auto;
+  margin-bottom: var(--space-6);
+  color: var(--text-color-2);
+}
+
+.preview-grid {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.preview-thumbnail {
+  display: block;
+  width: 180px;
+  aspect-ratio: 1240 / 1753;
+  padding: 0;
+  border: none;
+  background: white;
+  cursor: pointer;
+  border-radius: var(--radius-2);
+  overflow: hidden;
+  box-shadow: var(--shadow-3);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.preview-thumbnail:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-5);
+}
+
+.preview-thumbnail :deep(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Lightbox */
+.lightbox {
+  border: none;
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100vh;
+  padding: 0;
+  margin: auto;
+}
+
+.lightbox::backdrop {
+  background: rgb(0 0 0 / 90%);
+}
+
+.lightbox-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  position: relative;
+}
+
+.lightbox-image-container {
+  max-width: min(800px, 90vw);
+  max-height: 85vh;
+}
+
+.lightbox-image-container :deep(img) {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgb(255 255 255 / 90%);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-3);
+  color: var(--text-color-1);
+  transition: background 0.15s ease;
+}
+
+.lightbox-close:hover {
+  background: white;
+}
+
+.lightbox-nav {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: rgb(255 255 255 / 90%);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-4);
+  color: var(--text-color-1);
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.lightbox-nav:hover:not(:disabled) {
+  background: white;
+}
+
+.lightbox-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: var(--space-2);
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: var(--font-size--1);
+  background: rgb(0 0 0 / 50%);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-round);
+}
+
+@media (--sm-n-below) {
+  .lightbox-nav {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-2);
+  }
+
+  .lightbox-content {
+    gap: var(--space-2);
+    padding: var(--space-2);
   }
 }
 </style>
