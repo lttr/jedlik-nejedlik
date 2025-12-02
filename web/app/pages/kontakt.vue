@@ -25,7 +25,7 @@
     <hr />
     <section class="hero p-switcher">
       <figure>
-        <ProfileImg :image="zdenkaPhoto" />
+        <ProfileImg v-if="zdenkaPhoto" :image="zdenkaPhoto" />
         <figcaption class="p-heading-4">Zdeňka Trummová</figcaption>
       </figure>
 

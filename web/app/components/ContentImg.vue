@@ -27,6 +27,12 @@ const { loading = "lazy", alt = "" } = defineProps<{
 
 <style scoped>
 .content-image {
+  display: block;
   margin-block: var(--space-7);
+  margin-inline: auto;
+  width: 100%;
+  max-width: 964px;
+  height: auto;
+  border-radius: var(--radius-2);
 }
 </style>
