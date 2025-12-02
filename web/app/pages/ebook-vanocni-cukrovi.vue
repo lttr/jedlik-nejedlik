@@ -15,7 +15,11 @@
             jídlu.
           </p>
           <div class="hero-cta">
-            <a :href="purchaseUrl" class="cta-button primary"
+            <a
+              :href="purchaseUrl"
+              class="cta-button primary"
+              target="_blank"
+              rel="noopener"
               >To chci — koupit e-book</a
             >
           </div>
@@ -69,6 +73,79 @@
         </div>
       </div>
     </section>
+
+    <!-- Preview Section -->
+    <section class="preview-section p-full-bg">
+      <div class="section-content">
+        <h2 class="section-title">Nahlédněte dovnitř</h2>
+        <p class="preview-intro">
+          Ukázky z e-booku vám pomohou udělat si představu o obsahu a grafickém
+          zpracování.
+        </p>
+        <div class="preview-grid">
+          <button
+            v-for="(image, index) in previewImages"
+            :key="image.id"
+            class="preview-thumbnail"
+            @click="openLightbox(index)"
+          >
+            <NuxtImg
+              :src="image.id"
+              provider="directus"
+              width="300"
+              height="424"
+              :alt="`Ukázka z e-booku - strana ${index + 1}`"
+              loading="lazy"
+            />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Dialog -->
+    <dialog
+      ref="lightboxDialog"
+      class="lightbox"
+      @click="closeLightboxOnBackdrop"
+    >
+      <div class="lightbox-content" @click.stop>
+        <button
+          class="lightbox-close"
+          @click="closeLightbox"
+          aria-label="Zavřít"
+        >
+          <Icon name="mdi:close" />
+        </button>
+        <button
+          class="lightbox-nav lightbox-prev"
+          @click="prevImage"
+          :disabled="currentImageIndex === 0"
+          aria-label="Předchozí"
+        >
+          <Icon name="mdi:chevron-left" />
+        </button>
+        <div class="lightbox-image-container">
+          <NuxtImg
+            v-if="currentImage"
+            :src="currentImage.id"
+            provider="directus"
+            width="800"
+            :alt="`Ukázka z e-booku - strana ${currentImageIndex + 1}`"
+          />
+        </div>
+        <button
+          class="lightbox-nav lightbox-next"
+          @click="nextImage"
+          :disabled="currentImageIndex === previewImages.length - 1"
+          aria-label="Další"
+        >
+          <Icon name="mdi:chevron-right" />
+        </button>
+        <div class="lightbox-counter">
+          {{ currentImageIndex + 1 }} / {{ previewImages.length }}
+        </div>
+      </div>
+    </dialog>
 
     <!-- Target Audience Section -->
     <section class="audience-section p-full-bg">
@@ -151,7 +228,13 @@
         <div class="price-box">
           <div class="price">249 Kč</div>
           <p class="price-details">58 stran + doživotní aktualizace zdarma</p>
-          <a :href="purchaseUrl" class="cta-button primary large">To chci</a>
+          <a
+            :href="purchaseUrl"
+            class="cta-button primary large"
+            target="_blank"
+            rel="noopener"
+            >To chci</a
+          >
           <p class="price-note">Cena platná do 6. prosince, poté 290 Kč</p>
         </div>
       </div>
@@ -224,7 +307,11 @@
     <!-- Final CTA -->
     <section class="final-cta p-full-bg">
       <div class="section-content">
-        <a :href="purchaseUrl" class="cta-button primary large"
+        <a
+          :href="purchaseUrl"
+          class="cta-button primary large"
+          target="_blank"
+          rel="noopener"
           >To chci — stáhnout e-book za 249 Kč</a
         >
         <p class="final-note">Cena platná do 6. prosince, poté 290 Kč</p>
@@ -234,7 +321,7 @@
 </template>
 
 <script setup lang="ts">
-const purchaseUrl = "#TODO-nahradit-odkazem-na-platbu"
+const purchaseUrl = "https://form.simpleshop.cz/gN5Qq/buy/"
 
 useSeoMeta({
   title: "Cukroví s dětmi a v pohodě | E-book",
