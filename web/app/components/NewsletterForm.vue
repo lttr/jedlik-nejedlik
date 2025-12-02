@@ -111,16 +111,17 @@ async function onSubmit() {
 }
 
 .form-wrapper {
-  box-shadow: var(--shadow-4);
-  border: 2px solid var(--brand-color);
+  box-shadow: var(--shadow-3);
+  border: 1px solid var(--surface-3);
   margin-inline: auto;
   padding: var(--space-6);
-  border-radius: var(--radius-3);
-  background: var(--surface-1);
+  border-radius: var(--radius-4);
 
   @media (--sm-n-below) {
-    border-radius: var(--radius-2);
-    padding: var(--space-4);
+    border-radius: var(--radius-0);
+    border-inline: none;
+    box-shadow: none;
+    padding-inline: var(--space-2);
   }
 }
 
