@@ -54,9 +54,7 @@
       ozveme se vám.
     </p>
 
-    <p>
-      <ContentImg v-if="image" :image />
-    </p>
+    <ContentImg v-if="image" :image />
 
     <p>
       Jste v oboru začátečník nebo teprve dokončujete studia? Pokud vám jde o
