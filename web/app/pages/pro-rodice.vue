@@ -22,6 +22,12 @@
       </NuxtLink>
     </nav>
 
+    <!-- Current Offers Section -->
+    <section class="current-offers">
+      <h2 class="section-title">Aktuálně nabízíme</h2>
+      <HomepageChristmasCookieSection />
+    </section>
+
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
@@ -93,7 +99,12 @@
       </div>
     </section>
 
-    <!-- Webinars Section -->
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+      <NewsletterForm />
+    </section>
+
+    <!-- TODO: Webinars Section
     <section class="webinars-section">
       <h2 class="section-title">Webináře</h2>
       <p class="section-intro">
@@ -119,8 +130,9 @@
         </article>
       </div>
     </section>
+    -->
 
-    <!-- Courses Section -->
+    <!-- TODO: Courses Section
     <section class="courses-section">
       <h2 class="section-title">Kurzy</h2>
       <article class="course-card">
@@ -138,6 +150,7 @@
         </NuxtLink>
       </article>
     </section>
+    -->
   </PageWrapper>
 </template>
 
@@ -207,6 +220,15 @@
 .topic-link--lime {
   background: var(--color-light-lime);
   color: var(--color-forest-green);
+}
+
+/* Current Offers Section */
+.current-offers {
+  padding-block: var(--space-6);
+}
+
+.current-offers .section-title {
+  margin-bottom: var(--space-4);
 }
 
 /* Hero Section */
@@ -354,6 +376,13 @@
   font-size: var(--font-size-0);
   margin-top: var(--space-4);
   margin-bottom: 0;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+  padding-block: var(--space-8);
+  max-width: var(--size-content-3);
+  margin-inline: auto;
 }
 
 /* Section Titles */
