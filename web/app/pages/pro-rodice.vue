@@ -23,9 +23,9 @@
     </nav>
 
     <!-- Current Offers Section -->
-    <section class="current-offers">
+    <section class="current-offers p-full">
       <h2 class="section-title">Aktuálně nabízíme</h2>
-      <HomepageChristmasCookieSection />
+      <ChristmasCookieSection class="christmas-cookie-embedded" />
     </section>
 
     <!-- Hero Section -->
@@ -224,7 +224,8 @@
 
 /* Current Offers Section */
 .current-offers {
-  padding-block: var(--space-6);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-6);
 }
 
 .current-offers .section-title {
@@ -393,17 +394,9 @@
   position: relative;
 }
 
-.section-title::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: var(--color-orange-soda);
-  margin: var(--space-2) auto 0;
-  border-radius: var(--radius-round);
-}
-
 /* Webinars Section */
+
+/* TODO: Webinars Section
 .webinars-section {
   padding-block: var(--space-8);
   background: transparent;
@@ -445,8 +438,10 @@
 .webinar-card .p-button {
   align-self: flex-start;
 }
+*/
 
 /* Courses Section */
+/* TODO: Courses Section
 .courses-section {
   padding-block: var(--space-8);
   max-width: var(--size-content-3);
@@ -489,10 +484,10 @@
   color: var(--text-2);
 }
 
-/* Button overrides */
 .p-button {
   font-size: var(--font-size-0);
   padding-inline: var(--space-5);
   height: var(--size-5);
 }
+*/
 </style>
