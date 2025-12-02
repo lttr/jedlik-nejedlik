@@ -16,9 +16,8 @@
             <label for="newsletter-firstname">Křestní jméno</label>
             <input
               id="newsletter-firstname"
-              v-model="firstName"
               type="text"
-              name="firstname"
+              name="first_name"
               autocomplete="given-name"
             />
           </div>
@@ -27,9 +26,8 @@
             <label for="newsletter-lastname">Příjmení</label>
             <input
               id="newsletter-lastname"
-              v-model="lastName"
               type="text"
-              name="lastname"
+              name="last_name"
               autocomplete="family-name"
             />
           </div>
@@ -39,7 +37,6 @@
           <label for="newsletter-email">E-mailová adresa *</label>
           <input
             id="newsletter-email"
-            v-model="email"
             type="email"
             name="email"
             required
@@ -58,8 +55,16 @@
         </p>
 
         <div class="p-center">
-          <button type="submit" class="p-button-brand">Odebírat novinky</button>
+          <button
+            type="submit"
+            class="p-button-brand"
+            :disabled="isPendingOrSuccess"
+          >
+            Odebírat novinky
+          </button>
         </div>
+
+        <div v-if="error" class="error-message">{{ error.message }}</div>
       </form>
     </div>
   </div>
@@ -67,18 +72,15 @@
 
 <script lang="ts" setup>
 const router = useRouter()
-const firstName = ref("")
-const lastName = ref("")
-const email = ref("")
+const { execute, error, isSuccess, isPendingOrSuccess } =
+  useNewsletterParentsForm()
 
-async function onSubmit() {
-  // TODO: Implement newsletter subscription backend
-  console.log("Newsletter subscription:", {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-  })
-  router.push("/dekujeme-za-zajem-o-newsletter")
+async function onSubmit(event: Event) {
+  const form = event.target as HTMLFormElement
+  await execute(new FormData(form))
+  if (isSuccess.value) {
+    router.push("/dekujeme-za-zajem-o-newsletter")
+  }
 }
 </script>
 
