@@ -11,10 +11,7 @@
       <NuxtLink to="/nejedlik" class="topic-link topic-link--star">
         Máte doma nejedlíka
       </NuxtLink>
-      <NuxtLink
-        to="/konzultace-deti-obezita"
-        class="topic-link topic-link--blue"
-      >
+      <NuxtLink to="/nadvaha" class="topic-link topic-link--blue">
         Moje dítě má nadváhu/obezitu
       </NuxtLink>
       <NuxtLink to="/prevence" class="topic-link topic-link--lime">
