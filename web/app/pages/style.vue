@@ -142,6 +142,7 @@ const colors2 = [
   "brand-color",
   "brand-color-bright",
   "color-midnight",
+  "color-burgundy-red",
 ]
 
 const exampleCard: Card = {
