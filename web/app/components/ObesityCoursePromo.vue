@@ -17,38 +17,10 @@
           Máte pocit, že se situace doma kolem jídla vymyká z rukou?
         </p>
         <p>
-          Nadváha u dětí nebolí hned, ale ovlivňuje pohodu, sebevědomí i
-          rodinnou atmosféru. Mnoho rodičů cítí nejistotu, co dělat jako první –
-          jak dítě podpořit, aniž by mu ublížili přísností, tlakem nebo „diety".
+          Nadváha děti nebolí, ale ovlivňuje pohodu, sebevědomí i rodinnou
+          atmosféru. Mnoho rodičů cítí nejistotu, co dělat jako první – jak dítě
+          podpořit, aniž by mu ublížili přísností, tlakem nebo dietou.
         </p>
-      </div>
-
-      <div class="benefits-card">
-        <h2>Co vám kurz přinese?</h2>
-        <ul class="benefits-list">
-          <li>
-            <Icon name="uil:check-circle" class="benefit-icon" />
-            <span>Bez restrikcí, zákazů a pocitu selhání</span>
-          </li>
-          <li>
-            <Icon name="uil:check-circle" class="benefit-icon" />
-            <span
-              >Podpora odborníků na výživu, psychologii a práci s dětmi</span
-            >
-          </li>
-          <li>
-            <Icon name="uil:check-circle" class="benefit-icon" />
-            <span>Praktické návody, které zvládne každá rodina</span>
-          </li>
-          <li>
-            <Icon name="uil:check-circle" class="benefit-icon" />
-            <span>Respekt k emocím dítěte i rodiče</span>
-          </li>
-          <li>
-            <Icon name="uil:check-circle" class="benefit-icon" />
-            <span>Příklady z praxe, abyste v tom nebyli sami</span>
-          </li>
-        </ul>
       </div>
 
       <div class="cta-section">
@@ -127,40 +99,6 @@
   font-weight: var(--font-weight-6);
   color: var(--brand-color);
   margin-bottom: var(--space-3);
-}
-
-/* Benefits Card */
-.benefits-card {
-  background: var(--color-peach);
-  padding: var(--space-6);
-  border-radius: var(--radius-3);
-  margin-bottom: var(--space-6);
-}
-
-.benefits-card h2 {
-  text-align: center;
-  margin-bottom: var(--space-4);
-  font-size: var(--font-size-3);
-}
-
-.benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: var(--space-3);
-}
-
-.benefits-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
-.benefit-icon {
-  color: var(--color-forest-green);
-  flex-shrink: 0;
-  font-size: var(--font-size-3);
 }
 
 /* CTA Section */
