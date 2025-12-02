@@ -5,8 +5,8 @@
         <span class="chip">e-kniha</span>
         <h1 class="heading p-heading-1">Jak na cukroví s dětmi?</h1>
         <p class="description">
-          Pomůžeme Vám, aby bylo Vaše vánoční pečení a mlsání s dětmi chutné,
-          bez starostí a bez výčitek. I na návštěvách!
+          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
+          hádek okolo cukroví. I na návštěvách!
         </p>
         <div class="p-cluster">
           <NuxtLink to="/ebook-vanocni-cukrovi" class="cta p-button"
