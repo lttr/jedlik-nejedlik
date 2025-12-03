@@ -228,7 +228,7 @@
         <h2 class="pricing-title">Kolik mě podpora o svátcích bude stát?</h2>
         <div class="price-box">
           <div class="price">249 Kč</div>
-          <p class="price-details">58 stran + doživotní aktualizace zdarma</p>
+          <p class="price-details">58 stran + budoucí aktualizace zdarma</p>
           <a
             :href="purchaseUrl"
             class="cta-button primary large"
