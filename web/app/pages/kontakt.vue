@@ -52,6 +52,10 @@
       <p>
         <a href="mailto:zdenka@jedlik-nejedlik.cz">zdenka@jedlik-nejedlik.cz</a>
       </p>
+
+      <p>
+        <a href="tel:732651959">732 651 959</a>
+      </p>
     </div>
   </PageWrapper>
 </template>
