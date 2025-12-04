@@ -3,28 +3,23 @@
     <!-- Hero Section -->
     <section class="hero p-full-bg">
       <div class="hero-content">
-        <div class="hero-text">
-          <span class="chip">e-kniha</span>
-          <h1 class="hero-title">Cukroví s dětmi a v pohodě</h1>
-          <p class="hero-subtitle">
-            Rodičovský průvodce dlouhodobou pohodou okolo vánočního mlsání.
-          </p>
-          <p class="hero-benefit">
-            Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
-            hádek okolo cukroví. I na návštěvách!
-          </p>
-          <div class="hero-cta">
-            <a
-              :href="purchaseUrl"
-              class="cta-button primary"
-              target="_blank"
-              rel="noopener"
-              >To chci — koupit e-book</a
-            >
-          </div>
-        </div>
-        <div class="hero-image">
-          <SvgoCukroviOpt class="cookie-svg" aria-hidden="true" />
+        <span class="chip">e-kniha</span>
+        <h1 class="hero-title">Cukroví s dětmi a v pohodě</h1>
+        <p class="hero-subtitle">
+          Rodičovský průvodce dlouhodobou pohodou okolo vánočního mlsání.
+        </p>
+        <p class="hero-benefit">
+          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
+          hádek okolo cukroví. I na návštěvách!
+        </p>
+        <div class="hero-cta">
+          <a
+            :href="purchaseUrl"
+            class="cta-button primary"
+            target="_blank"
+            rel="noopener"
+            >To chci — koupit e-book</a
+          >
         </div>
       </div>
     </section>
@@ -395,17 +390,15 @@ useSeoMeta({
 
 /* Hero Section */
 .hero {
-  background-color: var(--color-burgundy-red);
-  color: white;
+  background-color: white;
   padding-block: var(--space-8);
   margin-top: calc(-1 * var(--space-6));
 }
 
 .hero-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-7);
-  align-items: center;
+  max-width: var(--size-content-3);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .chip {
@@ -414,7 +407,8 @@ useSeoMeta({
   padding-inline: var(--space-2);
   padding-block: 3px;
   border-radius: var(--radius-default);
-  border: var(--border-size-1) solid white;
+  border: var(--border-size-1) solid var(--color-burgundy-red);
+  color: var(--color-burgundy-red);
   margin-bottom: var(--space-3);
 }
 
@@ -428,12 +422,12 @@ useSeoMeta({
 .hero-subtitle {
   font-size: var(--font-size-2);
   margin-bottom: var(--space-3);
-  opacity: 0.95;
 }
 
 .hero-benefit {
   font-size: var(--font-size-0);
   max-width: var(--size-content-2);
+  margin-inline: auto;
   margin-bottom: var(--space-5);
   text-wrap: pretty;
 }
@@ -441,16 +435,8 @@ useSeoMeta({
 .hero-cta {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--space-2);
-}
-
-.hero-image {
-  transform: scale(1.3) translateX(3rem);
-}
-
-.cookie-svg {
-  width: 100%;
-  height: auto;
 }
 
 /* CTA Buttons */
@@ -760,30 +746,8 @@ useSeoMeta({
 
 /* Responsive */
 @media (--lg-n-below) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
   .hero-title {
     font-size: var(--font-size-5);
-  }
-
-  .hero-benefit {
-    margin-inline: auto;
-  }
-
-  .hero-cta {
-    align-items: center;
-  }
-
-  .hero-image {
-    order: -1;
-    transform: scale(1.4) translateY(2vw) translateX(-9vw);
-  }
-
-  .cookie-svg {
-    max-width: 25rem;
   }
 
   .contents-grid {
