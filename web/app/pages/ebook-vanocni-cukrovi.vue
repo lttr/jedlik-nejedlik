@@ -282,20 +282,34 @@
       </div>
     </section>
 
-    <!-- References Section -->
-    <section class="references-section p-full-bg">
+    <!-- Testimonials Section -->
+    <section class="testimonials-section p-full-bg">
       <div class="section-content">
         <h2 class="section-title">Reference rodičů</h2>
-        <div class="references-list">
-          <blockquote class="reference">
-            „Poprvé jsme měli Vánoce bez bojů o cukroví."
-          </blockquote>
-          <blockquote class="reference">
-            „Praktické a laskavé tipy, které fungují."
-          </blockquote>
-          <blockquote class="reference">
-            „Díky e-booku máme jasná pravidla, ale bez stresu."
-          </blockquote>
+        <div class="testimonials-list">
+          <div
+            v-for="testimonial of testimonials"
+            :key="testimonial.name"
+            class="testimonial-card"
+          >
+            <blockquote class="testimonial-quote">
+              {{ testimonial.quote }}
+            </blockquote>
+            <div class="testimonial-author">
+              <img
+                :src="testimonial.image"
+                :alt="testimonial.name"
+                class="testimonial-avatar"
+                width="80"
+                height="80"
+                loading="lazy"
+              />
+              <div class="testimonial-author-info">
+                <strong>{{ testimonial.name }}</strong>
+                <span>{{ testimonial.role }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -323,6 +337,30 @@ const previewImages = [
   { id: "7677b758-7907-4b7b-a7e2-5f121ed3abbc" },
   { id: "1c865708-d38d-420f-8c65-33bc6f91f60a" },
   { id: "92a7e957-0b44-4db3-ade4-19f68a8db6d9" },
+]
+
+const testimonials = [
+  {
+    name: "Alena Rejfková",
+    role: "Speciální pedagog a průvodkyně ve školce, máma osmileté slečny a pětileťáka",
+    quote:
+      "E-book od Zdeňky je nabitý informacemi, napsáno polopaticky i pro laika. Laskavá forma a plno praktických tipů. Děkuji a moc doporučuji.",
+    image: "/images/testimonials/alena.webp",
+  },
+  {
+    name: "Andrea Slavíková",
+    role: "Maminka Máti 4,5 let a pěti měsíční Madlenky",
+    quote:
+      "E-book jsem si zakoupila před synovými prvními Vánoci (tedy těmi opravdovými, když mu bylo rok a půl). Neměla jsem úplně ujasněné, jak přistoupit k celému systému koloběhu cukru a čokolád. Díky e-booku jsem získala představu, co a jak můžu udělat, abych se cítila dobře já i syn. Teď, když jsem se ke čtení vrátila (synovi je 4,5), tak i velmi oceňuji kroky, jak prožít návštěvy u rodiny a známých.",
+    image: "/images/testimonials/andrea.webp",
+  },
+  {
+    name: "Kateřina Zavřelová",
+    role: "Maminka třech malých indiánek",
+    quote:
+      "Vlastně mě (příjemně) překvapilo, že jsem po přečtení zjistila, že to není tak docela o cukroví, jako spíš o celkovém přístupu k jídlu i k dětem. A přestože doma v tomto nejsme na začátku, našla jsem si tam spoustu tipů, které jsem do dalšího vánočního období už zapojila. Manžel si z dětství nese špatnou zkušenost se zdravým cukrovím, které mu vůbec nechutnalo, a tak hledáme cesty, jak mít vánoční stůl příjemný pro všechny.",
+    image: "/images/testimonials/katerina.webp",
+  },
 ]
 
 const lightboxDialog = ref<HTMLDialogElement | null>(null)
@@ -705,29 +743,63 @@ useSeoMeta({
   color: var(--text-color-2);
 }
 
-/* References Section */
-.references-section {
+/* Testimonials Section */
+.testimonials-section {
   background-color: white;
   padding-block: var(--section-padding);
 }
 
-.references-list {
+.testimonials-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  max-width: var(--size-content-2);
+  gap: var(--space-6);
+  max-width: var(--size-content-3);
   margin-inline: auto;
 }
 
-.reference {
-  font-size: var(--font-size-1);
-  font-style: italic;
-  text-align: center;
-  padding: var(--space-4);
-  margin: 0;
-  background-color: var(--surface-1);
+.testimonial-card {
+  position: relative;
+  padding: var(--space-6);
+  background-color: var(--color-peach);
   border-radius: var(--radius-3);
-  border-left: 4px solid var(--color-burgundy-red);
+}
+
+.testimonial-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+  border: 3px solid white;
+  flex-shrink: 0;
+}
+
+.testimonial-quote {
+  font-size: var(--font-size-0);
+  color: var(--text-color-1);
+  margin: 0 0 var(--space-5);
+  line-height: var(--font-lineheight-3);
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.testimonial-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.testimonial-author strong {
+  font-size: var(--font-size-0);
+  color: var(--text-color-1);
+}
+
+.testimonial-author span {
+  font-size: var(--font-size--1);
+  color: var(--text-color-2);
 }
 
 /* Final CTA */
@@ -786,6 +858,19 @@ useSeoMeta({
 
   .preview-thumbnail {
     width: 140px;
+  }
+
+  .testimonial-card {
+    padding: var(--space-5);
+  }
+
+  .testimonial-quote {
+    font-size: var(--font-size-0);
+  }
+
+  .testimonial-author {
+    flex-direction: column;
+    text-align: center;
   }
 }
 
