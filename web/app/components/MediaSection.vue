@@ -150,7 +150,7 @@ const { data: media3 } = await useDirectusImage(
 }
 
 .media-visual {
-  margin-block: var(--space-5);
+  margin-block: var(--space-6);
 }
 
 .media-badges {

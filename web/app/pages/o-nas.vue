@@ -30,7 +30,11 @@
         charakter. Více naleznete v sekci
         <NuxtLink to="/pro-rodice">Pro rodiče</NuxtLink>.
       </p>
-      <ContentImg v-if="presentation1" :image="presentation1" />
+      <ContentImg
+        v-if="presentation1"
+        :image="presentation1"
+        class="level-image"
+      />
 
       <h3>Soukromá poradna Jedlík-nejedlík</h3>
       <p>
@@ -41,7 +45,11 @@
         potravy. Poradenství probíhá osobně nebo online. Více informací o našich
         službách najdete <NuxtLink to="/pro-rodice">ZDE</NuxtLink>.
       </p>
-      <ContentImg v-if="presentation2" :image="presentation2" />
+      <ContentImg
+        v-if="presentation2"
+        :image="presentation2"
+        class="level-image"
+      />
 
       <h3>Odborná činnost</h3>
       <p>
@@ -52,15 +60,19 @@
         spolupráce důležitá. Jste odborník? Více informací o naší odborné
         činnosti najdete <NuxtLink to="/pro-odborniky">ZDE</NuxtLink>.
       </p>
-      <ContentImg v-if="presentation3" :image="presentation3" />
+      <ContentImg
+        v-if="presentation3"
+        :image="presentation3"
+        class="level-image"
+      />
 
-      <h2>Tým projektu Jedlík-nejedlík</h2>
+      <h2 class="team-heading">Tým projektu Jedlík-nejedlík</h2>
       <p>
         Za celým vznikem projektu Jedlík-nejedlík stojí kromě zakladatelky
         Zdeňky také tým dalších třech lidí, bez nichž by nic z naší činnosti
         nemohlo fungovat nad rámec lokálního působení.
       </p>
-      <ContentImg v-if="team" :image="team" />
+      <ContentImg v-if="team" :image="team" class="team-image" />
     </article>
   </PageWrapper>
 </template>
@@ -82,3 +94,18 @@ const { data: team } = await useDirectusImage(
   "6e0075d1-3ba7-4bb5-8b3f-b71c218c39bd",
 )
 </script>
+
+<style scoped>
+.team-heading {
+  --flow-space: var(--space-9);
+}
+
+.team-image {
+  max-width: 740px;
+  border-radius: var(--radius-4);
+}
+
+.level-image {
+  margin-block: var(--space-6);
+}
+</style>
