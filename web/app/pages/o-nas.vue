@@ -69,8 +69,8 @@
       <h2 class="team-heading">Tým projektu Jedlík-nejedlík</h2>
       <p>
         Za celým vznikem projektu Jedlík-nejedlík stojí kromě zakladatelky
-        Zdeňky také tým dalších třech lidí, bez nichž by nic z naší činnosti
-        nemohlo fungovat nad rámec lokálního působení.
+        Zdeňky také tým dalších lidí, bez nichž by nic z naší činnosti nemohlo
+        fungovat nad rámec lokálního působení.
       </p>
       <ContentImg v-if="team" :image="team" class="team-image" />
     </article>
