@@ -91,7 +91,7 @@ const { data: presentation3 } = await useDirectusImage(
 )
 
 const { data: team } = await useDirectusImage(
-  "6e0075d1-3ba7-4bb5-8b3f-b71c218c39bd",
+  "f20b057d-d3aa-4b57-89d3-4f240315b305",
 )
 </script>
 
