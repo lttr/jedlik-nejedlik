@@ -222,7 +222,7 @@
       <div class="section-content">
         <h2 class="pricing-title">Kolik mě podpora o svátcích bude stát?</h2>
         <div class="price-box">
-          <div class="price">249 Kč</div>
+          <div class="price">290 Kč</div>
           <p class="price-details">58 stran + budoucí aktualizace zdarma</p>
           <a
             :href="purchaseUrl"
@@ -231,7 +231,7 @@
             rel="noopener"
             >To chci</a
           >
-          <p class="price-note">Cena platná do 6. prosince, poté 290 Kč</p>
+          <p class="price-note">Ke koupi do 22. 12. 2025</p>
         </div>
       </div>
     </section>
@@ -322,9 +322,9 @@
           class="cta-button primary large"
           target="_blank"
           rel="noopener"
-          >To chci — stáhnout e-book za 249 Kč</a
+          >To chci — stáhnout e-book za 290 Kč</a
         >
-        <p class="final-note">Cena platná do 6. prosince, poté 290 Kč</p>
+        <p class="final-note">Ke koupi do 22. 12. 2025</p>
       </div>
     </section>
   </div>
