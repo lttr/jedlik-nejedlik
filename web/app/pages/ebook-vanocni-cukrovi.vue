@@ -341,6 +341,13 @@ const previewImages = [
 
 const testimonials = [
   {
+    name: "MUDr. Lenka Veselá",
+    role: "Dětská lékařka",
+    quote:
+      "E-book je napsaný s velkým respektem jak k rodičům, tak k dětem. Nabízí jemné, ale praktické vedení, jak prožít období Vánoc i dalších oslav s větším klidem, bez zbytečného stresu a s důrazem na posilování zdravého vztahu dítěte k jídlu. Oceňuji, že nesklouzává k žádným extrémům – místo toho předkládá různé reálné a rodičovsky proveditelné přístupy, které mohou pomoci vytvořit doma příjemnější atmosféru. 🎄\n\nVelmi užitečné jsou i tipy na společné pečení vánočního cukroví: jak si ho s dětmi užít, nezbláznit se z nepořádku a zároveň podpořit jejich přirozenou zvědavost. Autorka také nabízí praktické rady, jak zvládnout návštěvy a rodinná setkání, kde bývá jídla ‚až až', a přesto si uchovat pohodu.\n\nHlavním poselstvím e-booku je, že budování zdravého vztahu dítěte k jídlu je proces – někdy náročný, ale rozhodně nemusí být raketovou vědou. Stačí drobné, soucitné kroky, které se postupně skládají v dlouhodobý efekt.\n\nE-book doporučuji všem rodičům, kteří se o vztah svých dětí k jídlu zajímají a hledají inspiraci, jak na něm citlivě pracovat. Přečetla jsem ho jedním dechem!",
+    image: "/images/testimonials/lenka.webp",
+  },
+  {
     name: "Alena Rejfková",
     role: "Speciální pedagog a průvodkyně ve školce, máma osmileté slečny a pětileťáka",
     quote:
@@ -778,6 +785,7 @@ useSeoMeta({
   color: var(--text-color-1);
   margin: 0 0 var(--space-5);
   line-height: var(--font-lineheight-3);
+  white-space: pre-line;
 }
 
 .testimonial-author {
