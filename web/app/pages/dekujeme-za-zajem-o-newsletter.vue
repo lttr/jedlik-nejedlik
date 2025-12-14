@@ -39,7 +39,7 @@
 import { DIRECTUS_URL } from "~~/shared/utils/directus"
 
 const CHECKLIST_FILE_ID = "d5f38263-a202-4c27-b0aa-b15c4a8d8851"
-const checklistUrl = `${DIRECTUS_URL}/assets/${CHECKLIST_FILE_ID}`
+const checklistUrl = `${DIRECTUS_URL}/assets/${CHECKLIST_FILE_ID}?download`
 
 useSeoMeta({
   title: "Děkujeme za přihlášení k newsletteru",
