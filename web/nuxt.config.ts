@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "nuxt-svgo",
     "@vueuse/nuxt",
     "@dxup/nuxt",
+    "@sentry/nuxt/module",
   ],
 
   components: [
@@ -32,6 +33,10 @@ export default defineNuxtConfig({
     name: "Jedlík-nejedlík",
     description: "Výživa a výchova v propojení",
     defaultLocale: "cs",
+  },
+
+  sourcemap: {
+    client: "hidden",
   },
 
   experimental: {
@@ -76,6 +81,11 @@ export default defineNuxtConfig({
   plausible: {
     ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
     apiHost: "https://plausible.lttr.cz",
+  },
+
+  sentry: {
+    org: "lukas-trumm",
+    project: "jedlik-nejedlik",
   },
 
   svgo: {
