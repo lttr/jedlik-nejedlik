@@ -231,7 +231,7 @@
             rel="noopener"
             >To chci</a
           >
-          <p class="price-note">Ke koupi do 22. 12. 2025</p>
+          <p class="price-note">Ke koupi do 21. 12. 2025</p>
         </div>
       </div>
     </section>
@@ -324,7 +324,7 @@
           rel="noopener"
           >To chci — stáhnout e-book za 290 Kč</a
         >
-        <p class="final-note">Ke koupi do 22. 12. 2025</p>
+        <p class="final-note">Ke koupi do 21. 12. 2025</p>
       </div>
     </section>
   </div>
