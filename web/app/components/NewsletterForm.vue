@@ -1,12 +1,14 @@
 <template>
   <div class="newsletter-section">
     <div class="newsletter-header">
-      <h3>Newsletter pro rodiče</h3>
-      <p>
-        Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské
-        výživy přímo do své e-mailové schránky.
+      <h3>Získejte Cukrovíčkové desatero zdarma</h3>
+      <p class="highlight">
+        Přihlaste se k newsletteru a stáhněte si praktický checklist pro
+        zdravější Vánoce.
       </p>
-      <p class="highlight">S naším newsletterem vám nic neunikne.</p>
+      <p class="christmas-note">
+        Checklist si budete moci stáhnout ihned po přihlášení.
+      </p>
     </div>
 
     <div class="form-wrapper">
@@ -110,6 +112,12 @@ async function onSubmit(event: Event) {
   margin-top: var(--space-2);
   font-weight: var(--font-weight-6);
   color: var(--brand-color);
+}
+
+.newsletter-header .christmas-note {
+  margin-top: var(--space-1);
+  font-size: var(--font-size--1);
+  color: var(--text-2);
 }
 
 .form-wrapper {
