@@ -16,6 +16,17 @@
       >
         Stáhnout Cukrovíčkové desatero
       </a>
+      <div class="upsell-box">
+        <p class="upsell-heading">Chcete vědět víc?</p>
+        <p class="upsell-text">
+          Detailní popis doporučení z desatera a mnoho navíc získáte v e-booku
+        </p>
+        <p class="upsell-ebook-name">Cukroví s dětmi a v pohodě</p>
+        <p class="upsell-deadline">Akce platí do 21.&nbsp;12.&nbsp;2025</p>
+        <NuxtLink to="/ebook-vanocni-cukrovi" class="p-button p-button-brand">
+          Zjistit více o e-booku
+        </NuxtLink>
+      </div>
       <p class="team-signature">Tým Jedlík-nejedlík</p>
       <NuxtLink to="/pro-rodice" class="back-link">
         ← Zpět na stránku Pro rodiče
@@ -86,6 +97,40 @@ useSeoMeta({
   padding: var(--space-4) var(--space-5);
   line-height: var(--font-lineheight-3);
   height: auto;
+}
+
+.upsell-box {
+  margin-block: var(--space-6);
+  padding: var(--space-5);
+  background: var(--surface-2);
+  border-radius: var(--radius-3);
+  text-align: center;
+}
+
+.upsell-heading {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-6);
+  color: var(--brand-color);
+  margin: 0 0 var(--space-2);
+}
+
+.upsell-text {
+  font-size: var(--font-size-0);
+  color: var(--text-2);
+  margin: 0 0 var(--space-1);
+}
+
+.upsell-ebook-name {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-6);
+  color: var(--text-1);
+  margin: 0 0 var(--space-2);
+}
+
+.upsell-deadline {
+  font-size: var(--font-size--1);
+  color: var(--text-2);
+  margin: 0 0 var(--space-3);
 }
 
 .team-signature {

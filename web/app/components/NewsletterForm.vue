@@ -3,11 +3,12 @@
     <div class="newsletter-header">
       <h3>Získejte Cukrovíčkové desatero zdarma</h3>
       <p class="highlight">
-        Přihlaste se k newsletteru a stáhněte si praktický checklist pro
-        zdravější Vánoce.
+        Stáhněte si desatero vánočního mlsání, které podpoří dlouhodobou pohodu
+        okolo cukroví u vás i vašich dětí.
       </p>
       <p class="christmas-note">
-        Checklist si budete moci stáhnout ihned po přihlášení.
+        Checklist si budete moci stáhnout ihned po přihlášení k odběru
+        newsletteru.
       </p>
     </div>
 
@@ -62,7 +63,7 @@
             class="p-button-brand"
             :disabled="isPendingOrSuccess"
           >
-            Odebírat novinky
+            Chci desatero
           </button>
         </div>
 
