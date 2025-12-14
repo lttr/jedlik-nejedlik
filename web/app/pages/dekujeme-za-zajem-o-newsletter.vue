@@ -14,7 +14,6 @@
         download
         class="p-button p-button-brand p-button-large download-button"
       >
-        <Icon name="uil:download-alt" />
         Stáhnout Cukrovíčkové desatero
       </a>
       <p class="team-signature">Tým Jedlík-nejedlík</p>
@@ -82,14 +81,11 @@ useSeoMeta({
 }
 
 .download-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
   margin-bottom: var(--space-5);
   font-size: var(--font-size-1);
   padding: var(--space-4) var(--space-5);
   line-height: var(--font-lineheight-3);
-  text-align: center;
+  height: auto;
 }
 
 .team-signature {
