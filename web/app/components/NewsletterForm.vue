@@ -1,81 +1,71 @@
 <template>
-  <div class="newsletter-wrapper">
-    <h3 class="newsletter-title">Získejte Cukrovíčkové desatero zdarma</h3>
-    <img
-      src="/images/desatero_vyrez.webp"
-      alt="Cukrovíčkové desatero"
-      class="desatero-image"
-    />
-    <div class="newsletter-section">
-      <div class="newsletter-header">
-        <p class="highlight">
-          Stáhněte si desatero vánočního mlsání, které podpoří dlouhodobou
-          pohodu okolo cukroví u vás i vašich dětí.
-        </p>
-        <p class="christmas-note">
-          Checklist si budete moci stáhnout ihned po přihlášení k odběru
-          newsletteru.
-        </p>
-      </div>
+  <div class="newsletter-section">
+    <div class="newsletter-header">
+      <h3>Newsletter pro rodiče</h3>
+      <p>
+        Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské
+        výživy přímo do své e-mailové schránky.
+      </p>
+      <p class="highlight">S naším newsletterem vám nic neunikne.</p>
+    </div>
 
-      <div class="form-wrapper">
-        <form class="form" @submit.prevent="onSubmit">
-          <div class="form-row">
-            <div class="p-form-group">
-              <label for="newsletter-firstname">Křestní jméno</label>
-              <input
-                id="newsletter-firstname"
-                type="text"
-                name="first_name"
-                autocomplete="given-name"
-              />
-            </div>
-
-            <div class="p-form-group">
-              <label for="newsletter-lastname">Příjmení</label>
-              <input
-                id="newsletter-lastname"
-                type="text"
-                name="last_name"
-                autocomplete="family-name"
-              />
-            </div>
-          </div>
-
+    <div class="form-wrapper">
+      <form class="form" @submit.prevent="onSubmit">
+        <div class="form-row">
           <div class="p-form-group">
-            <label for="newsletter-email">E-mailová adresa *</label>
+            <label for="newsletter-firstname">Křestní jméno</label>
             <input
-              id="newsletter-email"
-              type="email"
-              name="email"
-              required
-              autocomplete="email"
-              placeholder="vas@email.cz"
+              id="newsletter-firstname"
+              type="text"
+              name="first_name"
+              autocomplete="given-name"
             />
           </div>
 
-          <p class="consent-note">
-            Odesláním údajů souhlasím s tím, abych dostával/a na svůj e-mail
-            zprávy s novinkami od Jedlík-nejedlík. Souhlas mohu kdykoli odvolat
-            prostřednictvím odhlašovacího odkazu v každé zprávě.
-            <NuxtLink to="/zasady-zpracovani-osobnich-udaju"
-              >Zásady zpracování osobních údajů</NuxtLink
-            >
-          </p>
-
-          <div class="p-center">
-            <button
-              type="submit"
-              class="p-button-brand"
-              :disabled="isPendingOrSuccess"
-            >
-              Chci desatero
-            </button>
+          <div class="p-form-group">
+            <label for="newsletter-lastname">Příjmení</label>
+            <input
+              id="newsletter-lastname"
+              type="text"
+              name="last_name"
+              autocomplete="family-name"
+            />
           </div>
+        </div>
 
-          <div v-if="error" class="error-message">{{ error.message }}</div>
-        </form>
-      </div>
+        <div class="p-form-group">
+          <label for="newsletter-email">E-mailová adresa *</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="vas@email.cz"
+          />
+        </div>
+
+        <p class="consent-note">
+          Odesláním údajů souhlasím s tím, abych dostával/a na svůj e-mail
+          zprávy s novinkami od Jedlík-nejedlík. Souhlas mohu kdykoli odvolat
+          prostřednictvím odhlašovacího odkazu v každé zprávě.
+          <NuxtLink to="/zasady-zpracovani-osobnich-udaju"
+            >Zásady zpracování osobních údajů</NuxtLink
+          >
+        </p>
+
+        <div class="p-center">
+          <button
+            type="submit"
+            class="p-button-brand"
+            :disabled="isPendingOrSuccess"
+          >
+            Odebírat novinky
+          </button>
+        </div>
+
+        <div v-if="error" class="error-message">{{ error.message }}</div>
+      </form>
     </div>
   </div>
 </template>
@@ -95,23 +85,6 @@ async function onSubmit(event: Event) {
 </script>
 
 <style scoped>
-.newsletter-wrapper {
-  text-align: center;
-}
-
-.newsletter-title {
-  margin: 0 0 var(--space-3);
-  font-size: var(--font-size-4);
-  color: var(--brand-color);
-}
-
-.desatero-image {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  margin-bottom: var(--space-5);
-}
-
 .newsletter-section {
   max-width: var(--size-content-2);
   margin-inline: auto;
@@ -120,6 +93,12 @@ async function onSubmit(event: Event) {
 .newsletter-header {
   text-align: center;
   margin-bottom: var(--space-5);
+}
+
+.newsletter-header h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-4);
+  color: var(--brand-color);
 }
 
 .newsletter-header p {
@@ -131,12 +110,6 @@ async function onSubmit(event: Event) {
   margin-top: var(--space-2);
   font-weight: var(--font-weight-6);
   color: var(--brand-color);
-}
-
-.newsletter-header .christmas-note {
-  margin-top: var(--space-1);
-  font-size: var(--font-size--1);
-  color: var(--text-2);
 }
 
 .form-wrapper {

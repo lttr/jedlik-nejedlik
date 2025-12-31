@@ -1,6 +1,5 @@
 <template>
   <main class="main p-page-layout">
-    <ChristmasCookieSection />
     <AboutProjectSection />
     <!-- <HeroSection /> -->
     <!-- <ParentsSection /> -->
@@ -24,6 +23,7 @@ definePageMeta({
 <style scoped>
 .main {
   row-gap: var(--space-9);
+  padding-top: var(--space-9);
   padding-bottom: var(--space-9);
 }
 </style>

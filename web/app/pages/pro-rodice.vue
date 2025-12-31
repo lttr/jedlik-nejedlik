@@ -19,12 +19,6 @@
       </NuxtLink>
     </nav>
 
-    <!-- Current Offers Section -->
-    <section class="current-offers p-full">
-      <h2 class="section-title">Aktuálně nabízíme</h2>
-      <ChristmasCookieSection class="christmas-cookie-embedded" />
-    </section>
-
     <!-- Newsletter Section -->
     <section class="newsletter">
       <NewsletterForm />
@@ -147,16 +141,6 @@
 .topic-link--lime {
   background: var(--color-light-lime);
   color: var(--color-forest-green);
-}
-
-/* Current Offers Section */
-.current-offers {
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-6);
-}
-
-.current-offers .section-title {
-  margin-bottom: var(--space-4);
 }
 
 /* Newsletter Section */
