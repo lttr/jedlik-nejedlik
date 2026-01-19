@@ -50,7 +50,7 @@
       </NuxtLink>
       <!-- TODO: add link to STOB course -->
       <a
-        href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-zakladni"
+        href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-s-moznosti-cviceni"
         class="offer-link"
         target="_blank"
         rel="noopener"
