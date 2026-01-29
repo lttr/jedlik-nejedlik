@@ -3,21 +3,25 @@
     <!-- 1. Hero Section -->
     <section class="hero p-full-bg">
       <div class="hero-content">
-        <span class="chip">12týdenní program</span>
-        <h1>Pomozte svému dítěti znovu najít rovnováhu</h1>
-        <p class="hero-subtitle">
-          Otevíráme program pro rodiče, kteří hledají
+        <p class="hero-intro">
+          Otevíráme 12týdenní program pro rodiče, kteří hledají
           <strong>dlouhodobé a&nbsp;bezpečné řešení</strong> dětské nadváhy
           a&nbsp;obezity.
         </p>
+        <h1>Dětská nadváha pod kontrolou – bez diet a&nbsp;tlaku</h1>
+        <p class="hero-subtitle">
+          Praktický kurz pro rodiče dětí s&nbsp;nadváhou a&nbsp;obezitou
+          3–7&nbsp;let
+        </p>
         <p class="start-date">
           <Icon name="uil:calendar-alt" />
-          <span>Začínáme <strong>13.&nbsp;února 2026</strong></span>
+          <span>Začínáme <strong>16.&nbsp;února 2026</strong></span>
         </p>
+        <p class="hero-benefits-heading">Po absolvování kurzu:</p>
         <ul class="hero-benefits">
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
-            <span>Budete kompetentní a&nbsp;sebejistý průvodce změny</span>
+            <span>Jste kompetentní a&nbsp;sebejistý průvodce změny</span>
           </li>
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
@@ -416,6 +420,8 @@
         </div>
       </div>
     </section>
+
+    <PaymentLogos class="payment-logos-spacing" />
   </div>
 </template>
 
@@ -441,20 +447,16 @@ const registrationUrl = "#prihlasit"
   text-align: center;
 }
 
-.chip {
-  display: inline-block;
-  font-size: var(--font-size--1);
-  padding-inline: var(--space-2);
-  padding-block: 3px;
-  border-radius: var(--radius-default);
-  border: var(--border-size-1) solid var(--color-burgundy-red);
-  color: var(--color-burgundy-red);
-  margin-bottom: var(--space-3);
+.hero-intro {
+  max-width: var(--size-content-2);
+  margin-inline: auto;
+  margin-bottom: var(--space-5);
+  text-wrap: pretty;
 }
 
 .hero h1 {
-  font-size: var(--font-size-6);
-  font-weight: var(--font-weight-7);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-6);
   line-height: var(--font-lineheight-1);
   margin-bottom: var(--space-4);
   color: var(--brand-color);
@@ -475,6 +477,7 @@ const registrationUrl = "#prihlasit"
   background: var(--color-light-lime);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-round);
+  margin-top: var(--space-5);
   margin-bottom: var(--space-5);
   font-size: var(--font-size-1);
 }
@@ -570,7 +573,7 @@ const registrationUrl = "#prihlasit"
 }
 
 .results-list li {
-  font-size: var(--font-size-2);
+  font-size: var(--font-size-0);
   margin-bottom: var(--space-4);
   padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--surface-3);
@@ -801,6 +804,11 @@ const registrationUrl = "#prihlasit"
 .price-start {
   font-size: var(--font-size-1);
   font-weight: var(--font-weight-6);
+  margin-bottom: var(--space-4);
+}
+
+.payment-logos-spacing {
+  margin-top: var(--space-9);
   margin-bottom: var(--space-4);
 }
 
