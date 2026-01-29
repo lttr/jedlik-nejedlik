@@ -196,7 +196,9 @@
       <div class="section-content">
         <h2 class="pricing-title">Cena kurzu</h2>
         <div class="price-box">
-          <div class="price">3&nbsp;800&nbsp;Kč</div>
+          <div class="price">
+            3&nbsp;800&nbsp;Kč <span class="price-vat">včetně&nbsp;DPH</span>
+          </div>
           <p class="price-details">
             Cena zahrnuje 12týdenní vedený program, pracovní listy, živá setkání
             i&nbsp;bonusový podpůrný zoom, který se bude konat měsíc po ukončení
@@ -206,7 +208,7 @@
             Kurzovné je možné rozdělit do dvou splátek
             (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
-          <p class="price-start">Začínáme 13.&nbsp;února 2026</p>
+          <p class="price-start">Začínáme 17.&nbsp;února 2026</p>
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
@@ -788,6 +790,12 @@ const registrationUrl = "#prihlasit"
 .price {
   font-size: var(--font-size-2);
   font-weight: 700;
+}
+
+.price-vat {
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-4);
+  opacity: 0.8;
 }
 
 .price-details {

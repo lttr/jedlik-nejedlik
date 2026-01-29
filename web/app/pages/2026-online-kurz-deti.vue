@@ -8,7 +8,7 @@
 useSeoMeta({
   title: "Online kurz pro rodiče dětí s nadváhou | Jedlík-nejedlík",
   description:
-    "Pomozte svému dítěti znovu najít rovnováhu. Online kurz pro rodiče dětí s nadváhou a obezitou ve věku 3–7 let. Start: leden 2026.",
+    "Pomozte svému dítěti znovu najít rovnováhu. Online kurz pro rodiče dětí s nadváhou a obezitou ve věku 3–7 let. Start: únor 2026.",
 })
 </script>
 
