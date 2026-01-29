@@ -4,7 +4,11 @@
     <div class="payment-logos-images">
       <img src="/images/payment/gopay.png" alt="GoPay" />
       <img src="/images/payment/visa.png" alt="Visa" />
-      <img src="/images/payment/mastercard.png" alt="Mastercard" class="mastercard" />
+      <img
+        src="/images/payment/mastercard.png"
+        alt="Mastercard"
+        class="mastercard"
+      />
     </div>
   </div>
 </template>
