@@ -17,7 +17,18 @@
           <Icon name="uil:calendar-alt" />
           <span>Začínáme <strong>16.&nbsp;února 2026</strong></span>
         </p>
-        <p class="hero-benefits-heading">Po absolvování kurzu:</p>
+        <div class="hero-cta">
+          <a :href="registrationUrl" class="cta-button primary large"
+            >Chci se přihlásit</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- 1b. Po absolvování kurzu -->
+    <section class="after-course-section p-full-bg">
+      <div class="section-content">
+        <h2 class="section-title">Po absolvování kurzu</h2>
         <ul class="hero-benefits">
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
@@ -35,11 +46,6 @@
             >
           </li>
         </ul>
-        <div class="hero-cta">
-          <a :href="registrationUrl" class="cta-button primary large"
-            >Chci se přihlásit</a
-          >
-        </div>
       </div>
     </section>
 
@@ -48,14 +54,24 @@
       <div class="section-content">
         <h2 class="section-title">Výsledkem je, že:</h2>
         <ul class="results-list">
-          <li>Nárůst hmotnosti dítěte se zastaví</li>
           <li>
-            Dítě v&nbsp;následujících měsících z&nbsp;nadváhy přirozeně vyrůstá
+            <Icon name="mdi:check-circle" class="benefit-icon" />
+            <span>Nárůst hmotnosti dítěte se zastaví</span>
           </li>
           <li>
-            <strong
-              >Změna je udržitelná a&nbsp;nepoškozuje ani zdraví dítěte, ani váš
-              společný vztah</strong
+            <Icon name="mdi:check-circle" class="benefit-icon" />
+            <span
+              >Dítě v&nbsp;následujících měsících z&nbsp;nadváhy přirozeně
+              vyrůstá</span
+            >
+          </li>
+          <li>
+            <Icon name="mdi:check-circle" class="benefit-icon" />
+            <span
+              ><strong
+                >Změna je udržitelná a&nbsp;nepoškozuje ani zdraví dítěte, ani
+                váš společný vztah</strong
+              ></span
             >
           </li>
         </ul>
@@ -208,7 +224,7 @@
             Kurzovné je možné rozdělit do dvou splátek
             (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
-          <p class="price-start">Začínáme 17.&nbsp;února 2026</p>
+          <p class="price-start">Začínáme 16.&nbsp;února 2026</p>
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
@@ -452,7 +468,7 @@ const registrationUrl = "#prihlasit"
 .hero-intro {
   max-width: var(--size-content-2);
   margin-inline: auto;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
   text-wrap: pretty;
 }
 
@@ -468,7 +484,7 @@ const registrationUrl = "#prihlasit"
   font-size: var(--font-size-2);
   max-width: var(--size-content-2);
   margin-inline: auto;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-2);
   text-wrap: pretty;
 }
 
@@ -476,11 +492,11 @@ const registrationUrl = "#prihlasit"
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--color-light-lime);
+  background: var(--color-peach);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-round);
   margin-top: var(--space-5);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
   font-size: var(--font-size-1);
 }
 
@@ -549,7 +565,7 @@ const registrationUrl = "#prihlasit"
 
 .section-title {
   font-size: var(--font-size-4);
-  font-weight: var(--font-weight-7);
+  font-weight: var(--font-weight-6);
   text-align: center;
   margin-bottom: var(--space-6);
 }
@@ -557,6 +573,16 @@ const registrationUrl = "#prihlasit"
 .subsection-title {
   font-size: var(--font-size-2);
   font-weight: var(--font-weight-6);
+  margin-bottom: var(--space-4);
+}
+
+/* After Course Section */
+.after-course-section {
+  background-color: white;
+  padding-block: var(--space-5);
+}
+
+.after-course-section .section-title {
   margin-bottom: var(--space-4);
 }
 
@@ -571,20 +597,15 @@ const registrationUrl = "#prihlasit"
   padding: 0;
   max-width: var(--size-content-2);
   margin-inline: auto;
-  text-align: center;
+  text-align: left;
 }
 
 .results-list li {
-  font-size: var(--font-size-0);
-  margin-bottom: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--surface-3);
-}
-
-.results-list li:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-1);
+  margin-bottom: var(--space-3);
 }
 
 /* Why Section */
@@ -776,7 +797,7 @@ const registrationUrl = "#prihlasit"
 
 .pricing-title {
   font-size: var(--font-size-4);
-  font-weight: var(--font-weight-7);
+  font-weight: var(--font-weight-6);
   margin-bottom: var(--space-6);
 }
 
