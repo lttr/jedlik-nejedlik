@@ -21,6 +21,7 @@
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
+          <p class="sale-note">Prodej bude spuštěn 6.2.</p>
         </div>
       </div>
     </section>
@@ -228,6 +229,7 @@
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
+          <p class="sale-note">Prodej bude spuštěn 6.2.</p>
         </div>
       </div>
     </section>
@@ -525,7 +527,8 @@ const registrationUrl = "#prihlasit"
 
 .hero-cta {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* CTA Buttons */
@@ -555,6 +558,13 @@ const registrationUrl = "#prihlasit"
 .cta-button.large {
   padding: var(--space-4) var(--space-7);
   font-size: var(--font-size-1);
+}
+
+.sale-note {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-0);
+  color: var(--text-2);
+  font-style: italic;
 }
 
 /* Section Common Styles */
