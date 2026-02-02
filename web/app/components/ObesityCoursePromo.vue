@@ -446,7 +446,7 @@
 </template>
 
 <script setup lang="ts">
-const registrationUrl = "#prihlasit"
+const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
 </script>
 
 <style scoped>
