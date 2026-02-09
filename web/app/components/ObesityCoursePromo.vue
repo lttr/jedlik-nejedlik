@@ -15,7 +15,7 @@
         </p>
         <p class="start-date">
           <Icon name="uil:calendar-alt" />
-          <span>Začínáme <strong>16.&nbsp;února 2026</strong></span>
+          <span>Začínáme <strong>16.&nbsp;března 2026</strong></span>
         </p>
         <div class="hero-cta">
           <a :href="registrationUrl" class="cta-button primary large"
@@ -224,7 +224,7 @@
             Kurzovné je možné rozdělit do dvou splátek
             (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
-          <p class="price-start">Začínáme 16.&nbsp;února 2026</p>
+          <p class="price-start">Začínáme 16.&nbsp;března 2026</p>
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
