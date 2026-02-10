@@ -19,11 +19,6 @@
           <li>
             <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
           </li>
-          <li>
-            <NuxtLink class="link" to="/vzdelavani-pro-odborniky"
-              >Vzdělávání pro odborníky</NuxtLink
-            >
-          </li>
           <li><NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink></li>
         </ul>
       </section>
