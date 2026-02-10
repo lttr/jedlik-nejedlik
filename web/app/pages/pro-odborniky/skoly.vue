@@ -1,7 +1,7 @@
 <template>
   <PageWrapper root-element="article" class="p-prose">
     <p>
-      <NuxtLink to="/pro-odborniky-v2">&larr; Pro odborníky</NuxtLink>
+      <NuxtLink to="/pro-odborniky">&larr; Pro odborníky</NuxtLink>
     </p>
 
     <h1>Mateřské a&nbsp;základní školy</h1>
