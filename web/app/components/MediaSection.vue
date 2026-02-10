@@ -6,6 +6,7 @@
         <span>ČT24</span>
         <span>iDNES</span>
         <span>Český rozhlas</span>
+        <span>Deník N</span>
         <span>Lifestyle</span>
       </div>
     </div>
@@ -98,6 +99,19 @@
           target="_blank"
           rel="noopener"
           >Poslechnout</a
+        >
+      </div>
+
+      <div class="media-item">
+        <div class="media-item-content">
+          <h3>Deník N – rozhovor</h3>
+          <p>Jak poznat, že dítěti chutná a kdy už je to problém</p>
+        </div>
+        <a
+          href="https://denikn.cz/1961488/rozhovor-pro-rodice-jedliku-jak-poznat-ze-diteti-chutna-a-kdy-uz-je-to-problem/"
+          target="_blank"
+          rel="noopener"
+          >Číst</a
         >
       </div>
 
