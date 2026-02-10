@@ -1,109 +1,102 @@
 <template>
-  <PageWrapper root-element="article">
-    <div class="p-prose">
-      <h1>Výživa a&nbsp;výchova v&nbsp;propojení</h1>
+  <PageWrapper root-element="article" class="p-prose">
+    <h1>Výživa a&nbsp;výchova v&nbsp;propojení</h1>
 
-      <p class="p-base-text-bold">
-        Milí odborníci, vítejte na stránkách projektu Jedlík-nejedlík.
-      </p>
+    <p class="p-base-text-bold">
+      Milí odborníci, vítejte na stránkách projektu Jedlík-nejedlík.
+    </p>
 
-      <p>
-        Věříme, že prevence je základním krokem pro eliminaci nárůstu dětské
-        nadváhy a&nbsp;obezity na jedné straně a&nbsp;poruch příjmu potravy na
-        straně druhé.
-      </p>
+    <p>
+      Věříme, že prevence je základním krokem pro eliminaci nárůstu dětské
+      nadváhy a&nbsp;obezity na jedné straně a&nbsp;poruch příjmu potravy na
+      straně druhé.
+    </p>
 
-      <p>
-        Proto přicházíme s&nbsp;konceptem výživy a&nbsp;výchovy v&nbsp;propojení
-        jako nástrojem prevence, který si klade za cíl připravit rodiče na
-        výchovné situace okolo jídla tak, aby je zvládnul. Rodič, který ustojí
-        dětská <i>&bdquo;blééé, fuj, nechci apod.&ldquo;</i>, nerezignuje při
-        prvním nezdaru na výživová doporučení a&nbsp;bude schopen podporovat
-        zdravý životní styl u&nbsp;svých dětí dlouhodobě.
-      </p>
+    <p>
+      Proto přicházíme s&nbsp;konceptem výživy a&nbsp;výchovy v&nbsp;propojení
+      jako nástrojem prevence, který si klade za cíl připravit rodiče na
+      výchovné situace okolo jídla tak, aby je zvládnul. Rodič, který ustojí
+      dětská <i>&bdquo;blééé, fuj, nechci apod.&ldquo;</i>, nerezignuje při
+      prvním nezdaru na výživová doporučení a&nbsp;bude schopen podporovat
+      zdravý životní styl u&nbsp;svých dětí dlouhodobě.
+    </p>
 
-      <div class="p-flow">
-        <h2 class="p-base-text-bold">Naše cíle jsou:</h2>
-        <ul>
-          <li>
-            poskytovat rodičům odborné a&nbsp;profesně provázané poradenství
-            k&nbsp;tématům nejedlictví, nadváhy, obezity a&nbsp;zdravého
-            životního stylu u&nbsp;dětí i&nbsp;rodiny jako celku
-          </li>
-          <li>
-            vytvářet prostor pro prezentaci odborníků a&nbsp;odborných
-            pracovišť, které poskytují poradenství ve výše uvedených oblastech
-          </li>
-          <li>
-            otevírat prostor pro spolupráci odborníků, kteří chtějí táhnout
-            v&nbsp;uvedených oblastech za jeden provaz
-          </li>
-          <li>
-            poskytovat odborníkům možnost dalšího vzdělávání
-            v&nbsp;pedagogicko-psychologických tématech v&nbsp;kontextu výživy
-          </li>
-          <li>umožňovat pravidelná intervizní setkání</li>
-        </ul>
-      </div>
+    <div class="p-flow">
+      <h2 class="p-base-text-bold">Naše cíle jsou:</h2>
+      <ul>
+        <li>
+          poskytovat rodičům odborné a&nbsp;profesně provázané poradenství
+          k&nbsp;tématům nejedlictví, nadváhy, obezity a&nbsp;zdravého životního
+          stylu u&nbsp;dětí i&nbsp;rodiny jako celku
+        </li>
+        <li>
+          vytvářet prostor pro prezentaci odborníků a&nbsp;odborných pracovišť,
+          které poskytují poradenství ve výše uvedených oblastech
+        </li>
+        <li>
+          otevírat prostor pro spolupráci odborníků, kteří chtějí táhnout
+          v&nbsp;uvedených oblastech za jeden provaz
+        </li>
+        <li>
+          poskytovat odborníkům možnost dalšího vzdělávání
+          v&nbsp;pedagogicko-psychologických tématech v&nbsp;kontextu výživy
+        </li>
+        <li>umožňovat pravidelná intervizní setkání</li>
+      </ul>
     </div>
 
-    <nav class="target-cards">
-      <NuxtLink to="/pro-odborniky/skoly" class="target-card card--schools">
-        <span class="card-icon">🏫</span>
-        <span class="card-label">MŠ a&nbsp;ZŠ</span>
+    <nav class="topic-nav p-not-prose">
+      <NuxtLink to="/pro-odborniky/skoly" class="topic-link topic-link--orange">
+        MŠ a&nbsp;ZŠ
       </NuxtLink>
       <NuxtLink
         to="/pro-odborniky/zrizovatele"
-        class="target-card card--municipalities"
+        class="topic-link topic-link--blue"
       >
-        <span class="card-icon">🏛️</span>
-        <span class="card-label">Zřizovatelé</span>
+        Zřizovatelé
       </NuxtLink>
-      <NuxtLink to="/pro-odborniky/lekari" class="target-card card--doctors">
-        <span class="card-icon">⚕️</span>
-        <span class="card-label">Lékaři a&nbsp;nutriční terapeuté</span>
+      <NuxtLink to="/pro-odborniky/lekari" class="topic-link topic-link--green">
+        Lékaři a&nbsp;nutriční terapeuté
       </NuxtLink>
     </nav>
 
-    <div class="p-prose">
-      <p>
-        Vzdělávání nás baví a&nbsp;je běžnou součástí naší činnosti, ať už na
-        straně řečníků nebo posluchačů. Pořádáme přednášky, besedy, webináře,
-        kurzy a&nbsp;akce na míru.
-      </p>
+    <h2>Kde jsme se mohli potkat?</h2>
+    <ul class="conferences">
+      <li>
+        Konference Obezitologie a&nbsp;bariatrie &ndash; 4.&ndash;5. 12. 2025
+        &ndash; příspěvek: &bdquo;Multioborový přístup k&nbsp;terapii dětské
+        obezity v&nbsp;praxi&ldquo;
+      </li>
+      <li>
+        Kongres pediatrie pro praxi &ndash; 30.&ndash;31. 5. 2025 &ndash;
+        příspěvek: &bdquo;Co může nabídnout pediatr rodičům dětí s&nbsp;kily
+        navíc ve své ordinaci&ldquo;
+      </li>
+      <li>
+        Konference Dětská výživa a&nbsp;obezita &ndash; 29. 11. 2024 &ndash;
+        příspěvek: &bdquo;Výživa a&nbsp;výchova v&nbsp;propojení jako prevence
+        dětské nadváhy a&nbsp;obezity&ldquo;
+      </li>
+      <li>
+        Konference Obezitologie a&nbsp;bariatrie &ndash; 21.&ndash;22. listopadu
+        2024 &ndash; příspěvek: &bdquo;STOB a&nbsp;jeho komplexní přístup
+        v&nbsp;terapii dětské obezity&ldquo;
+      </li>
+      <li>
+        Konference Dítě: Co vše dítě živí &ndash; 19.&ndash;20. dubna 2024
+        &ndash; příspěvek: &bdquo;Výživa a&nbsp;výchova v&nbsp;propojení&ldquo;
+      </li>
+    </ul>
 
-      <h2>Kde jsme se mohli potkat?</h2>
-      <ul class="conferences">
-        <li>
-          Konference Obezitologie a&nbsp;bariatrie &ndash; 4.&ndash;5. 12. 2025
-          &ndash; příspěvek: &bdquo;Multioborový přístup k&nbsp;terapii dětské
-          obezity v&nbsp;praxi&ldquo;
-        </li>
-        <li>
-          Kongres pediatrie pro praxi &ndash; 30.&ndash;31. 5. 2025 &ndash;
-          příspěvek: &bdquo;Co může nabídnout pediatr rodičům dětí s&nbsp;kily
-          navíc ve své ordinaci&ldquo;
-        </li>
-        <li>
-          Konference Obezitologie a&nbsp;bariatrie &ndash; 21.&ndash;22.
-          listopadu 2024 &ndash; příspěvek: &bdquo;STOB a&nbsp;jeho komplexní
-          přístup v&nbsp;terapii dětské obezity&ldquo;
-        </li>
-        <li>
-          Konference Dětská výživa a&nbsp;obezita 29. 11. 2024 &ndash;
-          příspěvek: &bdquo;Výživa a&nbsp;výchova v&nbsp;propojení&ldquo;
-        </li>
-        <li>
-          Konference Dítě: Co vše dítě živí &ndash; 19.&ndash;20. dubna 2024
-          &ndash; příspěvek: &bdquo;Výživa a&nbsp;výchova
-          v&nbsp;propojení&ldquo;
-        </li>
-      </ul>
+    <ContentImg v-if="image" :image />
 
-      <ContentImg v-if="image" :image />
-    </div>
+    <p>
+      Vzdělávání nás baví a&nbsp;je běžnou součástí naší činnosti, ať už na
+      straně řečníků nebo posluchačů. Pořádáme přednášky, besedy, webináře,
+      kurzy a&nbsp;akce na míru.
+    </p>
 
-    <section class="newsletter-section">
+    <section class="newsletter-section p-not-prose">
       <h2>Odběr novinek pro odborníky</h2>
       <p>
         Chcete, aby vám žádné setkání neuteklo? Přihlašte se k&nbsp;odběru
@@ -112,61 +105,76 @@
       <NewsletterExpertsForm />
     </section>
 
-    <div class="p-prose">
-      <h2>Chcete s námi spolupracovat?</h2>
+    <h2>Chcete s&nbsp;námi spolupracovat?</h2>
 
-      <p>
-        Zabýváte se tématem dětské výživy, psychologie či výchovy? Patříte mezi
-        odborníky a máte pocit, že by naše spolupráce mohla být prospěšná dětem
-        a rodičům nebo vzájemně obohacující? Líbí se vám naše práce a chtěli
-        byste nás na vaší akci? Spojte se s námi prostřednictvím kontaktního
-        formuláře, ozveme se vám.
-      </p>
+    <p>
+      Zabýváte se tématem dětské výživy, psychologie či výchovy? Patříte mezi
+      odborníky a&nbsp;máte pocit, že by naše spolupráce mohla být prospěšná
+      dětem a&nbsp;rodičům nebo vzájemně obohacující? Líbí se vám naše práce
+      a&nbsp;chtěli byste nás na vaší akci? Spojte se s&nbsp;námi
+      prostřednictvím kontaktního formuláře, ozveme se vám.
+    </p>
 
-      <ContentImg v-if="image" :image />
+    <p>
+      Jste v&nbsp;oboru začátečník nebo teprve dokončujete studia? Pokud vám jde
+      o&nbsp;stejné hodnoty, není to překážka. Pro Jedlíka-nejedlíka je
+      podstatné, zda ke své profesi přistupujete zodpovědně a&nbsp;uděláte-li
+      chybu, umíte ji přiznat a&nbsp;lidsky či odborně na ni vyrůst. Kvalita
+      a&nbsp;odbornost je pro nás zásadní, zároveň si zakládáme na hodnotách
+      lidskosti, laskavosti a&nbsp;přijetí, ať už směrem k&nbsp;rodičům nebo
+      odborníkům. Nejste si jistí, jestli vaše odbornost stačí?
+      <NuxtLink to="#kontaktni-formular">Kontaktujte nás.</NuxtLink>
+    </p>
 
-      <p>
-        Jste v oboru začátečník nebo teprve dokončujete studia? Pokud vám jde o
-        stejné hodnoty, není to překážka. Pro Jedlíka-nejedlíka je podstatné,
-        zda ke své profesi přistupujete zodpovědně a uděláte-li chybu, umíte ji
-        přiznat a lidsky či odborně na ni vyrůst. Kvalita a odbornost je pro nás
-        zásadní, zároveň si zakládáme na hodnotách lidskosti, laskavosti a
-        přijetí, ať už směrem k rodičům nebo odborníkům. Nejste si jistí, jestli
-        vaše odbornost stačí?
-        <NuxtLink to="#kontaktni-formular">Kontaktujte nás.</NuxtLink>
-      </p>
+    <h2>S&nbsp;kým nespolupracujeme</h2>
 
-      <h2>S kým nespolupracujeme</h2>
+    <p>
+      Pokud vás láká s&nbsp;námi spolupracovat, ale výše uvedené na vás nesedí,
+      ušetříte mnoho času a&nbsp;energie oběma stranám, když nás nebudete
+      ohledně spolupráce kontaktovat. Dále upozorňujeme, že nejsme prodejci
+      doplňků stravy a&nbsp;nemáme zájem se jimi stát.
+    </p>
 
-      <p>
-        Pokud vás láká s námi spolupracovat, ale výše uvedené na vás nesedí,
-        ušetříte mnoho času a energie oběma stranám, když nás nebudete ohledně
-        spolupráce kontaktovat. Dále upozorňujeme, že nejsme prodejci doplňků
-        stravy a nemáme zájem se jimi stát.
-      </p>
+    <hr />
 
-      <hr />
+    <h2>Odborníci, se kterými dlouhodobě spolupracujeme</h2>
 
-      <h2>Odborníci, se kterými dlouhodobě spolupracujeme</h2>
+    <p>
+      Projekt Jedlík-nejedlík funguje na bázi mezioborové spolupráce.
+      V&nbsp;současnosti aktivně spolupracujeme s&nbsp;těmito odborníky:
+    </p>
 
-      <p>
-        Projekt Jedlík-nejedlík funguje na bázi mezioborové spolupráce. V
-        současnosti aktivně spolupracujeme s těmito odborníky:
-      </p>
-
-      <div class="experts p-stack">
-        <BiographyExpert v-for="bio of biographies" :key="bio.name" :bio />
-      </div>
-
-      <hr />
-
-      <CooperationForm id="kontaktni-formular" class="coop-form p-not-prose" />
-
-      <p>
-        Chcete se nás na něco zeptat?
-        <NuxtLink to="/kontakt">Využijte kontaktní formulář.</NuxtLink>
-      </p>
+    <div class="experts p-stack">
+      <BiographyExpert v-for="bio of biographies" :key="bio.name" :bio />
     </div>
+
+    <hr />
+
+    <p>
+      <strong>
+        Poskytujete rodičům poradenství v&nbsp;oblasti prevence či intervence
+        dětské nadváhy, obezity, ppp či zdravého životního stylu? Dejte
+        o&nbsp;sobě vědět.
+      </strong>
+    </p>
+
+    <p>
+      Chceme, aby rodiče řešili obtíže svých dětí s&nbsp;odborníky. Aktuálně
+      pracujeme na zveřejnění interaktivní mapy, ve které budou zanesena všechna
+      odborná pracoviště, projekty či soukromé poradny odborníků, kteří se
+      věnují oblasti dětské výživy či tématům, která s&nbsp;danou problematikou
+      souvisí (zejména nutriční terapeut, lékař, dětský psycholog,
+      psychoterapeut, klinický logoped, ergoterapeut, fyzioterapeut).
+    </p>
+
+    <p>
+      Chcete být součástí mapy a&nbsp;být tak blíž rodinám, kteří vaše služby
+      hledají? Vyplňte kontaktní formulář a&nbsp;my se vám ozveme. Na kvalitě
+      nám záleží. Zanesení do mapy je zpoplatněno manipulačním poplatkem
+      a&nbsp;dále doložením vaší odbornosti.
+    </p>
+
+    <CooperationForm id="kontaktni-formular" class="coop-form p-not-prose" />
   </PageWrapper>
 </template>
 
@@ -179,59 +187,48 @@ const { data: biographies } = await useBiographyExpert()
 </script>
 
 <style scoped>
-.target-cards {
-  display: flex;
+.topic-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
   margin-block: var(--space-6);
+  max-width: 42rem;
+  margin-inline: auto;
 }
 
-.target-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-5) var(--space-3);
-  text-align: center;
-  background: var(--surface-1);
-  border-radius: var(--radius-3);
-  border-top: 3px solid var(--card-color);
-  text-decoration: none;
-  color: var(--text-color-1);
-  transition: transform 0.15s ease;
-}
-
-.target-card:hover {
-  transform: translateY(-2px);
-}
-
-.card--schools {
-  --card-color: var(--color-orange-soda);
-}
-
-.card--municipalities {
-  --card-color: var(--color-pale-blue);
-}
-
-.card--doctors {
-  --card-color: var(--color-forest-green);
-}
-
-.card-icon {
-  font-size: 2rem;
-  width: 3.5rem;
-  height: 3.5rem;
+.topic-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--card-color) 12%, white);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-4);
+  text-decoration: none;
+  font-weight: var(--font-weight-5);
+  font-size: var(--font-size-0);
+  text-align: center;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
 }
 
-.card-label {
-  font-weight: 700;
-  font-size: var(--font-size-0);
-  line-height: 1.3;
+.topic-link--orange {
+  background: var(--color-star);
+  color: var(--color-navy);
+}
+
+.topic-link--blue {
+  background: var(--color-pale-blue);
+  color: var(--color-navy);
+}
+
+.topic-link--green {
+  background: var(--color-light-lime);
+  color: var(--color-forest-green);
 }
 
 .newsletter-section {
@@ -272,8 +269,9 @@ const { data: biographies } = await useBiographyExpert()
 }
 
 @media (--sm-n-below) {
-  .target-cards {
-    flex-direction: column;
+  .topic-nav {
+    grid-template-columns: 1fr;
+    max-width: 14rem;
   }
 }
 </style>
