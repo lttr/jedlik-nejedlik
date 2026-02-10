@@ -8,7 +8,7 @@
           <a class="link" href="mailto:info@jedlik-nejedlik.cz"
             >info@jedlik-nejedlik.cz</a
           ><br />
-          <a class="link" href="tel:732651959">732 651 959</a><br />
+          <a class="link" href="tel:732651959">732&nbsp;651&nbsp;959</a><br />
         </p>
       </section>
       <section class="p-stack">

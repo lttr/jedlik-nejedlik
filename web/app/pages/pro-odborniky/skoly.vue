@@ -65,7 +65,7 @@
         </li>
       </ul>
 
-      <p><strong>Cena:</strong> 5&nbsp;000 Kč + cestovné 10 Kč/km</p>
+      <p><strong>Cena:</strong> 5&nbsp;000&nbsp;Kč + cestovné 10&nbsp;Kč/km</p>
     </aside>
 
     <aside class="product-box">
