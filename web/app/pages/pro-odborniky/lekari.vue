@@ -22,9 +22,8 @@
         Výchovné postupy a&nbsp;práce s&nbsp;rodinou u&nbsp;dětí s&nbsp;nadváhou
         a&nbsp;obezitou do 8&nbsp;let věku
       </li>
+      <li>Výživa a&nbsp;výchova v&nbsp;propojení &ndash; pro odborníky</li>
     </ul>
-
-    <h2>Výživa a&nbsp;výchova v&nbsp;propojení &ndash; pro odborníky</h2>
 
     <p>
       Věříme ve spolupráci a&nbsp;podporu mezi odborníky, a&nbsp;proto jsme
