@@ -63,28 +63,40 @@
     <h2>Kde jsme se mohli potkat?</h2>
     <ul class="conferences">
       <li>
-        Konference Obezitologie a&nbsp;bariatrie &ndash; 4.&ndash;5. 12. 2025
-        &ndash; příspěvek: &bdquo;Multioborový přístup k&nbsp;terapii dětské
-        obezity v&nbsp;praxi&ldquo;
+        <span class="conf-date">4.&ndash;5.&nbsp;12.&nbsp;2025</span>
+        <span class="conf-name">Konference Obezitologie a&nbsp;bariatrie</span>
+        <span class="conf-talk"
+          >Multioborový přístup k&nbsp;terapii dětské obezity v&nbsp;praxi</span
+        >
       </li>
       <li>
-        Kongres pediatrie pro praxi &ndash; 30.&ndash;31. 5. 2025 &ndash;
-        příspěvek: &bdquo;Co může nabídnout pediatr rodičům dětí s&nbsp;kily
-        navíc ve své ordinaci&ldquo;
+        <span class="conf-date">30.&ndash;31.&nbsp;5.&nbsp;2025</span>
+        <span class="conf-name">Kongres pediatrie pro praxi</span>
+        <span class="conf-talk"
+          >Co může nabídnout pediatr rodičům dětí s&nbsp;kily navíc ve své
+          ordinaci</span
+        >
       </li>
       <li>
-        Konference Dětská výživa a&nbsp;obezita &ndash; 29. 11. 2024 &ndash;
-        příspěvek: &bdquo;Výživa a&nbsp;výchova v&nbsp;propojení jako prevence
-        dětské nadváhy a&nbsp;obezity&ldquo;
+        <span class="conf-date">29.&nbsp;11.&nbsp;2024</span>
+        <span class="conf-name">Konference Dětská výživa a&nbsp;obezita</span>
+        <span class="conf-talk"
+          >Výživa a&nbsp;výchova v&nbsp;propojení jako prevence dětské nadváhy
+          a&nbsp;obezity</span
+        >
       </li>
       <li>
-        Konference Obezitologie a&nbsp;bariatrie &ndash; 21.&ndash;22. listopadu
-        2024 &ndash; příspěvek: &bdquo;STOB a&nbsp;jeho komplexní přístup
-        v&nbsp;terapii dětské obezity&ldquo;
+        <span class="conf-date">21.&ndash;22.&nbsp;11.&nbsp;2024</span>
+        <span class="conf-name">Konference Obezitologie a&nbsp;bariatrie</span>
+        <span class="conf-talk"
+          >STOB a&nbsp;jeho komplexní přístup v&nbsp;terapii dětské
+          obezity</span
+        >
       </li>
       <li>
-        Konference Dítě: Co vše dítě živí &ndash; 19.&ndash;20. dubna 2024
-        &ndash; příspěvek: &bdquo;Výživa a&nbsp;výchova v&nbsp;propojení&ldquo;
+        <span class="conf-date">19.&ndash;20.&nbsp;4.&nbsp;2024</span>
+        <span class="conf-name">Konference Dítě: Co vše dítě živí</span>
+        <span class="conf-talk">Výživa a&nbsp;výchova v&nbsp;propojení</span>
       </li>
     </ul>
 
@@ -247,14 +259,65 @@ const { data: biographies } = await useBiographyExpert()
 .conferences {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 
   li {
-    padding-block: var(--space-3);
-    border-bottom: 1px solid var(--surface-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-3);
+    border-left: 4px solid;
   }
 
-  li:last-child {
-    border-bottom: none;
+  li:nth-child(5n + 1) {
+    background: color-mix(in oklab, var(--color-star), transparent 85%);
+    border-left-color: var(--color-star);
+  }
+
+  li:nth-child(5n + 2) {
+    background: color-mix(in oklab, var(--color-pale-blue), transparent 80%);
+    border-left-color: var(--color-pale-blue);
+  }
+
+  li:nth-child(5n + 3) {
+    background: color-mix(in oklab, var(--color-light-lime), transparent 80%);
+    border-left-color: var(--color-light-lime);
+  }
+
+  li:nth-child(5n + 4) {
+    background: color-mix(in oklab, var(--color-pale-blue), transparent 85%);
+    border-left-color: var(--color-pale-blue);
+  }
+
+  li:nth-child(5n + 5) {
+    background: color-mix(in oklab, var(--color-star), transparent 80%);
+    border-left-color: var(--color-star);
+  }
+}
+
+.conf-date {
+  font-size: var(--font-size-00);
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.conf-name {
+  display: block;
+  font-weight: var(--font-weight-5);
+}
+
+.conf-talk {
+  display: block;
+  font-size: var(--font-size-0);
+  margin-top: var(--space-1);
+
+  &::before {
+    content: "\201E";
+  }
+
+  &::after {
+    content: "\201C";
   }
 }
 
