@@ -1,6 +1,28 @@
 <template>
   <div class="form-wrapper">
     <form class="form" @submit.prevent="onSubmit">
+      <div class="form-row">
+        <div class="p-form-group">
+          <label for="webinar-firstname">Křestní jméno</label>
+          <input
+            id="webinar-firstname"
+            type="text"
+            name="first_name"
+            autocomplete="given-name"
+          />
+        </div>
+
+        <div class="p-form-group">
+          <label for="webinar-lastname">Příjmení</label>
+          <input
+            id="webinar-lastname"
+            type="text"
+            name="last_name"
+            autocomplete="family-name"
+          />
+        </div>
+      </div>
+
       <div class="p-form-group">
         <label for="webinar-email">Váš e-mail *</label>
         <input
@@ -88,6 +110,16 @@ form {
 .p-form-group label {
   font-weight: var(--font-weight-6);
   margin-bottom: var(--space-1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+
+  @media (--sm-n-below) {
+    grid-template-columns: 1fr;
+  }
 }
 
 textarea {

@@ -43,12 +43,19 @@ export function useWebinarSignupForm() {
     await Promise.all([
       directus.request(
         createItem("webinar_signup_form", {
-          ...item,
+          email: item.email,
+          first_name: item.first_name,
+          last_name: item.last_name,
+          question: item.question,
           webinar: "2026-03-obezita-otazky-odpovedi",
         }),
       ),
       directus.request(
-        createItem("newsletter_parents_form", { email: item.email }),
+        createItem("newsletter_parents_form", {
+          email: item.email,
+          first_name: item.first_name,
+          last_name: item.last_name,
+        }),
       ),
     ])
   }
