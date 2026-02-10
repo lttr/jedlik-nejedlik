@@ -37,6 +37,24 @@ export function useWaitlistObesityCourseForm() {
   return useAsyncRequest<FormData>(asyncRequest, possibleError)
 }
 
+export function useWebinarSignupForm() {
+  async function asyncRequest(data: FormData) {
+    const item = objectFromFormData(data)
+    await Promise.all([
+      directus.request(
+        createItem("webinar_signup_form", {
+          ...item,
+          webinar: "2026-03-obezita-otazky-odpovedi",
+        }),
+      ),
+      directus.request(
+        createItem("newsletter_parents_form", { email: item.email }),
+      ),
+    ])
+  }
+  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+}
+
 export function useNewsletterParentsForm() {
   async function asyncRequest(data: FormData) {
     const item = objectFromFormData(data)
