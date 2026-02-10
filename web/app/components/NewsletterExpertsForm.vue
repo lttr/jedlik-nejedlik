@@ -24,7 +24,7 @@
 
       <div class="p-form-group">
         <label for="note">Máte námět na téma pro kulatý stůl?</label>
-        <p class="p-secondary-text-regular">
+        <p class="note-description p-secondary-text-regular">
           Pokud je nějaké téma, které by vás zajímalo na kulatém stole otevřít,
           napište jej zde. Zvážíme jeho zařazení do harmonogramu.
         </p>
@@ -80,7 +80,11 @@ async function onSubmit(event: Event) {
 }
 
 form {
-  max-width: 30ch;
+  max-width: 40ch;
   margin-inline: auto;
+}
+
+.note-description {
+  text-align: start;
 }
 </style>
