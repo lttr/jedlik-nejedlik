@@ -2,7 +2,7 @@
   <PageWrapper class="nejedlik">
     <!-- Page Header -->
     <header class="page-header">
-      <h1>Moje dítě „nejí"</h1>
+      <h1>Moje dítě „nejí“</h1>
       <p class="lead">Nezoufejte. Nejste v&nbsp;tom sami.</p>
     </header>
 
@@ -156,17 +156,17 @@
           Mnoho náročných situací dokážete zvládnout sami bez vnější podpory,
           jindy se potřebujeme o&nbsp;někoho opřít. Pokud si nejste jistí, zda
           vyhledat pomoc odborníka, zorientujte se ve vaší situaci s&nbsp;naším
-          check listem.
+          checklistem.
         </strong>
       </p>
     </section>
 
     <section class="newsletter">
       <NewsletterForm
-        title="Stáhněte si náš check list zdarma"
-        description="Přihlaste se k odběru newsletteru a získejte check list, který vám pomůže zorientovat se ve vaší situaci."
-        highlight="Vyplňte e-mail a check list je váš."
-        button-text="Získat check list"
+        title="Stáhněte si náš checklist zdarma"
+        description="Přihlaste se k&nbsp;odběru newsletteru a&nbsp;získejte checklist, který vám pomůže zorientovat se ve vaší situaci."
+        highlight="Vyplňte e-mail a&nbsp;checklist je váš."
+        button-text="Získat checklist"
         redirect-path="/dekujeme-za-zajem-o-newsletter?pdf=nejedlici-checklist"
       />
     </section>
