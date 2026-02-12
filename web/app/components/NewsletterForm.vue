@@ -6,6 +6,8 @@
       <p class="highlight">{{ highlight }}</p>
     </div>
 
+    <slot />
+
     <div class="form-wrapper">
       <form class="form" @submit.prevent="onSubmit">
         <div class="form-row">

@@ -168,7 +168,16 @@
         highlight="Vyplňte e-mail a&nbsp;checklist je váš."
         button-text="Získat checklist"
         redirect-path="/dekujeme-za-zajem-o-newsletter?pdf=nejedlici-checklist"
-      />
+      >
+        <div class="thumbnail">
+          <img
+            src="/img/nejedlici-checklist-nahled.jpg"
+            width="240"
+            alt="Náhled checklistu pro rodiče nejedlíků"
+            class="thumbnail-img"
+          />
+        </div>
+      </NewsletterForm>
     </section>
   </PageWrapper>
 </template>
@@ -269,5 +278,16 @@
   margin-block: var(--space-6);
   max-width: var(--size-content-3);
   margin-inline: auto;
+}
+
+.thumbnail {
+  margin-inline: auto;
+  margin-bottom: var(--space-4);
+  width: fit-content;
+}
+
+.thumbnail-img {
+  border-radius: var(--radius-2);
+  box-shadow: var(--shadow-3);
 }
 </style>
