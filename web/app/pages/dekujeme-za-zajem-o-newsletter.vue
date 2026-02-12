@@ -4,6 +4,22 @@
       <Icon name="uil:check-circle" class="success-icon" />
       <h1>Děkujeme za Váš zájem</h1>
       <p class="lead">Přihlášení k odběru newsletteru proběhlo úspěšně.</p>
+
+      <template v-if="pdfDownload">
+        <p class="gift-text">
+          Jako poděkování si můžete stáhnout
+          <strong>{{ pdfDownload.label }}</strong
+          >.
+        </p>
+        <a
+          :href="pdfDownload.url"
+          download
+          class="p-button p-button-brand p-button-large download-button"
+        >
+          Stáhnout {{ pdfDownload.label }}
+        </a>
+      </template>
+
       <p class="team-signature">Tým Jedlík-nejedlík</p>
       <NuxtLink to="/pro-rodice" class="p-button p-button-brand">
         Zpět na stránku Pro rodiče
@@ -13,6 +29,25 @@
 </template>
 
 <script lang="ts" setup>
+import { DIRECTUS_URL } from "~~/shared/utils/directus"
+
+const PDF_MAP: Record<string, { fileId: string; label: string }> = {
+  "nejedlici-checklist": {
+    fileId: "a50cceb7-1ca5-4f16-bcdf-10515cae0ff7",
+    label: "Check list pro rodiče nejedlíků",
+  },
+}
+
+const route = useRoute()
+const pdfKey = route.query.pdf as string | undefined
+const pdfDownload =
+  pdfKey && PDF_MAP[pdfKey]
+    ? {
+        ...PDF_MAP[pdfKey],
+        url: `${DIRECTUS_URL}/assets/${PDF_MAP[pdfKey].fileId}?download`,
+      }
+    : null
+
 useSeoMeta({
   title: "Děkujeme za přihlášení k newsletteru",
   description:
@@ -55,6 +90,18 @@ useSeoMeta({
 .thank-you-content p {
   color: var(--text-2);
   margin-bottom: var(--space-3);
+}
+
+.gift-text {
+  font-size: var(--font-size-1);
+}
+
+.download-button {
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-1);
+  padding: var(--space-4) var(--space-5);
+  line-height: var(--font-lineheight-3);
+  height: auto;
 }
 
 .team-signature {

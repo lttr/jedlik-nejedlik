@@ -1,12 +1,9 @@
 <template>
   <div class="newsletter-section">
     <div class="newsletter-header">
-      <h3>Newsletter pro rodiče</h3>
-      <p>
-        Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské
-        výživy přímo do své e-mailové schránky.
-      </p>
-      <p class="highlight">S naším newsletterem vám nic neunikne.</p>
+      <h3>{{ title }}</h3>
+      <p>{{ description }}</p>
+      <p class="highlight">{{ highlight }}</p>
     </div>
 
     <div class="form-wrapper">
@@ -60,7 +57,7 @@
             class="p-button-brand"
             :disabled="isPendingOrSuccess"
           >
-            Odebírat novinky
+            {{ buttonText }}
           </button>
         </div>
 
@@ -71,6 +68,24 @@
 </template>
 
 <script lang="ts" setup>
+const props = withDefaults(
+  defineProps<{
+    title?: string
+    description?: string
+    highlight?: string
+    buttonText?: string
+    redirectPath?: string
+  }>(),
+  {
+    title: "Newsletter pro rodiče",
+    description:
+      "Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské výživy přímo do své e-mailové schránky.",
+    highlight: "S naším newsletterem vám nic neunikne.",
+    buttonText: "Odebírat novinky",
+    redirectPath: "/dekujeme-za-zajem-o-newsletter",
+  },
+)
+
 const router = useRouter()
 const { execute, error, isSuccess, isPendingOrSuccess } =
   useNewsletterParentsForm()
@@ -79,7 +94,7 @@ async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement
   await execute(new FormData(form))
   if (isSuccess.value) {
-    router.push("/dekujeme-za-zajem-o-newsletter")
+    router.push(props.redirectPath)
   }
 }
 </script>
