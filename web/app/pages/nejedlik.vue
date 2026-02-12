@@ -30,7 +30,7 @@
     </section>
 
     <!-- Kdy se na nás obracejí -->
-    <section class="reasons-section">
+    <section class="reasons-section p-prose">
       <h2>Kdy se na nás rodiče obracejí nejčastěji</h2>
       <ul class="reasons-list">
         <li>Máte doma tzv. nejedlíka nebo velmi vybíravé dítě</li>
@@ -224,7 +224,7 @@
 .highlight {
   font-size: var(--font-size-2);
   font-weight: var(--font-weight-5);
-  line-height: var(--font-lineheight-1);
+  line-height: var(--font-lineheight-3);
   max-width: 35ch;
   color: var(--color-forest-green);
 }
@@ -235,7 +235,7 @@
 }
 
 .reasons-list {
-  max-width: var(--size-content-2);
+  max-width: var(--size-content-3);
   margin-inline: auto;
 }
 
@@ -260,9 +260,8 @@
 
 /* Consultation Pricing */
 .price {
-  font-size: var(--font-size-3);
+  font-size: var(--font-size-2);
   font-weight: var(--font-weight-6);
-  color: var(--brand-color);
 }
 
 /* Newsletter Section */
