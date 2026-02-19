@@ -4,11 +4,8 @@
       Objednejte se na konzultaci a&nbsp;začněte s&nbsp;řešením vašich otázek
       ohledně výživy ještě dnes.
     </h2>
-    <p>Konzultace poskytuji osobně v&nbsp;Hradci Králové nebo online.</p>
-    <p>
-      Objednat se můžete prostřednictvím níže uvedeného formuláře nebo na
-      telefonním čísle 732&nbsp;651&nbsp;959.
-    </p>
+    <p>Konzultace poskytujeme osobně v&nbsp;Hradci Králové nebo online.</p>
+    <p>Objednat se můžete prostřednictvím níže uvedeného formuláře.</p>
 
     <form class="form" @submit.prevent="onSubmit">
       <div class="p-form-group">
