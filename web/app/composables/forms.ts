@@ -62,6 +62,14 @@ export function useWebinarSignupForm() {
   return useAsyncRequest<FormData>(asyncRequest, possibleError)
 }
 
+export function useConsultationForm() {
+  async function asyncRequest(data: FormData) {
+    const item = objectFromFormData(data)
+    await directus.request(createItem("consultation_form", item))
+  }
+  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+}
+
 export function useNewsletterParentsForm() {
   async function asyncRequest(data: FormData) {
     const item = objectFromFormData(data)

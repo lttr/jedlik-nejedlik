@@ -235,6 +235,11 @@
         </a>
       </p>
     </section>
+
+    <!-- Consultation Form -->
+    <section class="consultation-form-section">
+      <ConsultationForm />
+    </section>
   </PageWrapper>
 </template>
 
@@ -404,5 +409,12 @@
 .inbody-booking {
   text-align: center;
   margin-top: var(--space-4);
+}
+
+/* Consultation Form Section */
+.consultation-form-section {
+  max-width: var(--size-content-3);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-4);
 }
 </style>
