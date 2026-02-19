@@ -95,7 +95,7 @@ async function onSubmit(event: Event) {
 
 <style scoped>
 .form-wrapper {
-  max-width: var(--size-content-2);
+  max-width: var(--size-content-3);
   box-shadow: var(--shadow-3);
   border: 1px solid var(--surface-3);
   margin-inline: auto;
@@ -122,7 +122,7 @@ h2 {
 }
 
 form {
-  max-width: 40ch;
+  max-width: 55ch;
   margin-inline: auto;
   margin-top: var(--space-5);
 }
