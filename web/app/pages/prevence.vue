@@ -223,17 +223,6 @@
           <p>s&nbsp;interpretací výsledků</p>
         </div>
       </div>
-
-      <p class="inbody-booking">
-        <a
-          href="https://www.okolokuchyne.cz/individualni-konzultace/#objednatSe"
-          target="_blank"
-          rel="noopener"
-          class="p-button-brand"
-        >
-          Chci se objednat na měření
-        </a>
-      </p>
     </section>
 
     <!-- Consultation Form -->
@@ -404,11 +393,6 @@
 
 .inbody-price .price {
   margin-bottom: var(--space-1);
-}
-
-.inbody-booking {
-  text-align: center;
-  margin-top: var(--space-4);
 }
 
 /* Consultation Form Section */
