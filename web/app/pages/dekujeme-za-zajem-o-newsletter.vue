@@ -36,6 +36,10 @@ const PDF_MAP: Record<string, { fileId: string; label: string }> = {
     fileId: "a50cceb7-1ca5-4f16-bcdf-10515cae0ff7",
     label: "Check list pro rodiče nejedlíků",
   },
+  "zdrave-svacinky": {
+    fileId: "02e757ef-ed0a-4ba3-850d-7643c309d23e",
+    label: "Zdravé svačinky pro mého školáka",
+  },
 }
 
 const route = useRoute()
