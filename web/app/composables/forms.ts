@@ -5,40 +5,26 @@ const possibleError = new Error(
   `Omlouváme se, nepodařilo se odeslat formulář. Zkuste to prosím později.`,
 )
 
-export function useCooperationForm() {
-  async function asyncRequest(data: FormData) {
+function useDirectusForm(collection: string) {
+  return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
-    await directus.request(createItem("cooperation_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+    await directus.request(createItem(collection, item))
+  }, possibleError)
 }
 
-export function useNewsletterExpertsForm() {
-  async function asyncRequest(data: FormData) {
-    const item = objectFromFormData(data)
-    await directus.request(createItem("newsletter_experts_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
-}
-
-export function usePodcastQuestionForm() {
-  async function asyncRequest(data: FormData) {
-    const item = objectFromFormData(data)
-    await directus.request(createItem("podcast_question_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
-}
-
-export function useWaitlistObesityCourseForm() {
-  async function asyncRequest(data: FormData) {
-    const item = objectFromFormData(data)
-    await directus.request(createItem("waitlist_obesity_course_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
-}
+export const useCooperationForm = () => useDirectusForm("cooperation_form")
+export const useNewsletterExpertsForm = () =>
+  useDirectusForm("newsletter_experts_form")
+export const usePodcastQuestionForm = () =>
+  useDirectusForm("podcast_question_form")
+export const useWaitlistObesityCourseForm = () =>
+  useDirectusForm("waitlist_obesity_course_form")
+export const useConsultationForm = () => useDirectusForm("consultation_form")
+export const useNewsletterParentsForm = () =>
+  useDirectusForm("newsletter_parents_form")
 
 export function useWebinarSignupForm() {
-  async function asyncRequest(data: FormData) {
+  return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
     await Promise.all([
       directus.request(
@@ -58,22 +44,5 @@ export function useWebinarSignupForm() {
         }),
       ),
     ])
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
-}
-
-export function useConsultationForm() {
-  async function asyncRequest(data: FormData) {
-    const item = objectFromFormData(data)
-    await directus.request(createItem("consultation_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
-}
-
-export function useNewsletterParentsForm() {
-  async function asyncRequest(data: FormData) {
-    const item = objectFromFormData(data)
-    await directus.request(createItem("newsletter_parents_form", item))
-  }
-  return useAsyncRequest<FormData>(asyncRequest, possibleError)
+  }, possibleError)
 }
