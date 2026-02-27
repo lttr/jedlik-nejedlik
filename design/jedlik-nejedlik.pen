@@ -1727,7 +1727,8 @@
                   "lineHeight": 1.6,
                   "textAlign": "center",
                   "fontFamily": "Poppins",
-                  "fontSize": 20
+                  "fontSize": 20,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "rectangle",
@@ -1829,7 +1830,8 @@
                       "content": "Je pro vás jídlo vašeho dítěte každodenním zdrojem stresu?",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 17
+                      "fontSize": 17,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -1872,7 +1874,8 @@
                       "content": "Odmítá nové potraviny, konzumuje velmi omezený repertoár, stolování je každodenní boj, pláč a vztek je běžnou součástí stolování nebo se dítě jídlu úplně vyhýbá?",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 17
+                      "fontSize": 17,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -1909,7 +1912,8 @@
                       "content": "Potíže s jídlem mají u dětí mnoho podob i příčin – vývojových, fyziologických, smyslových, emočních, vztahových a dalších.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 17
+                      "fontSize": 17,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -2045,7 +2049,8 @@
                           "content": "Máte doma tzv. nejedlíka nebo velmi vybíravé dítě",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2096,7 +2101,8 @@
                           "content": "Trápí vás chování dítěte u jídla (odmítání, pláč, vyjednávání, boj)",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2147,7 +2153,8 @@
                           "content": "Období příkrmů neprobíhá podle vašich představ",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2198,7 +2205,8 @@
                           "content": "Máte obavy, že vztah k jídlu se nevyvíjí pohodově",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2249,7 +2257,8 @@
                           "content": "Nejste si jistí ohledně výživy vašeho dítěte a potřebujete ujištění",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     }
@@ -2310,7 +2319,8 @@
                           "content": "Už je toho na vás okolo stravování moc, je to pro vás zdroj frustrace",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2361,7 +2371,8 @@
                           "content": "Potřebujete se v situaci zorientovat a získat nadhled",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2412,7 +2423,8 @@
                           "content": "Dítě se potýká se zácpou",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -2463,7 +2475,8 @@
                           "content": "Dítě má za sebou lázeňský pobyt nebo jiný zásah do stravování a nevíte, jak dál",
                           "lineHeight": 1.5,
                           "fontFamily": "Poppins",
-                          "fontSize": 15
+                          "fontSize": 15,
+                          "fontWeight": "normal"
                         }
                       ]
                     }
@@ -2534,7 +2547,8 @@
                   "content": "Ať už je vaše situace jakákoliv, nemusíte na ni být sami.",
                   "lineHeight": 1.7,
                   "fontFamily": "Poppins",
-                  "fontSize": 17
+                  "fontSize": 17,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -2546,7 +2560,8 @@
                   "content": "U nás víme, že jídlo je naučená dovednost a návyky okolo stravování se vytváří mnoho let. Cílem není, aby dítě jedlo všechno a hned ani abyste s námi trávili roky a byli na nás závislí.",
                   "lineHeight": 1.7,
                   "fontFamily": "Poppins",
-                  "fontSize": 17
+                  "fontSize": 17,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "frame",
@@ -2614,7 +2629,8 @@
               "content": "V Jedlíkovi-Nejedlíkovi věříme, že:",
               "textAlign": "center",
               "fontFamily": "Poppins",
-              "fontSize": 18
+              "fontSize": 18,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -2682,7 +2698,8 @@
                       "content": "Jídlo je dovednost, která se vyvíjí v čase.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 15
+                      "fontSize": 15,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -2745,7 +2762,8 @@
                       "content": "Nátlakové metody ničí u dítěte vztah k jídlu.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 15
+                      "fontSize": 15,
+                      "fontWeight": "normal"
                     }
                   ]
                 },
@@ -2808,7 +2826,8 @@
                       "content": "Pracujeme vždy s respektem k dítěti i k realitě rodiny.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 15
+                      "fontSize": 15,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -2866,7 +2885,8 @@
               "lineHeight": 1.6,
               "textAlign": "center",
               "fontFamily": "Poppins",
-              "fontSize": 18
+              "fontSize": 18,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -2959,7 +2979,8 @@
               "lineHeight": 1.7,
               "textAlign": "center",
               "fontFamily": "Poppins",
-              "fontSize": 17
+              "fontSize": 17,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -2998,7 +3019,8 @@
               "lineHeight": 1.6,
               "textAlign": "center",
               "fontFamily": "Poppins",
-              "fontSize": 18
+              "fontSize": 18,
+              "fontWeight": "normal"
             },
             {
               "type": "frame",
@@ -3067,7 +3089,8 @@
                           "content": "/ 70 minut",
                           "lineHeight": 1.6,
                           "fontFamily": "Poppins",
-                          "fontSize": 16
+                          "fontSize": 16,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3106,7 +3129,8 @@
                               "content": "Vyhodnocení vstupního anamnestického dotazníku a jídelníčku",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 15
+                              "fontSize": 15,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
@@ -3137,7 +3161,8 @@
                               "content": "Rozbor videa stolování",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 15
+                              "fontSize": 15,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
@@ -3168,7 +3193,8 @@
                               "content": "Návrh prvních konkrétních kroků pro domácí prostředí",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 15
+                              "fontSize": 15,
+                              "fontWeight": "normal"
                             }
                           ]
                         }
@@ -3236,7 +3262,8 @@
                           "content": "/ hodina",
                           "lineHeight": 1.6,
                           "fontFamily": "Poppins",
-                          "fontSize": 16
+                          "fontSize": 16,
+                          "fontWeight": "normal"
                         }
                       ]
                     },
@@ -3250,7 +3277,8 @@
                       "content": "Slouží k doladění, podpoře a úpravám podle vývoje situace.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 15
+                      "fontSize": 15,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "rectangle",
@@ -3306,7 +3334,8 @@
                               "content": "Všechno potřebné víte – žádná další konzultace není potřeba",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 14
+                              "fontSize": 14,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
@@ -3337,7 +3366,8 @@
                               "content": "Domlouváme si plán dalších návštěv",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 14
+                              "fontSize": 14,
+                              "fontWeight": "normal"
                             }
                           ]
                         },
@@ -3368,7 +3398,8 @@
                               "content": "Navrhujeme práci v multioborovém týmu",
                               "lineHeight": 1.5,
                               "fontFamily": "Poppins",
-                              "fontSize": 14
+                              "fontSize": 14,
+                              "fontWeight": "normal"
                             }
                           ]
                         }
@@ -3450,7 +3481,8 @@
                       "content": "Přihlašte se k odběru newsletteru a získejte checklist, který vám pomůže zorientovat se ve vaší situaci.",
                       "lineHeight": 1.6,
                       "fontFamily": "Poppins",
-                      "fontSize": 15
+                      "fontSize": 15,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "frame",
@@ -3504,7 +3536,8 @@
                                   "fill": "$color-gray-7",
                                   "content": "Váš e-mail",
                                   "fontFamily": "Poppins",
-                                  "fontSize": 15
+                                  "fontSize": 15,
+                                  "fontWeight": "normal"
                                 }
                               ]
                             }
@@ -3633,7 +3666,8 @@
               "lineHeight": 1.5,
               "textAlign": "center",
               "fontFamily": "Poppins",
-              "fontSize": 17
+              "fontSize": 17,
+              "fontWeight": "normal"
             },
             {
               "type": "rectangle",
@@ -3726,7 +3760,8 @@
                   "content": "Je pro vás jídlo vašeho dítěte každodenním zdrojem stresu?",
                   "lineHeight": 1.6,
                   "fontFamily": "Poppins",
-                  "fontSize": 15
+                  "fontSize": 15,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -3769,7 +3804,8 @@
                   "content": "Odmítá nové potraviny, konzumuje velmi omezený repertoár, stolování je každodenní boj, pláč a vztek je běžnou součástí stolování?",
                   "lineHeight": 1.6,
                   "fontFamily": "Poppins",
-                  "fontSize": 15
+                  "fontSize": 15,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -3806,7 +3842,8 @@
                   "content": "Potíže s jídlem mají u dětí mnoho podob i příčin – vývojových, fyziologických, smyslových, emočních a dalších.",
                   "lineHeight": 1.6,
                   "fontFamily": "Poppins",
-                  "fontSize": 15
+                  "fontSize": 15,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -7383,6 +7420,8 @@
               "id": "X0RPw",
               "name": "mHTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Téma mě zajímá preventivně",
               "lineHeight": 1.15,
               "textAlign": "center",
@@ -7395,6 +7434,8 @@
               "id": "pPj7Q",
               "name": "mHSub",
               "fill": "$color-midnight",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Nečekáte, až se objeví potíže. Chcete předejít problémům s jídlem.",
               "lineHeight": 1.5,
               "textAlign": "center",
@@ -7784,6 +7825,8 @@
               "id": "A2i8d",
               "name": "mWTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Co pro vás děláme",
               "lineHeight": 1.3,
               "textAlign": "center",
@@ -7982,6 +8025,8 @@
                   "id": "BzUYX",
                   "name": "mNLtitle",
                   "fill": "$color-navy",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
                   "content": "Zdravé svačinky pro mého školáka",
                   "lineHeight": 1.3,
                   "textAlign": "center",
@@ -8102,6 +8147,8 @@
               "id": "sWjhF",
               "name": "mCTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Potřebujete víc?",
               "lineHeight": 1.3,
               "textAlign": "center",
@@ -8304,6 +8351,8 @@
               "id": "3XqG2",
               "name": "mPTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Ceník konzultací",
               "lineHeight": 1.3,
               "textAlign": "center",
@@ -8517,6 +8566,8 @@
               "id": "WKd8B",
               "name": "mVTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Na čem si zakládáme",
               "lineHeight": 1.3,
               "textAlign": "center",
@@ -8627,6 +8678,8 @@
               "id": "QmSQj",
               "name": "mFTitle",
               "fill": "$color-navy",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
               "content": "Napište nám",
               "lineHeight": 1.3,
               "textAlign": "center",
@@ -8986,7 +9039,7 @@
     },
     "font-size-body": {
       "type": "number",
-      "value": 18
+      "value": 17
     },
     "font-size-h1": {
       "type": "number",
