@@ -58,7 +58,8 @@
         Kurz zdravého (ne)hubnutí (naživo)
       </a>
       <NuxtLink to="/webinar-obezita-zdarma" class="offer-link offer-link-free">
-        Webinář zdarma - Dětská obezita v otázkách a odpovědích (9.&nbsp;března)
+        Webinář zdarma - Dětská obezita v otázkách a odpovědích
+        (24.&nbsp;března)
       </NuxtLink>
     </nav>
   </PageWrapper>
