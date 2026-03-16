@@ -68,7 +68,7 @@
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
       <div v-if="isSuccess" class="success-message">
-        Děkujeme za přihlášení! Těšíme se na vás 9. března v 19:00.
+        Děkujeme za přihlášení! Těšíme se na vás 24. března v 19:00.
       </div>
     </form>
   </div>

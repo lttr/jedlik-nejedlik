@@ -3,7 +3,7 @@
     <header class="page-header">
       <p class="badge">Akce zdarma</p>
       <h1>Dětská obezita v otázkách a odpovědích</h1>
-      <p class="subtitle">Webinář zdarma - 9. března od 19:00</p>
+      <p class="subtitle">Webinář zdarma - 24. března od 19:00</p>
     </header>
 
     <section class="info-section p-prose">
@@ -41,7 +41,7 @@
 useSeoMeta({
   title: "Webinář zdarma - Dětská obezita v otázkách a odpovědích",
   description:
-    "Bezplatný webinář pro rodiče dětí s nadváhou a obezitou. 9. března od 19:00. Kapacita 100 osob.",
+    "Bezplatný webinář pro rodiče dětí s nadváhou a obezitou. 24. března od 19:00. Kapacita 100 osob.",
 })
 </script>
 
