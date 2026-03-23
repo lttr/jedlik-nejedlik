@@ -16,19 +16,17 @@ argument-hint: <path-to-spec | inline text>
 
 Read `$ARGUMENTS` (file path or inline text). Generate a kebab-case slug from it.
 
-Write `spec.md` following work artifacts protocol from memory if available, otherwise put in a sensible location.
+Create `.aiwork/{date}_{slug}/spec.md` per the .aiwork protocol.
 
-Include: original text verbatim in blockquote, summary, decisions table (Decision | Choice | Rationale), scope (in/out), acceptance criteria. For ambiguous points, decide and mark `[DECIDED]`.
+First, copy the FULL original text into a blockquote. This is a mechanical paste - never summarize, truncate, or rephrase.
+
+Then write analysis sections: summary, decisions table (Decision | Choice | Rationale), scope (in/out), acceptance criteria. Mark ambiguous points `[DECIDED]`.
 
 ## Step 2 - Branch & plan
 
-Enter `/plan` mode.
-
 Create feature branch. Explore codebase for similar patterns and conventions. Use MCP tools for external services if available.
 
-Write `plan.md` next to spec with numbered implementation steps. Mark unclear items `[OPEN]`.
-
-Exit `/plan` mode.
+For complex tasks, write `plan.md` next to spec with numbered implementation steps. Mark unclear items `[OPEN]`.
 
 ## Step 3 - Implement
 
@@ -38,11 +36,11 @@ Execute plan. Use Task agents for parallel independent work.
 
 Improve all rendered text with `/czech-typography` skill.
 
-## Step 4 - Verify
+## Step 5 - Verify
 
 Loop (max 5x): run `/verify`, fix issues, retry. Then visual check with `browser-tools` skill if available (start dev server, check affected pages, stop server).
 
-## Step 5 - Ship
+## Step 6 - Ship
 
 Commit changes (split if logically separate).
 
