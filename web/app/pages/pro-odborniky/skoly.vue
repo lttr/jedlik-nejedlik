@@ -118,8 +118,8 @@
         místo konfliktů,
       </li>
       <li>
-        jak reagovat na odmítání jídla, vybíravost nebo „extrémní chutě"
-        růstovým způsobem,
+        jak reagovat na odmítání jídla, vybíravost nebo &bdquo;extrémní
+        chutě&ldquo; růstovým způsobem,
       </li>
       <li>
         jak podpořit dítě v&nbsp;rozvoji dovedností spojených s&nbsp;jídlem,
@@ -167,7 +167,7 @@
 
       <p>
         Možná vás už napadlo, jestli by nebylo jednodušší jídlo prostě
-        „neřešit".
+        &bdquo;neřešit&ldquo;.
       </p>
 
       <p>
@@ -183,7 +183,8 @@
           spolupráci, ne odpor,
         </li>
         <li>
-          proč tlak, přesvědčování nebo naopak úplné „neřešení" často nefungují,
+          proč tlak, přesvědčování nebo naopak úplné &bdquo;neřešení&ldquo;
+          často nefungují,
         </li>
         <li>
           jak zvládat náročné situace u&nbsp;jídla bez zbytečných konfliktů,
@@ -218,9 +219,9 @@
 
       <p>
         Máte doma dítě, které jí jen velmi omezeně, odmítá nové potraviny,
-        v&nbsp;jídle se „patlá" nebo je pro něj jídlo stresující? Nebo naopak
-        dítě, které sní téměř vše, nezná hranici sytosti a&nbsp;jídlo je pro něj
-        neustálým tématem?
+        v&nbsp;jídle se &bdquo;patlá&ldquo; nebo je pro něj jídlo stresující?
+        Nebo naopak dítě, které sní téměř vše, nezná hranici sytosti
+        a&nbsp;jídlo je pro něj neustálým tématem?
       </p>
 
       <p>
@@ -292,7 +293,10 @@
           kolik toho děti skutečně potřebují, aby byl zajištěn jejich zdravý
           vývoj,
         </li>
-        <li>jak přemýšlet o&nbsp;sladkostech, svačinách a&nbsp;„mlsání",</li>
+        <li>
+          jak přemýšlet o&nbsp;sladkostech, svačinách
+          a&nbsp;&bdquo;mlsání&ldquo;,
+        </li>
         <li>
           jak skloubit výživu s&nbsp;reálným životem rodiny (čas, školka,
           rozpočet).
