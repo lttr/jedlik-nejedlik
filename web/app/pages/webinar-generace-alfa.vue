@@ -8,6 +8,9 @@
           &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
           u&nbsp;stolu
         </h1>
+        <p class="hero-date">
+          <strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu
+        </p>
         <p class="hero-subtitle">Možná to znáte:</p>
         <ul class="pains-list">
           <li>
@@ -147,7 +150,10 @@
       <div class="section-content">
         <h2 class="section-title">Co získáte</h2>
         <ul class="bullet-list">
-          <li>2hodinový webinář</li>
+          <li>
+            2hodinový živý webinář &ndash; 13.&nbsp;května od&nbsp;12:30 na
+            Zoomu
+          </li>
           <li>konkrétní vysvětlení + praktické příklady</li>
           <li>záznam</li>
         </ul>
@@ -218,6 +224,9 @@
       <div class="section-content">
         <h2 class="section-title">Přihlaste se na webinář</h2>
         <p class="final-cta-subtitle">Generace alfa a&nbsp;jídlo</p>
+        <p class="final-cta-date">
+          <strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu
+        </p>
         <a :href="registrationUrl" class="cta-button primary large"
           >Koupit webinář za 290&nbsp;Kč</a
         >
@@ -274,6 +283,16 @@ useSeoMeta({
   margin-bottom: var(--space-5);
   color: var(--brand-color);
   text-wrap: balance;
+}
+
+.hero-date {
+  font-size: var(--font-size-2);
+  margin-bottom: var(--space-5);
+  color: var(--color-burgundy-red);
+}
+
+.hero-date strong {
+  font-weight: var(--font-weight-6);
 }
 
 .hero-subtitle {
@@ -684,7 +703,17 @@ useSeoMeta({
   font-size: var(--font-size-2);
   font-weight: var(--font-weight-6);
   color: var(--color-forest-green);
+  margin-bottom: var(--space-3);
+}
+
+.final-cta-date {
+  font-size: var(--font-size-1);
+  color: var(--color-forest-green);
   margin-bottom: var(--space-5);
+}
+
+.final-cta-date strong {
+  font-weight: var(--font-weight-6);
 }
 
 .final-cta-section .cta-button.primary {
