@@ -15,7 +15,7 @@
         </p>
         <p class="start-date">
           <Icon name="uil:calendar-alt" />
-          <span>Začínáme <strong>13.&nbsp;dubna 2026</strong></span>
+          <span>Začínáme <strong>14.&nbsp;9.</strong></span>
         </p>
         <div class="hero-cta">
           <a :href="registrationUrl" class="cta-button primary large"
@@ -218,13 +218,13 @@
           <p class="price-details">
             Cena zahrnuje 12týdenní vedený program, pracovní listy, živá setkání
             i&nbsp;bonusový podpůrný zoom, který se bude konat měsíc po ukončení
-            kurzu, tedy <strong>17.&nbsp;června</strong>.
+            kurzu, tedy <strong>4.&nbsp;ledna 2027</strong>.
           </p>
           <p class="price-installments">
             Kurzovné je možné rozdělit do dvou splátek
             (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
-          <p class="price-start">Začínáme 13.&nbsp;dubna 2026</p>
+          <p class="price-start">Začínáme 14.&nbsp;9.</p>
           <a :href="registrationUrl" class="cta-button primary large"
             >Chci se přihlásit</a
           >
