@@ -147,6 +147,22 @@
       </p>
     </section>
 
+    <!-- Webinar promo -->
+    <NuxtLink to="/webinar-generace-alfa" class="webinar-promo">
+      <div class="webinar-promo-content">
+        <p class="webinar-promo-badge">Online webinář</p>
+        <h2>
+          &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
+          u&nbsp;stolu
+        </h2>
+        <p>
+          Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali.
+          Pro rodiče dětí 3&ndash;12&nbsp;let.
+        </p>
+        <span class="webinar-promo-cta">Zjistit víc &rarr;</span>
+      </div>
+    </NuxtLink>
+
     <!-- Checklist / Newsletter -->
     <section class="checklist-section p-prose">
       <p>
@@ -278,6 +294,60 @@
   margin-block: var(--space-6);
   max-width: var(--size-content-3);
   margin-inline: auto;
+}
+
+/* Webinar Promo */
+.webinar-promo {
+  display: block;
+  max-width: var(--size-content-3);
+  margin: var(--space-6) auto;
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-peach);
+  border-radius: var(--radius-3);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.webinar-promo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+.webinar-promo-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.webinar-promo-badge {
+  align-self: flex-start;
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-6);
+  color: var(--color-burgundy-red);
+  background: white;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-round);
+  margin: 0 0 var(--space-2);
+}
+
+.webinar-promo h2 {
+  margin: 0;
+  font-size: var(--font-size-2);
+  color: var(--brand-color);
+}
+
+.webinar-promo p {
+  margin: 0;
+  color: var(--text-2);
+}
+
+.webinar-promo-cta {
+  margin-top: var(--space-3);
+  font-weight: var(--font-weight-6);
+  color: var(--color-burgundy-red);
 }
 
 .thumbnail {

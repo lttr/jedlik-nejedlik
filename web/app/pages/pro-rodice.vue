@@ -19,38 +19,32 @@
       </NuxtLink>
     </nav>
 
+    <!-- Webinars Section -->
+    <section class="webinars-section">
+      <h2 class="section-title">Webináře</h2>
+      <div class="webinars-grid">
+        <NuxtLink to="/webinar-generace-alfa" class="webinar-card">
+          <p class="webinar-badge">Aktuální webinář</p>
+          <h3>
+            &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
+            u&nbsp;stolu
+          </h3>
+          <p>
+            Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste
+            čekali, a&nbsp;získejte konkrétní opěrné body pro každodenní situace
+            u&nbsp;jídla.
+          </p>
+          <p class="webinar-meta">
+            Pro rodiče dětí 3&ndash;12&nbsp;let &middot; 290&nbsp;Kč
+          </p>
+        </NuxtLink>
+      </div>
+    </section>
+
     <!-- Newsletter Section -->
     <section class="newsletter">
       <NewsletterForm />
     </section>
-
-    <!-- TODO: Webinars Section
-    <section class="webinars-section">
-      <h2 class="section-title">Webináře</h2>
-      <p class="section-intro">
-        Pořádáme online webináře na témata kolem dětského jídla a vaření.
-        Sledujte nás na sociálních sítích, ať vám neunikne další termín.
-      </p>
-
-      <div class="webinars-grid">
-        <article class="webinar-card">
-          <h3>Jídlo na cesty pro děti i dospělé</h3>
-          <p>
-            Praktické tipy, co s sebou na výlety k jídlu – od svačinek v batohu
-            po výběr v restauraci.
-          </p>
-        </article>
-
-        <article class="webinar-card">
-          <h3>A co mám pořád vařit?</h3>
-          <p>
-            Jak si usnadnit každodenní kolotoč okolo kuchyně, jaké suroviny mít
-            vždy doma a jak se neuvařit.
-          </p>
-        </article>
-      </div>
-    </section>
-    -->
 
     <!-- TODO: Courses Section
     <section class="courses-section">
@@ -159,8 +153,6 @@
 }
 
 /* Webinars Section */
-
-/* TODO: Webinars Section
 .webinars-section {
   padding-block: var(--space-8);
   background: transparent;
@@ -173,19 +165,36 @@
   gap: var(--space-5);
   max-width: var(--size-content-3);
   margin-inline: auto;
-
-  @media (--md-n-above) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .webinar-card {
   padding: var(--space-5);
   background: var(--color-peach);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-3);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.webinar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+.webinar-badge {
+  align-self: flex-start;
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-6);
+  color: var(--color-burgundy-red);
+  background: white;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-round);
+  margin: 0;
 }
 
 .webinar-card h3 {
@@ -199,10 +208,10 @@
   color: var(--text-2);
 }
 
-.webinar-card .p-button {
-  align-self: flex-start;
+.webinar-meta {
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-5);
 }
-*/
 
 /* Courses Section */
 /* TODO: Courses Section
