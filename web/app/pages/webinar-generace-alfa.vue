@@ -170,6 +170,37 @@
       </div>
     </section>
 
+    <!-- Lecturers -->
+    <section class="lecturers-section p-full-bg">
+      <div class="section-content">
+        <h2 class="section-title">Lektorky</h2>
+        <div class="lecturers-grid">
+          <figure class="lecturer">
+            <ProfileImg v-if="zdenkaPhoto" :image="zdenkaPhoto" />
+            <figcaption>
+              <p class="p-heading-4">Mgr. Zdeňka Trummová</p>
+              <p>
+                pedagog (5&nbsp;let přímé praxe), výživová poradkyně
+                s&nbsp;desetiletou praxí se zaměřením na výživu dětí, studentka
+                oboru nutriční terapie, zakladatelka projektu Jedlík-nejedlík
+              </p>
+            </figcaption>
+          </figure>
+          <figure class="lecturer">
+            <ProfileImg v-if="petraPhoto" :image="petraPhoto" />
+            <figcaption>
+              <p class="p-heading-4">Mgr. Petra Zapletalová</p>
+              <p>
+                nutriční terapeutka (10&nbsp;let přímé praxe), máma čtyř dětí,
+                na sociálních sítí známá pod profilem &bdquo;očima nutriční
+                terapeutky&ldquo;
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- Pricing -->
     <section class="pricing-section p-full-bg">
       <div class="section-content">
@@ -237,6 +268,13 @@
 
 <script lang="ts" setup>
 const registrationUrl = "https://form.simpleshop.cz/n05o4/buy/"
+
+const { data: zdenkaPhoto } = await useDirectusImage(
+  "a64de3ab-044d-46c7-9e4c-64f3854e93d0",
+)
+const { data: petraPhoto } = await useDirectusImage(
+  "421732fb-1f4b-484c-a5eb-35074abfa139",
+)
 
 useSeoMeta({
   title: "Webinář: Generace alfa u stolu | Jedlík-nejedlík",
@@ -591,6 +629,29 @@ useSeoMeta({
   margin-bottom: 0;
 }
 
+/* Lecturers */
+.lecturers-section {
+  background-color: white;
+  padding-block: var(--section-padding);
+}
+
+.lecturers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  max-width: var(--size-content-3);
+  margin-inline: auto;
+}
+
+.lecturer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0;
+  text-align: center;
+}
+
 /* Pricing */
 .pricing-section {
   background-color: var(--color-burgundy-red);
@@ -733,7 +794,8 @@ useSeoMeta({
 }
 
 @media (--md-n-below) {
-  .for-whom-grid {
+  .for-whom-grid,
+  .lecturers-grid {
     grid-template-columns: 1fr;
   }
 }
