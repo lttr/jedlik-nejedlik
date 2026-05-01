@@ -12,9 +12,6 @@
     "start": "node web/.output/server/index.mjs",
     "typecheck": "pnpm -r run typecheck"
   },
-  "engines": {
-    "node": "22"
-  },
   "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "prettier": "^3.4.2"

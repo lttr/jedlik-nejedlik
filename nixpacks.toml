@@ -7,7 +7,7 @@ providers = ["node"]
 
 # NodeJS version -> field "engines": { "node" } in package.json
 [variables]
-NIXPACKS_NODE_VERSION = '22'
+NIXPACKS_NODE_VERSION = '24'
 
 [phases.install]
 onlyIncludeFiles = [
