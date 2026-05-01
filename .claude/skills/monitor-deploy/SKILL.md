@@ -12,14 +12,18 @@ App: `jedlik-nejedlik-production` — uuid `g8000og`. Deploy auto-triggers on pu
 
 ### 1. Wait for deployment to start (~5-15s after push)
 
-Poll until latest deployment matches local `HEAD`:
+Poll until Coolify registers a deployment whose commit matches local `HEAD`. Capture the deployment uuid for later steps:
 
 ```bash
-git rev-parse HEAD
-coolify app deployments list g8000og --format json | jq -r '.[0] | "\(.deployment_uuid) \(.status) \(.commit)"'
+HEAD_SHA=$(git rev-parse HEAD)
+DEPLOY_UUID=$(timeout 60 bash -c "
+  until uuid=\$(coolify app deployments list g8000og --format json | jq -er '.[0] | select(.commit==\"$HEAD_SHA\") | .deployment_uuid'); do sleep 5; done
+  echo \$uuid
+") || { echo 'Deploy did not start in 60s' >&2; exit 1; }
+echo "Deploy started: $DEPLOY_UUID"
 ```
 
-Sleep 5s and retry if commit is older. Cap retries ~60s.
+`jq -e` exits non-zero when the latest deploy commit does not match `HEAD`, so `until` keeps polling. `timeout 60` caps the wait so we bail clearly if the webhook dropped the push.
 
 ### 2. Monitor with a watcher that always emits a terminal event
 
