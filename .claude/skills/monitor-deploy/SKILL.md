@@ -25,18 +25,31 @@ Sleep 5s and retry if commit is older. Cap retries ~60s.
 
 Critical: a watcher that only emits on error keywords goes silent on success — silence looks identical to "still running." Always emit when the deploy ends so you know to report.
 
-`--follow` exits when the deploy finishes, so just append a sentinel `echo` after the pipeline. Run directly via `Monitor`:
+**Gotcha:** `coolify app deployments logs --follow` does **not** exit when the deploy finishes — it keeps tailing like `tail -f`. So a plain `echo DEPLOY_DONE` appended after the pipeline never runs. Drive termination from the deploy status API instead: background the log follower, poll status, kill follower on terminal status, then emit the sentinel. Run via `Monitor`:
 
 ```bash
-coolify app deployments logs g8000og --follow 2>&1 \
-  | rg --line-buffered -iN "error|failed|fatal|exception|cannot|unable to" \
-  | rg --line-buffered -vN "error-(404|500)|errorhandler|error_page"
-echo "DEPLOY_DONE"
+( coolify app deployments logs g8000og --follow 2>&1 \
+    | rg --line-buffered -iN "error|failed|fatal|exception|cannot|unable to" \
+    | rg --line-buffered -vN "error-(404|500)|errorhandler|error_page" ) &
+WATCHER=$!
+
+status=in_progress
+while [[ "$status" == "in_progress" || "$status" == "queued" || "$status" == "pending" || "$status" == "running" ]]; do
+  sleep 5
+  status=$(coolify app deployments list g8000og --format json | jq -r '.[0].status')
+done
+
+pkill -P $WATCHER 2>/dev/null
+kill $WATCHER 2>/dev/null
+wait 2>/dev/null
+echo "DEPLOY_DONE:$status"
 ```
 
 - Coolify pipes docker progress to stderr, so filter by content not stream.
 - Two `rg` stages: match error keywords, drop false positives (Nuxt error chunk filenames).
-- `DEPLOY_DONE` is the guaranteed terminal notification — fetch the actual status in step 3.
+- Status poll runs every 5s; terminal statuses (`finished`, `failed`, `cancelled`, etc.) break the loop.
+- `pkill -P $WATCHER` reaps the children of the backgrounded subshell (the coolify + rg pipeline); `kill $WATCHER` finishes the subshell itself.
+- `DEPLOY_DONE:<status>` is the guaranteed terminal notification — fetch full state in step 3.
 
 ### 3. On terminal event, fetch full final state
 
