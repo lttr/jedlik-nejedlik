@@ -78,6 +78,10 @@ export default defineNuxtConfig({
     filesWithGlobals: ["../node_modules/@lttr/puleo/output/media.css"],
   },
 
+  ogImage: {
+    zeroRuntime: true,
+  },
+
   plausible: {
     ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
     apiHost: "https://plausible.lttr.cz",
