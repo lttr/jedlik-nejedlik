@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "pnpm -F web run dev",
     "build": "pnpm -r run build",
-    "format": "prettier --write .",
+    "format": "prettier --write --list-different .",
     "lint": "pnpm -r run lint",
     "lint:fix": "eslint --fix",
     "verify": "pnpm -r run verify",
