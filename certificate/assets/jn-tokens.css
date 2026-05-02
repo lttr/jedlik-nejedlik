@@ -1,0 +1,387 @@
+/* ============================================================
+   Jedlík-nejedlík Design System — Colors & Type
+   Source: web/app/assets/css/main.css + Puleo CSS framework
+   ============================================================ */
+
+/* -------------------- FONTS -------------------- */
+/* Brand uses Poppins (loaded via Nuxt Fonts in production).
+   Substitution flag: design system imports from Google Fonts CDN. */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ============ BRAND COLORS (from main.css) ============ */
+  --color-navy: #0a1a57; /* Primary brand color, headings, body text */
+  --color-peach: #ffe8d6; /* Header/nav background, soft surface */
+  --color-forest-green: #2e4d17; /* Accent text on lime sections */
+  --color-pale-blue: #abc2ff; /* Hover states, secondary inverse text */
+  --color-dull-blue: #aec0e4; /* Subtle accent */
+  --color-light-lime: #e0f096; /* Section backgrounds (about, highlights) */
+  --color-orange-soda: #fa702b; /* Bright accent, energetic CTAs */
+  --color-midnight: #22284f; /* Footer + dark surface */
+  --color-star: #ffbc57; /* Rating stars, warm highlight */
+  --color-burgundy-red: #b42739; /* Primary CTA buttons */
+
+  /* Brand color triad */
+  --brand-color: var(--color-navy);
+  --brand-color-dim: #010837;
+  --brand-color-bright: #1434b3;
+
+  /* ============ SEMANTIC ============ */
+  --bg-color-body: #ffffff;
+  --surface-0: #ffffff;
+  --surface-1: #f7f7f7;
+  --surface-2: #ececec;
+  --surface-3: #d9d9d9;
+  --text-color-1: var(--color-navy);
+  --text-color-2: #4a4f6e;
+  --text-color-1-inverse: #ffffff;
+  --text-color-2-inverse: var(--color-pale-blue);
+  --link-color: var(--brand-color-bright);
+  --focus-color: var(--brand-color-bright);
+
+  --positive-alert-color: #145a32;
+  --positive-alert-bg-color: #e0f096;
+  --error-alert-color: #ffffff;
+  --error-alert-bg-color: var(--color-burgundy-red);
+  --success-alert-color: var(--positive-alert-color);
+  --success-alert-bg-color: var(--positive-alert-bg-color);
+
+  /* ============ TYPOGRAPHY (Puleo-aligned scale) ============ */
+  --font-family-body: "Poppins", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-family-headings: "Poppins", system-ui, -apple-system, sans-serif;
+
+  --font-weight-1: 100;
+  --font-weight-3: 300;
+  --font-weight-4: 400;
+  --font-weight-5: 500;
+  --font-weight-6: 600;
+  --font-weight-7: 700;
+  --font-weight-headings: 700;
+
+  /* Modular scale, ~1.25 ratio (matches Puleo Open-Props derivation) */
+  --font-size--2: 0.75rem; /* 12px — micro / labels */
+  --font-size--1: 0.875rem; /* 14px — secondary text, nav links */
+  --font-size-0: 1rem; /* 16px — body */
+  --font-size-1: 1.125rem; /* 18px — body large */
+  --font-size-2: 1.375rem; /* 22px — h4 */
+  --font-size-3: 1.75rem; /* 28px — h3 */
+  --font-size-4: 2.25rem; /* 36px — h2 */
+  --font-size-5: 3rem; /* 48px — h1 / display */
+  --font-size-6: 3.75rem; /* 60px — hero */
+  --font-size-7: 4.5rem; /* 72px — extra-display */
+
+  --font-size-h1: var(--font-size-5);
+
+  --font-lineheight-1: 1.1; /* tight, hero */
+  --font-lineheight-2: 1.25; /* headings */
+  --font-lineheight-3: 1.4;
+  --font-lineheight-4: 1.6; /* body */
+  --line-height-body: var(--font-lineheight-4);
+  --line-height-headings: var(--font-lineheight-2);
+
+  /* ============ SPACING (Puleo fluid scale) ============
+     Each token fluidly interpolates between a small-viewport min and
+     large-viewport max via clamp(min, base + vw, max). Mins are 4.5/9/13.5/...
+     px (3 × 1.5 ratio); maxes round to 5/10/15/.../120px.
+     Half-step tokens (e.g. --space-3-4) interpolate from one step's min
+     to the next step's max for extra-fluid breathing room. */
+  --space-1: clamp(0.281rem, 0.27rem + 0.05vw, 0.313rem); /* 4.5  → 5px  */
+  --space-2: clamp(0.563rem, 0.54rem + 0.11vw, 0.625rem); /* 9    → 10px */
+  --space-3: clamp(0.844rem, 0.81rem + 0.16vw, 0.938rem); /* 13.5 → 15px */
+  --space-4: clamp(1.125rem, 1.08rem + 0.22vw, 1.25rem); /* 18   → 20px */
+  --space-5: clamp(1.688rem, 1.62rem + 0.33vw, 1.875rem); /* 27   → 30px */
+  --space-6: clamp(2.25rem, 2.16rem + 0.43vw, 2.5rem); /* 36   → 40px */
+  --space-7: clamp(3.375rem, 3.24rem + 0.65vw, 3.75rem); /* 54   → 60px */
+  --space-8: clamp(4.5rem, 4.33rem + 0.87vw, 5rem); /* 72   → 80px */
+  --space-9: clamp(6.75rem, 6.49rem + 1.3vw, 7.5rem); /* 108  → 120px */
+  /* Half-step (fluid) tokens */
+  --space-1-2: clamp(0.281rem, 0.16rem + 0.6vw, 0.625rem); /* 4.5  → 10px */
+  --space-2-3: clamp(0.563rem, 0.43rem + 0.65vw, 0.938rem); /* 9    → 15px */
+  --space-3-4: clamp(0.844rem, 0.7rem + 0.71vw, 1.25rem); /* 13.5 → 20px */
+  --space-4-5: clamp(1.125rem, 0.86rem + 1.3vw, 1.875rem); /* 18   → 30px */
+  --space-5-6: clamp(1.688rem, 1.4rem + 1.41vw, 2.5rem); /* 27   → 40px */
+  --space-6-7: clamp(2.25rem, 1.73rem + 2.61vw, 3.75rem); /* 36   → 60px */
+  --space-7-8: clamp(3.375rem, 2.81rem + 2.83vw, 5rem); /* 54   → 80px */
+  --space-8-9: clamp(4.5rem, 3.46rem + 5.22vw, 7.5rem); /* 72   → 120px */
+  --space-3-5: clamp(0.844rem, 0.49rem + 1.79vw, 1.875rem); /* 13.5 → 30px */
+  --space-4-6: clamp(1.125rem, 0.65rem + 2.39vw, 2.5rem); /* 18   → 40px */
+
+  /* ============ RADII ============ */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 5px;
+  --radius-3: 1rem;
+  --radius-4: 2rem;
+  --radius-round: 1e5px;
+  --radius-default: var(--radius-round);
+  --input-radius: var(--radius-4);
+
+  /* ============ BORDERS ============ */
+  --border-size-1: 1px;
+  --border-size-2: 2px;
+  --border-size-3: 5px;
+  --border-1: 1px solid var(--surface-3);
+  --border-3: 1px solid var(--text-color-2);
+  --border-4: 1px solid var(--text-color-1);
+
+  /* ============ SHADOWS (soft, low-contrast — matches site usage) ============ */
+  --shadow-1: 0 1px 2px rgba(168, 168, 168, 0.1);
+  --shadow-2: 0 2px 4px rgba(168, 168, 168, 0.1),
+    0 1px 2px rgba(168, 168, 168, 0.05);
+  --shadow-3: 0 4px 8px rgba(168, 168, 168, 0.1),
+    0 2px 4px rgba(168, 168, 168, 0.05);
+  --shadow-4: 0 8px 16px rgba(168, 168, 168, 0.1),
+    0 4px 8px rgba(168, 168, 168, 0.09), 0 2px 4px rgba(168, 168, 168, 0.05),
+    0 1px 2px rgba(168, 168, 168, 0.01);
+
+  /* ============ SIZES (Puleo content sizes) ============ */
+  --size-content-1: 20ch;
+  --size-content-2: 45ch;
+  --size-content-3: 60ch;
+  --size-header-1: 18ch;
+  --size-header-2: 30ch;
+  --measure: 75ch;
+
+  /* ============ COMPONENTS ============ */
+  --button-height-default: 3rem;
+  --form-gap: var(--space-5);
+  --input-padding-inline: var(--space-4);
+}
+
+/* -------------------- SEMANTIC ELEMENT STYLES -------------------- */
+html,
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-body);
+  color: var(--text-color-1);
+  background-color: var(--bg-color-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-headings);
+  font-weight: var(--font-weight-headings);
+  line-height: var(--line-height-headings);
+  color: var(--color-navy);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--font-size-5);
+}
+h2 {
+  font-size: var(--font-size-4);
+}
+h3 {
+  font-size: var(--font-size-3);
+}
+h4 {
+  font-size: var(--font-size-2);
+}
+h5 {
+  font-size: var(--font-size-1);
+}
+h6 {
+  font-size: var(--font-size-0);
+}
+
+p {
+  margin: 0;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+a:hover {
+  text-decoration: none;
+}
+
+/* ============ PULEO UTILITY CLASSES (essentials) ============ */
+
+/* Secondary text size + weight pairs */
+.p-secondary-text-regular {
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-4);
+  color: var(--text-color-2);
+}
+.p-secondary-text-bold {
+  font-size: var(--font-size--1);
+  font-weight: var(--font-weight-6);
+  color: var(--text-color-1);
+}
+
+/* Heading utilities */
+.p-heading-1 {
+  font-size: var(--font-size-5);
+  font-weight: var(--font-weight-headings);
+  line-height: var(--line-height-headings);
+}
+.p-heading-2 {
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-headings);
+  line-height: var(--line-height-headings);
+}
+.p-heading-3 {
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-headings);
+  line-height: var(--line-height-headings);
+}
+.p-heading-4 {
+  font-size: var(--font-size-2);
+  font-weight: var(--font-weight-headings);
+  line-height: var(--line-height-headings);
+}
+
+/* Layout primitives */
+.p-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-space, var(--space-4));
+}
+.p-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cluster-space, var(--space-3));
+  align-items: center;
+}
+.p-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.p-flow > * + * {
+  margin-block-start: var(--space-5);
+}
+.p-container {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+.p-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cluster-space, var(--space-5));
+}
+.p-switcher > * {
+  flex-grow: 1;
+  flex-basis: calc((var(--switcher-treshold, 30ch) - 100%) * 999);
+}
+
+/* Buttons */
+.p-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-default);
+  padding-inline: var(--space-5);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  font-family: inherit;
+  color: #fff;
+  background-color: var(--color-burgundy-red);
+  border: var(--border-size-2) solid var(--color-burgundy-red);
+  border-radius: var(--radius-default);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out;
+}
+.p-button:hover {
+  background-color: color-mix(in srgb, var(--color-burgundy-red) 85%, black);
+  border-color: color-mix(in srgb, var(--color-burgundy-red) 85%, black);
+}
+.p-button:active {
+  background-color: color-mix(in srgb, var(--color-burgundy-red) 70%, black);
+}
+
+.p-button-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-default);
+  padding-inline: var(--space-5);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  font-family: inherit;
+  color: #fff;
+  background-color: var(--brand-color);
+  border: var(--border-size-2) solid var(--brand-color);
+  border-radius: var(--radius-default);
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+.p-button-brand:hover {
+  background-color: var(--brand-color-bright);
+  border-color: var(--brand-color-bright);
+}
+
+.p-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-height-default);
+  padding-inline: var(--space-5);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  font-family: inherit;
+  color: var(--brand-color);
+  background-color: transparent;
+  border: var(--border-size-2) solid var(--brand-color);
+  border-radius: var(--radius-default);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+}
+.p-secondary:hover {
+  background-color: var(--brand-color);
+  color: #fff;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--font-size-0);
+  padding-inline: var(--input-padding-inline);
+  padding-block: var(--space-3);
+  background-color: var(--surface-0);
+  border: 1px solid var(--surface-3);
+  border-radius: var(--input-radius);
+  color: var(--text-color-1);
+  transition:
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brand-color-bright);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
+}
+
+textarea {
+  border-radius: var(--radius-3);
+  min-height: 8rem;
+  resize: vertical;
+}

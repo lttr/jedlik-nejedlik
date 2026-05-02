@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <title>Generátor certifikátů — Jedlík-nejedlík</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/jn-tokens.css" />
+    <link rel="stylesheet" href="cert.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #e9e4dc;
+        color: var(--color-navy);
+        font-family: var(--font-family-body);
+        min-height: 100vh;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 24px;
+        padding: 24px;
+        box-sizing: border-box;
+        min-height: 100vh;
+      }
+
+      @media (max-width: 1100px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .panel {
+        background: #fffaf2;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 8px 24px -12px rgba(10, 26, 87, 0.15);
+        box-sizing: border-box;
+        align-self: start;
+        position: sticky;
+        top: 24px;
+      }
+
+      .panel h1 {
+        font-size: 22px;
+        margin: 0 0 4px;
+        font-family: var(--font-family-headings);
+      }
+      .panel .sub {
+        font-size: 13px;
+        color: var(--text-color-2);
+        margin-bottom: 20px;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-color-2);
+        margin-bottom: 6px;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 14px;
+        padding: 10px 14px;
+        background: #fff;
+        border: 1px solid var(--surface-3);
+        border-radius: 10px;
+        color: var(--text-color-1);
+      }
+      .field textarea {
+        min-height: 140px;
+        resize: vertical;
+        font-family: var(--font-family-body);
+      }
+      .field input:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--brand-color-bright);
+        box-shadow: 0 0 0 3px
+          color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      button {
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 999px;
+        border: 2px solid var(--color-navy);
+        background: var(--color-navy);
+        color: #fff;
+        cursor: pointer;
+        transition:
+          background 150ms,
+          color 150ms;
+      }
+      button:hover {
+        background: var(--brand-color-bright);
+        border-color: var(--brand-color-bright);
+      }
+      button.secondary {
+        background: transparent;
+        color: var(--color-navy);
+      }
+      button.secondary:hover {
+        background: var(--color-navy);
+        color: #fff;
+      }
+      button[disabled] {
+        opacity: 0.5;
+        cursor: progress;
+      }
+
+      .status {
+        font-size: 13px;
+        color: var(--text-color-2);
+        margin-top: 12px;
+        min-height: 1.4em;
+      }
+
+      .preview-wrap {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow: auto;
+      }
+      .preview-scaler {
+        transform-origin: top left;
+      }
+
+      /* Hidden render area used during PDF capture */
+      .render-stage {
+        position: fixed;
+        left: -10000px;
+        top: 0;
+        width: 297mm;
+        height: 210mm;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="panel">
+        <h1>Generátor certifikátů</h1>
+        <div class="sub">Potvrzení o účasti — Jedlík-nejedlík</div>
+
+        <div class="field">
+          <label for="names">Jména účastníků (každé na nový řádek)</label>
+          <textarea
+            id="names"
+            placeholder="Jan Novák&#10;Jana Nováková&#10;Petr Svoboda"
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="workshop">Název workshopu</label>
+          <input
+            type="text"
+            id="workshop"
+            value="Podpora rodin v oblasti stravování"
+          />
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="hours">Rozsah (hodiny)</label>
+            <input type="number" id="hours" value="5" min="1" step="1" />
+          </div>
+          <div class="field">
+            <label for="workshopDate">Datum workshopu</label>
+            <input type="date" id="workshopDate" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="issueDate">Datum vystavení</label>
+          <input type="date" id="issueDate" />
+        </div>
+
+        <div class="actions">
+          <button id="generate">Vygenerovat PDF (ZIP)</button>
+          <button id="generateSingle" class="secondary">
+            Stáhnout první jako PDF
+          </button>
+        </div>
+
+        <div class="status" id="status"></div>
+      </aside>
+
+      <section class="preview-wrap">
+        <div class="preview-scaler" id="previewScaler">
+          <div id="preview"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="render-stage" id="stage" aria-hidden="true"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
