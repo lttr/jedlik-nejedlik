@@ -1,7 +1,0 @@
-*.min.css
-.nuxt/
-.output/
-cache/
-dist/
-node_modules
-pnpm-lock.yaml

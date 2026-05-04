@@ -32,6 +32,17 @@ This is an education site, that I'm building for my wife.
 - Sentry for error tracking
 - Plausible for analytics
 
+## Toolchain
+
+Project uses [Vite+](https://viteplus.dev/) (`vp`) as a unified frontend toolchain.
+
+- `vp install` — install deps
+- `vp check` — format + lint + type check
+- `vp fmt` — format with Oxfmt (replaces Prettier)
+- `vp run dev` — Nuxt dev server
+- `vp run build` — production build (Nuxt). **Do not use `vp build`** — it runs raw Vite which has no `index.html` entry; Nuxt builds via `nuxi build`.
+- `vp run lint` / `vp run lint:slow` — fast Oxlint vs full ESLint (Nuxt-aware rules)
+
 ## MCP Integration
 
 Directus supports [Model Context Protocol (MCP)](https://directus.io/docs/guides/ai/mcp) for AI-assisted content management. Example for Claude Code:

@@ -3,23 +3,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm -F web run dev",
-    "build": "pnpm -r run build",
-    "format": "prettier --write --list-different .",
-    "lint": "pnpm -r run lint",
-    "lint:fix": "eslint --fix",
-    "verify": "pnpm -r run verify",
+    "dev": "vp run -F web dev",
+    "build": "vp run -r build",
+    "check": "vp check",
+    "check:fix": "vp check --fix",
+    "lint:slow": "vp run -r lint:slow",
+    "lint:slow:fix": "vp run -r lint:slow:fix",
+    "typecheck": "vp run -r typecheck",
+    "verify": "vp fmt --check && vp lint && vp run lint:slow && vp run typecheck",
     "start": "node web/.output/server/index.mjs",
-    "typecheck": "pnpm -r run typecheck"
+    "prepare": "vp config"
   },
   "packageManager": "pnpm@10.33.2",
   "devDependencies": {
     "@nuxt/fonts": "^0.14.0",
-    "prettier": "^3.4.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@vercel/nft": "^0.27.4"
-    }
+    "vite-plus": "catalog:"
   }
 }
