@@ -4,11 +4,14 @@ export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  lint: { options: { typeAware: true, typeCheck: true } },
+  lint: {
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
+  },
   fmt: {
     semi: false,
-    printWidth: 80,
-    sortPackageJson: false,
     ignorePatterns: [
       "*.min.css",
       ".nuxt/",
