@@ -19,19 +19,13 @@
         <div class="colors p-cluster">
           <div v-for="color of colors1" :key="color">
             <span class="p-secondary-text-regular">{{ color }}</span>
-            <div
-              class="color-box"
-              :style="`background-color: var(--${color});`"
-            ></div>
+            <div class="color-box" :style="`background-color: var(--${color});`"></div>
           </div>
         </div>
         <div class="colors p-cluster">
           <div v-for="color of colors2" :key="color">
             <span class="p-secondary-text-regular">{{ color }}</span>
-            <div
-              class="color-box"
-              :style="`background-color: var(--${color});`"
-            ></div>
+            <div class="color-box" :style="`background-color: var(--${color});`"></div>
           </div>
         </div>
       </div>
@@ -41,26 +35,23 @@
       <h1>Nadpis první úrovně</h1>
       <p>Primární text</p>
       <p class="narrow">
-        In hac habitasse platea dictumst. Nullam malesuada molestie lorem. Nunc
-        non mauris. Nam accumsan tortor gravida elit. Cras porttitor. Praesent
-        vel enim sed eros luctus imperdiet.
+        In hac habitasse platea dictumst. Nullam malesuada molestie lorem. Nunc non mauris. Nam
+        accumsan tortor gravida elit. Cras porttitor. Praesent vel enim sed eros luctus imperdiet.
       </p>
       <h2>Nadpis druhé úrovně</h2>
       <p class="p-secondary-text-regular">Sekundární text</p>
       <p class="p-secondary-text-regular">
-        Morbi dictum, sem sit amet aliquam euismod, odio tortor pellentesque
-        odio, ac ultrices enim nibh sed quam. Integer tortor velit, condimentum
-        a, vestibulum eget, sagittis nec, neque. Aenean est urna, bibendum et,
-        imperdiet at, rhoncus in, arcu. In hac habitasse platea dictumst.
-        Vestibulum blandit dignissim dui. Maecenas vitae.
+        Morbi dictum, sem sit amet aliquam euismod, odio tortor pellentesque odio, ac ultrices enim
+        nibh sed quam. Integer tortor velit, condimentum a, vestibulum eget, sagittis nec, neque.
+        Aenean est urna, bibendum et, imperdiet at, rhoncus in, arcu. In hac habitasse platea
+        dictumst. Vestibulum blandit dignissim dui. Maecenas vitae.
       </p>
       <h3>Nadpis třetí úrovně</h3>
       <div class="p-cluster">
-        Morbi dictum, sem sit amet aliquam euismod, odio tortor pellentesque
-        odio, ac ultrices enim nibh sed quam. Integer tortor velit, condimentum
-        a, vestibulum eget, sagittis nec, neque. Aenean est urna, bibendum et,
-        imperdiet at, rhoncus in, arcu. In hac habitasse platea dictumst.
-        Vestibulum blandit dignissim dui. Maecenas vitae.
+        Morbi dictum, sem sit amet aliquam euismod, odio tortor pellentesque odio, ac ultrices enim
+        nibh sed quam. Integer tortor velit, condimentum a, vestibulum eget, sagittis nec, neque.
+        Aenean est urna, bibendum et, imperdiet at, rhoncus in, arcu. In hac habitasse platea
+        dictumst. Vestibulum blandit dignissim dui. Maecenas vitae.
       </div>
     </section>
     <section class="p-flow">

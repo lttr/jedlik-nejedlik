@@ -5,22 +5,18 @@
       <div class="hero-content">
         <p class="hero-intro">
           Otevíráme 12týdenní program pro rodiče, kteří hledají
-          <strong>dlouhodobé a&nbsp;bezpečné řešení</strong> dětské nadváhy
-          a&nbsp;obezity.
+          <strong>dlouhodobé a&nbsp;bezpečné řešení</strong> dětské nadváhy a&nbsp;obezity.
         </p>
         <h1>Dětská nadváha pod kontrolou – bez diet a&nbsp;tlaku</h1>
         <p class="hero-subtitle">
-          Praktický kurz pro rodiče dětí s&nbsp;nadváhou a&nbsp;obezitou
-          3–7&nbsp;let
+          Praktický kurz pro rodiče dětí s&nbsp;nadváhou a&nbsp;obezitou 3–7&nbsp;let
         </p>
         <p class="start-date">
           <Icon name="uil:calendar-alt" />
           <span>Začínáme <strong>14.&nbsp;9.</strong></span>
         </p>
         <div class="hero-cta">
-          <a :href="registrationUrl" class="cta-button primary large"
-            >Chci se přihlásit</a
-          >
+          <a :href="registrationUrl" class="cta-button primary large">Chci se přihlásit</a>
         </div>
       </div>
     </section>
@@ -41,8 +37,8 @@
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
             <span
-              >Dokážete dlouhodobě podporovat změnu v&nbsp;celé rodině a&nbsp;je
-              vám v&nbsp;tom dobře</span
+              >Dokážete dlouhodobě podporovat změnu v&nbsp;celé rodině a&nbsp;je vám v&nbsp;tom
+              dobře</span
             >
           </li>
         </ul>
@@ -60,17 +56,14 @@
           </li>
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
-            <span
-              >Dítě v&nbsp;následujících měsících z&nbsp;nadváhy přirozeně
-              vyrůstá</span
-            >
+            <span>Dítě v&nbsp;následujících měsících z&nbsp;nadváhy přirozeně vyrůstá</span>
           </li>
           <li>
             <Icon name="mdi:check-circle" class="benefit-icon" />
             <span
               ><strong
-                >Změna je udržitelná a&nbsp;nepoškozuje ani zdraví dítěte, ani
-                váš společný vztah</strong
+                >Změna je udržitelná a&nbsp;nepoškozuje ani zdraví dítěte, ani váš společný
+                vztah</strong
               ></span
             >
           </li>
@@ -83,33 +76,26 @@
       <div class="section-content">
         <h2 class="section-title">Proč je náš kurz funkční a&nbsp;bezpečný?</h2>
         <p class="why-intro">
-          Je postavený tak, abyste <strong>nejdřív porozuměli situaci</strong>,
-          zvolili si v&nbsp;ní reálné cíle pro vás, získali nástroje, jak
-          zvládnout situace, které okolo jídla s&nbsp;dítětem řešíte,
-          a&nbsp;<strong>teprve potom se pouštíte do změny</strong>.
+          Je postavený tak, abyste <strong>nejdřív porozuměli situaci</strong>, zvolili si v&nbsp;ní
+          reálné cíle pro vás, získali nástroje, jak zvládnout situace, které okolo jídla
+          s&nbsp;dítětem řešíte, a&nbsp;<strong>teprve potom se pouštíte do změny</strong>.
         </p>
         <h3 class="subsection-title">V&nbsp;průběhu kurzu:</h3>
         <ul class="course-benefits-list">
           <li>
-            Pochopíte, co nadváha a&nbsp;obezita u&nbsp;dětí znamenají
-            a&nbsp;jaká nesou rizika – bez strašení a&nbsp;dlouhého vysvětlování
+            Pochopíte, co nadváha a&nbsp;obezita u&nbsp;dětí znamenají a&nbsp;jaká nesou rizika –
+            bez strašení a&nbsp;dlouhého vysvětlování
           </li>
-          <li>
-            Zmapujete, jaké návyky a&nbsp;situace u&nbsp;vás doma změnu
-            podporují, nebo brzdí
-          </li>
+          <li>Zmapujete, jaké návyky a&nbsp;situace u&nbsp;vás doma změnu podporují, nebo brzdí</li>
           <li>Naučíte se rozlišovat hlad, sytost, nudu, emoce a&nbsp;návyk</li>
-          <li>
-            Osvojíte si strategie zvládání emočně náročných situací bez použití
-            jídla
-          </li>
+          <li>Osvojíte si strategie zvládání emočně náročných situací bez použití jídla</li>
           <li>Naučíte se hodnotit pokrok podle dlouhodobé udržitelnosti</li>
           <li>Posílíte svou rodičovskou sebedůvěru</li>
         </ul>
         <p class="why-conclusion">
-          Z&nbsp;kurzu neodcházíte s&nbsp;návodem na dokonalost a&nbsp;zákazy,
-          ale s&nbsp;<strong>realistickým plánem</strong>, který je udržitelný
-          a&nbsp;chutná :)
+          Z&nbsp;kurzu neodcházíte s&nbsp;návodem na dokonalost a&nbsp;zákazy, ale s&nbsp;<strong
+            >realistickým plánem</strong
+          >, který je udržitelný a&nbsp;chutná :)
         </p>
       </div>
     </section>
@@ -119,8 +105,7 @@
       <div class="section-content">
         <h2 class="section-title">Jak kurz probíhá</h2>
         <p class="format-intro">
-          Kurz trvá <strong>12&nbsp;týdnů</strong> a&nbsp;kombinuje různé formy
-          práce:
+          Kurz trvá <strong>12&nbsp;týdnů</strong> a&nbsp;kombinuje různé formy práce:
         </p>
         <ul class="format-list">
           <li>Předem natočený video obsah</li>
@@ -128,8 +113,7 @@
           <li>Průběžný e-mailing</li>
           <li><strong>4 živé skupinové zoomy</strong></li>
           <li>
-            <strong>1&nbsp;bonusový podpůrný zoom</strong> měsíc po skončení
-            kurzu (v&nbsp;ceně)
+            <strong>1&nbsp;bonusový podpůrný zoom</strong> měsíc po skončení kurzu (v&nbsp;ceně)
           </li>
         </ul>
         <div class="video-types">
@@ -137,16 +121,13 @@
           <div class="video-types-grid">
             <div class="video-type">
               <h4>Informační</h4>
-              <p>
-                Pomáhají situaci porozumět a&nbsp;ukazují cesty, které vedou ke
-                změně.
-              </p>
+              <p>Pomáhají situaci porozumět a&nbsp;ukazují cesty, které vedou ke změně.</p>
             </div>
             <div class="video-type">
               <h4>Akční</h4>
               <p>
-                Vedou ke konkrétním změnám v&nbsp;každodenním fungování rodiny +
-                podpora v&nbsp;pracovním listu.
+                Vedou ke konkrétním změnám v&nbsp;každodenním fungování rodiny + podpora
+                v&nbsp;pracovním listu.
               </p>
             </div>
           </div>
@@ -159,31 +140,21 @@
       <div class="section-content">
         <h2 class="section-title">Obsah kurzu v blocích</h2>
         <p class="content-intro">
-          V&nbsp;kurzu vás nezavalíme. Tématy vás provázíme postupně
-          v&nbsp;doporučeném harmonogramu. Obsah je rozdělený do pěti logických
-          oblastí:
+          V&nbsp;kurzu vás nezavalíme. Tématy vás provázíme postupně v&nbsp;doporučeném
+          harmonogramu. Obsah je rozdělený do pěti logických oblastí:
         </p>
         <ol class="content-blocks-list">
           <li>
-            <strong>Aktuální situace</strong> – porozumění nadváze, očekáváním
-            a&nbsp;prostředí
+            <strong>Aktuální situace</strong> – porozumění nadváze, očekáváním a&nbsp;prostředí
           </li>
           <li>
-            <strong>Rodič jako průvodce změnou</strong> – emoce, hranice,
-            komunikace, sebedůvěra
+            <strong>Rodič jako průvodce změnou</strong> – emoce, hranice, komunikace, sebedůvěra
           </li>
+          <li><strong>Jídlo bez boje</strong> – hlad × nuda, porce, sladkosti, pitný režim</li>
+          <li><strong>Každodenní návyky</strong> – režim dne, pohyb, spánek, stolování</li>
           <li>
-            <strong>Jídlo bez boje</strong> – hlad × nuda, porce, sladkosti,
-            pitný režim
-          </li>
-          <li>
-            <strong>Každodenní návyky</strong> – režim dne, pohyb, spánek,
-            stolování
-          </li>
-          <li>
-            <strong>Udržení změny</strong> – jak změnu udržet a&nbsp;žít jí
-            s&nbsp;lehkostí, jak poznat, že se nedaří, a&nbsp;kde hledat
-            případnou pomoc
+            <strong>Udržení změny</strong> – jak změnu udržet a&nbsp;žít jí s&nbsp;lehkostí, jak
+            poznat, že se nedaří, a&nbsp;kde hledat případnou pomoc
           </li>
         </ol>
       </div>
@@ -200,9 +171,8 @@
           <li>Nehodnotí vzhled těla</li>
         </ul>
         <p class="not-doing-note">
-          Věděli jste, že minimálně do 7&nbsp;let věku je nadváha dítěte
-          záležitost především nás dospělých? Dítě není parťák změny, my ano
-          a&nbsp;jsme tu pro vás.
+          Věděli jste, že minimálně do 7&nbsp;let věku je nadváha dítěte záležitost především nás
+          dospělých? Dítě není parťák změny, my ano a&nbsp;jsme tu pro vás.
         </p>
       </div>
     </section>
@@ -212,22 +182,17 @@
       <div class="section-content">
         <h2 class="pricing-title">Cena kurzu</h2>
         <div class="price-box">
-          <div class="price">
-            3&nbsp;800&nbsp;Kč <span class="price-vat">včetně&nbsp;DPH</span>
-          </div>
+          <div class="price">3&nbsp;800&nbsp;Kč <span class="price-vat">včetně&nbsp;DPH</span></div>
           <p class="price-details">
-            Cena zahrnuje 12týdenní vedený program, pracovní listy, živá setkání
-            i&nbsp;bonusový podpůrný zoom, který se bude konat měsíc po ukončení
-            kurzu, tedy <strong>4.&nbsp;ledna 2027</strong>.
+            Cena zahrnuje 12týdenní vedený program, pracovní listy, živá setkání i&nbsp;bonusový
+            podpůrný zoom, který se bude konat měsíc po ukončení kurzu, tedy
+            <strong>4.&nbsp;ledna 2027</strong>.
           </p>
           <p class="price-installments">
-            Kurzovné je možné rozdělit do dvou splátek
-            (2×&nbsp;2&nbsp;000&nbsp;Kč)
+            Kurzovné je možné rozdělit do dvou splátek (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
           <p class="price-start">Začínáme 14.&nbsp;9.</p>
-          <a :href="registrationUrl" class="cta-button primary large"
-            >Chci se přihlásit</a
-          >
+          <a :href="registrationUrl" class="cta-button primary large">Chci se přihlásit</a>
         </div>
       </div>
     </section>
@@ -237,15 +202,10 @@
       <div class="section-content">
         <h2 class="section-title">Je kurz pro vás?</h2>
         <p class="bmi-text">
-          Nejste si jisti, zda má vaše dítě nadváhu nebo obezitu? Využijte
-          kalkulátor dětského BMI, který vám pomůže situaci posoudit.
+          Nejste si jisti, zda má vaše dítě nadváhu nebo obezitu? Využijte kalkulátor dětského BMI,
+          který vám pomůže situaci posoudit.
         </p>
-        <a
-          href="https://www.childrenbmi.com/"
-          class="bmi-link"
-          target="_blank"
-          rel="noopener"
-        >
+        <a href="https://www.childrenbmi.com/" class="bmi-link" target="_blank" rel="noopener">
           <Icon name="mdi:calculator" />
           Spočítat BMI dítěte
           <Icon name="mdi:open-in-new" class="external-icon" />
@@ -261,29 +221,29 @@
           <div class="unique-card">
             <h3>Chráníme dítě před tlakem a&nbsp;studem</h3>
             <p>
-              Váha ani vzhled se před dítětem neřeší. Odpovědnost zůstává
-              u&nbsp;dospělých a&nbsp;prostředí, ve kterém dítě vyrůstá.
+              Váha ani vzhled se před dítětem neřeší. Odpovědnost zůstává u&nbsp;dospělých
+              a&nbsp;prostředí, ve kterém dítě vyrůstá.
             </p>
           </div>
           <div class="unique-card">
             <h3>Změnu chápeme jako proces</h3>
             <p>
-              Nečekají vás rychlé výsledky. Učíme vás, jak změnu nastavit tak,
-              aby byla dlouhodobě udržitelná a&nbsp;žitelná.
+              Nečekají vás rychlé výsledky. Učíme vás, jak změnu nastavit tak, aby byla dlouhodobě
+              udržitelná a&nbsp;žitelná.
             </p>
           </div>
           <div class="unique-card">
             <h3>Propojujeme výživu, emoce i&nbsp;rodinné fungování</h3>
             <p>
-              Kurz neřeší jen jídlo, ale i&nbsp;pohyb, spánek, emoce, vztahy
-              a&nbsp;každodenní režim.
+              Kurz neřeší jen jídlo, ale i&nbsp;pohyb, spánek, emoce, vztahy a&nbsp;každodenní
+              režim.
             </p>
           </div>
           <div class="unique-card">
             <h3>Respektujeme realitu běžné rodiny</h3>
             <p>
-              Cílem není ideál. Pracujeme s&nbsp;tím, co je reálně možné žít
-              dlouhodobě bez neustálé kontroly.
+              Cílem není ideál. Pracujeme s&nbsp;tím, co je reálně možné žít dlouhodobě bez neustálé
+              kontroly.
             </p>
           </div>
         </div>
@@ -293,9 +253,7 @@
     <!-- 10. Porovnání -->
     <section class="comparison-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">
-          Jak se tento kurz liší od běžných programů
-        </h2>
+        <h2 class="section-title">Jak se tento kurz liší od běžných programů</h2>
         <div class="comparison">
           <div class="comparison-column comparison-column--other">
             <h3>Běžné kurzy</h3>
@@ -330,61 +288,48 @@
             <summary>Je tento kurz opravdu pro naše dítě?</summary>
             <p>
               Kurz je určen rodičům dětí ve věku
-              <strong>3&nbsp;až 7&nbsp;let</strong>, u&nbsp;kterých je přítomná
-              nadváha, nebo obezita. Pokud vám pediatr či jiný odborník sdělil,
-              že vaše dítě má nadváhu, nebo obezitu, nebo vám vyšel takový
-              výsledek na online kalkulačce, a&nbsp;přesto nejste o&nbsp;nadváze
-              vašeho dítěte přesvědčeni, kontaktujte Zdeňku Trummovou na
-              <a href="mailto:zdenka@jedlik-nejedlik.cz"
-                >zdenka@jedlik-nejedlik.cz</a
-              >
+              <strong>3&nbsp;až 7&nbsp;let</strong>, u&nbsp;kterých je přítomná nadváha, nebo
+              obezita. Pokud vám pediatr či jiný odborník sdělil, že vaše dítě má nadváhu, nebo
+              obezitu, nebo vám vyšel takový výsledek na online kalkulačce, a&nbsp;přesto nejste
+              o&nbsp;nadváze vašeho dítěte přesvědčeni, kontaktujte Zdeňku Trummovou na
+              <a href="mailto:zdenka@jedlik-nejedlik.cz">zdenka@jedlik-nejedlik.cz</a>
               a&nbsp;situaci proberte s&nbsp;ní.
             </p>
           </details>
 
           <details class="faq-item">
-            <summary>
-              Neublíží kurz dítěti po psychické stránce? Nechceme na dítě
-              tlačit.
-            </summary>
+            <summary>Neublíží kurz dítěti po psychické stránce? Nechceme na dítě tlačit.</summary>
             <p>
-              Ne. Ochrana dítěte je jedním ze základních principů kurzu. Je to
-              jedna z&nbsp;těch věcí, která dělá náš kurz jedinečný.
+              Ne. Ochrana dítěte je jedním ze základních principů kurzu. Je to jedna z&nbsp;těch
+              věcí, která dělá náš kurz jedinečný.
             </p>
           </details>
 
           <details class="faq-item">
-            <summary>
-              Nebudeme v&nbsp;kurzu řešit diety nebo počítání kalorií?
-            </summary>
+            <summary>Nebudeme v&nbsp;kurzu řešit diety nebo počítání kalorií?</summary>
             <p>
-              Ne. Kurz není dietní a&nbsp;není postaven na počítání kalorií.
-              Učíme vás měnit prostředí a&nbsp;návyky tak, aby zdravější chování
-              vznikalo přirozeně.
+              Ne. Kurz není dietní a&nbsp;není postaven na počítání kalorií. Učíme vás měnit
+              prostředí a&nbsp;návyky tak, aby zdravější chování vznikalo přirozeně.
             </p>
           </details>
 
           <details class="faq-item">
-            <summary>
-              Co když už jsme zkoušeli změnu a&nbsp;nefungovalo to?
-            </summary>
+            <summary>Co když už jsme zkoušeli změnu a&nbsp;nefungovalo to?</summary>
             <p>
               To je velmi častá zkušenost. Kurz pracuje i&nbsp;s&nbsp;tím,
-              <strong>proč předchozí pokusy selhaly</strong>. Často ne kvůli
-              nedostatku snahy, ale kvůli nerealistickým očekáváním, tlaku na
-              dítě, přetížení rodičů, nízké kvalitě odborného vedení, nebo
-              příliš rychlému tempu.
+              <strong>proč předchozí pokusy selhaly</strong>. Často ne kvůli nedostatku snahy, ale
+              kvůli nerealistickým očekáváním, tlaku na dítě, přetížení rodičů, nízké kvalitě
+              odborného vedení, nebo příliš rychlému tempu.
             </p>
           </details>
 
           <details class="faq-item">
             <summary>Co když změnu nechce druhý rodič nebo rodina?</summary>
             <p>
-              Téma nesouladu mezi dospělými je možné otevřít na jednom
-              z&nbsp;podpůrných zoomů. V&nbsp;praxi vidíme, že i&nbsp;přesto, že
-              jeden rodič změnu nepodporuje, pro dítě je prospěšné, když se
-              alespoň jeden rodič snaží, protože nárůst hmotnosti dítěte není
-              tak rychlý.
+              Téma nesouladu mezi dospělými je možné otevřít na jednom z&nbsp;podpůrných zoomů.
+              V&nbsp;praxi vidíme, že i&nbsp;přesto, že jeden rodič změnu nepodporuje, pro dítě je
+              prospěšné, když se alespoň jeden rodič snaží, protože nárůst hmotnosti dítěte není tak
+              rychlý.
             </p>
           </details>
 
@@ -392,46 +337,40 @@
             <summary>Musíme změnit celý život rodiny?</summary>
             <p>
               Ne. Kurz není o&nbsp;„převrácení života naruby“. Učíme vás hledat
-              <strong>malé, ale funkční změny</strong>, které lze dlouhodobě
-              udržet v&nbsp;běžném rodinném provozu.
+              <strong>malé, ale funkční změny</strong>, které lze dlouhodobě udržet v&nbsp;běžném
+              rodinném provozu.
             </p>
           </details>
 
           <details class="faq-item">
             <summary>Jak rychle uvidíme výsledky?</summary>
             <p>
-              U&nbsp;každé rodiny je to jiné, každé dítě má jinou závažnost
-              nadváhy či obezity, jiné startovací podmínky. Kurz neslibuje
-              rychlé výsledky. Cílem je zastavení dalšího nárůstu hmotnosti
-              a&nbsp;vytvoření podmínek, ve kterých dítě může z&nbsp;nadváhy
-              <strong>postupně vyrůst</strong>, což je v&nbsp;praxi jeden
-              z&nbsp;nejbezpečnějších způsobů práce s&nbsp;dětmi v&nbsp;tomto
-              věku. Tempo změny je tedy individuální.
+              U&nbsp;každé rodiny je to jiné, každé dítě má jinou závažnost nadváhy či obezity, jiné
+              startovací podmínky. Kurz neslibuje rychlé výsledky. Cílem je zastavení dalšího
+              nárůstu hmotnosti a&nbsp;vytvoření podmínek, ve kterých dítě může z&nbsp;nadváhy
+              <strong>postupně vyrůst</strong>, což je v&nbsp;praxi jeden z&nbsp;nejbezpečnějších
+              způsobů práce s&nbsp;dětmi v&nbsp;tomto věku. Tempo změny je tedy individuální.
             </p>
           </details>
 
           <details class="faq-item">
             <summary>Co když kurz časově nezvládneme?</summary>
             <p>
-              Kurz je kombinací předtočeného obsahu a&nbsp;živých setkání.
-              Materiály vám posíláme postupně. Pokud doporučené tempo nestíháte,
-              nic se neděje, videa si pustíte vlastním tempem. Živé zoomy slouží
-              k&nbsp;ukotvení a&nbsp;podpoře, ne ke kontrole. Po ukončení kurzu
-              bude následovat za měsíc podpůrný zoom, kde si můžete ujasnit
-              dohnaná témata. Pokud budete potřebovat i&nbsp;tak víc podpory, je
-              možné se domluvit na další formě spolupráce za zvýhodněnou cenu.
+              Kurz je kombinací předtočeného obsahu a&nbsp;živých setkání. Materiály vám posíláme
+              postupně. Pokud doporučené tempo nestíháte, nic se neděje, videa si pustíte vlastním
+              tempem. Živé zoomy slouží k&nbsp;ukotvení a&nbsp;podpoře, ne ke kontrole. Po ukončení
+              kurzu bude následovat za měsíc podpůrný zoom, kde si můžete ujasnit dohnaná témata.
+              Pokud budete potřebovat i&nbsp;tak víc podpory, je možné se domluvit na další formě
+              spolupráce za zvýhodněnou cenu.
             </p>
           </details>
 
           <details class="faq-item">
-            <summary>
-              Budeme v&nbsp;kurzu „hodnoceni“, jestli to děláme správně?
-            </summary>
+            <summary>Budeme v&nbsp;kurzu „hodnoceni“, jestli to děláme správně?</summary>
             <p>
-              Ne. Kurz není o&nbsp;kontrole ani o&nbsp;výkonu. Během skupinových
-              zoomů vám rádi poskytneme zpětnou vazbu ke krokům, které
-              podnikáte, ale pouze pokud o&nbsp;to budete mít zájem. Neexistuje
-              „správné tempo“. Pracujete s&nbsp;tím, kde jste teď,
+              Ne. Kurz není o&nbsp;kontrole ani o&nbsp;výkonu. Během skupinových zoomů vám rádi
+              poskytneme zpětnou vazbu ke krokům, které podnikáte, ale pouze pokud o&nbsp;to budete
+              mít zájem. Neexistuje „správné tempo“. Pracujete s&nbsp;tím, kde jste teď,
               a&nbsp;hledáte udržitelnou cestu dál.
             </p>
           </details>

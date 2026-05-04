@@ -5,19 +5,13 @@
       <div class="hero-content">
         <span class="chip">e-kniha</span>
         <h1 class="hero-title">Cukroví s dětmi a v pohodě</h1>
-        <p class="hero-subtitle">
-          Rodičovský průvodce dlouhodobou pohodou okolo vánočního mlsání.
-        </p>
+        <p class="hero-subtitle">Rodičovský průvodce dlouhodobou pohodou okolo vánočního mlsání.</p>
         <p class="hero-benefit">
-          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
-          hádek okolo cukroví. I na návštěvách!
+          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a hádek okolo cukroví.
+          I na návštěvách!
         </p>
         <div class="hero-cta">
-          <a
-            :href="purchaseUrl"
-            class="cta-button primary"
-            target="_blank"
-            rel="noopener"
+          <a :href="purchaseUrl" class="cta-button primary" target="_blank" rel="noopener"
             >To chci — koupit e-book</a
           >
         </div>
@@ -29,13 +23,13 @@
       <div class="section-content">
         <h2 class="section-title">Proč tento e-book vznikl?</h2>
         <p class="why-text">
-          Vánoce mohou být krásné i chaotické. Sladké se během svátků často mění
-          v boj o hranice, reakce dítěte a naše vlastní očekávání.
+          Vánoce mohou být krásné i chaotické. Sladké se během svátků často mění v boj o hranice,
+          reakce dítěte a naše vlastní očekávání.
         </p>
         <p class="why-conclusion">
           <strong
-            >Tento e-book vám pomůže projít obdobím cukroví s klidem a zároveň
-            nastavovat hranice, které dítěti dávají jistotu.</strong
+            >Tento e-book vám pomůže projít obdobím cukroví s klidem a zároveň nastavovat hranice,
+            které dítěti dávají jistotu.</strong
           >
         </p>
       </div>
@@ -99,17 +93,9 @@
 
     <!-- Lightbox Dialog -->
     <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events, vuejs-accessibility/no-static-element-interactions -->
-    <dialog
-      ref="lightboxDialog"
-      class="lightbox"
-      @click="closeLightboxOnBackdrop"
-    >
+    <dialog ref="lightboxDialog" class="lightbox" @click="closeLightboxOnBackdrop">
       <div class="lightbox-content" @click.stop>
-        <button
-          class="lightbox-close"
-          aria-label="Zavřít"
-          @click="closeLightbox"
-        >
+        <button class="lightbox-close" aria-label="Zavřít" @click="closeLightbox">
           <Icon name="mdi:close" />
         </button>
         <button
@@ -137,9 +123,7 @@
         >
           <Icon name="mdi:chevron-right" />
         </button>
-        <div class="lightbox-counter">
-          {{ currentImageIndex + 1 }} / {{ previewImages.length }}
-        </div>
+        <div class="lightbox-counter">{{ currentImageIndex + 1 }} / {{ previewImages.length }}</div>
       </div>
     </dialog>
 
@@ -150,24 +134,15 @@
         <div class="audience-cards">
           <div class="audience-card">
             <h3>Pro rodiče miminek (první Vánoce)</h3>
-            <p>
-              Pomůže vám promyslet rámec kolem sladkého ještě dřív, než ho dítě
-              začne testovat.
-            </p>
+            <p>Pomůže vám promyslet rámec kolem sladkého ještě dřív, než ho dítě začne testovat.</p>
           </div>
           <div class="audience-card">
             <h3>Pro rodiče starších dětí</h3>
-            <p>
-              Přináší nástroje, jak ustát konflikty, návštěvy i výzvy svátků bez
-              výčitek.
-            </p>
+            <p>Přináší nástroje, jak ustát konflikty, návštěvy i výzvy svátků bez výčitek.</p>
           </div>
           <div class="audience-card">
             <h3>Pro rodiče dětí s nadváhou</h3>
-            <p>
-              Podpoří dítě i rodiče díky předvídatelnosti a klidnému vedení
-              během svátků.
-            </p>
+            <p>Podpoří dítě i rodiče díky předvídatelnosti a klidnému vedení během svátků.</p>
           </div>
         </div>
       </div>
@@ -207,10 +182,9 @@
         <h2 class="section-title">Kdo e-book vytvořil</h2>
         <div class="author-content">
           <p>
-            <strong>Zdeňka Trummová</strong> — pedagog, nutriční poradce,
-            studentka nutriční terapie, lektorka zdravého životního stylu, máma
-            dvou holčiček, která se opírá o vědecky podložená data a ověřené
-            postupy v práci s rodinami — bez strašení a bez nerealistických
+            <strong>Zdeňka Trummová</strong> — pedagog, nutriční poradce, studentka nutriční
+            terapie, lektorka zdravého životního stylu, máma dvou holčiček, která se opírá o vědecky
+            podložená data a ověřené postupy v práci s rodinami — bez strašení a bez nerealistických
             slibů.
           </p>
         </div>
@@ -224,11 +198,7 @@
         <div class="price-box">
           <div class="price">290 Kč</div>
           <p class="price-details">58 stran + budoucí aktualizace zdarma</p>
-          <a
-            :href="purchaseUrl"
-            class="cta-button primary large"
-            target="_blank"
-            rel="noopener"
+          <a :href="purchaseUrl" class="cta-button primary large" target="_blank" rel="noopener"
             >To chci</a
           >
           <p class="price-note">Ke koupi do 21. 12. 2025</p>
@@ -248,9 +218,8 @@
           <div class="faq-item">
             <h3 class="faq-question">Je to pro nejedlíky?</h3>
             <p class="faq-answer">
-              Ano. V e-booku najdete mnoho tipů, jak vzít děti do kuchyně a
-              zažít tam úspěch. Dítě rozšiřuje svůj repertoár potravin i tím, že
-              s jídlem pracuje.
+              Ano. V e-booku najdete mnoho tipů, jak vzít děti do kuchyně a zažít tam úspěch. Dítě
+              rozšiřuje svůj repertoár potravin i tím, že s jídlem pracuje.
             </p>
           </div>
           <div class="faq-item">
@@ -261,21 +230,15 @@
           </div>
           <div class="faq-item">
             <h3 class="faq-question">Pomůže to, i když máme doma chaos?</h3>
-            <p class="faq-answer">
-              Ano, e-book je vedený reálnými situacemi rodičů.
-            </p>
+            <p class="faq-answer">Ano, e-book je vedený reálnými situacemi rodičů.</p>
           </div>
           <div class="faq-item">
-            <h3 class="faq-question">
-              Je e-book pro mě, když jsem úplně vyřízená máma?
-            </h3>
+            <h3 class="faq-question">Je e-book pro mě, když jsem úplně vyřízená máma?</h3>
             <p class="faq-answer">
-              Ano, ALE… V e-booku najdete tipy, jak si přípravy okolo cukroví a
-              vánočního mlsání nejdřív dobře nastavit, aby vám během Vánoc
-              neutíkala energie oknem. Pokud jste ale silně přetížená, bude pro
-              vás e-book zdrojem dalších informací a v případě přetížení je
-              možná dobré nekonzumovat žádné informace — byť ty od nás jsou
-              opravdu kvalitní.
+              Ano, ALE… V e-booku najdete tipy, jak si přípravy okolo cukroví a vánočního mlsání
+              nejdřív dobře nastavit, aby vám během Vánoc neutíkala energie oknem. Pokud jste ale
+              silně přetížená, bude pro vás e-book zdrojem dalších informací a v případě přetížení
+              je možná dobré nekonzumovat žádné informace — byť ty od nás jsou opravdu kvalitní.
             </p>
           </div>
         </div>
@@ -287,11 +250,7 @@
       <div class="section-content">
         <h2 class="section-title">Reference rodičů</h2>
         <div class="testimonials-list">
-          <div
-            v-for="testimonial of testimonials"
-            :key="testimonial.name"
-            class="testimonial-card"
-          >
+          <div v-for="testimonial of testimonials" :key="testimonial.name" class="testimonial-card">
             <blockquote class="testimonial-quote">
               {{ testimonial.quote }}
             </blockquote>
@@ -317,11 +276,7 @@
     <!-- Final CTA -->
     <section class="final-cta p-full-bg">
       <div class="section-content">
-        <a
-          :href="purchaseUrl"
-          class="cta-button primary large"
-          target="_blank"
-          rel="noopener"
+        <a :href="purchaseUrl" class="cta-button primary large" target="_blank" rel="noopener"
           >To chci — stáhnout e-book za 290 Kč</a
         >
         <p class="final-note">Ke koupi do 21. 12. 2025</p>

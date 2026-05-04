@@ -10,19 +10,16 @@
     <section class="intro-section">
       <div class="intro-content p-prose">
         <p>
-          Dětská nadváha i obezita vznikají souhrou mnoha faktorů. Nejde o jedno
-          rodičovské rozhodnutí, geny apod. Na vyšší hmotnosti se podílí vždy
-          životní styl, rodinné návyky, genetika, individuální predispozice,
-          prostředí a mnoho dalších vlivů.
+          Dětská nadváha i obezita vznikají souhrou mnoha faktorů. Nejde o jedno rodičovské
+          rozhodnutí, geny apod. Na vyšší hmotnosti se podílí vždy životní styl, rodinné návyky,
+          genetika, individuální predispozice, prostředí a mnoho dalších vlivů.
         </p>
 
-        <p class="highlight">
-          U nás nesoudíme, u nás se díváme dopředu a pomáháme.
-        </p>
+        <p class="highlight">U nás nesoudíme, u nás se díváme dopředu a pomáháme.</p>
 
         <p>
-          Rodiče často přicházejí s obavou, že „něco pokazili", že se na ně
-          budeme dívat jako na viníka a nastavíme rodině přísné restrikce.
+          Rodiče často přicházejí s obavou, že „něco pokazili", že se na ně budeme dívat jako na
+          viníka a nastavíme rodině přísné restrikce.
         </p>
 
         <p>V Jedlíkovi-nejedlíkovi pracujeme jinak – Rodič je náš partner.</p>
@@ -34,8 +31,8 @@
         </ul>
 
         <p>
-          Soustředíme se na to, co skutečně pomáhá: stabilní návyky, úpravy
-          které jsou pro rodinu žitelné a udržitelné a laskavé vedení.
+          Soustředíme se na to, co skutečně pomáhá: stabilní návyky, úpravy které jsou pro rodinu
+          žitelné a udržitelné a laskavé vedení.
         </p>
       </div>
     </section>

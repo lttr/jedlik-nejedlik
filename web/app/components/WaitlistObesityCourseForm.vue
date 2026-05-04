@@ -14,11 +14,7 @@
       </div>
 
       <div class="p-center">
-        <button
-          type="submit"
-          class="p-button-brand"
-          :disabled="isPendingOrSuccess"
-        >
+        <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
           {{ isSuccess ? "Odesláno" : "Přihlásit se na čekací listinu" }}
         </button>
       </div>
@@ -32,8 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-const { execute, error, isSuccess, isPendingOrSuccess } =
-  useWaitlistObesityCourseForm()
+const { execute, error, isSuccess, isPendingOrSuccess } = useWaitlistObesityCourseForm()
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement

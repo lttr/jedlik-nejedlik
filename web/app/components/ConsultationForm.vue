@@ -1,8 +1,8 @@
 <template>
   <div class="form-wrapper">
     <h2>
-      Objednejte se na konzultaci a&nbsp;začněte s&nbsp;řešením vašich otázek
-      ohledně výživy ještě dnes.
+      Objednejte se na konzultaci a&nbsp;začněte s&nbsp;řešením vašich otázek ohledně výživy ještě
+      dnes.
     </h2>
     <p>Konzultace poskytujeme osobně v&nbsp;Hradci Králové nebo online.</p>
     <p>Objednat se můžete prostřednictvím níže uvedeného formuláře.</p>
@@ -10,73 +10,40 @@
     <form class="form" @submit.prevent="onSubmit">
       <div class="p-form-group">
         <label for="consultation-name">Jméno</label>
-        <input
-          id="consultation-name"
-          type="text"
-          name="name"
-          autocomplete="name"
-        />
+        <input id="consultation-name" type="text" name="name" autocomplete="name" />
       </div>
 
       <div class="p-form-group">
         <label for="consultation-email">E-mail *</label>
-        <input
-          id="consultation-email"
-          type="email"
-          name="email"
-          required
-          autocomplete="email"
-        />
+        <input id="consultation-email" type="email" name="email" required autocomplete="email" />
       </div>
 
       <div class="p-form-group">
         <label for="consultation-phone">Telefonní číslo *</label>
-        <input
-          id="consultation-phone"
-          type="tel"
-          name="phone"
-          required
-          autocomplete="tel"
-        />
+        <input id="consultation-phone" type="tel" name="phone" required autocomplete="tel" />
       </div>
 
       <div class="p-form-group">
         <label for="consultation-service"
-          >Napište název služby, o&nbsp;kterou máte zájem (Konzultace, webinář,
-          přednáška, měření na inbody 270) *</label
+          >Napište název služby, o&nbsp;kterou máte zájem (Konzultace, webinář, přednáška, měření na
+          inbody 270) *</label
         >
-        <input
-          id="consultation-service"
-          type="text"
-          name="service"
-          required
-          autocomplete="off"
-        />
+        <input id="consultation-service" type="text" name="service" required autocomplete="off" />
       </div>
 
       <div class="p-form-group">
         <label for="consultation-question">Máte nějaký dotaz?</label>
-        <textarea
-          id="consultation-question"
-          name="question"
-          rows="4"
-        ></textarea>
+        <textarea id="consultation-question" name="question" rows="4"></textarea>
       </div>
 
       <div class="p-center">
-        <button
-          type="submit"
-          class="p-button-brand"
-          :disabled="isPendingOrSuccess"
-        >
+        <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
           {{ isSuccess ? "Odesláno" : "Odeslat" }}
         </button>
       </div>
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
-      <div v-if="isSuccess" class="success-message">
-        Děkujeme! Ozveme se vám co nejdříve.
-      </div>
+      <div v-if="isSuccess" class="success-message">Děkujeme! Ozveme se vám co nejdříve.</div>
     </form>
   </div>
 </template>

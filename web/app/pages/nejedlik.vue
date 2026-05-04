@@ -11,21 +11,18 @@
       <ul class="intro-questions">
         <li>Je pro vás jídlo vašeho dítěte každodenním zdrojem stresu?</li>
         <li>
-          Odmítá nové potraviny, konzumuje velmi omezený repertoár, stolování je
-          každodenní boj, pláč a&nbsp;vztek je běžnou součástí stolování nebo se
-          dítě jídlu úplně vyhýbá?
+          Odmítá nové potraviny, konzumuje velmi omezený repertoár, stolování je každodenní boj,
+          pláč a&nbsp;vztek je běžnou součástí stolování nebo se dítě jídlu úplně vyhýbá?
         </li>
         <li>
-          Potíže s&nbsp;jídlem mají u&nbsp;dětí mnoho podob i&nbsp;příčin –
-          vývojových, fyziologických, smyslových, emočních, vztahových
-          a&nbsp;dalších.
+          Potíže s&nbsp;jídlem mají u&nbsp;dětí mnoho podob i&nbsp;příčin – vývojových,
+          fyziologických, smyslových, emočních, vztahových a&nbsp;dalších.
         </li>
       </ul>
 
       <p class="highlight">
-        U&nbsp;nás nehledáme, kdo co zkazil, ale jak se v&nbsp;dané situaci
-        posunout k&nbsp;funkčnějšímu stravování a&nbsp;větší pohodě
-        u&nbsp;stolu.
+        U&nbsp;nás nehledáme, kdo co zkazil, ale jak se v&nbsp;dané situaci posunout
+        k&nbsp;funkčnějšímu stravování a&nbsp;větší pohodě u&nbsp;stolu.
       </p>
     </section>
 
@@ -34,24 +31,15 @@
       <h2>Kdy se na nás rodiče obracejí nejčastěji</h2>
       <ul class="reasons-list">
         <li>Máte doma tzv. nejedlíka nebo velmi vybíravé dítě</li>
-        <li>
-          Trápí vás chování dítěte u&nbsp;jídla (odmítání, pláč, vyjednávání,
-          boj)
-        </li>
+        <li>Trápí vás chování dítěte u&nbsp;jídla (odmítání, pláč, vyjednávání, boj)</li>
         <li>Období příkrmů neprobíhá podle vašich představ</li>
         <li>Máte obavy, že vztah k&nbsp;jídlu se nevyvíjí pohodově</li>
-        <li>
-          Nejste si jistí ohledně výživy vašeho dítěte a&nbsp;potřebujete
-          ujištění
-        </li>
-        <li>
-          Už je toho na vás okolo stravování moc, je to pro vás zdroj frustrace
-        </li>
+        <li>Nejste si jistí ohledně výživy vašeho dítěte a&nbsp;potřebujete ujištění</li>
+        <li>Už je toho na vás okolo stravování moc, je to pro vás zdroj frustrace</li>
         <li>Potřebujete se v&nbsp;situaci zorientovat a&nbsp;získat nadhled</li>
         <li>Dítě se potýká se zácpou</li>
         <li>
-          Dítě má za sebou lázeňský pobyt nebo jiný zásah do stravování
-          a&nbsp;nevíte, jak dál
+          Dítě má za sebou lázeňský pobyt nebo jiný zásah do stravování a&nbsp;nevíte, jak dál
         </li>
       </ul>
     </section>
@@ -64,15 +52,14 @@
         <strong>nemusíte na ni být sami</strong>.
       </p>
       <p>
-        U&nbsp;nás víme, že jídlo je naučená dovednost a&nbsp;návyky okolo
-        stravování se vytváří mnoho let. Cílem není, aby dítě jedlo všechno
-        a&nbsp;hned ani abyste s&nbsp;námi trávili roky a&nbsp;byli na nás
-        závislí.
+        U&nbsp;nás víme, že jídlo je naučená dovednost a&nbsp;návyky okolo stravování se vytváří
+        mnoho let. Cílem není, aby dítě jedlo všechno a&nbsp;hned ani abyste s&nbsp;námi trávili
+        roky a&nbsp;byli na nás závislí.
       </p>
       <p class="highlight">
-        Pomůžeme vám najít důvěru v&nbsp;to, že můžete nakrmit své dítě, posílit
-        vaše rodičovské kompetence okolo stravování, snížit napětí u&nbsp;jídla
-        a&nbsp;nastavit dlouhodobě udržitelný směr.
+        Pomůžeme vám najít důvěru v&nbsp;to, že můžete nakrmit své dítě, posílit vaše rodičovské
+        kompetence okolo stravování, snížit napětí u&nbsp;jídla a&nbsp;nastavit dlouhodobě
+        udržitelný směr.
       </p>
     </section>
 
@@ -87,9 +74,8 @@
       </ul>
       <p>
         <strong>
-          Pracujeme vždy s&nbsp;respektem k&nbsp;dítěti i&nbsp;k&nbsp;realitě
-          rodiny. Hledáme řešení na míru právě pro vás, které je srozumitelné,
-          žitelné a&nbsp;dlouhodobě udržitelné.
+          Pracujeme vždy s&nbsp;respektem k&nbsp;dítěti i&nbsp;k&nbsp;realitě rodiny. Hledáme řešení
+          na míru právě pro vás, které je srozumitelné, žitelné a&nbsp;dlouhodobě udržitelné.
         </strong>
       </p>
     </section>
@@ -105,9 +91,8 @@
         <li><strong>emoční a&nbsp;vztahovou rovinu.</strong></li>
       </ul>
       <p>
-        Inspirujeme rodiče k&nbsp;vytváření prostředí, kde se může dítě
-        v&nbsp;jídle bezpečně posouvat, a&nbsp;budovat si tak zdravý vztah
-        k&nbsp;jídlu i&nbsp;sobě na celý život.
+        Inspirujeme rodiče k&nbsp;vytváření prostředí, kde se může dítě v&nbsp;jídle bezpečně
+        posouvat, a&nbsp;budovat si tak zdravý vztah k&nbsp;jídlu i&nbsp;sobě na celý život.
       </p>
     </section>
 
@@ -120,44 +105,34 @@
       <p class="price">1500&nbsp;Kč / 70&nbsp;minut</p>
       <p>Zahrnuje:</p>
       <ul>
-        <li>
-          vyhodnocení vstupního anamnestického dotazníku a&nbsp;jídelníčku
-        </li>
+        <li>vyhodnocení vstupního anamnestického dotazníku a&nbsp;jídelníčku</li>
         <li>rozbor videa stolování</li>
         <li>návrh prvních konkrétních kroků pro domácí prostředí</li>
       </ul>
 
       <p>Následně navrhujeme další postup. Co to znamená v&nbsp;praxi?</p>
       <ul>
-        <li>
-          Všechno potřebné víte a&nbsp;žádná další konzultace není potřeba.
-        </li>
+        <li>Všechno potřebné víte a&nbsp;žádná další konzultace není potřeba.</li>
         <li>Domlouváme si plán dalších návštěv.</li>
         <li>
-          Navrhujeme práci v&nbsp;multioborovém týmu (nejčastěji ergoterapeut,
-          logoped, psychoterapeut), který navazuje na naši práci z&nbsp;úvodní
-          konzultace.
+          Navrhujeme práci v&nbsp;multioborovém týmu (nejčastěji ergoterapeut, logoped,
+          psychoterapeut), který navazuje na naši práci z&nbsp;úvodní konzultace.
         </li>
       </ul>
 
       <h3>Následné konzultace</h3>
       <p class="price">500&nbsp;Kč / hodina</p>
-      <p>
-        Slouží k&nbsp;doladění, podpoře a&nbsp;úpravám podle vývoje situace.
-      </p>
+      <p>Slouží k&nbsp;doladění, podpoře a&nbsp;úpravám podle vývoje situace.</p>
     </section>
 
     <!-- Webinar promo -->
     <NuxtLink to="/webinar-generace-alfa" class="webinar-promo">
       <div class="webinar-promo-content">
         <p class="webinar-promo-badge">Online webinář</p>
-        <h2>
-          &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
-          u&nbsp;stolu
-        </h2>
+        <h2>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h2>
         <p>
-          Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali.
-          Pro rodiče dětí 3&ndash;12&nbsp;let.
+          Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali. Pro rodiče dětí
+          3&ndash;12&nbsp;let.
         </p>
         <span class="webinar-promo-cta">Zjistit víc &rarr;</span>
       </div>
@@ -167,12 +142,10 @@
     <section class="checklist-section p-prose">
       <p>
         <strong>
-          Milí rodiče, některé obtížné situace okolo jídla jsou vývojově běžné,
-          i&nbsp;přesto, že nám denně obtěžují život a&nbsp;znejišťují nás.
-          Mnoho náročných situací dokážete zvládnout sami bez vnější podpory,
-          jindy se potřebujeme o&nbsp;někoho opřít. Pokud si nejste jistí, zda
-          vyhledat pomoc odborníka, zorientujte se ve vaší situaci s&nbsp;naším
-          checklistem.
+          Milí rodiče, některé obtížné situace okolo jídla jsou vývojově běžné, i&nbsp;přesto, že
+          nám denně obtěžují život a&nbsp;znejišťují nás. Mnoho náročných situací dokážete zvládnout
+          sami bez vnější podpory, jindy se potřebujeme o&nbsp;někoho opřít. Pokud si nejste jistí,
+          zda vyhledat pomoc odborníka, zorientujte se ve vaší situaci s&nbsp;naším checklistem.
         </strong>
       </p>
     </section>

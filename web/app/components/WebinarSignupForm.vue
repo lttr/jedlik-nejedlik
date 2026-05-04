@@ -4,22 +4,12 @@
       <div class="form-row">
         <div class="p-form-group">
           <label for="webinar-firstname">Křestní jméno</label>
-          <input
-            id="webinar-firstname"
-            type="text"
-            name="first_name"
-            autocomplete="given-name"
-          />
+          <input id="webinar-firstname" type="text" name="first_name" autocomplete="given-name" />
         </div>
 
         <div class="p-form-group">
           <label for="webinar-lastname">Příjmení</label>
-          <input
-            id="webinar-lastname"
-            type="text"
-            name="last_name"
-            autocomplete="family-name"
-          />
+          <input id="webinar-lastname" type="text" name="last_name" autocomplete="family-name" />
         </div>
       </div>
 
@@ -36,9 +26,7 @@
       </div>
 
       <div class="p-form-group">
-        <label for="webinar-question"
-          >Na co bych se chtěl/a na webináři zeptat?</label
-        >
+        <label for="webinar-question">Na co bych se chtěl/a na webináři zeptat?</label>
         <textarea
           id="webinar-question"
           name="question"
@@ -48,20 +36,13 @@
       </div>
 
       <p class="consent-note">
-        Odesláním formuláře se přihlašujete k odběru novinek od Jedlík-nejedlík.
-        Souhlas můžete kdykoli odvolat prostřednictvím odhlašovacího odkazu v
-        každé zprávě.
-        <NuxtLink to="/zasady-zpracovani-osobnich-udaju"
-          >Zásady zpracování osobních údajů</NuxtLink
-        >
+        Odesláním formuláře se přihlašujete k odběru novinek od Jedlík-nejedlík. Souhlas můžete
+        kdykoli odvolat prostřednictvím odhlašovacího odkazu v každé zprávě.
+        <NuxtLink to="/zasady-zpracovani-osobnich-udaju">Zásady zpracování osobních údajů</NuxtLink>
       </p>
 
       <div class="p-center">
-        <button
-          type="submit"
-          class="p-button-brand"
-          :disabled="isPendingOrSuccess"
-        >
+        <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
           {{ isSuccess ? "Přihlášeno" : "Přihlásit se na webinář" }}
         </button>
       </div>

@@ -8,9 +8,7 @@
 
     <!-- Navigation Links Section -->
     <nav class="topic-nav">
-      <NuxtLink to="/nejedlik" class="topic-link topic-link--star">
-        Máte doma nejedlíka
-      </NuxtLink>
+      <NuxtLink to="/nejedlik" class="topic-link topic-link--star"> Máte doma nejedlíka </NuxtLink>
       <NuxtLink to="/nadvaha" class="topic-link topic-link--blue">
         Moje dítě má nadváhu/obezitu
       </NuxtLink>
@@ -25,18 +23,12 @@
       <div class="webinars-grid">
         <NuxtLink to="/webinar-generace-alfa" class="webinar-card">
           <p class="webinar-badge">Aktuální webinář</p>
-          <h3>
-            &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
-            u&nbsp;stolu
-          </h3>
+          <h3>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h3>
           <p>
-            Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste
-            čekali, a&nbsp;získejte konkrétní opěrné body pro každodenní situace
-            u&nbsp;jídla.
+            Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali, a&nbsp;získejte
+            konkrétní opěrné body pro každodenní situace u&nbsp;jídla.
           </p>
-          <p class="webinar-meta">
-            Pro rodiče dětí 3&ndash;12&nbsp;let &middot; 290&nbsp;Kč
-          </p>
+          <p class="webinar-meta">Pro rodiče dětí 3&ndash;12&nbsp;let &middot; 290&nbsp;Kč</p>
         </NuxtLink>
       </div>
     </section>

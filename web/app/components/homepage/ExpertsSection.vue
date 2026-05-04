@@ -4,9 +4,9 @@
     <div class="wrapper p-switcher">
       <h2 class="heading">Pro odborníky</h2>
       <p class="description p-secondary-text-regular">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id
-        dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. ntum ipsum.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        ntum ipsum.
       </p>
       <button class="cta">Více informací</button>
     </div>

@@ -4,8 +4,8 @@
       <div class="p-flow">
         <h1>Podcast</h1>
         <p class="subtitle">
-          Podcast Jedlík-nejedlík… podcast o tom, jak u dětí podporovat zdravý
-          postoj k jídlu a nepodělat přitom váš vzájemný vztah s dítětem…
+          Podcast Jedlík-nejedlík… podcast o tom, jak u dětí podporovat zdravý postoj k jídlu a
+          nepodělat přitom váš vzájemný vztah s dítětem…
         </p>
         <p>Kde nás můžete poslouchat?</p>
         <p>
@@ -24,28 +24,22 @@
     <div class="bonuses">
       <div class="bonus">
         <h3>Exkluzivní rozhovory</h3>
-        <p>
-          1x za měsíc pro vás děláme rozhovory se skvělými odborníky na dané
-          téma
-        </p>
+        <p>1x za měsíc pro vás děláme rozhovory se skvělými odborníky na dané téma</p>
       </div>
       <div class="bonus">
         <h3>Plná verze podcastu</h3>
         <p>
           Zajímá vás k danému tématu víc? Plnou verzi najdete na
-          <NuxtLink href="https://www.forendors.cz/jedliknejedlik"
-            >Forendors</NuxtLink
-          >.
+          <NuxtLink href="https://www.forendors.cz/jedliknejedlik">Forendors</NuxtLink>.
         </p>
       </div>
       <div class="bonus">
         <h3>Pravidelná podcast poradna</h3>
         <p>
-          Každý měsíc natáčíme poradenský díl, ve kterém odpovídáme na 5 dotazů,
-          které jste nám zaslali. Pokud se nějaké téma opakuje, natočíme pro vás
-          zvláštní epizodu ;). Vaše dotazy nám můžete poslat prostřednictvím
-          formuláře - buďte co nejkonkrétnější, ať např. víme, o jak staré dítko
-          se jedná.
+          Každý měsíc natáčíme poradenský díl, ve kterém odpovídáme na 5 dotazů, které jste nám
+          zaslali. Pokud se nějaké téma opakuje, natočíme pro vás zvláštní epizodu ;). Vaše dotazy
+          nám můžete poslat prostřednictvím formuláře - buďte co nejkonkrétnější, ať např. víme, o
+          jak staré dítko se jedná.
         </p>
       </div>
     </div>
@@ -64,13 +58,9 @@
 </template>
 
 <script lang="ts" setup>
-const { data: zdenkaPhoto } = await useDirectusImage(
-  "a87fbb53-9d2b-4b0d-8bf6-89d522486979",
-)
+const { data: zdenkaPhoto } = await useDirectusImage("a87fbb53-9d2b-4b0d-8bf6-89d522486979")
 
-const { data: anickaPhoto } = await useDirectusImage(
-  "8d621999-f37f-4568-a51d-11e65a0bde62",
-)
+const { data: anickaPhoto } = await useDirectusImage("8d621999-f37f-4568-a51d-11e65a0bde62")
 
 const zdenka = {
   name: "Zdeňka Trummová",
@@ -86,12 +76,8 @@ const anicka = {
   photo: anickaPhoto.value,
 }
 
-const { data: podcastPhoto } = await useDirectusImage(
-  "0ecb6a25-a328-430f-abdc-5606f96dd074",
-)
-const { data: podcastLogo } = await useDirectusImage(
-  "56bd73da-334d-4564-af5d-1ed5a170a3ed",
-)
+const { data: podcastPhoto } = await useDirectusImage("0ecb6a25-a328-430f-abdc-5606f96dd074")
+const { data: podcastLogo } = await useDirectusImage("56bd73da-334d-4564-af5d-1ed5a170a3ed")
 </script>
 
 <style scoped>

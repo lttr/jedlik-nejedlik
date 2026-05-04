@@ -3,11 +3,10 @@
     <article class="p-prose">
       <h1>Zdeňka Trummová</h1>
       <p>
-        Příběh Zdeňky si můžete poslechnout v rozhovoru pro rozhlas. Od jeho
-        natáčení k poradně Jedlík-nejedlík přibyla také nezisková organizace se
-        stejnojmenným názvem, Zdeňka se stala studentkou nutriční terapie,
-        spolupracuje s lékaři, přednáší na konferencích a spolupracuje s
-        odborníky na celorepublikové úrovni.
+        Příběh Zdeňky si můžete poslechnout v rozhovoru pro rozhlas. Od jeho natáčení k poradně
+        Jedlík-nejedlík přibyla také nezisková organizace se stejnojmenným názvem, Zdeňka se stala
+        studentkou nutriční terapie, spolupracuje s lékaři, přednáší na konferencích a spolupracuje
+        s odborníky na celorepublikové úrovni.
       </p>
 
       <a

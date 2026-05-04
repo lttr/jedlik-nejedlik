@@ -7,13 +7,12 @@
     </div>
 
     <p class="subheading">
-      Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty ke
-      zdravému vztahu k jídlu napříč rodinou. Vycházíme z konceptu výživy a
-      výchovy v propojení. Jídlo je naučená dovednost a věříme, že vždy existuje
-      způsob, jak se projíst k větší spokojenosti u stolu a zároveň nerezignovat
-      na výživu. Vycházíme z odborných výživových poznatků, které opakovaně
-      prokazují, že strava a zdravý životní styl jsou základními nástroji zdraví
-      - <strong>na tom, co naše děti jedí, záleží</strong>.
+      Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty ke zdravému vztahu k
+      jídlu napříč rodinou. Vycházíme z konceptu výživy a výchovy v propojení. Jídlo je naučená
+      dovednost a věříme, že vždy existuje způsob, jak se projíst k větší spokojenosti u stolu a
+      zároveň nerezignovat na výživu. Vycházíme z odborných výživových poznatků, které opakovaně
+      prokazují, že strava a zdravý životní styl jsou základními nástroji zdraví -
+      <strong>na tom, co naše děti jedí, záleží</strong>.
     </p>
   </section>
 </template>

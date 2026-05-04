@@ -85,8 +85,7 @@
       .field textarea:focus {
         outline: none;
         border-color: var(--brand-color-bright);
-        box-shadow: 0 0 0 3px
-          color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
       }
       .row {
         display: grid;
@@ -174,11 +173,7 @@
 
         <div class="field">
           <label for="workshop">Název workshopu</label>
-          <input
-            type="text"
-            id="workshop"
-            value="Podpora rodin v oblasti stravování"
-          />
+          <input type="text" id="workshop" value="Podpora rodin v oblasti stravování" />
         </div>
 
         <div class="row">
@@ -199,9 +194,7 @@
 
         <div class="actions">
           <button id="generate">Vygenerovat PDF (ZIP)</button>
-          <button id="generateSingle" class="secondary">
-            Stáhnout první jako PDF
-          </button>
+          <button id="generateSingle" class="secondary">Stáhnout první jako PDF</button>
         </div>
 
         <div class="status" id="status"></div>

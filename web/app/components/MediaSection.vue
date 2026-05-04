@@ -12,10 +12,7 @@
     </div>
 
     <div v-if="media1" class="media-visual">
-      <ContentImg
-        :image="media1"
-        alt="Vizuální mediální výstupy Jedlík-nejedlík"
-      />
+      <ContentImg :image="media1" alt="Vizuální mediální výstupy Jedlík-nejedlík" />
     </div>
 
     <div class="media-list">
@@ -34,10 +31,7 @@
     </div>
 
     <div v-if="media2" class="media-visual">
-      <ContentImg
-        :image="media2"
-        alt="Vizuální mediální výstupy Jedlík-nejedlík"
-      />
+      <ContentImg :image="media2" alt="Vizuální mediální výstupy Jedlík-nejedlík" />
     </div>
 
     <div class="media-list">
@@ -56,10 +50,7 @@
     </div>
 
     <div v-if="media3" class="media-visual">
-      <ContentImg
-        :image="media3"
-        alt="Vizuální mediální výstupy Jedlík-nejedlík"
-      />
+      <ContentImg :image="media3" alt="Vizuální mediální výstupy Jedlík-nejedlík" />
     </div>
 
     <div class="media-list">
@@ -132,17 +123,11 @@
 </template>
 
 <script lang="ts" setup>
-const { data: media1 } = await useDirectusImage(
-  "a2842731-4919-4631-baa7-dd90ad521912",
-)
+const { data: media1 } = await useDirectusImage("a2842731-4919-4631-baa7-dd90ad521912")
 
-const { data: media2 } = await useDirectusImage(
-  "aa119fda-080e-4ed9-90dc-f58939299541",
-)
+const { data: media2 } = await useDirectusImage("aa119fda-080e-4ed9-90dc-f58939299541")
 
-const { data: media3 } = await useDirectusImage(
-  "3c7f383a-cd78-43f8-8805-c09754b7f9ae",
-)
+const { data: media3 } = await useDirectusImage("3c7f383a-cd78-43f8-8805-c09754b7f9ae")
 </script>
 
 <style scoped>
@@ -192,13 +177,11 @@ const { data: media3 } = await useDirectusImage(
   gap: var(--space-3);
   padding-block: var(--space-3);
   padding-inline: var(--space-3);
-  border-block-end: 1px solid
-    color-mix(in srgb, var(--color-navy) 15%, transparent);
+  border-block-end: 1px solid color-mix(in srgb, var(--color-navy) 15%, transparent);
 }
 
 .media-item:first-child {
-  border-block-start: 1px solid
-    color-mix(in srgb, var(--color-navy) 15%, transparent);
+  border-block-start: 1px solid color-mix(in srgb, var(--color-navy) 15%, transparent);
 }
 
 .media-item-content {

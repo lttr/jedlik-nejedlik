@@ -4,16 +4,16 @@
     <header class="page-header">
       <h1>Téma mě zajímá preventivně</h1>
       <p class="lead">
-        Nečekejte s&nbsp;péčí o&nbsp;zdraví svých dětí, až bude problém, pojďte
-        cestou prevence… vyplatí se to vám i&nbsp;vašim dětem.
+        Nečekejte s&nbsp;péčí o&nbsp;zdraví svých dětí, až bude problém, pojďte cestou prevence…
+        vyplatí se to vám i&nbsp;vašim dětem.
       </p>
     </header>
 
     <!-- Intro Section -->
     <section class="intro-section p-prose">
       <p>
-        Většina dětí se rodí zdravá. To, jak se bude jejich zdraví vyvíjet dál,
-        ovlivňuje největším dílem každodenní realita:
+        Většina dětí se rodí zdravá. To, jak se bude jejich zdraví vyvíjet dál, ovlivňuje největším
+        dílem každodenní realita:
       </p>
       <ul class="intro-list">
         <li>rodinné návyky</li>
@@ -26,9 +26,8 @@
     <!-- What prevention means -->
     <section class="prevention-section p-prose">
       <p>
-        Prevence neznamená dietu ani dělení potravin na zdravé a&nbsp;nezdravé,
-        hlídání každého sousta nebo odepírání si všech dobrot světa
-        a&nbsp;bičování se k&nbsp;velkým výkonům apod.
+        Prevence neznamená dietu ani dělení potravin na zdravé a&nbsp;nezdravé, hlídání každého
+        sousta nebo odepírání si všech dobrot světa a&nbsp;bičování se k&nbsp;velkým výkonům apod.
       </p>
       <p>Umožněte vašemu dítěti vstoupit do dospělosti:</p>
       <ul>
@@ -36,8 +35,8 @@
         <li>s&nbsp;předpokladem, že si zdraví udrží do vysokého věku</li>
         <li>se zdravým vztahem k&nbsp;jídlu i&nbsp;k&nbsp;sobě samému</li>
         <li>
-          s&nbsp;vědomím si toho, kým je a&nbsp;že jeho hodnota není o&nbsp;jeho
-          hmotnosti, výkonu ani vzhledu
+          s&nbsp;vědomím si toho, kým je a&nbsp;že jeho hodnota není o&nbsp;jeho hmotnosti, výkonu
+          ani vzhledu
         </li>
       </ul>
     </section>
@@ -45,18 +44,16 @@
     <!-- Prevention definition -->
     <section class="definition-section p-prose">
       <p class="highlight">
-        Prevence znamená vytvářet konstantně prostředí, ve kterém má dítě šanci
-        vyrůst ve zdravého člověka, a&nbsp;to jak po fyzické, tak psychické
-        stránce.
+        Prevence znamená vytvářet konstantně prostředí, ve kterém má dítě šanci vyrůst ve zdravého
+        člověka, a&nbsp;to jak po fyzické, tak psychické stránce.
       </p>
     </section>
 
     <!-- What we do (Proto) -->
     <section class="proto-section p-prose">
       <p>
-        V&nbsp;Jedlíkovi-nejedlíkovi věříme, že prevence je nejlepší způsob, jak
-        zachovat zdraví našich dětí, jak pečovat o&nbsp;dar, který většina
-        z&nbsp;nich dostala při svém narození.
+        V&nbsp;Jedlíkovi-nejedlíkovi věříme, že prevence je nejlepší způsob, jak zachovat zdraví
+        našich dětí, jak pečovat o&nbsp;dar, který většina z&nbsp;nich dostala při svém narození.
       </p>
       <p>Proto:</p>
       <ul>
@@ -65,28 +62,23 @@
           <strong>zdarma relevantní informace</strong> k&nbsp;tématu
         </li>
         <li>
-          <strong>vytváříme online produkty</strong> z&nbsp;roviny zdravého
-          životního stylu v&nbsp;rovině prevence, a&nbsp;to zdarma nebo za
-          symbolické částky, které nezruinují vaši peněženku a&nbsp;zároveň
-          podpoří činnost naší organizace
+          <strong>vytváříme online produkty</strong> z&nbsp;roviny zdravého životního stylu
+          v&nbsp;rovině prevence, a&nbsp;to zdarma nebo za symbolické částky, které nezruinují vaši
+          peněženku a&nbsp;zároveň podpoří činnost naší organizace
         </li>
         <li>
-          <strong>vystupujeme</strong> na přednáškách pro rodiče a&nbsp;širokou
-          veřejnost i&nbsp;na odborných konferencích
+          <strong>vystupujeme</strong> na přednáškách pro rodiče a&nbsp;širokou veřejnost i&nbsp;na
+          odborných konferencích
         </li>
         <li>
           <strong>upozorňujeme na další smysluplné projekty</strong>
           v&nbsp;oblasti prevence
         </li>
         <li>
-          <strong>spolupracujeme</strong> s&nbsp;podobně laděnými organizacemi
-          a&nbsp;odborníky, v&nbsp;jejichž práci věříme jak po odborné, tak po
-          lidské stránce
+          <strong>spolupracujeme</strong> s&nbsp;podobně laděnými organizacemi a&nbsp;odborníky,
+          v&nbsp;jejichž práci věříme jak po odborné, tak po lidské stránce
         </li>
-        <li>
-          <strong>vyvracíme</strong> mýty v&nbsp;oblasti zdravého životního
-          stylu
-        </li>
+        <li><strong>vyvracíme</strong> mýty v&nbsp;oblasti zdravého životního stylu</li>
       </ul>
     </section>
 
@@ -118,22 +110,19 @@
       <h2>Potřebujete víc?</h2>
       <ul class="consultation-questions">
         <li>
-          Prevenci se věnujete, patříte mezi aktivní rodiče, ale dlouhodobě se
-          vám nedaří fungovat okolo zdravého životního stylu v&nbsp;lehkosti?
+          Prevenci se věnujete, patříte mezi aktivní rodiče, ale dlouhodobě se vám nedaří fungovat
+          okolo zdravého životního stylu v&nbsp;lehkosti?
         </li>
         <li>
-          Vaše dítě má specifické stravovací potřeby (potravinové alergie,
-          zácpa, nemoc…) a&nbsp;vy nevíte, jak na ně?
+          Vaše dítě má specifické stravovací potřeby (potravinové alergie, zácpa, nemoc…) a&nbsp;vy
+          nevíte, jak na ně?
         </li>
         <li>
-          Nebo máte tolik informací o&nbsp;výživě, že nevíte, čemu se věnovat
-          teď a&nbsp;čemu potom, co je podstatné a&nbsp;co méně? Potřebujete se
-          v&nbsp;tématu ukotvit, najít se, získat nadhled?
+          Nebo máte tolik informací o&nbsp;výživě, že nevíte, čemu se věnovat teď a&nbsp;čemu potom,
+          co je podstatné a&nbsp;co méně? Potřebujete se v&nbsp;tématu ukotvit, najít se, získat
+          nadhled?
         </li>
-        <li>
-          Ze zdravého životního stylu se stalo téma a&nbsp;zdroj každodenní
-          úzkosti?
-        </li>
+        <li>Ze zdravého životního stylu se stalo téma a&nbsp;zdroj každodenní úzkosti?</li>
       </ul>
       <p><strong>Využijte naši jednorázovou konzultaci.</strong></p>
       <p class="price">1&nbsp;000&nbsp;Kč / 60&nbsp;minut</p>
@@ -142,31 +131,23 @@
         <div class="benefit">
           <p>
             <strong>Odborné vedení bez extrémů a&nbsp;bez strašení.</strong>
-            Pomůžeme vám zorientovat se v&nbsp;současných výživových trendech
-            a&nbsp;oddělit podstatné od nepodstatného.
+            Pomůžeme vám zorientovat se v&nbsp;současných výživových trendech a&nbsp;oddělit
+            podstatné od nepodstatného.
           </p>
         </div>
         <div class="benefit">
           <p>
-            <strong
-              >Praktické a&nbsp;udržitelné nastavení rodinného
-              stravování.</strong
-            >
-            Takové, které zapadne do vašeho života. Bez speciálních diet, bez
-            neustálého vaření a&nbsp;bez pocitu, že v&nbsp;restauraci není co
-            objednat a&nbsp;v&nbsp;obchodě co koupit, protože všechno obsahuje
-            éčka nebo není dost bio.
+            <strong>Praktické a&nbsp;udržitelné nastavení rodinného stravování.</strong>
+            Takové, které zapadne do vašeho života. Bez speciálních diet, bez neustálého vaření
+            a&nbsp;bez pocitu, že v&nbsp;restauraci není co objednat a&nbsp;v&nbsp;obchodě co
+            koupit, protože všechno obsahuje éčka nebo není dost bio.
           </p>
         </div>
         <div class="benefit">
           <p>
-            <strong
-              >Individuální poradenství, pokud chcete jít více do
-              hloubky.</strong
-            >
-            Každá rodina má jiný příběh. To, co funguje u&nbsp;jednoho, nemusí
-            být cesta pro druhého. Pracujeme v&nbsp;kontextu vašeho životního
-            stylu, hodnot i&nbsp;možností.
+            <strong>Individuální poradenství, pokud chcete jít více do hloubky.</strong>
+            Každá rodina má jiný příběh. To, co funguje u&nbsp;jednoho, nemusí být cesta pro
+            druhého. Pracujeme v&nbsp;kontextu vašeho životního stylu, hodnot i&nbsp;možností.
           </p>
         </div>
       </div>
@@ -179,14 +160,14 @@
         <li>Nedělíme jídlo na „zdravé" a&nbsp;„nezdravé".</li>
         <li>Nevytváříme další výživový směr ani ideologii.</li>
         <li>
-          Nejsme guru zdravého životního stylu a&nbsp;neděláme kroky, které
-          u&nbsp;vás vytvářejí závislost na našich službách.
+          Nejsme guru zdravého životního stylu a&nbsp;neděláme kroky, které u&nbsp;vás vytvářejí
+          závislost na našich službách.
         </li>
       </ul>
       <p>Pracujeme s&nbsp;odpovědností, kontextem a&nbsp;dlouhodobostí.</p>
       <p>
-        Pomáháme vám nastavit zdravý životní styl, který je udržitelný
-        a&nbsp;dává smysl celé vaší rodině.
+        Pomáháme vám nastavit zdravý životní styl, který je udržitelný a&nbsp;dává smysl celé vaší
+        rodině.
       </p>
     </section>
 
@@ -203,12 +184,10 @@
         <li>svalová hmota</li>
         <li>beztuková hmota</li>
         <li>váha</li>
+        <li>BMI, procentuální podíl tělesného tuku, poměr pasu k&nbsp;bokům (WHR)</li>
         <li>
-          BMI, procentuální podíl tělesného tuku, poměr pasu k&nbsp;bokům (WHR)
-        </li>
-        <li>
-          svalová hmota v&nbsp;jednotlivých tělesných částech, procento
-          svaloviny v&nbsp;jednotlivých tělesných částech
+          svalová hmota v&nbsp;jednotlivých tělesných částech, procento svaloviny
+          v&nbsp;jednotlivých tělesných částech
         </li>
         <li>a&nbsp;další</li>
       </ul>

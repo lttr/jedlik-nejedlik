@@ -13,15 +13,11 @@ function useDirectusForm(collection: string) {
 }
 
 export const useCooperationForm = () => useDirectusForm("cooperation_form")
-export const useNewsletterExpertsForm = () =>
-  useDirectusForm("newsletter_experts_form")
-export const usePodcastQuestionForm = () =>
-  useDirectusForm("podcast_question_form")
-export const useWaitlistObesityCourseForm = () =>
-  useDirectusForm("waitlist_obesity_course_form")
+export const useNewsletterExpertsForm = () => useDirectusForm("newsletter_experts_form")
+export const usePodcastQuestionForm = () => useDirectusForm("podcast_question_form")
+export const useWaitlistObesityCourseForm = () => useDirectusForm("waitlist_obesity_course_form")
 export const useConsultationForm = () => useDirectusForm("consultation_form")
-export const useNewsletterParentsForm = () =>
-  useDirectusForm("newsletter_parents_form")
+export const useNewsletterParentsForm = () => useDirectusForm("newsletter_parents_form")
 
 export function useWebinarSignupForm() {
   return useAsyncRequest<FormData>(async (data) => {

@@ -5,8 +5,7 @@
       <div class="column p-stack">
         <h2>Semináře a&nbsp;přednášky</h2>
         <p class="description">
-          Vzdělávání nás baví, a proto pořádáme přednášky, besedy, webináře,
-          kurzy a akce na míru.
+          Vzdělávání nás baví, a proto pořádáme přednášky, besedy, webináře, kurzy a akce na míru.
         </p>
         <button class="cta">Všechny semináře</button>
       </div>

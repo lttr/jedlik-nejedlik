@@ -5,13 +5,11 @@
         <span class="chip">e-kniha</span>
         <h1 class="heading p-heading-1">Jak na cukroví s dětmi?</h1>
         <p class="description">
-          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a
-          hádek okolo cukroví. I na návštěvách!
+          Pomůžeme vám projít obdobím vánočního mlsání s klidem, bez výčitek a hádek okolo cukroví.
+          I na návštěvách!
         </p>
         <div class="p-cluster">
-          <NuxtLink to="/ebook-vanocni-cukrovi" class="cta p-button"
-            >Koupit e-knihu</NuxtLink
-          >
+          <NuxtLink to="/ebook-vanocni-cukrovi" class="cta p-button">Koupit e-knihu</NuxtLink>
           <NuxtLink to="/o-nas" class="link p-button">O nás</NuxtLink>
         </div>
       </div>

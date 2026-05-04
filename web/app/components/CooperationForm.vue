@@ -13,13 +13,7 @@
 
       <div class="p-form-group">
         <label for="email">Email *</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          required
-          autocomplete="email"
-        />
+        <input id="email" type="email" name="email" required autocomplete="email" />
       </div>
 
       <div class="p-form-group">
@@ -33,23 +27,12 @@
       </div>
 
       <div class="p-form-group">
-        <label for="cooperation"
-          >V jaké oblasti byste rádi spolupracovali?</label
-        >
-        <input
-          id="cooperation"
-          type="text"
-          name="cooperation"
-          autocomplete="off"
-        />
+        <label for="cooperation">V jaké oblasti byste rádi spolupracovali?</label>
+        <input id="cooperation" type="text" name="cooperation" autocomplete="off" />
       </div>
 
       <div class="p-center">
-        <button
-          type="submit"
-          class="p-button-brand"
-          :disabled="isPendingOrSuccess"
-        >
+        <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
           {{ isSuccess ? "Odesláno" : "Odeslat" }}
         </button>
       </div>

@@ -45,20 +45,16 @@
         </div>
 
         <p class="consent-note">
-          Odesláním údajů souhlasím s tím, abych dostával/a na svůj e-mail
-          zprávy s novinkami od Jedlík-nejedlík. Souhlas mohu kdykoli odvolat
-          prostřednictvím odhlašovacího odkazu v každé zprávě.
+          Odesláním údajů souhlasím s tím, abych dostával/a na svůj e-mail zprávy s novinkami od
+          Jedlík-nejedlík. Souhlas mohu kdykoli odvolat prostřednictvím odhlašovacího odkazu v každé
+          zprávě.
           <NuxtLink to="/zasady-zpracovani-osobnich-udaju"
             >Zásady zpracování osobních údajů</NuxtLink
           >
         </p>
 
         <div class="p-center">
-          <button
-            type="submit"
-            class="p-button-brand"
-            :disabled="isPendingOrSuccess"
-          >
+          <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
             {{ buttonText }}
           </button>
         </div>
@@ -89,8 +85,7 @@ const props = withDefaults(
 )
 
 const router = useRouter()
-const { execute, error, isSuccess, isPendingOrSuccess } =
-  useNewsletterParentsForm()
+const { execute, error, isSuccess, isPendingOrSuccess } = useNewsletterParentsForm()
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement

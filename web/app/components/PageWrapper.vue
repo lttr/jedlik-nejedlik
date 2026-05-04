@@ -1,9 +1,5 @@
 <template>
-  <component
-    :is="element"
-    :class="{ 'p-page-layout': isPageLayout }"
-    class="page-wrapper"
-  >
+  <component :is="element" :class="{ 'p-page-layout': isPageLayout }" class="page-wrapper">
     <slot></slot>
   </component>
 </template>

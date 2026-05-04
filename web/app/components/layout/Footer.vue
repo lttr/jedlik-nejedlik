@@ -5,9 +5,7 @@
         <SiteLogo class="logo" />
         <p class="contact p-secondary-text-regular">
           Kontakt:<br />
-          <a class="link" href="mailto:info@jedlik-nejedlik.cz"
-            >info@jedlik-nejedlik.cz</a
-          ><br />
+          <a class="link" href="mailto:info@jedlik-nejedlik.cz">info@jedlik-nejedlik.cz</a><br />
           <a class="link" href="tel:732651959">732&nbsp;651&nbsp;959</a><br />
         </p>
       </section>
@@ -25,9 +23,7 @@
       <section class="p-stack">
         <ul class="unstyled p-stack">
           <li>
-            <NuxtLink class="link" to="/obchodni-podminky"
-              >Obchodní podmínky</NuxtLink
-            >
+            <NuxtLink class="link" to="/obchodni-podminky">Obchodní podmínky</NuxtLink>
           </li>
           <li>
             <NuxtLink class="link" to="/zasady-zpracovani-osobnich-udaju"

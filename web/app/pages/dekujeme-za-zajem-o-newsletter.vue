@@ -54,8 +54,7 @@ const pdfDownload =
 
 useSeoMeta({
   title: "Děkujeme za přihlášení k newsletteru",
-  description:
-    "Vaše přihlášení k newsletteru Jedlík-nejedlík bylo úspěšně zpracováno.",
+  description: "Vaše přihlášení k newsletteru Jedlík-nejedlík bylo úspěšně zpracováno.",
 })
 </script>
 

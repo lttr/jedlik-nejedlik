@@ -14,9 +14,9 @@
     "start": "node web/.output/server/index.mjs",
     "prepare": "vp config"
   },
-  "packageManager": "pnpm@10.33.2",
   "devDependencies": {
     "@nuxt/fonts": "^0.14.0",
     "vite-plus": "catalog:"
-  }
+  },
+  "packageManager": "pnpm@10.33.2"
 }

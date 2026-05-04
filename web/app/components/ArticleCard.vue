@@ -6,9 +6,7 @@
 
     <div class="content p-stack">
       <NuxtLink :to class="title-link">
-        <component :is="headingLevel" class="title p-heading-4">{{
-          title
-        }}</component>
+        <component :is="headingLevel" class="title p-heading-4">{{ title }}</component>
       </NuxtLink>
       <ul class="p-cluster">
         <li v-for="tag of tags" :key="tag.to">

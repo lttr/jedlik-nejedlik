@@ -16,8 +16,7 @@ export function useAsyncRequest<TInputData, TOutputData = void>(
   const status = ref<"idle" | "pending" | "success" | "error">("idle")
   const error = ref<Error | null>(null)
 
-  const timeout = (ms: number) =>
-    new Promise((_, reject) => setTimeout(reject, ms))
+  const timeout = (ms: number) => new Promise((_, reject) => setTimeout(reject, ms))
 
   async function execute(data: TInputData) {
     status.value = "pending"
@@ -35,9 +34,7 @@ export function useAsyncRequest<TInputData, TOutputData = void>(
   return {
     error,
     execute,
-    isPendingOrSuccess: computed(() =>
-      ["pending", "success"].includes(status.value),
-    ),
+    isPendingOrSuccess: computed(() => ["pending", "success"].includes(status.value)),
     isSuccess: computed(() => status.value === "success"),
     status,
   }

@@ -7,8 +7,8 @@
         <h2 class="heading">Výživa a výchova v&nbsp;propojení</h2>
       </div>
       <p class="description">
-        Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty
-        ke zdravému vztahu k jídlu napříč&nbsp;rodinou.
+        Pomáháme rodičům zvládat náročné situace okolo jídla a vyšlapávat cesty ke zdravému vztahu k
+        jídlu napříč&nbsp;rodinou.
       </p>
       <NuxtLink class="cta p-button" to="/o-nas">Více o projektu</NuxtLink>
     </div>

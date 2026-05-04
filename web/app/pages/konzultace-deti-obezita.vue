@@ -3,9 +3,8 @@
     <header class="page-header">
       <h1>Konzultace pro děti</h1>
       <p class="lead">
-        Pomáháme rodinám s&nbsp;dětmi, které se potýkají s&nbsp;nadváhou či
-        obezitou. Pracujeme bez diet, bez strašení a&nbsp;s&nbsp;respektem
-        k&nbsp;dítěti i&nbsp;celé rodině.
+        Pomáháme rodinám s&nbsp;dětmi, které se potýkají s&nbsp;nadváhou či obezitou. Pracujeme bez
+        diet, bez strašení a&nbsp;s&nbsp;respektem k&nbsp;dítěti i&nbsp;celé rodině.
       </p>
     </header>
 

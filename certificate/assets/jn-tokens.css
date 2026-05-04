@@ -47,8 +47,7 @@
   --success-alert-bg-color: var(--positive-alert-bg-color);
 
   /* ============ TYPOGRAPHY (Puleo-aligned scale) ============ */
-  --font-family-body: "Poppins", system-ui, -apple-system, "Segoe UI",
-    sans-serif;
+  --font-family-body: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-family-headings: "Poppins", system-ui, -apple-system, sans-serif;
 
   --font-weight-1: 100;
@@ -127,13 +126,11 @@
 
   /* ============ SHADOWS (soft, low-contrast — matches site usage) ============ */
   --shadow-1: 0 1px 2px rgba(168, 168, 168, 0.1);
-  --shadow-2: 0 2px 4px rgba(168, 168, 168, 0.1),
-    0 1px 2px rgba(168, 168, 168, 0.05);
-  --shadow-3: 0 4px 8px rgba(168, 168, 168, 0.1),
-    0 2px 4px rgba(168, 168, 168, 0.05);
-  --shadow-4: 0 8px 16px rgba(168, 168, 168, 0.1),
-    0 4px 8px rgba(168, 168, 168, 0.09), 0 2px 4px rgba(168, 168, 168, 0.05),
-    0 1px 2px rgba(168, 168, 168, 0.01);
+  --shadow-2: 0 2px 4px rgba(168, 168, 168, 0.1), 0 1px 2px rgba(168, 168, 168, 0.05);
+  --shadow-3: 0 4px 8px rgba(168, 168, 168, 0.1), 0 2px 4px rgba(168, 168, 168, 0.05);
+  --shadow-4:
+    0 8px 16px rgba(168, 168, 168, 0.1), 0 4px 8px rgba(168, 168, 168, 0.09),
+    0 2px 4px rgba(168, 168, 168, 0.05), 0 1px 2px rgba(168, 168, 168, 0.01);
 
   /* ============ SIZES (Puleo content sizes) ============ */
   --size-content-1: 20ch;
@@ -376,8 +373,7 @@ input[type="tel"]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--brand-color-bright);
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-color-bright) 20%, transparent);
 }
 
 textarea {

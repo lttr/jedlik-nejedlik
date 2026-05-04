@@ -4,26 +4,15 @@
     <section class="hero p-full-bg">
       <div class="hero-content">
         <p class="badge">Online webinář</p>
-        <h1>
-          &bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa
-          u&nbsp;stolu
-        </h1>
-        <p class="hero-date">
-          <strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu
-        </p>
+        <h1>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h1>
+        <p class="hero-date"><strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu</p>
         <p class="hero-subtitle">Možná to znáte:</p>
         <ul class="pains-list">
           <li>
-            vysvětlujete, proč je něco &bdquo;zdravé&ldquo;&hellip; a&nbsp;dítě
-            to stejně odmítne
+            vysvětlujete, proč je něco &bdquo;zdravé&ldquo;&hellip; a&nbsp;dítě to stejně odmítne
           </li>
-          <li>
-            snažíte se nastavit pravidla&hellip; a&nbsp;končí to konfliktem
-          </li>
-          <li>
-            dítě se ofrňuje nad chlebem se sýrem, přitom pro vás to bylo vždy
-            běžné jídlo
-          </li>
+          <li>snažíte se nastavit pravidla&hellip; a&nbsp;končí to konfliktem</li>
+          <li>dítě se ofrňuje nad chlebem se sýrem, přitom pro vás to bylo vždy běžné jídlo</li>
         </ul>
         <div class="hero-cta">
           <a :href="registrationUrl" class="cta-button primary large"
@@ -36,24 +25,18 @@
     <!-- Why this is different -->
     <section class="intro-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">
-          My jsme jedli všechno&hellip; tak proč moje dítě ne?
-        </h2>
+        <h2 class="section-title">My jsme jedli všechno&hellip; tak proč moje dítě ne?</h2>
         <p class="emphasis-question"><em>Dělám něco špatně?</em></p>
         <p class="lead">
-          Vychováváte dítě v&nbsp;úplně jiném světě, než ve kterém jste
-          vyrůstali vy.
+          Vychováváte dítě v&nbsp;úplně jiném světě, než ve kterém jste vyrůstali vy.
         </p>
         <p class="sub-lead">Děti generace alfa:</p>
         <ul class="bullet-list">
           <li>vyrůstají v&nbsp;prostředí neustálého výběru</li>
+          <li>mají přístup k&nbsp;nadměrnému množství informací (a&nbsp;dezinformací)</li>
           <li>
-            mají přístup k&nbsp;nadměrnému množství informací
-            (a&nbsp;dezinformací)
-          </li>
-          <li>
-            k&nbsp;autoritě se staví jinak &ndash; méně samozřejmě ji přijímají,
-            víc očekávají vysvětlení
+            k&nbsp;autoritě se staví jinak &ndash; méně samozřejmě ji přijímají, víc očekávají
+            vysvětlení
           </li>
         </ul>
         <p class="closing-note">A&nbsp;to vše se promítá i&nbsp;do jídla.</p>
@@ -64,13 +47,11 @@
     <section class="learn-section p-full-bg">
       <div class="section-content">
         <h2 class="section-title">
-          Poznejte současnou generaci dětí. Pochopte, v&nbsp;čem jsou vaše světy
-          jiné.
+          Poznejte současnou generaci dětí. Pochopte, v&nbsp;čem jsou vaše světy jiné.
         </h2>
         <p class="learn-intro">
-          Bez strašení. Bez pocitu viny. Bez univerzálních nefunkčních rad typu
-          &bdquo;prostě to vydržte&ldquo; nebo klišé &bdquo;my jsme jedli
-          všechno&ldquo;.
+          Bez strašení. Bez pocitu viny. Bez univerzálních nefunkčních rad typu &bdquo;prostě to
+          vydržte&ldquo; nebo klišé &bdquo;my jsme jedli všechno&ldquo;.
         </p>
 
         <h3 class="subsection-title">Na webináři se dozvíte:</h3>
@@ -79,13 +60,11 @@
           <li>jak přemýšlí o&nbsp;jídle a&nbsp;co se mu honí hlavou</li>
           <li>co změnit ve větách a&nbsp;přístupu, aby to začalo fungovat</li>
           <li>
-            kde být pevní a&nbsp;držet hranice a&nbsp;kde ustoupit, abyste
-            u&nbsp;dítěte podpořili rozvoj zdravého vztahu k&nbsp;jídlu
+            kde být pevní a&nbsp;držet hranice a&nbsp;kde ustoupit, abyste u&nbsp;dítěte podpořili
+            rozvoj zdravého vztahu k&nbsp;jídlu
           </li>
           <li>jak s&nbsp;dětmi o&nbsp;jídle mluvit tak, aby to mělo efekt</li>
-          <li>
-            jak okolo jídla nesklouznout k&nbsp;tlaku ani k&nbsp;rezignaci
-          </li>
+          <li>jak okolo jídla nesklouznout k&nbsp;tlaku ani k&nbsp;rezignaci</li>
         </ul>
       </div>
     </section>
@@ -97,18 +76,13 @@
         <ul class="check-list">
           <li>najdete způsob komunikace, který funguje</li>
           <li>budete vědět, kdy na dítě netlačit (a&nbsp;proč)</li>
-          <li>
-            dostanete konkrétní opěrné body pro každodenní situace u&nbsp;jídla
-          </li>
-          <li>
-            díky pochopení získáte větší klid a&nbsp;jistotu okolo stravování
-            svých dětí
-          </li>
+          <li>dostanete konkrétní opěrné body pro každodenní situace u&nbsp;jídla</li>
+          <li>díky pochopení získáte větší klid a&nbsp;jistotu okolo stravování svých dětí</li>
         </ul>
         <p class="after-conclusion">
           <strong
-            >Zjistíte, co konkrétně změnit ve svém přístupu, aby se jídlo
-            přestalo měnit v&nbsp;každodenní boj.</strong
+            >Zjistíte, co konkrétně změnit ve svém přístupu, aby se jídlo přestalo měnit
+            v&nbsp;každodenní boj.</strong
           >
         </p>
       </div>
@@ -122,23 +96,15 @@
             <h3>Pro koho webinář je</h3>
             <ul>
               <li>rodiče dětí ve&nbsp;věku přibližně 3&ndash;12&nbsp;let</li>
-              <li>
-                rodiče, kteří mají pocit, že &bdquo;to u&nbsp;jídla drhne&ldquo;
-              </li>
-              <li>
-                rodiče, kteří nechtějí jít cestou tlaku ani úplného povolení
-              </li>
+              <li>rodiče, kteří mají pocit, že &bdquo;to u&nbsp;jídla drhne&ldquo;</li>
+              <li>rodiče, kteří nechtějí jít cestou tlaku ani úplného povolení</li>
             </ul>
           </div>
           <div class="for-whom-card for-whom-card--no">
             <h3>Pro koho není</h3>
             <ul>
-              <li>
-                pokud hledáte rychlé &bdquo;triky, jak dítě donutit jíst&ldquo;
-              </li>
-              <li>
-                pokud chcete mít nad jídlem plnou kontrolu bez zapojení dítěte
-              </li>
+              <li>pokud hledáte rychlé &bdquo;triky, jak dítě donutit jíst&ldquo;</li>
+              <li>pokud chcete mít nad jídlem plnou kontrolu bez zapojení dítěte</li>
             </ul>
           </div>
         </div>
@@ -150,21 +116,16 @@
       <div class="section-content">
         <h2 class="section-title">Co získáte</h2>
         <ul class="bullet-list">
-          <li>
-            2hodinový živý webinář &ndash; 13.&nbsp;května od&nbsp;12:30 na
-            Zoomu
-          </li>
+          <li>2hodinový živý webinář &ndash; 13.&nbsp;května od&nbsp;12:30 na Zoomu</li>
           <li>konkrétní vysvětlení + praktické příklady</li>
           <li>záznam</li>
         </ul>
         <div class="bonus-box">
           <p class="bonus-title">Bonusový zoom</p>
           <p>
-            Pouze k&nbsp;webináři zakoupenému od 29.&nbsp;4. do
-            12.&nbsp;5.&nbsp;2026 získáte
-            <strong>hodnotný dárek</strong> &ndash; skupinové online setkání
-            &bdquo;Otázky a&nbsp;odpovědi&ldquo; na téma generace alfa, které
-            proběhne 15.&nbsp;6. v&nbsp;19:00.
+            Pouze k&nbsp;webináři zakoupenému od 29.&nbsp;4. do 12.&nbsp;5.&nbsp;2026 získáte
+            <strong>hodnotný dárek</strong> &ndash; skupinové online setkání &bdquo;Otázky
+            a&nbsp;odpovědi&ldquo; na téma generace alfa, které proběhne 15.&nbsp;6. v&nbsp;19:00.
           </p>
         </div>
       </div>
@@ -180,9 +141,9 @@
             <figcaption>
               <p class="p-heading-4">Mgr. Zdeňka Trummová</p>
               <p>
-                pedagog (5&nbsp;let přímé praxe), výživová poradkyně
-                s&nbsp;desetiletou praxí se zaměřením na výživu dětí, studentka
-                oboru nutriční terapie, zakladatelka projektu Jedlík-nejedlík
+                pedagog (5&nbsp;let přímé praxe), výživová poradkyně s&nbsp;desetiletou praxí se
+                zaměřením na výživu dětí, studentka oboru nutriční terapie, zakladatelka projektu
+                Jedlík-nejedlík
               </p>
             </figcaption>
           </figure>
@@ -191,9 +152,8 @@
             <figcaption>
               <p class="p-heading-4">Mgr. Petra Zapletalová</p>
               <p>
-                nutriční terapeutka (10&nbsp;let přímé praxe), máma čtyř dětí,
-                na sociálních sítí známá pod profilem &bdquo;očima nutriční
-                terapeutky&ldquo;
+                nutriční terapeutka (10&nbsp;let přímé praxe), máma čtyř dětí, na sociálních sítí
+                známá pod profilem &bdquo;očima nutriční terapeutky&ldquo;
               </p>
             </figcaption>
           </figure>
@@ -208,8 +168,8 @@
         <div class="price-box">
           <div class="price">290&nbsp;Kč</div>
           <p class="price-details">
-            Jednorázová investice, která vám může výrazně zjednodušit každodenní
-            situace u&nbsp;jídla.
+            Jednorázová investice, která vám může výrazně zjednodušit každodenní situace
+            u&nbsp;jídla.
           </p>
           <a :href="registrationUrl" class="cta-button primary large"
             >Koupit webinář za 290&nbsp;Kč</a
@@ -226,24 +186,23 @@
           <details class="faq-item" open>
             <summary>&bdquo;Není to moc obecné?&ldquo;</summary>
             <p>
-              Ne. Právě naopak. Bez pochopení kontextu generace často nefungují
-              ani konkrétní rady.
+              Ne. Právě naopak. Bez pochopení kontextu generace často nefungují ani konkrétní rady.
             </p>
           </details>
 
           <details class="faq-item" open>
             <summary>&bdquo;Stačí mi přece selský rozum&hellip;&ldquo;</summary>
             <p>
-              Ano, ale i&nbsp;ten se vám utvářel v&nbsp;jiné době, než selský
-              rozum, kterým přemýšlí vaše děti.
+              Ano, ale i&nbsp;ten se vám utvářel v&nbsp;jiné době, než selský rozum, kterým přemýšlí
+              vaše děti.
             </p>
           </details>
 
           <details class="faq-item" open>
             <summary>&bdquo;Nebude to jen teorie?&ldquo;</summary>
             <p>
-              Nebude. Odnesete si konkrétní formulace, přístupy a&nbsp;změny,
-              které můžete zkusit hned.
+              Nebude. Odnesete si konkrétní formulace, přístupy a&nbsp;změny, které můžete zkusit
+              hned.
             </p>
           </details>
         </div>
@@ -255,9 +214,7 @@
       <div class="section-content">
         <h2 class="section-title">Přihlaste se na webinář</h2>
         <p class="final-cta-subtitle">Generace alfa a&nbsp;jídlo</p>
-        <p class="final-cta-date">
-          <strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu
-        </p>
+        <p class="final-cta-date"><strong>13.&nbsp;května od&nbsp;12:30</strong> na Zoomu</p>
         <a :href="registrationUrl" class="cta-button primary large"
           >Koupit webinář za 290&nbsp;Kč</a
         >
@@ -269,12 +226,8 @@
 <script lang="ts" setup>
 const registrationUrl = "https://form.simpleshop.cz/n05o4/buy/"
 
-const { data: zdenkaPhoto } = await useDirectusImage(
-  "a64de3ab-044d-46c7-9e4c-64f3854e93d0",
-)
-const { data: petraPhoto } = await useDirectusImage(
-  "421732fb-1f4b-484c-a5eb-35074abfa139",
-)
+const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64f3854e93d0")
+const { data: petraPhoto } = await useDirectusImage("421732fb-1f4b-484c-a5eb-35074abfa139")
 
 useSeoMeta({
   title: "Webinář: Generace alfa u stolu | Jedlík-nejedlík",

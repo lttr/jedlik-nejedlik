@@ -11,9 +11,7 @@
         </li>
       </ul>
       <NuxtLink :to class="title-link">
-        <component :is="headingLevel" class="title p-heading-4">{{
-          title
-        }}</component>
+        <component :is="headingLevel" class="title p-heading-4">{{ title }}</component>
       </NuxtLink>
       <p class="p-secondary-text-regular">
         {{ text }}

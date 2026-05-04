@@ -4,37 +4,31 @@
     <details>
       <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing?</summary>
       <p>
-        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi,
-        qui nunc nobis videntur parum clari, fiant sollemnes in futurum. Nunc
-        varius risus quis nulla. Vivamus vel magna. Ut rutrum. Aenean dignissim,
-        leo quis faucibus semper, massa est faucibus massa, sit amet pharetra
-        arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna.
-        Pellentesque et urna sit amet leo accumsan volutpat. Nam molestie
-        lobortis lorem. Quisque eu nulla.
+        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis
+        videntur parum clari, fiant sollemnes in futurum. Nunc varius risus quis nulla. Vivamus vel
+        magna. Ut rutrum. Aenean dignissim, leo quis faucibus semper, massa est faucibus massa, sit
+        amet pharetra arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna. Pellentesque et
+        urna sit amet leo accumsan volutpat. Nam molestie lobortis lorem. Quisque eu nulla.
       </p>
     </details>
     <details>
       <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing?</summary>
       <p>
-        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi,
-        qui nunc nobis videntur parum clari, fiant sollemnes in futurum. Nunc
-        varius risus quis nulla. Vivamus vel magna. Ut rutrum. Aenean dignissim,
-        leo quis faucibus semper, massa est faucibus massa, sit amet pharetra
-        arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna.
-        Pellentesque et urna sit amet leo accumsan volutpat. Nam molestie
-        lobortis lorem. Quisque eu nulla.
+        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis
+        videntur parum clari, fiant sollemnes in futurum. Nunc varius risus quis nulla. Vivamus vel
+        magna. Ut rutrum. Aenean dignissim, leo quis faucibus semper, massa est faucibus massa, sit
+        amet pharetra arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna. Pellentesque et
+        urna sit amet leo accumsan volutpat. Nam molestie lobortis lorem. Quisque eu nulla.
       </p>
     </details>
     <details>
       <summary>Lorem ipsum dolor sit amet, consectetuer adipiscing?</summary>
       <p>
-        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi,
-        qui nunc nobis videntur parum clari, fiant sollemnes in futurum. Nunc
-        varius risus quis nulla. Vivamus vel magna. Ut rutrum. Aenean dignissim,
-        leo quis faucibus semper, massa est faucibus massa, sit amet pharetra
-        arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna.
-        Pellentesque et urna sit amet leo accumsan volutpat. Nam molestie
-        lobortis lorem. Quisque eu nulla.
+        Humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis
+        videntur parum clari, fiant sollemnes in futurum. Nunc varius risus quis nulla. Vivamus vel
+        magna. Ut rutrum. Aenean dignissim, leo quis faucibus semper, massa est faucibus massa, sit
+        amet pharetra arcu nunc et sem. Aliquam tempor. Nam lobortis sem non urna. Pellentesque et
+        urna sit amet leo accumsan volutpat. Nam molestie lobortis lorem. Quisque eu nulla.
       </p>
     </details>
   </section>

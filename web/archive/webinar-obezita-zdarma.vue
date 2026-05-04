@@ -8,21 +8,16 @@
 
     <section class="info-section p-prose">
       <p>
-        Dětská obezita nevzniká přes noc a její řešení není nikdy jen
-        o&nbsp;jídle&hellip; V&nbsp;rámci Světového dne obezity otevíráme
-        prostor pro vaše rodičovské otázky k&nbsp;tématu dětské nadváhy
-        a&nbsp;obezity.
+        Dětská obezita nevzniká přes noc a její řešení není nikdy jen o&nbsp;jídle&hellip;
+        V&nbsp;rámci Světového dne obezity otevíráme prostor pro vaše rodičovské otázky
+        k&nbsp;tématu dětské nadváhy a&nbsp;obezity.
       </p>
 
-      <p>
-        Začínáme v&nbsp;19:00 a během jedné hodiny vám budeme odpovídat na vaše
-        dotazy.
-      </p>
+      <p>Začínáme v&nbsp;19:00 a během jedné hodiny vám budeme odpovídat na vaše dotazy.</p>
 
       <p class="note">
-        Z&nbsp;webináře nebude pořizován záznam, aby byla zajištěna psychická
-        pohoda všech zúčastněných a mohli jste se bez obav ptát na cokoliv, co
-        vás k&nbsp;tématu zajímá.
+        Z&nbsp;webináře nebude pořizován záznam, aby byla zajištěna psychická pohoda všech
+        zúčastněných a mohli jste se bez obav ptát na cokoliv, co vás k&nbsp;tématu zajímá.
       </p>
 
       <p>Kapacita: 100 osob</p>

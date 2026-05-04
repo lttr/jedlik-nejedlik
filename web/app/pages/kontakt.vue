@@ -35,8 +35,7 @@
         </h2>
 
         <p class="call-to-action">
-          Ozvěte se mi na email nebo zanechte zprávu v kontaktním formuláři a já
-          se vám brzy ozvu.
+          Ozvěte se mi na email nebo zanechte zprávu v kontaktním formuláři a já se vám brzy ozvu.
         </p>
       </div>
     </section>
@@ -45,8 +44,8 @@
       <p class="name p-base-text-bold">Zdeňka Trummová</p>
 
       <p>
-        Nutriční poradkyně, lektorka výživy rodiny a zdravého životního stylu,
-        pedagog, student nutriční terapie
+        Nutriční poradkyně, lektorka výživy rodiny a zdravého životního stylu, pedagog, student
+        nutriční terapie
       </p>
 
       <p>
@@ -61,9 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-const { data: zdenkaPhoto } = await useDirectusImage(
-  "a64de3ab-044d-46c7-9e4c-64f3854e93d0",
-)
+const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64f3854e93d0")
 </script>
 
 <style scoped>

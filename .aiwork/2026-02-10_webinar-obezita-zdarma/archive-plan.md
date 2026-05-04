@@ -20,11 +20,9 @@ Webinář "Dětská obezita v otázkách a odpovědích" (24. března) proběhl.
 ## Steps
 
 1. **Přesunout stránku do archivu**
-
    - `web/app/pages/webinar-obezita-zdarma.vue` → `web/archive/webinar-obezita-zdarma.vue`
 
 2. **Odstranit odkaz z nadvaha.vue** (řádky 60-63)
-
    - Smazat `<NuxtLink to="/webinar-obezita-zdarma" ...>` blok
    - Smazat nepoužitý styl `.offer-link-free`
 

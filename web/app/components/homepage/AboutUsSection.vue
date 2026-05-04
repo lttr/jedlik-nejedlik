@@ -3,9 +3,9 @@
     <div class="column p-stack">
       <h2>O nás</h2>
       <p class="description">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id
-        dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. ntum ipsum.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        ntum ipsum.
       </p>
       <button class="cta">Více o nás</button>
     </div>

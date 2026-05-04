@@ -39,9 +39,7 @@
   function renderCert({ name, workshop, hours, workshopDate, issueDate }) {
     const isPlaceholder = !name || !name.trim()
     const displayName = isPlaceholder ? "JMÉNO" : name.trim()
-    const wsDateStr = workshopDate
-      ? formatCzechDate(workshopDate)
-      : "DD. MM. RRRR"
+    const wsDateStr = workshopDate ? formatCzechDate(workshopDate) : "DD. MM. RRRR"
     const issueDateStr = issueDate ? formatCzechDate(issueDate) : "DD. MM. RRRR"
     const hoursStr = `${hours} ${hours === 1 ? "hodina" : hours >= 2 && hours <= 4 ? "hodiny" : "hodin"}`
 
@@ -284,15 +282,11 @@
     const iso = today.toISOString().slice(0, 10)
     document.getElementById("issueDate").value = iso
     document.getElementById("workshopDate").value = iso
-    ;["names", "workshop", "hours", "workshopDate", "issueDate"].forEach(
-      (id) => {
-        document.getElementById(id).addEventListener("input", updatePreview)
-      },
-    )
+    ;["names", "workshop", "hours", "workshopDate", "issueDate"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", updatePreview)
+    })
     document.getElementById("generate").addEventListener("click", generateAll)
-    document
-      .getElementById("generateSingle")
-      .addEventListener("click", generateFirst)
+    document.getElementById("generateSingle").addEventListener("click", generateFirst)
     window.addEventListener("resize", scalePreview)
 
     updatePreview()

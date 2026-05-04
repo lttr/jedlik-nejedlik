@@ -12,11 +12,10 @@
 
       <section class="perex">
         <p>
-          <b>Trpí Vaše dítě nadváhou nebo obezitou?</b> Musíte chodit v čase
-          prázdnin do práce a chcete, aby Vaše dítě trávilo čas smysluplným
-          způsobem a ještě udělalo něco pro své zdraví?
-          <b>Přihlaste Vaše dítko na příměstský tábor, který bere ohledy</b> na
-          specifika dětí s nadváhou či obezitou.
+          <b>Trpí Vaše dítě nadváhou nebo obezitou?</b> Musíte chodit v čase prázdnin do práce a
+          chcete, aby Vaše dítě trávilo čas smysluplným způsobem a ještě udělalo něco pro své
+          zdraví? <b>Přihlaste Vaše dítko na příměstský tábor, který bere ohledy</b> na specifika
+          dětí s nadváhou či obezitou.
         </p>
       </section>
 
@@ -27,29 +26,21 @@
 
       <section class="p-flow">
         <p>
-          Věděli jste, že <b>mnoho dětí s nadváhou</b> a obezitou
-          <b>nechce jezdit na tábory</b> a podobné aktivity, protože mají
-          strach, že se stanou terčem posměchu od ostatních dětí? Nebo že
-          nezvládnout podávat takové sportovní výkony jako děti bez kilogramů
-          navíc?
+          Věděli jste, že <b>mnoho dětí s nadváhou</b> a obezitou <b>nechce jezdit na tábory</b> a
+          podobné aktivity, protože mají strach, že se stanou terčem posměchu od ostatních dětí?
+          Nebo že nezvládnout podávat takové sportovní výkony jako děti bez kilogramů navíc?
         </p>
         <p>
           <b
-            >S námi nemusí mít Vaše dítě žádné obavy. Program je sestaven podle
-            ověřené metodiky společnosti STOB</b
+            >S námi nemusí mít Vaše dítě žádné obavy. Program je sestaven podle ověřené metodiky
+            společnosti STOB</b
           >
-          obezitě, která v České republice úspěšně pomáhá svým klientům s
-          přebytečnými kilogramy již 30 let.
-          <b>Více o STOBu a jejích metodách</b>&nbsp;<a
-            href="https://www.stob.cz/cs/home"
-            >ZDE</a
-          >.
-          <b
-            >Instruktorky mají bohaté zkušenosti v oblasti práce s dětmi s
-            nadváhou</b
-          >, a to nejen po výživové stránce, ale také po pedagogické,
-          psychologické či pohybové. Více o instruktorkách si můžete přečíst
-          <a href="#instruktorky">níže</a>.
+          obezitě, která v České republice úspěšně pomáhá svým klientům s přebytečnými kilogramy již
+          30 let.
+          <b>Více o STOBu a jejích metodách</b>&nbsp;<a href="https://www.stob.cz/cs/home">ZDE</a>.
+          <b>Instruktorky mají bohaté zkušenosti v oblasti práce s dětmi s nadváhou</b>, a to nejen
+          po výživové stránce, ale také po pedagogické, psychologické či pohybové. Více o
+          instruktorkách si můžete přečíst <a href="#instruktorky">níže</a>.
         </p>
         <div class="images p-switcher">
           <img
@@ -71,88 +62,74 @@
         <p>
           Na táboře si formou her a kreativních aktivit
           <b>děti osvojí základy zdravého životního stylu</b>. Mnoho věcí si
-          <b>vyzkouší prakticky a spoustu vhodných potravin ochutnají</b> v
-          rámci obědů a svačinek, které jsou součástí programu.
+          <b>vyzkouší prakticky a spoustu vhodných potravin ochutnají</b> v rámci obědů a svačinek,
+          které jsou součástí programu.
+          <b>Nebude chybět ani pohyb, který bude pro děti bezpečný jak fyzicky, tak psychicky.</b>
+          V dětech budeme vzbuzovat zájem o různé sportovní činnosti a budeme je vystavovat takovým
+          pohybovým aktivitám, při nichž budou moct zažívat radost.
+        </p>
+        <p>
           <b
-            >Nebude chybět ani pohyb, který bude pro děti bezpečný jak fyzicky,
-            tak psychicky.</b
+            >Cílem tábora není redukce hmotnosti, ale osvojení si takových návyků zdravého životního
+            stylu, které pomohou zastavit další růst hmotnosti.</b
           >
-          V dětech budeme vzbuzovat zájem o různé sportovní činnosti a budeme je
-          vystavovat takovým pohybovým aktivitám, při nichž budou moct zažívat
-          radost.
+          Pokud není obezita dítěte závažná a není lékařem indikováno jinak, nemělo by dítě cíleně
+          svou hmotnost redukovat.
+        </p>
+        <p>
+          V rámci tábora bude věnován prostor i programů psychologickým, v nichž se budeme zaměřovat
+          na budování zdravého sebevědomí a sebehodnoty dítěte v kolektivu.
         </p>
         <p>
           <b
-            >Cílem tábora není redukce hmotnosti, ale osvojení si takových
-            návyků zdravého životního stylu, které pomohou zastavit další růst
-            hmotnosti.</b
-          >
-          Pokud není obezita dítěte závažná a není lékařem indikováno jinak,
-          nemělo by dítě cíleně svou hmotnost redukovat.
-        </p>
-        <p>
-          V rámci tábora bude věnován prostor i programů psychologickým, v nichž
-          se budeme zaměřovat na budování zdravého sebevědomí a sebehodnoty
-          dítěte v kolektivu.
-        </p>
-        <p>
-          <b
-            >Při ukončení tábora rodiče dostanou doporučení, jak pokračovat v
-            upevňování zdravých návyků svých dětí.</b
+            >Při ukončení tábora rodiče dostanou doporučení, jak pokračovat v upevňování zdravých
+            návyků svých dětí.</b
           >
         </p>
       </section>
 
       <h4>Organizační záležitosti</h4>
       <p>
-        Tábor je určen <b>pro děti od 1. do 5. třídy s nadváhou či obezitou</b>.
-        Kapacita je omezena na max. 20 dětí. Nejste si jistí, zda je tábor pro
-        Vaše dítko? Konkaktujte nás.
+        Tábor je určen <b>pro děti od 1. do 5. třídy s nadváhou či obezitou</b>. Kapacita je omezena
+        na max. 20 dětí. Nejste si jistí, zda je tábor pro Vaše dítko? Konkaktujte nás.
       </p>
       <p>Termín konání: <b>12. – 16. srpna 2024</b></p>
       <p>
-        O Vaše dítě se postaráme v čase od 7:30 do 16:00. Společný program
-        probíhá od 8:15 do 15:30. V době, kdy ještě neprobíhá společný program
-        (hlavní hry atd.), nabídneme dětem různé možnosti zabavení.
+        O Vaše dítě se postaráme v čase od 7:30 do 16:00. Společný program probíhá od 8:15 do 15:30.
+        V době, kdy ještě neprobíhá společný program (hlavní hry atd.), nabídneme dětem různé
+        možnosti zabavení.
       </p>
       <p>
-        Místo konání: Na Stavě 801, 503 46 Třebechovice pod Orebem &ndash;
-        komplex skautských kluboven naproti ZŠ Třebechovice
+        Místo konání: Na Stavě 801, 503 46 Třebechovice pod Orebem &ndash; komplex skautských
+        kluboven naproti ZŠ Třebechovice
       </p>
 
       <p>
         Chcete se na něco zeptat? Kontaktujte nás na mailové adrese
-        <a href="mailto:taborstobik@seznam.cz">taborstobik@seznam.cz</a> nebo na
-        telefonním čísle <b>732 651 959</b>
+        <a href="mailto:taborstobik@seznam.cz">taborstobik@seznam.cz</a> nebo na telefonním čísle
+        <b>732 651 959</b>
       </p>
 
       <section class="p-flow">
         <h4>Cena</h4>
-        <p>
-          Cena příměstského tábora <b>3500,-</b> (Pro pojištěnce 211 příspěvek
-          <b>2000,-</b>)
-        </p>
+        <p>Cena příměstského tábora <b>3500,-</b> (Pro pojištěnce 211 příspěvek <b>2000,-</b>)</p>
 
         <p>
-          Cena zahrnuje program včetně všech materiálů + stravu (svačina, oběd,
-          svačina) a je konečná.
+          Cena zahrnuje program včetně všech materiálů + stravu (svačina, oběd, svačina) a je
+          konečná.
         </p>
         <p>
           <b>Mnohé pojišťovny na tábory a sportovní aktivity přispívají</b>
-          různě velké finanční prostředky. Zjistěte si, zda se to týká i Vaší
-          pojišťovny. Doklad o zaplacení předáme všem účastníkům první den
-          tábora.
+          různě velké finanční prostředky. Zjistěte si, zda se to týká i Vaší pojišťovny. Doklad o
+          zaplacení předáme všem účastníkům první den tábora.
         </p>
 
         <h4>Storno poplatky</h4>
         <p>
-          Odhlášení méně než 2 měsíce před zahájením tábora činí poplatek 100% z
-          celkové ceny tábora.
+          Odhlášení méně než 2 měsíce před zahájením tábora činí poplatek 100% z celkové ceny
+          tábora.
         </p>
-        <p>
-          Storno poplatek Vám nebude účtován, seženete-li za své dítě
-          náhradníka.
-        </p>
+        <p>Storno poplatek Vám nebude účtován, seženete-li za své dítě náhradníka.</p>
       </section>
 
       <section>
@@ -173,15 +150,13 @@
             />
             <h4>Mgr. Zdeňka Trummová</h4>
             <p class="p-secondary-text-regular">
-              Učím druhé, jak mají pečovat o svoje zdraví s lehkostí a
-              přirozeností. Tak, aby nebyli v zajetí módních výživových směrů,
-              diet a společenských tlaků. Pomáhám nastavovat udržitelný
-              stravovací systém, který chutná. Můj soukromý i profesní život
-              nejvíc ovlivnila obezita, kterou jsem trpěla od předškolního věku.
-              Problematice dětské a rodinné výživy se věnuji v soukromé poradně
-              Jedlík-nejedlík v Hradci Králové. Více o mně na
-              <a href="https://www.okolokuchyne.cz">www.okolokuchyne.cz</a> nebo
-              na
+              Učím druhé, jak mají pečovat o svoje zdraví s lehkostí a přirozeností. Tak, aby nebyli
+              v zajetí módních výživových směrů, diet a společenských tlaků. Pomáhám nastavovat
+              udržitelný stravovací systém, který chutná. Můj soukromý i profesní život nejvíc
+              ovlivnila obezita, kterou jsem trpěla od předškolního věku. Problematice dětské a
+              rodinné výživy se věnuji v soukromé poradně Jedlík-nejedlík v Hradci Králové. Více o
+              mně na
+              <a href="https://www.okolokuchyne.cz">www.okolokuchyne.cz</a> nebo na
               <a href="https://www.stob.cz">www.stob.cz</a>
             </p>
           </div>
@@ -196,12 +171,11 @@
             />
             <h4>Bc. Zuzana Chadimová</h4>
             <p class="p-secondary-text-regular">
-              Jsem vystudovaná nutriční terapeutka se soukromou praxí v Opočně.
-              Jedna z hlavních myšlenek je nemocem předcházet než je léčit.
-              Začít na drobných změnách v dětském věku může přinést velké změny
-              v budoucí životě. Jako lektorka zdravotního cvičení a instruktorka
-              Nordic Walking společně s výživou pomáhám měnit zítřek již dnes.
-              Více o mně na
+              Jsem vystudovaná nutriční terapeutka se soukromou praxí v Opočně. Jedna z hlavních
+              myšlenek je nemocem předcházet než je léčit. Začít na drobných změnách v dětském věku
+              může přinést velké změny v budoucí životě. Jako lektorka zdravotního cvičení a
+              instruktorka Nordic Walking společně s výživou pomáhám měnit zítřek již dnes. Více o
+              mně na
               <a href="https://www.jde-to.cz/">www.jde-to.cz</a> nebo na
               <a href="https://www.stob.cz">www.stob.cz</a>
             </p>
