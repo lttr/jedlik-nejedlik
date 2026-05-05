@@ -31,10 +31,12 @@ const biographyExpertRequest = () =>
         status: { _eq: "published" },
       },
     }),
-  ) as Promise<BiographyExpert[]>
+  )
 
 export async function useBiographyExpert() {
-  return useAsyncData<BiographyExpert[]>("biographies", async () => {
-    return await biographyExpertRequest()
+  return useAsyncData("biographies", async () => {
+    // Narrowing matches the `fields` list passed to readItems above.
+    // eslint-disable-next-line typescript-eslint/no-unsafe-type-assertion
+    return (await biographyExpertRequest()) as BiographyExpert[]
   })
 }

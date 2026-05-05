@@ -8,6 +8,8 @@ export interface UseAsyncRequestResult<TInputData> {
   error: Ref<Error | null>
 }
 
+const timeout = (ms: number) => new Promise((_, reject) => setTimeout(reject, ms))
+
 export function useAsyncRequest<TInputData, TOutputData = void>(
   asyncFn: (data: TInputData) => Promise<TOutputData>,
   defaultError: Error,
@@ -15,8 +17,6 @@ export function useAsyncRequest<TInputData, TOutputData = void>(
 ): UseAsyncRequestResult<TInputData> {
   const status = ref<"idle" | "pending" | "success" | "error">("idle")
   const error = ref<Error | null>(null)
-
-  const timeout = (ms: number) => new Promise((_, reject) => setTimeout(reject, ms))
 
   async function execute(data: TInputData) {
     status.value = "pending"

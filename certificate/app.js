@@ -157,7 +157,8 @@
       [...imgs].map((img) => {
         if (img.complete) return Promise.resolve()
         return new Promise((res) => {
-          img.onload = img.onerror = res
+          img.addEventListener("load", res, { once: true })
+          img.addEventListener("error", res, { once: true })
         })
       }),
     )
@@ -234,6 +235,8 @@
         const name = state.names[i]
         setStatus(`Generuji ${i + 1}/${state.names.length}: ${name}…`)
         const html = renderCert({ ...state, name })
+        // Sequential by design: shared #stage element + per-item status updates.
+        // eslint-disable-next-line no-await-in-loop
         const canvas = await renderToCanvas(html)
         const blob = canvasToPdfBlob(canvas)
         zip.file(buildFilename({ ...state, name }), blob)

@@ -1,4 +1,4 @@
-import withNuxt from "./.nuxt/eslint.config.mjs"
+import nuxtEslintConfig from "./.nuxt/eslint.config.mjs"
 import customConfig from "@lttr/nuxt-config-eslint"
 import baselineJs from "eslint-plugin-baseline-js"
 import esX from "eslint-plugin-es-x"
@@ -34,7 +34,7 @@ export default [
   },
 
   // Nuxt + custom configs for JS/Vue
-  ...(await withNuxt(
+  ...(await nuxtEslintConfig(
     customConfig,
 
     // JS baseline - register plugins
