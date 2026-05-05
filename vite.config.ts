@@ -70,6 +70,20 @@ export default defineConfig({
       "max-nested-callbacks": ["error", 3],
       "max-classes-per-file": ["error", 1],
       "import/max-dependencies": ["error", { max: 20, ignoreTypeImports: true }],
+      "no-fallthrough": "error",
+      "typescript/no-confusing-void-expression": "error",
+      // Deferred: enable after Directus SDK responses typed via createDirectus<Schema>
+      "typescript/strict-boolean-expressions": "off",
+      "typescript/no-unsafe-argument": "off",
+      "typescript/no-unsafe-assignment": "off",
+      "typescript/no-unsafe-call": "off",
+      "typescript/no-unsafe-member-access": "off",
+      "typescript/no-unsafe-return": "off",
+      "typescript/no-mixed-enums": "error",
+      "typescript/prefer-ts-expect-error": "error",
+      "unicorn/consistent-empty-array-spread": "error",
+      "unicorn/no-array-callback-reference": "error",
+      "unicorn/escape-case": "error",
       // Restriction
       "no-var": "error",
       "no-console": ["error", { allow: ["warn", "error"] }],
@@ -83,6 +97,17 @@ export default defineConfig({
       "vue/no-import-compiler-macros": "error",
       "vue/no-multiple-slot-args": "error",
       complexity: ["error", 15],
+      "typescript/no-namespace": "error",
+      "typescript/no-require-imports": "error",
+      "typescript/no-var-requires": "error",
+      "typescript/use-unknown-in-catch-callback-variable": "error",
+      "typescript/promise-function-async": "error",
+      // Deferred: opt-in when public composable API surface stabilizes
+      "typescript/explicit-module-boundary-types": "off",
+      "node/no-process-env": "error",
+      "unicorn/no-process-exit": "error",
+      "unicorn/no-array-for-each": "error",
+      "unicorn/no-array-reduce": "error",
       // Style
       "prefer-const": "error",
       "object-shorthand": "error",
@@ -98,6 +123,8 @@ export default defineConfig({
       // Nursery
       "typescript/no-unnecessary-condition": "error",
       "typescript/prefer-optional-chain": "error",
+      "oxc/branches-sharing-code": "error",
+      "promise/no-return-in-finally": "error",
     },
     env: {
       browser: true,
