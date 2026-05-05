@@ -15,7 +15,7 @@ export interface BiographyExpert {
   url?: string
 }
 
-const biographyExpertRequest = () =>
+const biographyExpertRequest = async () =>
   directus.request(
     readItems("biography_expert", {
       fields: [

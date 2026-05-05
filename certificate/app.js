@@ -1,4 +1,16 @@
-/* eslint-disable max-lines-per-function -- legacy single-file static page wrapped in IIFE */
+// TODO: standalone static page (HTML + plain JS, no TS/Vue). Migrate into the
+// Nuxt app or convert to TypeScript so the strict oxlint rules can apply.
+/* eslint-disable
+  max-lines-per-function,
+  typescript/no-unsafe-argument,
+  typescript/no-unsafe-assignment,
+  typescript/no-unsafe-call,
+  typescript/no-unsafe-member-access,
+  typescript/no-unsafe-return,
+  typescript/strict-boolean-expressions,
+  typescript/explicit-module-boundary-types
+  -- legacy single-file static page; rules above need typed code to be useful
+*/
 ;(() => {
   const SPIRAL_PATH =
     "M50.291 360.72C19.742 347.992.831 325.527 2.057 303.782c.787-14.144 9.873-23.766 11.997-25.904 34.069-34.273 131.226-8.904 138.153 25.764 2.458 12.3-6.005 27.993-17.943 31.99-31.158 10.43-106.234-51.896-95.473-116.504 4.932-29.55 27.365-57.137 56.208-67.53 33.332-12.013 63.316 3.085 111.569 28.322 33.513 17.526 150.912 78.962 139.082 132.193-2.869 12.9-12.852 23.163-23.353 27.717-40.582 17.612-121.947-35.474-136.509-108.242-8.42-42.128 4.435-96.512 46.466-126.884 48.152-34.795 105.224-16.86 118.918-12.56 74.592 23.436 132.402 105.354 113.893 151.503-5.023 12.537-17.257 26.348-31.958 27.382-35.525 2.496-82.941-65.676-80.32-131.665 1.784-45.071 27.605-105.48 78.458-118.143 35.529-8.857 66.478 9.798 77.854 16.65 51.113 30.826 84.76 99.784 63.281 131.456-8.292 12.205-26.471 21.36-39.924 16.13-40.99-15.96-39.229-165.702 3.422-181.952 13.05-4.972 34.272.88 70.703 38.585"
@@ -27,7 +39,7 @@
   function slugify(s) {
     return s
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[\u0300-\u036F]/g, "")
       .replace(/[^a-zA-Z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "")
       .replace(/-+/g, "-")
@@ -155,9 +167,9 @@
     // Wait for images to load
     const imgs = certEl.querySelectorAll("img")
     await Promise.all(
-      [...imgs].map((img) => {
-        if (img.complete) return Promise.resolve()
-        return new Promise((res) => {
+      [...imgs].map(async (img) => {
+        if (img.complete) return
+        await new Promise((res) => {
           img.addEventListener("load", res, { once: true })
           img.addEventListener("error", res, { once: true })
         })
@@ -212,7 +224,9 @@
     document.body.appendChild(a)
     a.click()
     a.remove()
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    setTimeout(() => {
+      URL.revokeObjectURL(url)
+    }, 1000)
   }
 
   function validate(state) {
@@ -289,9 +303,9 @@
     const iso = today.toISOString().slice(0, 10)
     document.getElementById("issueDate").value = iso
     document.getElementById("workshopDate").value = iso
-    ;["names", "workshop", "hours", "workshopDate", "issueDate"].forEach((id) => {
+    for (const id of ["names", "workshop", "hours", "workshopDate", "issueDate"]) {
       document.getElementById(id).addEventListener("input", updatePreview)
-    })
+    }
     document.getElementById("generate").addEventListener("click", () => {
       void generateAll()
     })

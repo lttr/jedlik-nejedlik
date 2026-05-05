@@ -8,7 +8,7 @@ export interface UseAsyncRequestResult<TInputData> {
   error: Ref<Error | null>
 }
 
-const timeout = (ms: number) =>
+const timeout = async (ms: number) =>
   new Promise((_, reject) => {
     setTimeout(reject, ms)
   })
