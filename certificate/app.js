@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function -- legacy single-file static page wrapped in IIFE */
 ;(() => {
   const SPIRAL_PATH =
     "M50.291 360.72C19.742 347.992.831 325.527 2.057 303.782c.787-14.144 9.873-23.766 11.997-25.904 34.069-34.273 131.226-8.904 138.153 25.764 2.458 12.3-6.005 27.993-17.943 31.99-31.158 10.43-106.234-51.896-95.473-116.504 4.932-29.55 27.365-57.137 56.208-67.53 33.332-12.013 63.316 3.085 111.569 28.322 33.513 17.526 150.912 78.962 139.082 132.193-2.869 12.9-12.852 23.163-23.353 27.717-40.582 17.612-121.947-35.474-136.509-108.242-8.42-42.128 4.435-96.512 46.466-126.884 48.152-34.795 105.224-16.86 118.918-12.56 74.592 23.436 132.402 105.354 113.893 151.503-5.023 12.537-17.257 26.348-31.958 27.382-35.525 2.496-82.941-65.676-80.32-131.665 1.784-45.071 27.605-105.48 78.458-118.143 35.529-8.857 66.478 9.798 77.854 16.65 51.113 30.826 84.76 99.784 63.281 131.456-8.292 12.205-26.471 21.36-39.924 16.13-40.99-15.96-39.229-165.702 3.422-181.952 13.05-4.972 34.272.88 70.703 38.585"
@@ -37,7 +38,7 @@
   }
 
   function renderCert({ name, workshop, hours, workshopDate, issueDate }) {
-    const isPlaceholder = !name || !name.trim()
+    const isPlaceholder = !name?.trim()
     const displayName = isPlaceholder ? "JMÉNO" : name.trim()
     const wsDateStr = workshopDate ? formatCzechDate(workshopDate) : "DD. MM. RRRR"
     const issueDateStr = issueDate ? formatCzechDate(issueDate) : "DD. MM. RRRR"
@@ -116,7 +117,7 @@
       .filter(Boolean)
     return {
       names,
-      workshop: document.getElementById("workshop").value || "",
+      workshop: document.getElementById("workshop").value ?? "",
       hours: parseInt(document.getElementById("hours").value, 10) || 5,
       workshopDate: document.getElementById("workshopDate").value,
       issueDate: document.getElementById("issueDate").value,
@@ -125,7 +126,7 @@
 
   function updatePreview() {
     const state = getFormState()
-    const firstName = state.names[0] || ""
+    const firstName = state.names[0] ?? ""
     document.getElementById("preview").innerHTML = renderCert({
       ...state,
       name: firstName,
@@ -163,7 +164,9 @@
       }),
     )
     // Small delay to let fonts settle
-    await new Promise((r) => setTimeout(r, 50))
+    await new Promise((r) => {
+      setTimeout(r, 50)
+    })
     const canvas = await html2canvas(certEl, {
       scale: 3,
       backgroundColor: "#fffaf2",
@@ -189,9 +192,10 @@
   function buildFilename({ name, workshop, issueDate }) {
     const parts = [
       "Certifikat",
+      // eslint-disable-next-line typescript/prefer-nullish-coalescing -- empty slug should fall back too
       slugify(name) || "ucastnik",
       slugify(workshop).slice(0, 40),
-      issueDate || "",
+      issueDate ?? "",
     ].filter(Boolean)
     return `${parts.join("_")}.pdf`
   }
@@ -212,7 +216,7 @@
   }
 
   function validate(state) {
-    if (!state.names.length) return "Zadej alespoň jedno jméno."
+    if (state.names.length === 0) return "Zadej alespoň jedno jméno."
     if (!state.workshop.trim()) return "Zadej název workshopu."
     if (!state.workshopDate) return "Zadej datum workshopu."
     if (!state.issueDate) return "Zadej datum vystavení."
@@ -288,8 +292,12 @@
     ;["names", "workshop", "hours", "workshopDate", "issueDate"].forEach((id) => {
       document.getElementById(id).addEventListener("input", updatePreview)
     })
-    document.getElementById("generate").addEventListener("click", generateAll)
-    document.getElementById("generateSingle").addEventListener("click", generateFirst)
+    document.getElementById("generate").addEventListener("click", () => {
+      void generateAll()
+    })
+    document.getElementById("generateSingle").addEventListener("click", () => {
+      void generateFirst()
+    })
     window.addEventListener("resize", scalePreview)
 
     updatePreview()

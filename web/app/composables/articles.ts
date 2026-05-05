@@ -10,10 +10,10 @@ export interface Article {
 }
 
 export async function useArticle(slug: string) {
-  return await useAsyncData(
+  return useAsyncData(
     `article-${slug}`,
     async () => {
-      return await directus.request(readItem("articles", slug))
+      return directus.request(readItem("articles", slug))
     },
     {
       transform: (input) => {
@@ -37,7 +37,7 @@ export async function useArticles() {
   return useAsyncData(
     "articles",
     async () => {
-      return await directus.request(
+      return directus.request(
         readItems("articles", {
           fields: ["id", "title", "perex", "cover"],
           filter: {
