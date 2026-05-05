@@ -55,6 +55,12 @@ export default defineConfig({
       "typescript/only-throw-error": "error",
       "typescript/prefer-includes": "error",
       "typescript/prefer-promise-reject-errors": "error",
+      "typescript/no-misused-promises": "error",
+      "typescript/switch-exhaustiveness-check": "error",
+      "typescript/prefer-nullish-coalescing": "error",
+      "typescript/restrict-plus-operands": "error",
+      "typescript/return-await": "error",
+      "typescript/no-deprecated": "error",
       // Restriction
       "no-var": "error",
       "no-console": ["warn", { allow: ["warn", "error"] }],
@@ -77,6 +83,9 @@ export default defineConfig({
       "import/no-duplicates": "error",
       "import/first": "error",
       "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+      // Nursery
+      "typescript/no-unnecessary-condition": "error",
+      "typescript/prefer-optional-chain": "error",
     },
     env: {
       browser: true,
