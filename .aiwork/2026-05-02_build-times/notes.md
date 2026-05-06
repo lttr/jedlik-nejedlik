@@ -67,3 +67,42 @@ Each command run 3× back-to-back; warm caches throughout. Variance <3% across r
 - `format`/`lint` not apples-to-apples: prettier→oxfmt, eslint→oxlint. Old eslint flat config retained as `vp run lint:slow` for Nuxt-aware rules oxlint can't replicate yet.
 - Build win is the headline: ~14s shaved, mostly from Rolldown + vite-plus-core.
 - Lint −53%: oxlint vs eslint is the biggest dev-loop quality-of-life gain.
+
+## Post oxlint rule expansion — 2026-05-06
+
+After oxlint rule expansion (commits `33ea0cf` → `1117bcd`). Branch `master`, HEAD `1117bcd`.
+3× back-to-back, warm caches, variance <3%, averages reported.
+
+Rule count: oxlint defaults only → **273 rules** (categories: correctness/suspicious/perf as error + tiered explicit rules).
+
+| Command              | real      | user      | sys      | Result             |
+| -------------------- | --------- | --------- | -------- | ------------------ |
+| `vp fmt --check`     | 0m1.046s  | 0m10.089s | 0m1.169s | clean (oxfmt)      |
+| `vp lint`            | 0m0.867s  | 0m3.392s  | 0m0.684s | 0 errors (oxlint)  |
+| `vp check`           | 0m1.703s  | 0m12.972s | 0m1.771s | clean (fmt + lint) |
+| `pnpm run build`     | 0m32.222s | 0m30.728s | 0m4.034s | ok                 |
+| `pnpm run typecheck` | 0m5.259s  | 0m8.124s  | 0m0.902s | clean              |
+
+### Build output
+
+- Total: 21.4 MB / 6.76 MB gzip (unchanged)
+- Nuxt 4.4.4, Nitro 2.13.4, Vite 0.1.20 (vite-plus-core), Vue 3.5.33
+- 856 client modules
+- Preset: `node-server`
+
+### Diff vs post-migration (2026-05-04)
+
+| Command   | 05-04   | 05-06   | Δ             |
+| --------- | ------- | ------- | ------------- |
+| format    | 1.045s  | 1.046s  | +0.1% (noise) |
+| lint      | 0.718s  | 0.867s  | **+20.8%**    |
+| build     | 32.188s | 32.222s | +0.1% (noise) |
+| typecheck | 4.944s  | 5.259s  | +6.4%         |
+
+### Notes
+
+- Lint +20.8% (~150ms) is the cost of going from oxlint defaults to 273 explicit rules across 9 plugins. Still 4.4× faster than the eslint baseline (1.539s) — budget well intact.
+- Typecheck +6.4% likely noise / vue-tsc cache state; no typecheck-relevant changes landed.
+- Build/format unchanged as expected (rule expansion is lint-only).
+- u/r ratio for lint dropped from 3.80× to 3.91× — still parallel-bound, no thread saturation issue.
+- `vp check` (1.703s) vs sum of separate fmt+lint (1.913s): −11% from shared startup. Use it as the pre-commit gate.
