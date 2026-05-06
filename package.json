@@ -10,7 +10,7 @@
     "lint:slow": "vp run -r lint:slow",
     "lint:slow:fix": "vp run -r lint:slow:fix",
     "typecheck": "vp run -r typecheck",
-    "verify": "vp fmt --check && vp lint && vp run lint:slow && vp run typecheck",
+    "verify": "vp check && vp run lint:slow && vp run typecheck",
     "start": "node web/.output/server/index.mjs",
     "prepare": "vp config"
   },
