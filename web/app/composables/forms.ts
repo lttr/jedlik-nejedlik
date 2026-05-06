@@ -1,25 +1,33 @@
 import { createItem } from "@directus/sdk"
+import type { UseAsyncRequestResult } from "./async-request"
+import type { FormCollection } from "./directus"
 import { directus } from "./directus"
 
 const possibleError = new Error(
   `Omlouváme se, nepodařilo se odeslat formulář. Zkuste to prosím později.`,
 )
 
-function useDirectusForm(collection: string) {
+function useDirectusForm(collection: FormCollection): UseAsyncRequestResult<FormData> {
   return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
     await directus.request(createItem(collection, item))
   }, possibleError)
 }
 
-export const useCooperationForm = () => useDirectusForm("cooperation_form")
-export const useNewsletterExpertsForm = () => useDirectusForm("newsletter_experts_form")
-export const usePodcastQuestionForm = () => useDirectusForm("podcast_question_form")
-export const useWaitlistObesityCourseForm = () => useDirectusForm("waitlist_obesity_course_form")
-export const useConsultationForm = () => useDirectusForm("consultation_form")
-export const useNewsletterParentsForm = () => useDirectusForm("newsletter_parents_form")
+export const useCooperationForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("cooperation_form")
+export const useNewsletterExpertsForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("newsletter_experts_form")
+export const usePodcastQuestionForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("podcast_question_form")
+export const useWaitlistObesityCourseForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("waitlist_obesity_course_form")
+export const useConsultationForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("consultation_form")
+export const useNewsletterParentsForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("newsletter_parents_form")
 
-export function useWebinarSignupForm() {
+export function useWebinarSignupForm(): UseAsyncRequestResult<FormData> {
   return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
     await Promise.all([

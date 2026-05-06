@@ -18,22 +18,14 @@ export interface BiographyExpert {
 const biographyExpertRequest = async () =>
   directus.request(
     readItems("biography_expert", {
-      fields: [
-        "name",
-        "description",
-        "url",
-        "photo.id",
-        "photo.width",
-        "photo.height",
-        "photo.description",
-      ],
+      fields: ["name", "description", "url", { photo: ["id", "width", "height", "description"] }],
       filter: {
         status: { _eq: "published" },
       },
     }),
   )
 
-export async function useBiographyExpert() {
+export function useBiographyExpert(): ReturnType<typeof useAsyncData<BiographyExpert[]>> {
   return useAsyncData("biographies", async () => {
     // Narrowing matches the `fields` list passed to readItems above.
     // eslint-disable-next-line typescript-eslint/no-unsafe-type-assertion

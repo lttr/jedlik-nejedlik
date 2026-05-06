@@ -9,7 +9,16 @@ export interface Article {
   id: number
 }
 
-export async function useArticle(slug: string) {
+export interface ArticleView {
+  id: number
+  image: string
+  tags: { text: string; to: string }[]
+  text: string
+  title: string
+  to: string
+}
+
+export function useArticle(slug: string): ReturnType<typeof useAsyncData<ArticleView>> {
   return useAsyncData(
     `article-${slug}`,
     async () => {
@@ -33,7 +42,7 @@ export async function useArticle(slug: string) {
   )
 }
 
-export async function useArticles() {
+export function useArticles(): ReturnType<typeof useAsyncData<ArticleView[]>> {
   return useAsyncData(
     "articles",
     async () => {

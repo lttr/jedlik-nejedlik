@@ -1,4 +1,4 @@
-export function objectFromFormData(formData: FormData) {
+export function objectFromFormData(formData: FormData): Record<string, string> {
   return Object.fromEntries(
     // Using Array.from() for Safari iOS compatibility (Iterator.prototype.map is ES2025)
     Array.from(formData.entries()).map(([key, value]) => [
