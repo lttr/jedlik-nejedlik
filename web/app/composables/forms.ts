@@ -1,7 +1,8 @@
 import { createItem } from "@directus/sdk"
 import type { UseAsyncRequestResult } from "./async-request"
-import type { FormCollection } from "./directus"
-import { directus } from "./directus"
+import type { FormCollection } from "~/utils/directus-schema"
+
+export type FormSubmission = Record<string, unknown>
 
 const possibleError = new Error(
   `Omlouváme se, nepodařilo se odeslat formulář. Zkuste to prosím později.`,
@@ -10,7 +11,7 @@ const possibleError = new Error(
 function useDirectusForm(collection: FormCollection): UseAsyncRequestResult<FormData> {
   return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
-    await directus.request(createItem(collection, item))
+    await getDirectusClient().request(createItem(collection, item))
   }, possibleError)
 }
 
@@ -31,7 +32,7 @@ export function useWebinarSignupForm(): UseAsyncRequestResult<FormData> {
   return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
     await Promise.all([
-      directus.request(
+      getDirectusClient().request(
         createItem("webinar_signup_form", {
           email: item.email,
           first_name: item.first_name,
@@ -40,7 +41,7 @@ export function useWebinarSignupForm(): UseAsyncRequestResult<FormData> {
           webinar: "2026-03-obezita-otazky-odpovedi",
         }),
       ),
-      directus.request(
+      getDirectusClient().request(
         createItem("newsletter_parents_form", {
           email: item.email,
           first_name: item.first_name,

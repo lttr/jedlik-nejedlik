@@ -29,8 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-import { DIRECTUS_URL } from "~~/shared/utils/directus"
-
 const PDF_MAP: Record<string, { fileId: string; label: string }> = {
   "nejedlici-checklist": {
     fileId: "a50cceb7-1ca5-4f16-bcdf-10515cae0ff7",
@@ -42,13 +40,14 @@ const PDF_MAP: Record<string, { fileId: string; label: string }> = {
   },
 }
 
+const directusUrl = useRuntimeConfig().public.directusUrl
 const route = useRoute()
 const pdfKey = route.query.pdf as string | undefined
 const pdfDownload =
   pdfKey && PDF_MAP[pdfKey]
     ? {
         ...PDF_MAP[pdfKey],
-        url: `${DIRECTUS_URL}/assets/${PDF_MAP[pdfKey].fileId}?download`,
+        url: `${directusUrl}/assets/${PDF_MAP[pdfKey].fileId}?download`,
       }
     : null
 

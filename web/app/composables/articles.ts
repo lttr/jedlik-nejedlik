@@ -1,5 +1,14 @@
 import { readItem, readItems } from "@directus/sdk"
-import { directus } from "./directus"
+
+// Wire shape of `articles` collection in Directus. Used to type the SDK client
+// at the Schema level.
+export interface ArticleCollection {
+  id: number
+  title: string
+  perex: string
+  cover: string
+  status: string
+}
 
 export interface Article {
   cover: string
@@ -22,7 +31,7 @@ export function useArticle(slug: string): ReturnType<typeof useAsyncData<Article
   return useAsyncData(
     `article-${slug}`,
     async () => {
-      return directus.request(readItem("articles", slug))
+      return getDirectusClient().request(readItem("articles", slug))
     },
     {
       transform: (input) => {
@@ -46,7 +55,7 @@ export function useArticles(): ReturnType<typeof useAsyncData<ArticleView[]>> {
   return useAsyncData(
     "articles",
     async () => {
-      return directus.request(
+      return getDirectusClient().request(
         readItems("articles", {
           fields: ["id", "title", "perex", "cover"],
           filter: {

@@ -1,22 +1,41 @@
 import { readItems } from "@directus/sdk"
-import { directus } from "./directus"
+import { z } from "zod"
 
-export interface Photo {
-  id: string
-  width: number
-  height: number
-  description?: string
-}
+export type Photo = Image
 
+// Consumer contract: optional keys (omitted when null on the wire).
 export interface BiographyExpert {
   name: string
   description?: string
-  photo?: Photo
   url?: string
+  photo?: Photo
+}
+
+// Parses the fetched response and normalises null → undefined for consumers.
+const BiographyExpertSchema = z
+  .object({
+    name: z.string(),
+    description: z.string().nullable(),
+    url: z.string().nullable(),
+    photo: ImageSchema.nullable(),
+  })
+  .transform(
+    (o): BiographyExpert => ({
+      name: o.name,
+      description: o.description ?? undefined,
+      url: o.url ?? undefined,
+      photo: o.photo ?? undefined,
+    }),
+  )
+
+// SDK Schema-level shape: every column the SDK can address. Fetched columns
+// (z.input) plus columns we filter on but don't fetch.
+export type BiographyExpertCollection = z.input<typeof BiographyExpertSchema> & {
+  status: string
 }
 
 const biographyExpertRequest = async () =>
-  directus.request(
+  getDirectusClient().request(
     readItems("biography_expert", {
       fields: ["name", "description", "url", { photo: ["id", "width", "height", "description"] }],
       filter: {
@@ -26,9 +45,7 @@ const biographyExpertRequest = async () =>
   )
 
 export function useBiographyExpert(): ReturnType<typeof useAsyncData<BiographyExpert[]>> {
-  return useAsyncData("biographies", async () => {
-    // Narrowing matches the `fields` list passed to readItems above.
-    // eslint-disable-next-line typescript-eslint/no-unsafe-type-assertion
-    return (await biographyExpertRequest()) as BiographyExpert[]
+  return useAsyncData("biographies", biographyExpertRequest, {
+    transform: (input) => z.array(BiographyExpertSchema).parse(input),
   })
 }

@@ -16,13 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-export interface BiographyExpert {
-  name: string
-  description?: string
-  photo?: Image
-  url?: string
-}
-
 defineProps<{
   bio: BiographyExpert
 }>()

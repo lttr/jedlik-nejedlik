@@ -62,14 +62,14 @@ const { data: zdenkaPhoto } = await useDirectusImage("a87fbb53-9d2b-4b0d-8bf6-89
 
 const { data: anickaPhoto } = await useDirectusImage("8d621999-f37f-4568-a51d-11e65a0bde62")
 
-const zdenka = {
+const zdenka: BiographyExpert = {
   name: "Zdeňka Trummová",
   description:
     "Zdeňka je zakladatelkou projektu Jedlík-nejedlík, výživovou specialistkou a učitelkou, která opustila školství, aby mohla edukovat o tématech, která podporují zdraví a pohodu dětí i jejich rodičů. Potkat ji můžete i v týmech jiných organizací, jako např. STOB, protože věří v sílu spolupráce.",
   photo: zdenkaPhoto.value,
 }
 
-const anicka = {
+const anicka: BiographyExpert = {
   name: "Anna Běla Sýkorová",
   description:
     "Anička vystudovala obor Výživa a potraviny a je lektorkou a metodičkou dětských kurzů STOBu. Její hlavní pracovní náplní je koordinování, metodické vedení a lektorování programů pro školy se zaměřením na budování zdravého třídního klimatu a podporu well-beingu jednotlivce i skupiny, což dělá pod Skautským institutem.",
