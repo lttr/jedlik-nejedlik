@@ -18,6 +18,12 @@ export default defineConfig({
     cache: {
       scripts: true,
     },
+    tasks: {
+      "verify:all": {
+        command: "echo verify done",
+        dependsOn: ["check", "lint:slow", "typecheck", "smoke", "build"],
+      },
+    },
   },
   lint: {
     plugins: [
@@ -134,6 +140,31 @@ export default defineConfig({
       typeAware: true,
       typeCheck: true,
     },
+    overrides: [
+      {
+        // Build config files legitimately read process.env at build time.
+        files: ["**/*.config.{ts,js,mjs,cjs}"],
+        rules: {
+          "node/no-process-env": "off",
+        },
+      },
+      {
+        // Ambient .d.ts declarations frequently use side-effect imports
+        // (e.g. @total-typescript/ts-reset).
+        files: ["**/*.d.ts"],
+        rules: {
+          "import/no-unassigned-import": "off",
+        },
+      },
+      {
+        // @lttr/nuxt-config-eslint ships JS only, so its default export lands
+        // here as `any`. Off only the rule that fires on that one call.
+        files: ["**/eslint.config.{js,mjs,cjs}"],
+        rules: {
+          "typescript/no-unsafe-argument": "off",
+        },
+      },
+    ],
   },
   fmt: {
     semi: false,

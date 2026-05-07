@@ -34,9 +34,8 @@ export default [
   },
 
   // Nuxt + custom configs for JS/Vue
+  // eslint-disable-next-line baseline-js/use-baseline -- config file runs in Node
   ...(await nuxtEslintConfig(
-    // @lttr/nuxt-config-eslint ships JS only, no .d.ts → typed as any here.
-    // eslint-disable-next-line typescript/no-unsafe-argument
     customConfig,
 
     // JS baseline - register plugins

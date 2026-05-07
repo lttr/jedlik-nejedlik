@@ -1,2 +1,9 @@
+# vp staged runs `vp check --fix` which formats code and fixes lint errors
 vp staged
+vp run lint:slow:fix
 vp run typecheck
+# Smoke dev-boot only when a change can shift SSR runtime behavior:
+# nuxt.config, modules list, server/app plugins, runtimeConfig-shaped envs.
+if git diff --cached --name-only | grep -qE '^web/(nuxt\.config|server/|app/plugins/|package\.json)'; then
+  vp run smoke
+fi

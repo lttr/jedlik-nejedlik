@@ -10,7 +10,8 @@
     "lint:slow": "vp run -r lint:slow",
     "lint:slow:fix": "vp run -r lint:slow:fix",
     "typecheck": "vp run -r typecheck",
-    "verify": "vp check && vp run lint:slow && vp run typecheck",
+    "smoke": "scripts/smoke-dev.sh",
+    "verify": "vp run verify:all",
     "start": "node web/.output/server/index.mjs",
     "prepare": "vp config"
   },
