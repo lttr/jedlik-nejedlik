@@ -105,4 +105,10 @@ export default defineNuxtConfig({
     // Don't wrap svg files inside module provided icon component
     defaultImport: "component",
   },
+
+  vite: {
+    optimizeDeps: {
+      include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
+    },
+  },
 })
