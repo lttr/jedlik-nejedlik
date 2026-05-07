@@ -1,4 +1,6 @@
-const DIRECTUS_URL = "https://obsah-jedlika.lttr.cz"
+// @nuxt/image provider config is build-time. Runtime URL flows separately into
+// runtimeConfig.public.directusUrl via NUXT_PUBLIC_DIRECTUS_URL env override.
+const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 
 export default defineNuxtConfig({
   modules: [
@@ -33,6 +35,12 @@ export default defineNuxtConfig({
     name: "Jedlík-nejedlík",
     description: "Výživa a výchova v propojení",
     defaultLocale: "cs",
+  },
+
+  runtimeConfig: {
+    public: {
+      directusUrl: "",
+    },
   },
 
   sourcemap: {

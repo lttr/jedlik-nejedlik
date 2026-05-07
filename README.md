@@ -37,6 +37,7 @@ This is an education site, that I'm building for my wife.
 Project uses [Vite+](https://viteplus.dev/) (`vp`) as a unified frontend toolchain.
 
 - `vp install` — install deps
+- `cp .env.example .env` — seed local env (Directus URL etc.)
 - `vp check` — format + lint + type check
 - `vp fmt` — format with Oxfmt (replaces Prettier)
 - `vp run dev` — Nuxt dev server

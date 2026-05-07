@@ -1,9 +1,11 @@
 node_modules
 
-# Local Netlify folder
-.netlify
 .env
 
+# Nuxt
+.nuxt
+.output
+dist
 
 # pencil.dev
 design/images/generated*

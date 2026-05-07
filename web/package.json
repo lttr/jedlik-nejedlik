@@ -15,7 +15,8 @@
   "dependencies": {
     "@directus/sdk": "^21.3.0",
     "@lttr/puleo": "^0.8.1",
-    "@sentry/nuxt": "^10.51.0"
+    "@sentry/nuxt": "^10.51.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@dxup/nuxt": "^0.2.2",
