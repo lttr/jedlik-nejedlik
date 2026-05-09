@@ -95,7 +95,7 @@
           <div class="for-whom-card for-whom-card--yes">
             <h3>Pro koho webinář je</h3>
             <ul>
-              <li>rodiče dětí ve&nbsp;věku přibližně 3&ndash;12&nbsp;let</li>
+              <li>rodiče dětí ve&nbsp;věku 1&ndash;15&nbsp;let</li>
               <li>rodiče, kteří mají pocit, že &bdquo;to u&nbsp;jídla drhne&ldquo;</li>
               <li>rodiče, kteří nechtějí jít cestou tlaku ani úplného povolení</li>
             </ul>
@@ -232,7 +232,7 @@ const { data: petraPhoto } = await useDirectusImage("421732fb-1f4b-484c-a5eb-350
 useSeoMeta({
   title: "Webinář: Generace alfa u stolu | Jedlík-nejedlík",
   description:
-    "Online webinář pro rodiče dětí 3–12 let. Pochopte, proč vaše dítě reaguje u jídla jinak, a získejte konkrétní opěrné body pro každodenní situace. 290 Kč.",
+    "Online webinář pro rodiče dětí 1–15 let. Pochopte, proč vaše dítě reaguje u jídla jinak, a získejte konkrétní opěrné body pro každodenní situace. 290 Kč.",
 })
 </script>
 

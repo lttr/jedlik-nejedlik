@@ -132,7 +132,7 @@
         <h2>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h2>
         <p>
           Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali. Pro rodiče dětí
-          3&ndash;12&nbsp;let.
+          1&ndash;15&nbsp;let.
         </p>
         <span class="webinar-promo-cta">Zjistit víc &rarr;</span>
       </div>
