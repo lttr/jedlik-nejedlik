@@ -95,7 +95,7 @@
           <div class="for-whom-card for-whom-card--yes">
             <h3>Pro koho webinář je</h3>
             <ul>
-              <li>rodiče dětí ve&nbsp;věku přibližně 1&ndash;15&nbsp;let</li>
+              <li>rodiče dětí ve&nbsp;věku 1&ndash;15&nbsp;let</li>
               <li>rodiče, kteří mají pocit, že &bdquo;to u&nbsp;jídla drhne&ldquo;</li>
               <li>rodiče, kteří nechtějí jít cestou tlaku ani úplného povolení</li>
             </ul>
