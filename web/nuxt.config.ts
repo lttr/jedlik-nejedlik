@@ -56,6 +56,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2025-12-01",
 
+  vite: {
+    optimizeDeps: {
+      include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
+    },
+  },
+
   eslint: {
     config: {
       nuxt: {
@@ -104,11 +110,5 @@ export default defineNuxtConfig({
     autoImportPath: "./assets/svgs/",
     // Don't wrap svg files inside module provided icon component
     defaultImport: "component",
-  },
-
-  vite: {
-    optimizeDeps: {
-      include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
-    },
   },
 })
