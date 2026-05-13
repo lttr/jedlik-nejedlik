@@ -1,4 +1,5 @@
 import { readItems } from "@directus/sdk"
+import type { AsyncData, NuxtError } from "nuxt/app"
 import { z } from "zod"
 
 export type Photo = Image
@@ -44,8 +45,13 @@ const biographyExpertRequest = async () =>
     }),
   )
 
-export function useBiographyExpert(): ReturnType<typeof useAsyncData<BiographyExpert[]>> {
-  return useAsyncData("biographies", biographyExpertRequest, {
+export async function useBiographyExpert(): Promise<
+  AsyncData<BiographyExpert[] | undefined, NuxtError | undefined>
+> {
+  const key = "biographies"
+  const result = useAsyncData(key, biographyExpertRequest, {
     transform: (input) => z.array(BiographyExpertSchema).parse(input),
   })
+  watchAsyncDataError(key, result.error)
+  return result
 }

@@ -1,4 +1,5 @@
 import { readFile } from "@directus/sdk"
+import type { AsyncData, NuxtError } from "nuxt/app"
 import { z } from "zod"
 
 // Subset of the `directus_files` columns the app actually consumes. `id` is
@@ -20,10 +21,13 @@ export const ImageSchema = z
 
 export type Image = z.infer<typeof ImageSchema>
 
-export async function useDirectusImage(id: string): Promise<{
-  data: Ref<Image>
-}> {
-  return useAsyncData(`image-${id}`, async () => getDirectusClient().request(readFile(id)), {
+export async function useDirectusImage(
+  id: string,
+): Promise<AsyncData<Image | undefined, NuxtError | undefined>> {
+  const key = `image-${id}`
+  const result = useAsyncData(key, async () => getDirectusClient().request(readFile(id)), {
     transform: (input) => ImageSchema.parse(input),
   })
+  watchAsyncDataError(key, result.error)
+  return result
 }
