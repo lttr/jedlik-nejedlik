@@ -23,6 +23,10 @@ export default defineConfig({
         command: "echo verify done",
         dependsOn: ["check", "lint:slow", "typecheck", "smoke", "build"],
       },
+      "custom-staged": {
+        command: "echo custom staged",
+        dependsOn: ["lint:slow", "typecheck", "smoke"],
+      },
     },
   },
   lint: {
