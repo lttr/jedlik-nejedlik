@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Feedback Loops Audit — jedlik-nejedlik</title>
+    <style>
+      :root {
+        --bg: #1c1917;
+        --surface: #262420;
+        --surface2: #2f2c27;
+        --accent: #d4a574;
+        --fg: #e7e5e4;
+        --mute: #a8a29e;
+        --line: #3a3733;
+        --fast: #86efac;
+        --med: #67e8f9;
+        --slow: #fde68a;
+        --ai: #fca5a5;
+        --miss: #f87171;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          14px/1.5 system-ui,
+          sans-serif;
+      }
+      a {
+        color: var(--accent);
+      }
+      header {
+        padding: 24px 32px;
+        border-bottom: 1px solid var(--line);
+      }
+      h1 {
+        margin: 0 0 4px;
+        font-size: 22px;
+        color: var(--accent);
+      }
+      .sub {
+        color: var(--mute);
+        font-size: 13px;
+      }
+      .counts {
+        margin-top: 14px;
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .count {
+        background: var(--surface);
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: 1px solid var(--line);
+      }
+      .count b {
+        color: var(--accent);
+        margin-right: 6px;
+      }
+      main {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 24px;
+        padding: 24px 32px;
+      }
+      .tiers {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .tier {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+      }
+      .tier h2 {
+        margin: 0 0 4px;
+        font-size: 15px;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .tier .meta {
+        color: var(--mute);
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+      .tier .meta code {
+        background: var(--bg);
+        padding: 1px 5px;
+        border-radius: 3px;
+        color: var(--fg);
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        background: var(--surface2);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        position: relative;
+        cursor: help;
+      }
+      .chip .name {
+        font-weight: 600;
+      }
+      .chip.fast {
+        border-color: var(--fast);
+      }
+      .chip.med {
+        border-color: var(--med);
+      }
+      .chip.slow {
+        border-color: var(--slow);
+      }
+      .chip.ai {
+        border-color: var(--ai);
+      }
+      .chip.miss {
+        opacity: 0.55;
+        border-style: dashed;
+      }
+      .badge {
+        font-size: 11px;
+        padding: 1px 6px;
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--mute);
+      }
+      .badge.ok {
+        color: var(--fast);
+      }
+      .badge.warn {
+        color: var(--slow);
+      }
+      .badge.miss {
+        color: var(--miss);
+      }
+      .badge.mis {
+        color: var(--ai);
+      }
+      .chip[data-tip]:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        background: #0c0a09;
+        border: 1px solid var(--line);
+        padding: 8px 10px;
+        border-radius: 6px;
+        font-size: 11px;
+        color: var(--fg);
+        width: 280px;
+        z-index: 10;
+        margin-bottom: 6px;
+        white-space: normal;
+        line-height: 1.4;
+      }
+      aside {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        align-self: start;
+        position: sticky;
+        top: 16px;
+      }
+      aside h2 {
+        margin: 0 0 12px;
+        font-size: 15px;
+        color: var(--accent);
+      }
+      .gap {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .gap:last-child {
+        border: 0;
+      }
+      .gap .rank {
+        color: var(--accent);
+        font-weight: 700;
+        margin-right: 6px;
+      }
+      .gap .why {
+        color: var(--mute);
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      section.fix {
+        padding: 24px 32px;
+        border-top: 1px solid var(--line);
+      }
+      section.fix h2 {
+        margin: 0 0 6px;
+        color: var(--accent);
+        font-size: 16px;
+      }
+      section.fix p {
+        color: var(--mute);
+        font-size: 13px;
+        margin: 0 0 12px;
+      }
+      pre {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        overflow: auto;
+        font:
+          12px/1.5 ui-monospace,
+          monospace;
+        color: var(--fg);
+      }
+      .legend {
+        display: flex;
+        gap: 14px;
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--mute);
+        flex-wrap: wrap;
+      }
+      .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        display: inline-block;
+      }
+      .dot.fast {
+        background: var(--fast);
+      }
+      .dot.med {
+        background: var(--med);
+      }
+      .dot.slow {
+        background: var(--slow);
+      }
+      .dot.ai {
+        background: var(--ai);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Feedback Loops Audit — jedlik-nejedlik</h1>
+      <div class="sub">
+        Nuxt 4 (compat) · Vue 3 · TypeScript · Vite+ (<code>vp</code>) · pnpm workspace · deployed
+        Netlify · Directus CMS
+      </div>
+      <div class="counts">
+        <div class="count"><b>9</b>wired</div>
+        <div class="count"><b>2</b>partial / not-wired</div>
+        <div class="count"><b>6</b>missing</div>
+        <div class="count"><b>0</b>misplaced</div>
+      </div>
+      <div class="sub" style="margin-top: 10px">
+        Updated 2026-05-13: Tier 2 Stop hook wired via
+        <code>.claude/hooks/stop-smart.sh</code> (scoped to changed files).
+        <code>--no-verify</code> bypass blocked via <code>.claude/settings.json</code> deny. Gaps 1,
+        2, 5 closed.
+      </div>
+      <div class="legend">
+        <span><i class="dot fast"></i>fast &lt;500ms</span>
+        <span><i class="dot med"></i>medium &lt;10s</span>
+        <span><i class="dot slow"></i>slow &gt;10s</span>
+        <span><i class="dot ai"></i>AI / network</span>
+        <span>✓ wired · ⚠ not-wired · ✗ missing · ↕ misplaced</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="tiers">
+        <div class="tier">
+          <h2>Tier 1 — On file edit <span class="badge">&lt;500ms</span></h2>
+          <div class="meta">
+            CC hook: <code>PostToolUse: Write|Edit|MultiEdit</code> — silent on success, blocks
+            &amp; feeds stderr on fail
+          </div>
+          <div class="chips">
+            <div
+              class="chip fast"
+              data-tip="Wired via global ~/.claude/settings.json → format-code.sh → walks tree, finds vite.config.ts, runs `vp fmt --write <file>`. ~50ms per file. Oxfmt is Rust-native."
+            >
+              <span class="name">oxfmt (vp fmt)</span><span class="badge ok">✓ wired</span>
+            </div>
+            <div
+              class="chip fast"
+              data-tip="oxlint runs as part of `vp staged` at pre-commit. Could also run on PostToolUse for instant lint feedback (Rust, ~870ms full project — borderline). Currently not wired at tier 1."
+            >
+              <span class="name">oxlint</span><span class="badge warn">⚠ tier 3 only</span>
+            </div>
+            <div
+              class="chip slow miss"
+              data-tip="ESLint 10 with type-aware rules. Too slow for PostToolUse — will recompile project per edit. Correctly placed at tier 3."
+            >
+              <span class="name">eslint</span
+              ><span class="badge miss">✗ tier 3 only (correct)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tier">
+          <h2>Tier 2 — End of turn <span class="badge">&lt;10s</span></h2>
+          <div class="meta">
+            CC hook: <code>Stop</code> via <code>.claude/hooks/stop-smart.sh</code>. Collects
+            changed files (<code>git diff HEAD</code> + untracked), runs oxlint → eslint on scoped
+            set. Exit 2 + stderr-tail on fail → agent self-heals before user sees response. Target
+            wall ~1s.
+          </div>
+          <div class="chips">
+            <div
+              class="chip fast"
+              data-tip="stop-smart.sh step 1: `vp lint <changed code files>`. Rust-native oxlint, ~50ms/file. Runs only when code files (.ts/.tsx/.vue/.js/etc.) changed."
+            >
+              <span class="name">oxlint (scoped)</span><span class="badge ok">✓ wired</span>
+            </div>
+            <div
+              class="chip med"
+              data-tip="stop-smart.sh step 2: `cd web && pnpm exec eslint <changed web/ files>`. File-scoped ESLint (not project-wide) — much faster than full `lint:slow`. Project-wide lint stays at tier 3."
+            >
+              <span class="name">eslint (scoped)</span><span class="badge ok">✓ wired</span>
+            </div>
+            <div
+              class="chip slow miss"
+              data-tip="DROPPED 2026-05-13. vue-tsc ~5.3s, project-scoped (can't narrow per-file), runs on most turns → too costly for tier 2. Pre-commit (tier 3) still gates it; agent runs `vp run verify` on demand. Tradeoff: type errors surface at commit time instead of end-of-turn — eslint type-aware rules already catch most."
+            >
+              <span class="name">vue-tsc (typecheck)</span
+              ><span class="badge warn">⚠ moved to tier 3</span>
+            </div>
+            <div
+              class="chip ai miss"
+              data-tip="GAP. No vitest in web/package.json. stop-smart.sh has commented stub for `pnpm exec vitest --run --changed` once tests exist. See gap 1 in sidebar."
+            >
+              <span class="name">unit tests (vitest)</span
+              ><span class="badge miss">✗ none yet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tier">
+          <h2>Tier 3 — Pre-commit <span class="badge">&lt;30s</span></h2>
+          <div class="meta">
+            CC hook: <code>PreToolUse: Bash(git commit:*)</code> — repo wires via git's own
+            <code>core.hooksPath=.vite-hooks/_</code> instead
+          </div>
+          <div class="chips">
+            <div
+              class="chip fast"
+              data-tip=".vite-hooks/pre-commit line 1: `vp staged` → vp check --fix on staged files (oxlint + oxfmt). Wired via git, NOT CC PreToolUse — works because `git commit` stderr surfaces back to the agent through the Bash tool result."
+            >
+              <span class="name">vp staged (ox lint+fmt)</span
+              ><span class="badge ok">✓ wired (git)</span>
+            </div>
+            <div
+              class="chip med"
+              data-tip=".vite-hooks/pre-commit line 2: `vp run lint:slow` → eslint . in web/. ESLint 10 with @nuxt/eslint, type-aware. Cold ~9.5s."
+            >
+              <span class="name">eslint (lint:slow)</span
+              ><span class="badge ok">✓ wired (git)</span>
+            </div>
+            <div
+              class="chip med"
+              data-tip=".vite-hooks/pre-commit line 3: `vp run typecheck` → nuxi typecheck → vue-tsc. ~5.3s warm."
+            >
+              <span class="name">vue-tsc</span><span class="badge ok">✓ wired (git)</span>
+            </div>
+            <div
+              class="chip med"
+              data-tip=".vite-hooks/pre-commit line 4: `vp run smoke` → scripts/smoke-dev.sh. Boots nuxi dev on :3199, curls /, kills. Catches SSR runtime errors typecheck/lint miss. ~6.7s."
+            >
+              <span class="name">smoke (nuxi dev fetch)</span
+              ><span class="badge ok">✓ wired (git)</span>
+            </div>
+            <div
+              class="chip fast"
+              data-tip=".claude/settings.json permissions.deny blocks `git commit --no-verify` and `git push --no-verify` (both `--flag:*` and `*--flag*` patterns to catch positioning). Hook is guarantee; CLAUDE.md is suggestion."
+            >
+              <span class="name">block --no-verify</span><span class="badge ok">✓ wired</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tier">
+          <h2>Tier 4 — Pre-push <span class="badge">async</span></h2>
+          <div class="meta">
+            CC hook: <code>PreToolUse: Bash(git push:*)</code> — repo intentionally dropped this
+            tier (2026-05-06)
+          </div>
+          <div class="chips">
+            <div
+              class="chip slow miss"
+              data-tip="DROPPED. Build moved into `vp run verify` script (root package.json). Rationale in 2026-05-04_agent-feedback-loops/plan.md: async log had no automatic readback path → agent couldn't see failures reliably. Decision: agent runs `vp run verify` on demand instead."
+            >
+              <span class="name">nuxi build</span><span class="badge warn">⚠ moved to verify</span>
+            </div>
+            <div
+              class="chip ai miss"
+              data-tip="No e2e suite present (no playwright/cypress in package.json). Smoke at tier 3 covers boot path only."
+            >
+              <span class="name">e2e tests</span><span class="badge miss">✗ none</span>
+            </div>
+            <div
+              class="chip ai miss"
+              data-tip="No /ultrareview, coderabbit, greptile, or claude-code review hook wired. Manual /code-review skill exists in user CLAUDE.md but not auto-triggered."
+            >
+              <span class="name">AI review</span><span class="badge miss">✗ missing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tier">
+          <h2>Tier 5 — CI <span class="badge">unlimited</span></h2>
+          <div class="meta">
+            No <code>.github/workflows/</code>. Netlify build is the only cloud gate.
+          </div>
+          <div class="chips">
+            <div
+              class="chip slow"
+              data-tip="Netlify deploys on push. Runs `vp run build` (nuxi build, ~32s) per nixpacks.toml-style config. Catches build regressions, not lint/typecheck unless build chokes."
+            >
+              <span class="name">netlify build</span><span class="badge ok">✓ wired</span>
+            </div>
+            <div
+              class="chip ai miss"
+              data-tip="No GH Actions for verify. If Netlify build skips lint/typecheck (it does, since `build` script ≠ `verify`), regressions ship to deploy preview before failing."
+            >
+              <span class="name">github actions verify</span
+              ><span class="badge miss">✗ missing</span>
+            </div>
+            <div
+              class="chip slow miss"
+              data-tip="No bundle-size budget (size-limit, bundlesize). Worth adding if perf matters; low priority for content site."
+            >
+              <span class="name">size-limit</span><span class="badge miss">✗ missing</span>
+            </div>
+            <div
+              class="chip slow miss"
+              data-tip="No a11y check (pa11y, axe-core). Public-facing edu site — worth considering at tier 5."
+            >
+              <span class="name">a11y (axe/pa11y)</span><span class="badge miss">✗ missing</span>
+            </div>
+            <div
+              class="chip med miss"
+              data-tip="No knip / madge / dep-cruiser. Dead-export and cycle detection not gated."
+            >
+              <span class="name">knip / madge</span><span class="badge miss">✗ missing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <h2>Remaining gaps — ranked by leverage</h2>
+
+        <div class="gap">
+          <span class="rank">1.</span><b>No unit / component tests</b>
+          <div class="why">
+            Zero vitest/jest/playwright in <code>web/package.json</code>. Smoke covers boot only.
+            Even one vitest run for utils + zod schemas (nuxt.config runtimeConfig validation) would
+            prevent regressions like the 2026-05-07 SSR plugin externalization incident.
+            <code>stop-smart.sh</code> has commented stub ready — flip on once vitest added.
+          </div>
+        </div>
+
+        <div class="gap">
+          <span class="rank">2.</span><b>GH Actions verify mirror</b>
+          <div class="why">
+            Netlify only runs <code>build</code>, not <code>verify</code>. Lint/typecheck
+            regressions still ship to deploy preview if agent skips local verify. Cheap mirror:
+            <code>vp run verify</code> on PR.
+          </div>
+        </div>
+
+        <div class="gap">
+          <span class="rank">3.</span><b>a11y check (Tier 5)</b>
+          <div class="why">
+            Public-facing edu site. Axe-core / pa11y on built site catches regressions humans miss.
+            Low priority but high signal-to-noise.
+          </div>
+        </div>
+
+        <div class="gap">
+          <span class="rank">4.</span><b>knip / dead-export check</b>
+          <div class="why">
+            Code grows, dead exports accumulate. Knip at Tier 5 (CI) or as on-demand
+            <code>vp run check:dead</code> would surface them without per-edit cost.
+          </div>
+        </div>
+
+        <h2 style="margin-top: 18px">Closed since 2026-05-04</h2>
+        <div class="gap">
+          <span class="rank">✓</span><b>Stop hook (Tier 2)</b>
+          <div class="why">
+            Wired 2026-05-13 as <code>.claude/hooks/stop-smart.sh</code>. Scoped to changed files
+            (<code>git diff HEAD</code> + untracked). Chain oxlint → eslint → typecheck, fail-fast,
+            stderr-tail 50 lines.
+          </div>
+        </div>
+        <div class="gap">
+          <span class="rank">✓</span><b>Block <code>--no-verify</code></b>
+          <div class="why">
+            Wired in <code>.claude/settings.json</code> permissions.deny (commit + push, both flag
+            positions).
+          </div>
+        </div>
+        <div class="gap">
+          <span class="rank">✓</span><b>Tier 1 oxlint (closed as won't-do)</b>
+          <div class="why">
+            Diminishing returns — oxlint now runs at Tier 2 (changed files only, &lt;500ms typical
+            scope). PostToolUse oxlint would duplicate without latency win.
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section class="fix">
+      <h2>Applied — current <code>.claude/settings.json</code></h2>
+      <p>
+        Stop-hook self-heal and <code>--no-verify</code> deny landed 2026-05-13. Stop hook proxies
+        to <code>.claude/hooks/stop-smart.sh</code> which scopes lint/typecheck to changed files
+        (orig audit ran project-wide <code>vp lint</code> — refined to keep tier 2 under budget on
+        large diffs).
+      </p>
+      <pre>
+{
+  "permissions": {
+    "deny": [
+      "Bash(git commit --no-verify:*)",
+      "Bash(git commit *--no-verify*)",
+      "Bash(git push --no-verify:*)",
+      "Bash(git push *--no-verify*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-smart.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}</pre
+      >
+      <p style="margin-top: 14px">
+        <b>Next:</b> scaffold vitest in <code>web/</code> (gap 1) — <code>stop-smart.sh</code> has
+        commented stub at bottom (<code>pnpm exec vitest --run --changed</code>) ready to enable.
+        Then add a GH Actions workflow that runs <code>vp run verify</code> on PR (gap 2).
+      </p>
+    </section>
+  </body>
+</html>
