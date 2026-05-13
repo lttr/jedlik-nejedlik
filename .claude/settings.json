@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git commit --no-verify:*)",
+      "Bash(git commit *--no-verify*)",
+      "Bash(git push --no-verify:*)",
+      "Bash(git push *--no-verify*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-smart.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
