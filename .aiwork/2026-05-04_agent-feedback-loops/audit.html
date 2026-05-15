@@ -265,19 +265,22 @@
       <h1>Feedback Loops Audit — jedlik-nejedlik</h1>
       <div class="sub">
         Nuxt 4 (compat) · Vue 3 · TypeScript · Vite+ (<code>vp</code>) · pnpm workspace · deployed
-        Netlify · Directus CMS
+        Coolify (nixpacks) · Directus CMS
       </div>
       <div class="counts">
-        <div class="count"><b>9</b>wired</div>
+        <div class="count"><b>11</b>wired</div>
         <div class="count"><b>2</b>partial / not-wired</div>
-        <div class="count"><b>6</b>missing</div>
+        <div class="count"><b>5</b>missing</div>
         <div class="count"><b>0</b>misplaced</div>
       </div>
       <div class="sub" style="margin-top: 10px">
-        Updated 2026-05-13: Tier 2 Stop hook wired via
-        <code>.claude/hooks/stop-smart.sh</code> (scoped to changed files).
-        <code>--no-verify</code> bypass blocked via <code>.claude/settings.json</code> deny. Gaps 1,
-        2, 5 closed.
+        Updated 2026-05-15: PostToolUse autofix hook wired (<code
+          >.claude/hooks/post-edit-fix.sh</code
+        >
+        → <code>vp lint --fix &lt;file&gt;</code>) — Tier 1 oxlint promoted from "won't-do" to
+        wired. SessionStart worktree bootstrap (<code>worktree-install.sh</code>) auto-runs
+        <code>pnpm install</code> on fresh worktrees. Deploy moved Netlify → Coolify (commit
+        2145eb9; nixpacks build via <code>nixpacks.toml</code>).
       </div>
       <div class="legend">
         <span><i class="dot fast"></i>fast &lt;500ms</span>
@@ -305,9 +308,10 @@
             </div>
             <div
               class="chip fast"
-              data-tip="oxlint runs as part of `vp staged` at pre-commit. Could also run on PostToolUse for instant lint feedback (Rust, ~870ms full project — borderline). Currently not wired at tier 1."
+              data-tip="Wired 2026-05-15 via .claude/hooks/post-edit-fix.sh → `vp lint --fix <edited file>`. Single-file scope (~50ms). Silent on success, swallows errors — un-autofixable violations surface at Stop hook (tier 2)."
             >
-              <span class="name">oxlint</span><span class="badge warn">⚠ tier 3 only</span>
+              <span class="name">oxlint --fix (post-edit)</span
+              ><span class="badge ok">✓ wired</span>
             </div>
             <div
               class="chip slow miss"
@@ -431,18 +435,18 @@
         <div class="tier">
           <h2>Tier 5 — CI <span class="badge">unlimited</span></h2>
           <div class="meta">
-            No <code>.github/workflows/</code>. Netlify build is the only cloud gate.
+            No <code>.github/workflows/</code>. Coolify build is the only cloud gate.
           </div>
           <div class="chips">
             <div
               class="chip slow"
-              data-tip="Netlify deploys on push. Runs `vp run build` (nuxi build, ~32s) per nixpacks.toml-style config. Catches build regressions, not lint/typecheck unless build chokes."
+              data-tip="Coolify deploys on push to master via nixpacks (nixpacks.toml). Runs the build script (nuxi build). run.cache.scripts re-enabled locally, gated off in CI (commit 5bda78a) to fix earlier build hang. Catches build regressions, not lint/typecheck unless build chokes."
             >
-              <span class="name">netlify build</span><span class="badge ok">✓ wired</span>
+              <span class="name">coolify build</span><span class="badge ok">✓ wired</span>
             </div>
             <div
               class="chip ai miss"
-              data-tip="No GH Actions for verify. If Netlify build skips lint/typecheck (it does, since `build` script ≠ `verify`), regressions ship to deploy preview before failing."
+              data-tip="No GH Actions for verify. Coolify build skips lint/typecheck (build script ≠ verify), so regressions ship to deploy before failing."
             >
               <span class="name">github actions verify</span
               ><span class="badge miss">✗ missing</span>
@@ -476,8 +480,8 @@
           <span class="rank">1.</span><b>No unit / component tests</b>
           <div class="why">
             Zero vitest/jest/playwright in <code>web/package.json</code>. Smoke covers boot only.
-            Even one vitest run for utils + zod schemas (nuxt.config runtimeConfig validation) would
-            prevent regressions like the 2026-05-07 SSR plugin externalization incident.
+            Even one vitest run for utils + zod schemas (e.g. <code>safe-runtime-config</code> boot
+            validation, commit 1931e13) would gate regressions before the boot-fetch smoke stage.
             <code>stop-smart.sh</code> has commented stub ready — flip on once vitest added.
           </div>
         </div>
@@ -524,10 +528,20 @@
           </div>
         </div>
         <div class="gap">
-          <span class="rank">✓</span><b>Tier 1 oxlint (closed as won't-do)</b>
+          <span class="rank">✓</span><b>Tier 1 oxlint --fix (reversed 2026-05-15)</b>
           <div class="why">
-            Diminishing returns — oxlint now runs at Tier 2 (changed files only, &lt;500ms typical
-            scope). PostToolUse oxlint would duplicate without latency win.
+            Wired as <code>.claude/hooks/post-edit-fix.sh</code> — single-file
+            <code>vp lint --fix</code> after every Edit/Write. Won't-do call from 2026-05-13
+            reversed: per-file scope avoids the 870ms project cost and autofixes simple violations
+            before they reach the Stop hook.
+          </div>
+        </div>
+        <div class="gap">
+          <span class="rank">✓</span><b>Worktree bootstrap</b>
+          <div class="why">
+            <code>SessionStart</code> hook runs <code>worktree-install.sh</code> — auto
+            <code>pnpm install</code> on fresh worktrees so subagents don't trip over missing
+            node_modules.
           </div>
         </div>
       </aside>
@@ -536,10 +550,10 @@
     <section class="fix">
       <h2>Applied — current <code>.claude/settings.json</code></h2>
       <p>
-        Stop-hook self-heal and <code>--no-verify</code> deny landed 2026-05-13. Stop hook proxies
-        to <code>.claude/hooks/stop-smart.sh</code> which scopes lint/typecheck to changed files
-        (orig audit ran project-wide <code>vp lint</code> — refined to keep tier 2 under budget on
-        large diffs).
+        Stop-hook self-heal and <code>--no-verify</code> deny landed 2026-05-13. PostToolUse autofix
+        + SessionStart worktree bootstrap landed 2026-05-15 (commit 90027b4). Stop hook scopes
+        lint/typecheck to changed files (orig audit ran project-wide <code>vp lint</code> — refined
+        to keep tier 2 under budget on large diffs).
       </p>
       <pre>
 {
@@ -552,16 +566,27 @@
     ]
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [{ "type": "command",
+          "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/worktree-install.sh" }]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [{ "type": "command",
+          "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/post-edit-fix.sh\"",
+          "timeout": 10 }]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-smart.sh\"",
-            "timeout": 30
-          }
-        ]
+        "hooks": [{ "type": "command",
+          "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-smart.sh\"",
+          "timeout": 30 }]
       }
     ]
   }
