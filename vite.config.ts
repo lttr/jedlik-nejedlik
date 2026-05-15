@@ -15,9 +15,6 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   run: {
-    cache: {
-      scripts: true,
-    },
     tasks: {
       "verify:all": {
         command: "echo verify done",
