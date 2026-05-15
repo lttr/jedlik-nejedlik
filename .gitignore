@@ -1,14 +1,17 @@
 node_modules
 
+# Env
 .env
+.env.*
+!.env.example
 
 # Nuxt
 .nuxt
 .output
-dist
+.data
 
 # pencil.dev
 design/images/generated*
 
-# Playwright
-.playwright-cli/
+# Claude
+.claude/worktrees
