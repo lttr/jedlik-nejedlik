@@ -15,6 +15,11 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   run: {
+    cache: {
+      // Disabled in CI because vite-plus 0.1.20 script-cache tracing
+      // makes the Coolify build step hang until it times out.
+      scripts: process.env.CI !== "true",
+    },
     tasks: {
       "verify:all": {
         command: "echo verify done",
