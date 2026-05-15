@@ -14,8 +14,26 @@ export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
+  run: {
+    cache: {
+      scripts: true,
+    },
+    tasks: {
+      "verify:all": {
+        command: "echo verify done",
+        dependsOn: ["check", "lint:slow", "typecheck", "smoke", "build"],
+      },
+      "custom-staged": {
+        command: "echo custom staged",
+        dependsOn: ["lint:slow", "typecheck", "smoke"],
+      },
+    },
+  },
   lint: {
-    options: {},
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
   },
   fmt: {
     semi: false,
