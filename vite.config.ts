@@ -10,6 +10,16 @@ const ignorePatterns = [
   "pnpm-lock.yaml",
 ]
 
+// Generated artifacts excluded from cache-input tracking.
+const srcInput = [
+  { auto: true },
+  "!**/.nuxt/**",
+  "!**/.output/**",
+  "!**/node_modules/.cache/**",
+  "!**/node_modules/.vite/**",
+  "!**/*.tsbuildinfo",
+]
+
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
@@ -21,13 +31,24 @@ export default defineConfig({
       scripts: process.env.CI !== "true",
     },
     tasks: {
+      // Tools run directly (not via nested `vp run -r`) so the cached unit is
+      // the leaf command and `srcInput` applies to it.
+      "verify:check": { command: "vp check", input: srcInput },
+      "verify:lint": { command: "eslint .", cwd: "web", input: srcInput },
+      "verify:typecheck": { command: "nuxi typecheck", cwd: "web", input: srcInput },
+      "verify:knip": { command: "knip", input: srcInput },
+      "verify:smoke": { command: "scripts/smoke-dev.sh" },
+      "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
       "verify:all": {
         command: "echo verify done",
-        dependsOn: ["check", "lint:slow", "typecheck", "knip", "smoke", "build"],
-      },
-      "custom-staged": {
-        command: "echo custom staged",
-        dependsOn: ["lint:slow", "typecheck", "smoke"],
+        dependsOn: [
+          "verify:check",
+          "verify:lint",
+          "verify:typecheck",
+          "verify:knip",
+          "verify:smoke",
+          "verify:build",
+        ],
       },
     },
   },
