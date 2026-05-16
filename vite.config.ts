@@ -23,7 +23,7 @@ export default defineConfig({
     tasks: {
       "verify:all": {
         command: "echo verify done",
-        dependsOn: ["check", "lint:slow", "typecheck", "smoke", "build"],
+        dependsOn: ["check", "lint:slow", "typecheck", "knip", "smoke", "build"],
       },
       "custom-staged": {
         command: "echo custom staged",
