@@ -36,7 +36,7 @@ export default defineConfig({
       "verify:check": { command: "vp check", input: srcInput },
       "verify:lint": { command: "eslint .", cwd: "web", input: srcInput },
       "verify:typecheck": { command: "nuxi typecheck", cwd: "web", input: srcInput },
-      "verify:knip": { command: "knip", input: srcInput },
+      "verify:fallow": { command: "fallow", input: srcInput },
       "verify:smoke": { command: "scripts/smoke-dev.sh" },
       "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
       "verify:all": {
@@ -45,7 +45,7 @@ export default defineConfig({
           "verify:check",
           "verify:lint",
           "verify:typecheck",
-          "verify:knip",
+          "verify:fallow",
           "verify:smoke",
           "verify:build",
         ],

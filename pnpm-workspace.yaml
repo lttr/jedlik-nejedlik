@@ -3,6 +3,7 @@ packages:
 
 onlyBuiltDependencies:
   - esbuild
+  - fallow
   - sharp
   - unrs-resolver
 

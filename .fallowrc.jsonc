@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+
+  // certificate/ is a standalone vanilla-JS cert renderer — app.js is its root.
+  // (Knip listed the same file as a `.` workspace entry.)
+  "entry": ["certificate/app.js"],
+
+  "ignorePatterns": [
+    // Archived pages kept for reference, not wired into the app (Knip: `!archive/**`).
+    "web/archive/**",
+    // certificate CSS is <link>-ed from generated HTML, never JS-imported —
+    // fallow's CSS analysis can't see the reference.
+    "certificate/**/*.css",
+  ],
+
+  "ignoreDependencies": [
+    // TS language-service plugin (tsconfig compilerOptions.plugins).
+    "@dxup/unimport",
+    // Icon collections referenced by name string, resolved by @nuxt/icon.
+    "@iconify-json/bi",
+    "@iconify-json/logos",
+    "@iconify-json/uil",
+    // Peer of @vueuse/nuxt.
+    "@vueuse/core",
+    // Transitive: provided by eslint config, imported directly.
+    "eslint-plugin-es-x",
+  ],
+
+  "rules": {
+    // catalog `vite`/`vitest` consumed via pnpm-workspace.yaml `overrides`,
+    // not a `catalog:` specifier — the only form these checks trace.
+    "unused-catalog-entries": "off",
+    "unused-dependency-overrides": "off",
+  },
+
+  "health": {
+    // CRAP is inflated without coverage data (estimates 0% untested).
+    // Cyclomatic/cognitive of every flagged fn is already under threshold;
+    // raise maxCrap or run `fallow --coverage` for real scores.
+    "maxCrap": 100,
+  },
+}

@@ -15,3 +15,6 @@ design/images/generated*
 
 # Claude
 .claude/worktrees
+
+# fallow
+.fallow
