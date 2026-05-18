@@ -268,19 +268,20 @@
         Coolify (nixpacks) · Directus CMS
       </div>
       <div class="counts">
-        <div class="count"><b>11</b>wired</div>
+        <div class="count"><b>13</b>wired</div>
         <div class="count"><b>2</b>partial / not-wired</div>
-        <div class="count"><b>5</b>missing</div>
+        <div class="count"><b>4</b>missing</div>
         <div class="count"><b>0</b>misplaced</div>
       </div>
       <div class="sub" style="margin-top: 10px">
-        Updated 2026-05-15: PostToolUse autofix hook wired (<code
-          >.claude/hooks/post-edit-fix.sh</code
-        >
-        → <code>vp lint --fix &lt;file&gt;</code>) — Tier 1 oxlint promoted from "won't-do" to
-        wired. SessionStart worktree bootstrap (<code>worktree-install.sh</code>) auto-runs
-        <code>pnpm install</code> on fresh worktrees. Deploy moved Netlify → Coolify (commit
-        2145eb9; nixpacks build via <code>nixpacks.toml</code>).
+        Updated 2026-05-18: <code>knip</code> replaced by <code>fallow</code> (commits 39336ed,
+        9e0e170) — dead-code + complexity gate now wired into pre-commit (<code
+          >fallow audit --quiet</code
+        >) and the <code>verify:all</code> task graph (<code>verify:fallow</code>). Gap 4 closed.
+        <code>verify</code> restructured into a Vite+ task graph with <code>dependsOn</code> fan-out
+        (commit 0bf0c16). Prior 2026-05-15: PostToolUse autofix hook
+        (<code>post-edit-fix.sh</code>), SessionStart worktree bootstrap, deploy moved Netlify →
+        Coolify (nixpacks).
       </div>
       <div class="legend">
         <span><i class="dot fast"></i>fast &lt;500ms</span>
@@ -397,6 +398,12 @@
             </div>
             <div
               class="chip fast"
+              data-tip=".vite-hooks/pre-commit line 5: `fallow audit --quiet` → dead-code, unused-export and complexity gate. Replaced knip 2026-05-15. Fails the commit on regressions. Rust-fast."
+            >
+              <span class="name">fallow audit</span><span class="badge ok">✓ wired (git)</span>
+            </div>
+            <div
+              class="chip fast"
               data-tip=".claude/settings.json permissions.deny blocks `git commit --no-verify` and `git push --no-verify` (both `--flag:*` and `*--flag*` patterns to catch positioning). Hook is guarantee; CLAUDE.md is suggestion."
             >
               <span class="name">block --no-verify</span><span class="badge ok">✓ wired</span>
@@ -464,10 +471,10 @@
               <span class="name">a11y (axe/pa11y)</span><span class="badge miss">✗ missing</span>
             </div>
             <div
-              class="chip med miss"
-              data-tip="No knip / madge / dep-cruiser. Dead-export and cycle detection not gated."
+              class="chip fast"
+              data-tip="`fallow` (replaced knip 2026-05-15) gates dead code, unused exports and complexity. Wired into pre-commit (`fallow audit --quiet`) and the verify:all task graph (verify:fallow). Runs on demand via `vp run verify` too."
             >
-              <span class="name">knip / madge</span><span class="badge miss">✗ missing</span>
+              <span class="name">fallow (dead-code)</span><span class="badge ok">✓ wired</span>
             </div>
           </div>
         </div>
@@ -503,15 +510,16 @@
           </div>
         </div>
 
+        <h2 style="margin-top: 18px">Closed since 2026-05-04</h2>
         <div class="gap">
-          <span class="rank">4.</span><b>knip / dead-export check</b>
+          <span class="rank">✓</span><b>Dead-code / complexity gate (fallow)</b>
           <div class="why">
-            Code grows, dead exports accumulate. Knip at Tier 5 (CI) or as on-demand
-            <code>vp run check:dead</code> would surface them without per-edit cost.
+            <code>fallow</code> replaced <code>knip</code> 2026-05-15. Wired into pre-commit (<code
+              >fallow audit --quiet</code
+            >) and the <code>verify:all</code> task graph (<code>verify:fallow</code>) — dead
+            exports and complexity regressions block the commit.
           </div>
         </div>
-
-        <h2 style="margin-top: 18px">Closed since 2026-05-04</h2>
         <div class="gap">
           <span class="rank">✓</span><b>Stop hook (Tier 2)</b>
           <div class="why">

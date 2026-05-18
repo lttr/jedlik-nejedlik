@@ -2,50 +2,66 @@
 
 Goal: turn Vite+ migration speed wins into deterministic hooks. Agent self-heals fast, no context bloat.
 
-## Status — 2026-05-06
+## Status — 2026-05-18 — all tiers landed
 
-| Tier          | Trigger                | Budget    | Tool                           | Status                                         |
-| ------------- | ---------------------- | --------- | ------------------------------ | ---------------------------------------------- |
-| 1 per-edit    | PostToolUse Edit/Write | <500ms    | `vp fmt` on file               | **DONE** — handled by global `~/.claude` hook  |
-| 2 end-of-turn | Stop                   | <10s      | `vp lint` + typecheck          | **TODO**                                       |
-| 3 pre-commit  | git hook               | <30s      | fmt + lint + typecheck + smoke | **DONE** (smoke conditional, 2026-05-07)       |
-| 4 pre-push    | ~~git hook async~~     | —         | ~~build~~                      | **DROPPED** — build moved into `verify` script |
-| 5 CI          | Netlify                | unlimited | already exists                 | done                                           |
+| Tier          | Trigger                | Budget    | Tool                                                        | Status                                       |
+| ------------- | ---------------------- | --------- | ----------------------------------------------------------- | -------------------------------------------- |
+| 1 per-edit    | PostToolUse Edit/Write | <500ms    | `vp fmt --write` (global) + `vp lint --fix` (proj)          | **DONE**                                     |
+| 2 end-of-turn | Stop                   | <10s      | oxlint + eslint on changed files, fail-fast                 | **DONE**                                     |
+| 3 pre-commit  | git hook               | <30s      | staged check + lint:slow + typecheck + smoke + fallow audit | **DONE**                                     |
+| 4 pre-push    | ~~git hook async~~     | —         | ~~build~~                                                   | **DROPPED** — build folded into `verify:all` |
+| 5 CI          | Netlify                | unlimited | already exists                                              | done                                         |
 
-### What landed
+## What landed
 
-- `vp config` ran → `core.hooksPath = .vite-hooks/_`. Pre-commit fires `vp staged` → `vp check --fix` per `vite.config.ts:staged`, then `vp run lint:slow` (Nuxt-aware ESLint), then `vp run typecheck`. Cold wall ~9.5s, warm ~3s.
-- New scripts in root `package.json`: `check`, `check:fix`, `verify` (`vp check && vp run lint:slow && vp run typecheck && vp run build`). Build included in `verify` instead of a pre-push hook — agent runs verify on demand, no async log + hook-readback complexity.
+### Tier 1 — per-edit (two layers)
 
-### Measured budgets (2026-05-06, see `2026-05-02_build-times/notes.md`)
+- Global `~/.claude/hooks/format-code.sh` (PostToolUse Edit/MultiEdit/Write) → `vp fmt --write <file>`.
+- Project `.claude/hooks/post-edit-fix.sh` (same matcher) → `vp lint --fix <file>`, silent, swallows errors (exit 0). Plan originally said "no project hook" — superseded: format and lint-fix are split across two hooks so neither doubles wall-time nor fights the other.
 
-- `vp fmt --check` 1.05s · `vp lint` 0.87s · `vp check` 1.70s · typecheck 5.26s · build 32.2s · `vp run smoke` 6.7s (dev boot + SSR fetch)
-- Tier 2 with lint+typecheck = ~6.1s wall, well under <10s budget.
-- Tier 3 full (`verify`) = ~7s + `lint:slow` overhead. Likely 10–15s total. With smoke gated on relevant paths, +6.7s only when nuxt config/modules/plugins change.
+### Tier 2 — Stop hook
 
-## Remaining steps
+- `.claude/hooks/stop-smart.sh`, wired in `.claude/settings.json` (timeout 30s).
+- Lints only changed files (`git diff --name-only HEAD` + untracked). oxlint at workspace root; eslint gets the `web/`-prefix-stripped subset (eslint config lives only in `web/`).
+- Fail-fast: exit 2 + stderr tail-50 → agent self-heals in transcript.
+- Typecheck deliberately **excluded** here (~5s, vue-tsc can't narrow) — pushed to tier 3. Resolves old unresolved Q1.
 
-- [x] **Tier 1** — covered by global `~/.claude/settings.json` PostToolUse hook (`format-code.sh`). Walks up tree, finds `vite.config.ts`, runs `vp fmt --write <file>`. No project hook added — Claude Code merges hooks additively (no override), so a project-level duplicate would just double-format. Decided 2026-05-06.
-  - [x] CLAUDE.md note added: pre-commit auto-formats staged files; re-Read after `git commit`.
-- [ ] **Tier 2** — Stop hook: `vp lint && vp run typecheck`. Truncate stderr ~50 lines. Cwd = repo root (scripts proxy to `web/` via `vp run -r`).
-- [x] **Tier 3 upgrade** — `.vite-hooks/pre-commit` now runs `vp staged` → `vp run lint:slow` → `vp run typecheck`. Cold wall ~9.5s (2026-05-07 measurement), well under <30s budget.
-- [x] **Tier 3 runtime smoke** — `scripts/smoke-dev.sh` boots `nuxi dev` on port 3199, curls `/`, kills. ~6.7s wall. Wired into pre-commit conditionally (only when staged paths match `web/(nuxt\.config|server/|app/plugins/|package\.json)`) and into `verify:all` deps. Catches SSR runtime errors lint+typecheck miss: broken Nitro plugins, unresolved `#`-imports, bad `runtimeConfig` validation. Motivation: `nuxt-safe-runtime-config@0.1.3` validateAtRuntime plugin externalization broke SSR (2026-05-07 incident); typecheck/lint were green, only a real boot caught it.
-- [x] **Tier 4 dropped** — pre-push async build removed (2026-05-06). Async log had no automatic readback path → manual grep would be unreliable. Build instead added to `verify` script: agent runs `vp run verify` when it wants full gate, blocking, see output directly. `.vite-hooks/pre-push` payload deleted, `.gitignore` reverted.
-- [ ] **Verify** — break a file on purpose, watch each tier fire, confirm agent sees error in transcript.
+### Tier 3 — pre-commit (`.vite-hooks/pre-commit`)
+
+```
+vp staged          # vp check --fix on staged files (oxlint + oxfmt)
+vp run lint:slow   # Nuxt-aware eslint
+vp run typecheck
+vp run smoke       # always — no longer path-gated (commit bdc9cc8)
+fallow audit --quiet  # dead-code / complexity gate (replaced knip)
+```
+
+### Tier 4 — dropped; `verify:all` task graph
+
+- `vite.config.ts` `run.tasks` defines `verify:all` with `dependsOn` fan-out: `verify:check`, `verify:lint`, `verify:typecheck`, `verify:fallow`, `verify:smoke`, `verify:build`. Root `verify` script = `vp run verify:all`.
+- Build runs here on demand, not in a hook — blocking, agent sees output directly.
+
+### Also since original plan
+
+- SessionStart hook `worktree-install.sh` — auto-installs deps in fresh worktrees.
+- `fallow` replaced `knip` for dead-code/complexity; commits gated on `fallow audit`.
+
+## Remaining
+
+- [ ] **Verify end-to-end** — break a file on purpose, confirm each tier fires and the agent sees the error in transcript. (Only open item.)
 
 ## Resolved
 
-- ~~Hooks file location~~ → `.claude/settings.json` (checked in, team-wide). Project hooks belong in repo.
-- ~~Pre-commit already configured?~~ → Yes, via `vp config` + `vite-plus` staged mechanism. No husky / simple-git-hooks needed.
-- ~~Cwd~~ → repo root; root scripts use `vp run -r` to fan out.
+- Hooks location → `.claude/settings.json` + `.vite-hooks/` (checked in, team-wide).
+- Cwd → repo root; root scripts fan out via `vp run -r`.
+- Typecheck in Stop hook → no, tier 3 only.
+- Pre-commit `--fix` mutating files mid-session → CLAUDE.md note covers it.
+- Smoke now always runs in pre-commit (path-gating dropped) — simpler, ~6.7s acceptable.
 
 ## Still unresolved
 
-1. Typecheck (5.26s) in tier 2 Stop hook? Adds latency to every turn. Alternative: tier 2 = lint only, typecheck pushed to tier 3.
-2. Lint warnings — currently 0; `--max-warnings 0` redundant. Re-check after rule expansion churn settles.
-3. ~~Pre-commit `--fix` mutating files mid-session~~ → not an issue. Agent restarts between commits often enough; CLAUDE.md note ("pre-commit auto-formats staged files — re-Read after `git commit`") covers long-lived sessions. Add the note when wiring tier 1.
-4. Smoke port hardcoded to 3199 (avoids 3000 collision with running dev). If user runs another smoke concurrently → port collision. Acceptable for single-machine dev; revisit if it bites.
-5. Smoke kills its `nuxi dev` child via trap; if pre-commit is itself killed mid-run, dev may linger. Mitigation: `fuser -k 3199/tcp` is cheap to add at script start. Not added until proven necessary.
+1. Smoke port hardcoded 3199 — collision risk if two smokes run concurrently. Acceptable single-machine; revisit if it bites.
+2. Smoke's `nuxi dev` child may linger if pre-commit is killed mid-run. Mitigation `fuser -k 3199/tcp` at script start — not added until proven necessary.
 
 ## Non-goals
 
