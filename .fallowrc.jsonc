@@ -33,10 +33,19 @@
     "unused-dependency-overrides": "off",
   },
 
+  // Complexity gates. Become the primary complexity enforcement if the
+  // eslint `complexity` rule is ever dropped.
   "health": {
-    // CRAP is inflated without coverage data (estimates 0% untested).
-    // Cyclomatic/cognitive of every flagged fn is already under threshold;
-    // raise maxCrap or run `fallow --coverage` for real scores.
-    "maxCrap": 100,
+    "maxCyclomatic": 8,
+    "maxCognitive": 8,
+    // CRAP needs real coverage data; without `fallow --coverage` it assumes
+    // 0% untested and inflates. Set out of reach so it can never gate.
+    "maxCrap": 1000,
+  },
+
+  // `fallow audit` (run by the pre-commit hook) gates on every finding in
+  // changed files, not just newly-introduced ones.
+  "audit": {
+    "gate": "all",
   },
 }

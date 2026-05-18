@@ -3,3 +3,4 @@ vp staged
 vp run lint:slow
 vp run typecheck
 vp run smoke
+fallow audit --quiet
