@@ -35,6 +35,7 @@
           <div class="mobile-nav-links">
             <a href="#jidlo-je-naucena-dovednost">Jídlo je naučená dovednost</a>
             <a href="#rocni-program">Roční podpůrný program</a>
+            <a href="#workshopy">Workshopy pro MŠ</a>
             <a href="#o-jidle-se-s-detmi-nemluvi">O&nbsp;jídle se s&nbsp;dětmi (ne)mluví</a>
             <a href="#kdyz-dite-neji">Když dítě nejí podle našich představ</a>
             <a href="#vyziva-deti">Výživa dětí jednoduše a&nbsp;prakticky</a>
@@ -97,6 +98,71 @@
           </ul>
 
           <p>Cena je závislá na rozsahu spolupráce.</p>
+        </aside>
+
+        <h2 id="workshopy">Workshopy pro MŠ</h2>
+
+        <p>
+          Zážitkové programy přímo pro děti, které je hravou formou provázejí světem jídla, chutí
+          a&nbsp;zdravého stravování.
+        </p>
+
+        <aside id="jime-hrave" class="product-box">
+          <h3>Jíme hravě&nbsp;&ndash; workshop za&nbsp;doprovodu rodičů nebo pedagogů</h3>
+
+          <p>
+            Workshop je založen na vzájemné spolupráci mezi rodičem (případně pedagogem)
+            a&nbsp;dítětem. V&nbsp;rámci programu si děti připraví jednoduché chutné pokrmy, zahrají
+            si řadu aktivit zaměřených na podporu zdravého stravování a&nbsp;dobrého vztahu
+            k&nbsp;jídlu.
+          </p>
+
+          <p>
+            Aktivity podporují zvídavost dětí, otevřenou komunikaci o&nbsp;tom, co našemu tělu
+            prospívá, a&nbsp;prohlubují vzájemný vztah dítěte a&nbsp;dospělé osoby.
+          </p>
+
+          <p>Cena dohodou dle domluveného rozsahu.</p>
+        </aside>
+
+        <aside id="jenikova-cesta" class="product-box">
+          <h3>Jeníkova cesta za&nbsp;spokojeným bříškem&nbsp;&ndash; workshop pro děti</h3>
+
+          <p>
+            Pohádkový workshop kombinuje vyprávění příběhu s&nbsp;praktickými aktivitami. Děti se
+            seznámí s&nbsp;plyšovým kamarádem Jeníkem a&nbsp;snaží se zjistit, proč se Jeník necítí
+            dobře a&nbsp;má smutné srdíčko.
+          </p>
+
+          <p>
+            Společně pátrají po tom, co našemu tělíčku skutečně prospívá, skládají duhu z&nbsp;ovoce
+            a&nbsp;zeleniny, seznámí se s&nbsp;výživovou pyramidou a&nbsp;starším dětem jsou
+            představeny základní živiny.
+          </p>
+
+          <p>
+            V&nbsp;závěru workshopu už je Jeník veselý a&nbsp;každý z&nbsp;dětí se tak stává
+            &bdquo;zeleninovým hrdinou&ldquo;. Na programu děti obdrží medaili, která rozhodně
+            nebude z&nbsp;čokolády&nbsp;:) a&nbsp;svůj (možná) první úkolníček zdraví.
+          </p>
+
+          <p>Cena dohodou dle domluveného rozsahu.</p>
+        </aside>
+
+        <aside id="ubrousku-prostri-se" class="product-box">
+          <h3>Ubrousku, prostři se&nbsp;&ndash; pro děti</h3>
+
+          <p>
+            Program seznamuje děti s&nbsp;různými druhy potravin, podporuje rozvoj jejich smyslového
+            vnímání potravin a&nbsp;dovednost mindfulness přístupu ke stravování.
+          </p>
+
+          <p>
+            Na program navazuje společná hravá svačinka, kde děti rozvíjejí své kompetence při
+            přípravě jídla a&nbsp;pedagogové zkouší praxi tzv.&nbsp;pedagogického stravování.
+          </p>
+
+          <p>Cena dohodou dle domluveného rozsahu.</p>
         </aside>
 
         <h2 id="rodice">Rodiče jako klíčová součást změny</h2>
@@ -297,6 +363,9 @@
             </li>
             <li>
               <a href="#rocni-program">Roční podpůrný program</a>
+            </li>
+            <li>
+              <a href="#workshopy">Workshopy pro MŠ</a>
             </li>
             <li>
               <a href="#o-jidle-se-s-detmi-nemluvi">O&nbsp;jídle se s&nbsp;dětmi (ne)mluví</a>
