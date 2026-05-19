@@ -38,7 +38,7 @@ Improve all rendered text with `/czech-typography` skill.
 
 ## Step 5 - Verify
 
-Loop (max 5x): run `/verify`, fix issues, retry. Then visual check with `browser-tools` skill if available (start dev server, check affected pages, stop server).
+Visual check in the browser.
 
 ## Step 6 - Ship
 
