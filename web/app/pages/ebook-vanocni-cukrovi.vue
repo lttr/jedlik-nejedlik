@@ -357,23 +357,19 @@ function prevImage() {
   }
 }
 
-onMounted(() => {
-  const handleKeydown = (e: KeyboardEvent) => {
-    if (!lightboxDialog.value?.open) {
-      return
-    }
-    if (e.key === "ArrowRight") {
-      nextImage()
-    }
-    if (e.key === "ArrowLeft") {
-      prevImage()
-    }
-    if (e.key === "Escape") {
-      closeLightbox()
-    }
+useEventListener(window, "keydown", (e: KeyboardEvent) => {
+  if (!lightboxDialog.value?.open) {
+    return
   }
-  window.addEventListener("keydown", handleKeydown)
-  onUnmounted(() => window.removeEventListener("keydown", handleKeydown))
+  if (e.key === "ArrowRight") {
+    nextImage()
+  }
+  if (e.key === "ArrowLeft") {
+    prevImage()
+  }
+  if (e.key === "Escape") {
+    closeLightbox()
+  }
 })
 
 useSeoMeta({

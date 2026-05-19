@@ -66,23 +66,19 @@
 </template>
 
 <script lang="ts" setup>
-const props = withDefaults(
-  defineProps<{
-    title?: string
-    description?: string
-    highlight?: string
-    buttonText?: string
-    redirectPath?: string
-  }>(),
-  {
-    title: "Newsletter pro rodiče",
-    description:
-      "Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské výživy přímo do své e-mailové schránky.",
-    highlight: "S naším newsletterem vám nic neunikne.",
-    buttonText: "Odebírat novinky",
-    redirectPath: "/dekujeme-za-zajem-o-newsletter",
-  },
-)
+const {
+  title = "Newsletter pro rodiče",
+  description = "Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské výživy přímo do své e-mailové schránky.",
+  highlight = "S naším newsletterem vám nic neunikne.",
+  buttonText = "Odebírat novinky",
+  redirectPath = "/dekujeme-za-zajem-o-newsletter",
+} = defineProps<{
+  title?: string
+  description?: string
+  highlight?: string
+  buttonText?: string
+  redirectPath?: string
+}>()
 
 const router = useRouter()
 const { execute, error, isSuccess, isPendingOrSuccess } = useNewsletterParentsForm()
@@ -91,7 +87,7 @@ async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement
   await execute(new FormData(form))
   if (isSuccess.value) {
-    router.push(props.redirectPath)
+    router.push(redirectPath)
   }
 }
 </script>
