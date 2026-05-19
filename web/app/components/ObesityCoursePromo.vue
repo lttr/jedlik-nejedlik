@@ -74,7 +74,17 @@
     <!-- 3. Proč je kurz funkční -->
     <section class="why-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">Proč je náš kurz funkční a&nbsp;bezpečný?</h2>
+        <div class="section-heading">
+          <img
+            class="section-heading-img"
+            src="/images/online-kurz-deti/proc-funkcni.webp"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="685"
+          />
+          <h2 class="section-title">Proč je náš kurz funkční a&nbsp;bezpečný?</h2>
+        </div>
         <p class="why-intro">
           Je postavený tak, abyste <strong>nejdřív porozuměli situaci</strong>, zvolili si v&nbsp;ní
           reálné cíle pro vás, získali nástroje, jak zvládnout situace, které okolo jídla
@@ -103,7 +113,17 @@
     <!-- 4. Jak kurz probíhá -->
     <section class="format-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">Jak kurz probíhá</h2>
+        <div class="section-heading">
+          <img
+            class="section-heading-img"
+            src="/images/online-kurz-deti/jak-probiha.webp"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="604"
+          />
+          <h2 class="section-title">Jak kurz probíhá</h2>
+        </div>
         <p class="format-intro">
           Kurz trvá <strong>12&nbsp;týdnů</strong> a&nbsp;kombinuje různé formy práce:
         </p>
@@ -163,7 +183,17 @@
     <!-- 6. Co kurz nedělá -->
     <section class="not-doing-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">Co kurz záměrně nedělá</h2>
+        <div class="section-heading">
+          <img
+            class="section-heading-img"
+            src="/images/online-kurz-deti/co-nedela.webp"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="639"
+          />
+          <h2 class="section-title">Co kurz záměrně nedělá</h2>
+        </div>
         <ul class="not-doing-list">
           <li>Neřeší váhu dítěte před dítětem</li>
           <li>Nevede dítě k dietnímu myšlení</li>
@@ -216,7 +246,17 @@
     <!-- 9. Jedinečnost -->
     <section class="unique-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">V čem je náš kurz jedinečný?</h2>
+        <div class="section-heading">
+          <img
+            class="section-heading-img"
+            src="/images/online-kurz-deti/jedinecny.webp"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="738"
+          />
+          <h2 class="section-title">V&nbsp;čem je náš kurz jedinečný?</h2>
+        </div>
         <div class="unique-grid">
           <div class="unique-card">
             <h3>Chráníme dítě před tlakem a&nbsp;studem</h3>
@@ -253,7 +293,17 @@
     <!-- 10. Porovnání -->
     <section class="comparison-section p-full-bg">
       <div class="section-content">
-        <h2 class="section-title">Jak se tento kurz liší od běžných programů</h2>
+        <div class="section-heading">
+          <img
+            class="section-heading-img"
+            src="/images/online-kurz-deti/jak-se-lisi.webp"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="667"
+          />
+          <h2 class="section-title">Jak se tento kurz liší od běžných programů</h2>
+        </div>
         <div class="comparison">
           <div class="comparison-column comparison-column--other">
             <h3>Běžné kurzy</h3>
@@ -508,6 +558,27 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
   font-weight: var(--font-weight-6);
   text-align: center;
   margin-bottom: var(--space-6);
+}
+
+/* Section heading paired with a blob image */
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.section-heading-img {
+  flex-shrink: 0;
+  width: clamp(180px, 26vw, 300px);
+  height: auto;
+}
+
+.section-heading .section-title {
+  margin-bottom: 0;
+  text-align: left;
+  text-wrap: balance;
 }
 
 .subsection-title {
@@ -1019,6 +1090,19 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
 
   .section-title {
     font-size: var(--font-size-3);
+  }
+
+  .section-heading {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .section-heading-img {
+    width: clamp(160px, 60vw, 240px);
+  }
+
+  .section-heading .section-title {
+    text-align: center;
   }
 
   .start-date {
