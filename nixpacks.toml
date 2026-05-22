@@ -10,13 +10,7 @@ providers = ["node"]
 NIXPACKS_NODE_VERSION = '24'
 
 [phases.install]
-onlyIncludeFiles = [
-  ".npmrc",
-  "package.json",
-  "pnpm-lock.yaml",
-  "pnpm-workspace.yaml",
-  "./web/package.json",
-]
+onlyIncludeFiles = ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "./web/package.json"]
 # Nixpacks pins corepack@0.24.1, which can't launch pnpm 11
 # (ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING). Override with a current corepack.
 cmds = ["npm install -g corepack@latest && corepack enable", "pnpm i --frozen-lockfile"]

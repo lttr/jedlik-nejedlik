@@ -1,12 +1,6 @@
 packages:
   - web
 
-onlyBuiltDependencies:
-  - esbuild
-  - fallow
-  - sharp
-  - unrs-resolver
-
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
@@ -24,3 +18,14 @@ peerDependencyRules:
   allowedVersions:
     vite: "*"
     vitest: "*"
+
+shamefullyHoist: true
+
+allowBuilds:
+  "@parcel/watcher": false
+  "@sentry/cli": false
+  esbuild: true
+  fallow: true
+  sharp: true
+  unrs-resolver: true
+  vue-demi: false
