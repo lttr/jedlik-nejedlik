@@ -17,6 +17,9 @@ onlyIncludeFiles = [
   "pnpm-workspace.yaml",
   "./web/package.json",
 ]
+# Nixpacks pins corepack@0.24.1, which can't launch pnpm 11
+# (ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING). Override with a current corepack.
+cmds = ["npm install -g corepack@latest && corepack enable", "pnpm i --frozen-lockfile"]
 
 # Package manager -> depending on the lockfile detected
 
