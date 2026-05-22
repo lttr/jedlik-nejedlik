@@ -5,17 +5,19 @@
 # Nixpacks can figure the provider out automatically
 providers = ["node"]
 
-# NodeJS version -> field "engines": { "node" } in package.json
+# NodeJS version
 [variables]
 NIXPACKS_NODE_VERSION = '24'
 
 [phases.install]
 onlyIncludeFiles = ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "./web/package.json"]
+
+# Package manager
+
 # Nixpacks pins corepack@0.24.1, which can't launch pnpm 11
 # (ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING). Override with a current corepack.
 cmds = ["npm install -g corepack@latest && corepack enable", "pnpm i --frozen-lockfile"]
 
-# Package manager -> depending on the lockfile detected
 
 # Build command -> the build script in package.json
 
