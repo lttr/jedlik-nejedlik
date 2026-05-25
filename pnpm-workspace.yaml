@@ -1,26 +1,8 @@
 packages:
   - web
 
-catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: latest
-
-overrides:
-  vite: "catalog:"
-  vitest: "catalog:"
-  "@vercel/nft": ^0.27.4
-
-peerDependencyRules:
-  allowAny:
-    - vite
-    - vitest
-  allowedVersions:
-    vite: "*"
-    vitest: "*"
-
-shamefullyHoist: true
-
+# pnpm 11 hard-errors on unreviewed dependency build scripts (strictDepBuilds),
+# so every package that runs one must be listed explicitly.
 allowBuilds:
   "@parcel/watcher": false
   "@sentry/cli": false
@@ -29,3 +11,40 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   vue-demi: false
+
+# Adopt vite-plus: alias `vite`/`vitest` to VoidZero's drop-in builds.
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  vite-plus: latest
+
+# Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
+# enable enableGlobalVirtualStore — breaks resolution the same way.
+shamefullyHoist: true
+
+# =============================================================================
+# Workarounds for running pre-1.0 vite-plus under tooling that doesn't know
+# about it. Each is tagged with its issue and DELETE-WHEN condition; expect to
+# remove them one by one as the ecosystem matures.
+# =============================================================================
+
+overrides:
+  # ISSUE: Nuxt/@nuxt/vite-builder pull their own upstream vite/vitest instead
+  #   of the aliased builds. `catalog:` forces ALL transitive deps onto ours.
+  # DELETE WHEN: Nuxt ships vite-plus compat (also drops rolldown devDep in web/).
+  vite: "catalog:"
+  vitest: "catalog:"
+  # ISSUE: Vite+ resolved a @vercel/nft version Nitro's build couldn't use.
+  # DELETE WHEN: Nitro + Vite+ resolve a compatible version on their own.
+  "@vercel/nft": ^0.27.4
+
+# ISSUE: vite-plus-core's version string fails Nuxt's vite@^7 peer constraint,
+#   so the install errors. These tell pnpm to accept the override anyway.
+# DELETE WHEN: Nuxt ships vite-plus compat (same trigger as the override above).
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"
