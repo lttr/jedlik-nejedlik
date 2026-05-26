@@ -27,7 +27,10 @@
 
     <section class="signup-section">
       <h2>Přihlášení na webinář</h2>
-      <WebinarSignupForm />
+      <WebinarSignupForm
+        webinar-id="2026-03-obezita-otazky-odpovedi"
+        success-message="Děkujeme za přihlášení! Těšíme se na vás 24. března v 19:00."
+      />
     </section>
   </PageWrapper>
 </template>

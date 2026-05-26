@@ -48,15 +48,23 @@
       </div>
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
-      <div v-if="isSuccess" class="success-message">
-        Děkujeme za přihlášení! Těšíme se na vás 24. března v 19:00.
-      </div>
+      <div v-if="isSuccess" class="success-message">{{ successMessage }}</div>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-const { execute, error, isSuccess, isPendingOrSuccess } = useWebinarSignupForm()
+const props = withDefaults(
+  defineProps<{
+    webinarId: string
+    successMessage?: string
+  }>(),
+  {
+    successMessage: "Děkujeme za přihlášení! Těšíme se na vás.",
+  },
+)
+
+const { execute, error, isSuccess, isPendingOrSuccess } = useWebinarSignupForm(props.webinarId)
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement

@@ -21,8 +21,16 @@
     <section class="webinars-section">
       <h2 class="section-title">Webináře</h2>
       <div class="webinars-grid">
-        <NuxtLink to="/webinar-generace-alfa" class="webinar-card">
-          <p class="webinar-badge">Aktuální webinář</p>
+        <WebinarCard to="/webinar-deti-pitny-rezim" badge="Webinář zdarma">
+          <h3>Děti a&nbsp;pitný režim</h3>
+          <p>
+            Získejte odborné informace, praktické tipy a&nbsp;větší klid kolem pitného režimu
+            u&nbsp;dětí &ndash; z&nbsp;pohledu výživy, návyků i&nbsp;výchovy.
+          </p>
+          <p class="webinar-meta"><strong>16.&nbsp;června od&nbsp;18:30</strong> na&nbsp;Zoomu</p>
+          <p class="webinar-meta">Pro rodiče &middot; zdarma</p>
+        </WebinarCard>
+        <WebinarCard to="/webinar-generace-alfa" badge="Aktuální webinář">
           <h3>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h3>
           <p>
             Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali, a&nbsp;získejte
@@ -30,7 +38,7 @@
           </p>
           <p class="webinar-meta"><strong>13.&nbsp;května od&nbsp;12:30</strong> na&nbsp;Zoomu</p>
           <p class="webinar-meta">Pro rodiče dětí 1&ndash;15&nbsp;let &middot; 290&nbsp;Kč</p>
-        </NuxtLink>
+        </WebinarCard>
       </div>
     </section>
 
@@ -158,52 +166,6 @@
   gap: var(--space-5);
   max-width: var(--size-content-3);
   margin-inline: auto;
-}
-
-.webinar-card {
-  padding: var(--space-5);
-  background: var(--color-peach);
-  border-radius: var(--radius-3);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  text-decoration: none;
-  color: inherit;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.webinar-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-}
-
-.webinar-badge {
-  align-self: flex-start;
-  font-size: var(--font-size--1);
-  font-weight: var(--font-weight-6);
-  color: var(--color-burgundy-red);
-  background: white;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-round);
-  margin: 0;
-}
-
-.webinar-card h3 {
-  margin: 0;
-  font-size: var(--font-size-2);
-  color: var(--brand-color);
-}
-
-.webinar-card p {
-  margin: 0;
-  color: var(--text-2);
-}
-
-.webinar-meta {
-  font-size: var(--font-size--1);
-  font-weight: var(--font-weight-5);
 }
 
 /* Courses Section */

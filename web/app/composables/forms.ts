@@ -28,7 +28,7 @@ export const useConsultationForm = (): UseAsyncRequestResult<FormData> =>
 export const useNewsletterParentsForm = (): UseAsyncRequestResult<FormData> =>
   useDirectusForm("newsletter_parents_form")
 
-export function useWebinarSignupForm(): UseAsyncRequestResult<FormData> {
+export function useWebinarSignupForm(webinarId: string): UseAsyncRequestResult<FormData> {
   return useAsyncRequest<FormData>(async (data) => {
     const item = objectFromFormData(data)
     await Promise.all([
@@ -38,7 +38,7 @@ export function useWebinarSignupForm(): UseAsyncRequestResult<FormData> {
           first_name: item.first_name,
           last_name: item.last_name,
           question: item.question,
-          webinar: "2026-03-obezita-otazky-odpovedi",
+          webinar: webinarId,
         }),
       ),
       getDirectusClient().request(
