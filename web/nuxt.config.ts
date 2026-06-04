@@ -17,6 +17,15 @@ export default defineNuxtConfig({
     "@sentry/nuxt/module",
   ],
 
+  // nuxt-og-image 6.4.9 (via @nuxtjs/seo) prompts to pick a renderer on dev
+  // startup when no renderer dep is installed, and that consola prompt crashes
+  // (`uv_tty_init EINVAL`), killing `nuxi dev`. Build is unaffected (falls back
+  // to takumi + zeroRuntime). Disable the module in dev only — OG images are
+  // generated at build, so we lose nothing locally.
+  $development: {
+    ogImage: { enabled: false },
+  },
+
   components: [
     {
       path: "~/components",
@@ -77,6 +86,8 @@ export default defineNuxtConfig({
         weights: ["400", "600", "700"],
       },
     ],
+    // Extend @nuxt/fonts metric fallbacks to `font-family: var(...)` (Puleo uses them) to cut font-swap CLS.
+    processCSSVariables: true,
   },
 
   image: {
@@ -94,15 +105,6 @@ export default defineNuxtConfig({
 
   ogImage: {
     zeroRuntime: true,
-  },
-
-  // nuxt-og-image 6.4.9 (via @nuxtjs/seo) prompts to pick a renderer on dev
-  // startup when no renderer dep is installed, and that consola prompt crashes
-  // (`uv_tty_init EINVAL`), killing `nuxi dev`. Build is unaffected (falls back
-  // to takumi + zeroRuntime). Disable the module in dev only — OG images are
-  // generated at build, so we lose nothing locally.
-  $development: {
-    ogImage: { enabled: false },
   },
 
   plausible: {
