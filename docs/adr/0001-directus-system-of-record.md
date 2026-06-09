@@ -16,8 +16,8 @@ identity / auth provider. Directus permissions are the primary access gate.
 
 A Nitro layer (in this repo) is a permitted but secondary **trusted compute
 layer**, used only for operations that need a secret or server-side logic:
-signing video URLs, handling the GoPay webhook, calling Fakturoid, and LLM
-grading of open answers. It reads/writes Directus with a service account and
+signing video URLs, handling the GoPay webhook, calling Fakturoid, and asset
+ingestion (routing uploads to Directus / Cloudflare Stream). It reads/writes Directus with a service account and
 never becomes a second store of record. Where a Directus extension or Flow is
 the more convenient home for such an operation, that is equally acceptable.
 
