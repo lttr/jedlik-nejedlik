@@ -1,54 +1,76 @@
 # jedlik-nejedlik
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/db58e9bb-6a29-44cc-bc4c-dbc625f0e105/deploy-status)](https://app.netlify.com/sites/jedlik-nejedlik/deploys)
+Educational website **Jedlík-nejedlík** about nutrition and parenting ("výživa a
+výchova v propojení") for parents and professionals. Czech-language content site
+with a CMS-driven article workflow, landing pages, webinars, and lead-capture
+forms.
 
-This is an education site, that I'm building for my wife.
+- **Production:** <https://www.jedlik-nejedlik.cz>
+- **CMS (Directus):** <https://obsah-jedlika.lttr.cz>
 
-## Planned features
+## Tech stack
 
-- A website devided into sections based on target audience
-- A members section behind auth for bonus content
-- A newsletter subscription field
-- A contact form with protection against spam
-- A workflow for authoring articles, needs dedicated UI but does not need to be
-  localized
-- An integration with some sort of forms for doing surveys
-- A very simple e-shop, checkout workflow
-- A simple video course authoring workflow
+| Area            | Choice                                                            |
+| --------------- | ----------------------------------------------------------------- |
+| Framework       | [Nuxt 4](https://nuxt.com) (Vue 3.5, TypeScript)                  |
+| CMS             | [Directus](https://directus.io) headless CMS (`@directus/sdk`)    |
+| Styling         | [Puleo](https://github.com/lttr/puleo) CSS layer + PostCSS        |
+| Fonts           | `@nuxt/fonts` (Poppins, metric-fallback CLS tuning)               |
+| Icons           | `@nuxt/icon` (Iconify: `bi`, `logos`, `uil`) + auto-imported SVGs |
+| Images          | `@nuxt/image` with the Directus provider                          |
+| SEO / OG        | `@nuxtjs/seo` (sitemap, robots, OG image at build time)           |
+| Analytics       | [Plausible](https://plausible.io), self-hosted                    |
+| Error tracking  | [Sentry](https://sentry.io) (`@sentry/nuxt`)                      |
+| Validation      | [Zod](https://zod.dev)                                            |
+| Toolchain       | [Vite+](https://viteplus.dev/) (`vp`) — Oxfmt, Oxlint; ESLint     |
+| Package manager | pnpm 11 (workspace monorepo)                                      |
+| Hosting         | [Coolify](https://coolify.io)                                     |
 
-## Possible technologies and services
+## Prerequisites
 
-- Open props for base styling layer
-- HeadlessUI for base components layer
-- Postcss for using modern CSS
-- Prettier, eslint, stylelint for keeping the codebase in shape
-- Nuxt as an application framework
-- Directus as a headless CMS
-- Mux for video
-- Supabase for database and auth
-- Mailchimp for email management
-- GoPay for payments
-- Netlify for hosting
-- Sentry for error tracking
-- Plausible for analytics
+- Node
+- pnpm
+- [Vite+](https://viteplus.dev/)
 
-## Toolchain
-
-Project uses [Vite+](https://viteplus.dev/) (`vp`) as a unified frontend toolchain.
-
-- `vp install` — install deps
-- `cp .env.example .env` — seed local env (Directus URL etc.)
-- `vp check` — format + lint + type check
-- `vp fmt` — format with Oxfmt (replaces Prettier)
-- `vp run dev` — Nuxt dev server
-- `vp run build` — production build (Nuxt). **Do not use `vp build`** — it runs raw Vite which has no `index.html` entry; Nuxt builds via `nuxi build`.
-- `vp run lint` / `vp run lint:slow` — fast Oxlint vs full ESLint (Nuxt-aware rules)
-
-## MCP Integration
-
-Directus supports [Model Context Protocol (MCP)](https://directus.io/docs/guides/ai/mcp) for AI-assisted content management. Example for Claude Code:
+## Getting started
 
 ```bash
-claude mcp add --transport http directus https://<your-domain>/mcp \
+vp install                        # install dependencies
+cp web/.env.example web/.env      # seed local env
+vp run dev                        # start the Nuxt dev server
+```
+
+## Code quality
+
+Linting is intentionally strict — a large pedantic Oxlint rule set (see the
+`lint` block in `vite.config.ts`), plus a separate type-aware ESLint pass
+(`web/eslint.config.js`). Rules are either **error** or **off**; never `warn`.
+
+`vp run verify` runs the full gate, each step independently cached by Vite+:
+
+1. `verify:check` — format + lint (`vp check`)
+2. `verify:lint` — full ESLint
+3. `verify:typecheck` — `nuxi typecheck`
+4. `verify:fallow` — dead-code / unused-export detection
+5. `verify:smoke` — dev-server smoke test (`scripts/smoke-dev.sh`)
+6. `verify:build` — `nuxi build`
+
+A **pre-commit hook** (`vp staged`) auto-formats and `--fix`es staged files, so
+on-disk contents may change after `git commit`.
+
+## Content & CMS
+
+Directus is the source of content (articles, structured data) and serves images
+via the `@nuxt/image` Directus provider. Directus exposes a
+[Model Context Protocol](https://directus.io/docs/guides/ai/mcp) endpoint for
+AI-assisted content management. To wire it into Claude Code:
+
+```bash
+claude mcp add --transport http directus <directus-url>/mcp \
   --header "Authorization: Bearer <your-mcp-user-token>"
 ```
+
+## Deployment
+
+Hosted on **Coolify**, built with **Nixpacks**. The
+`jedlik-nejedlik-production` app **auto-deploys on push to `master`**.

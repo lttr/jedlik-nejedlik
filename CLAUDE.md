@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 (compat mode) frontend in `web/`, Directus CMS at `https://obsah-jedlika.lttr.cz`, deployed on Netlify. Czech locale, site `https://www.jedlik-nejedlik.cz`.
+Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend in `web/`, Directus CMS at `https://obsah-jedlika.lttr.cz`, deployed on Coolify (Nixpacks, auto-deploy on push to `master`). Czech locale, site `https://www.jedlik-nejedlik.cz`.
 
 ## Non-obvious
 
