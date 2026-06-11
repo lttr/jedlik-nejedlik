@@ -1,41 +1,65 @@
-# Specifikace produktu – Platforma kurzů a prodeje Jedlík-nejedlík
+# Specifikace: Eshop s digitálními kurzy Jedlík-nejedlík
 
-**Stav:** Pracovní verze v0.2 (po grilování – zapracována architektura, autentizace a mechanika kurzů)
-**Prodávající subjekt:** Jedlík-nejedlík, z. s. – IČO 19971192 (zapsaný spolek, KS Hradec Králové)
-**Kontext:** jedlik-nejedlik.cz – výživa a výchova; cílové skupiny: rodiče a odborníci; existující podcast.
+Obsah:
 
-> Veškeré technické pojmy, názvy nástrojů a technická rozhodnutí jsou vyčleněny do **části B (Technická specifikace)** na konci dokumentu. Část A je čistě byznysová a je určena pro stakeholdery.
+- Terminologie
+- Funkční specifikace
+- Technická specifikace
 
-> **Terminologie:** kanonický slovník pojmů (Kurz, Sekce, Lekce, Student, Objednávka, Oprávnění, Postup, Test, Pokus o test, Faktura) je veden v `BOUNDED-CONTEXT.md` (kořen repozitáře). Vyjasněno: koncový uživatel = **Student** (pojem „uživatel" rezervován pro administrátory v Directu); jediná automatická brána je **Test** (žádná samostatná entita „úkol").
+# Terminologie
 
----
+E-shop = Část webu Jedlík-nejedlík, kde je možné prohlížet kurzy, zakoupit je a
+konzumovat jejich materiály
+Student = Uživatel, který konzumuje kurzy
+Video kurz = Kurz, který je prodáván v e-shopu
+Sekce = Skupina lekcí, které mohou být uzamčené pomocí testu nebo administrátorem
+Lekce = Jedno video nebo text, volitelně s doplňkovými materiály
+Doplňkové materiály = Statické soubory, které se mohou nahrávat k lekcím
+Podklad = Videa, obrázky, PDFka, dokumenty které nejsou veřejné a vyžadují zpracování systémem
+Příjem podkladů = Místo v systému kde administrátor nahrává podklady
+Uživatel = Kdokoliv kdo konzumuje obsah webu nebo e-shopu
+Pravidlo odemčení = Pravidlo, které určuje, kdy může Student postoupit do další Sekce
+Kvíz = Úkol nebo test, po splnění kterého může Student postoupit do další Sekce
+Postup = Záznam o tom, které lekce má již Student splněné
 
-# ČÁST A – Byznysová specifikace
+**Externí systémy**
+
+- Systém pro správu obsahu (CMS), databáze jako služba, správa uživatelů
+  - dostupný na adrese https://obsah-jedlika.lttr.cz/
+  - technické řešení: Directus
+- Platební brána
+  - GoPay
+  - Již používaný pro SimpleShop
+- Fakturační systém
+  - Fakturoid
+- Hosting videa
+  - Cloudflare Stream
+- Hosting webu
+  - VPS u Hostingeru, správa pomocí Coolify
+
+# Funkční specifikace
 
 ## 1. Shrnutí
 
-Platforma pro prodej a zpřístupnění **digitálních kurzů** (především videokurzů) koncovým zákazníkům v České republice. Hlavní odlišností není samotný e-shop, ale **vzdělávací část**: uživatel se přihlásí, zakoupí kurz, prochází jeho sekcemi a pro odemčení další sekce musí **úspěšně složit test**. Nákup a platba jsou běžně řešená věc; skutečná práce je ve správě přístupu k obsahu, postupu výukou a bezpečném zpřístupnění videí.
-
-Řešení nahradí současný způsob prodeje přes jednoduchý formulářový systém.
+Platforma pro prodej a zpřístupnění **digitálních kurzů** (především videokurzů) koncovým zákazníkům v České republice. Hlavní odlišností není samotný e-shop, ale **vzdělávací část**: uživatel se přihlásí, zakoupí kurz, prochází jeho sekcemi a pro odemčení další sekce musí **úspěšně složit test**. Tato funkce je autorem kurzu nastavitelná dle potřeby.
 
 ## 2. Cíle a hranice
 
 **Cíle (verze 1)**
 
-- Prodávat digitální kurzy (na začátku se očekává jeden hlavní videokurz, postupně malá nabídka).
+- Prodávat digitální kurzy (očekává se jednotky nových kurzů ročně).
 - Průběh: přihlášení → nákup → zpřístupnění kurzu.
 - Postupné procházení výukou s odemykáním sekcí přes testy.
 - Bezpečné zpřístupnění videí (videa nesmí jít snadno sdílet dál).
-- Vystavování platných faktur jménem spolku.
-- Čeština, primárně český trh.
+- Běžná platební brána, vystavování faktur jménem spolku.
 
 **Mimo rozsah (verze 1)**
 
 - Fyzické produkty, doprava, sklad.
-- Firemní nákupy / hromadné licence (více míst).
-- Předplatné / opakované platby.
+- Firemní nákupy a hromadné licence.
+- Předplatné a opakované platby.
 - Vyhledávání v nabídce, doporučování, marketingová automatizace.
-- Více měn / ceny mimo CZK.
+- Více měn a ceny mimo CZK.
 
 ## 3. Byznysové požadavky
 
@@ -43,14 +67,12 @@ Platforma pro prodej a zpřístupnění **digitálních kurzů** (především v
 
 - BP-1: Prodej **digitálních kurzů** formou **jednorázového nákupu** s **trvalým přístupem**.
 - BP-2: Podpora **malé nabídky** (na startu jeden kurz, prostor pro několik).
-- BP-3: Kupující = student. Žádné firemní ani víceuživatelské nákupy (verze 1).
-- BP-4: Cílové skupiny dle webu: **rodiče** a **odborníci**. Mělo by být možné kurz cílit/směřovat na jednu skupinu.
 
 **Platby a fakturace**
 
-- BP-5: Přijímat platby v **CZK**. Ukončit používání stávajícího formulářového prodejního systému.
+- BP-5: Přijímat platby v **CZK**.
 - BP-6: Po potvrzené platbě **automaticky zpřístupnit** zakoupený kurz.
-- BP-7: Ke každému prodeji vystavit **platnou fakturu s řadovým číslem** jménem Jedlík-nejedlík, z. s. (IČO 19971192).
+- BP-7: Ke každému prodeji vystavit fakturu
 - BP-8: Fungovat zpočátku jako **neplátce DPH** – faktury bez DPH, s povinným označením „neplátce DPH“.
 - BP-9: **Sledovat kumulativní obrat z kurzů** vůči hranici pro povinnou registraci k DPH. **Aktuální hranice (2026): 2 000 000 Kč za kalendářní rok** (plátcovství od 1. 1. následujícího roku; přihláška do 10 prac. dnů), plus druhý limit **2 536 500 Kč (100 000 €)** s okamžitým plátcovstvím. Obrat se nově sleduje **za kalendářní rok** (leden–prosinec), ne za klouzavých 12 měsíců. Sledování obratu i hlídání hranice **řeší Fakturoid** (není potřeba vlastní počítadlo). Fakturaci připravit tak, aby šlo DPH (a režim pro zákazníky z jiných zemí EU) zapnout později jako nastavení, ne jako přestavbu.
 

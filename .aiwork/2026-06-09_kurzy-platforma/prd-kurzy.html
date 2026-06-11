@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-shop s video kurzy — Jedlík-nejedlík</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          fontFamily: "Poppins, sans-serif",
+          fontSize: "14px",
+          primaryColor: "#ffe8d6",
+          primaryBorderColor: "#0a1a57",
+          primaryTextColor: "#0a1a57",
+          lineColor: "#1434b3",
+          secondaryColor: "#e0f096",
+          tertiaryColor: "#abc2ff",
+        },
+      })
+    </script>
+    <style>
+      :root {
+        --navy: #0a1a57;
+        --navy-bright: #1434b3;
+        --navy-dim: #010837;
+        --peach: #ffe8d6;
+        --forest: #2e4d17;
+        --pale-blue: #abc2ff;
+        --dull-blue: #aec0e4;
+        --lime: #e0f096;
+        --orange: #fa702b;
+        --midnight: #22284f;
+        --star: #ffbc57;
+        --burgundy: #b42739;
+
+        --ink: #0a1a57;
+        --muted: #5a6488;
+        --line: #e7e9f1;
+        --surface: #ffffff;
+        --surface-soft: #f5f6fb;
+
+        --radius-card: 1rem;
+        --radius-pill: 100px;
+        --shadow-card: 0 1px 2px rgba(10, 26, 87, 0.04), 0 8px 24px -12px rgba(10, 26, 87, 0.18);
+        --shadow-soft: 0 1px 3px rgba(10, 26, 87, 0.06);
+
+        --measure: 72ch;
+      }
+
+      * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        font-size: 18px;
+        line-height: 1.6;
+        color: var(--ink);
+        background: var(--surface);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.2;
+        font-weight: 600;
+        margin: 0;
+        color: var(--navy);
+      }
+      h1 {
+        font-size: clamp(2.3rem, 5vw, 3rem);
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+        letter-spacing: -0.015em;
+      }
+      h3 {
+        font-size: 1.25rem;
+      }
+      h4 {
+        font-size: 1.02rem;
+      }
+      p {
+        margin: 0;
+      }
+      strong {
+        font-weight: 600;
+      }
+      code {
+        font-family: ui-monospace, "SF Mono", monospace;
+        font-size: 0.86em;
+        background: var(--surface-soft);
+        padding: 0.1em 0.4em;
+        border-radius: 6px;
+        color: var(--navy-bright);
+      }
+      a {
+        color: var(--navy-bright);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* ---- HEADER ---- */
+      .hero {
+        background: var(--navy);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        right: -80px;
+        top: -80px;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(224, 240, 150, 0.16), transparent 65%);
+        pointer-events: none;
+      }
+      .hero-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 3.2rem;
+        position: relative;
+      }
+      .hero h1 {
+        color: #fff;
+      }
+      .brandrow {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        position: absolute;
+        top: 3rem;
+        right: 1.5rem;
+      }
+      .logomark {
+        width: 44px;
+        height: 44px;
+        color: var(--lime);
+        flex: none;
+      }
+      .brandname {
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.01em;
+      }
+      .hero-lead {
+        font-size: 1.15rem;
+        line-height: 1.55;
+        color: var(--pale-blue);
+        max-width: 40ch;
+        margin-top: 0.9rem;
+      }
+      .hero-lead strong {
+        color: #fff;
+      }
+
+      .thesis {
+        margin-top: 1.8rem;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(171, 194, 255, 0.25);
+        border-left: 4px solid var(--lime);
+        border-radius: var(--radius-card);
+        padding: 1rem 1.2rem;
+        font-size: 0.98rem;
+        color: #eef1ff;
+        max-width: 62ch;
+      }
+      .thesis strong {
+        color: var(--lime);
+      }
+
+      /* ---- NAV ---- */
+      nav.toc {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      .toc-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0.55rem 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 0.35rem;
+        font-size: 0.82rem;
+      }
+      .toc a {
+        color: var(--muted);
+        padding: 0.25rem 0.7rem;
+        border-radius: var(--radius-pill);
+        text-decoration: none;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+        font-weight: 500;
+      }
+      .toc a:hover {
+        background: var(--peach);
+        color: var(--navy);
+        text-decoration: none;
+      }
+
+      /* ---- LAYOUT ---- */
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 4rem;
+      }
+      section {
+        margin-bottom: 3.4rem;
+        scroll-margin-top: 3.5rem;
+      }
+      .sec-head {
+        margin-bottom: 1.4rem;
+      }
+      .sec-sub {
+        color: var(--muted);
+        font-size: 0.98rem;
+        margin-top: 0.35rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1rem;
+      }
+      .g2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      @media (max-width: 760px) {
+        .g2,
+        .g3 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---- CARD ---- */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-card);
+        padding: 1.2rem 1.3rem;
+        box-shadow: var(--shadow-soft);
+      }
+      .card.soft {
+        background: var(--surface-soft);
+        box-shadow: none;
+      }
+      .card h3,
+      .card h4 {
+        margin-bottom: 0.5rem;
+      }
+      .card p {
+        font-size: 0.92rem;
+        color: #2f3a66;
+        line-height: 1.55;
+      }
+      .card ul {
+        margin: 0.3rem 0 0;
+        padding-left: 1.1rem;
+      }
+      .card li {
+        font-size: 0.92rem;
+        margin: 0.35rem 0;
+        color: #2f3a66;
+      }
+
+      /* scope cards */
+      .scope-in {
+        background: #f3f9ec;
+        border-color: #d6e7bf;
+      }
+      .scope-out {
+        background: #fdf1f2;
+        border-color: #f1d2d6;
+      }
+      .scope-in h3 {
+        color: var(--forest);
+      }
+      .scope-out h3 {
+        color: var(--burgundy);
+      }
+
+      /* ---- PILL / BADGE ---- */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        padding: 0.22rem 0.7rem;
+        border-radius: var(--radius-pill);
+        white-space: nowrap;
+      }
+      .pill-navy {
+        background: var(--navy);
+        color: #fff;
+      }
+      .pill-peach {
+        background: var(--peach);
+        color: var(--navy);
+      }
+      .pill-lime {
+        background: var(--lime);
+        color: var(--forest);
+      }
+      .pill-blue {
+        background: var(--pale-blue);
+        color: var(--navy);
+      }
+      .pill-burgundy {
+        background: #f7dde0;
+        color: var(--burgundy);
+      }
+      .pill-star {
+        background: #ffedcc;
+        color: #8a5a00;
+      }
+      .pill-ghost {
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--muted);
+      }
+      .pill-mono {
+        font-family: ui-monospace, monospace;
+        letter-spacing: -0.02em;
+      }
+
+      .hero .pill-peach {
+        background: rgba(255, 232, 214, 0.92);
+      }
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      /* decision cards */
+      .dcard {
+        display: flex;
+        gap: 0.65rem;
+        align-items: flex-start;
+      }
+      .dcard .pill {
+        flex: none;
+        margin-top: 0.1rem;
+      }
+      .dcard p {
+        font-size: 0.9rem;
+      }
+
+      /* rule cards */
+      .rule-ico {
+        font-size: 1.6rem;
+        line-height: 1;
+      }
+      .rule-head {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 0.4rem;
+      }
+
+      /* flow */
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.9rem;
+      }
+      .flow .node {
+        padding: 0.4rem 0.9rem;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .flow .arrow {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+      @media (max-width: 620px) {
+        .steps {
+          grid-template-columns: 1fr;
+        }
+      }
+      .step {
+        background: var(--surface-soft);
+        border-radius: 12px;
+        padding: 0.8rem 0.9rem;
+        font-size: 0.88rem;
+      }
+      .step .n {
+        font-weight: 600;
+        color: var(--navy);
+      }
+      .step .d {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      hr.div {
+        border: none;
+        border-top: 1px solid var(--line);
+        margin: 1rem 0;
+      }
+      .note {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 0.7rem;
+      }
+
+      /* stat */
+      .stat {
+        border-radius: var(--radius-card);
+        padding: 1.3rem 1.4rem;
+      }
+      .stat.navy {
+        background: var(--navy);
+        color: #fff;
+      }
+      .stat.peachy {
+        background: var(--peach);
+        color: var(--navy);
+      }
+      .stat .label {
+        font-size: 0.82rem;
+        opacity: 0.8;
+        font-weight: 500;
+      }
+      .stat.navy .label {
+        color: var(--pale-blue);
+        opacity: 1;
+      }
+      .stat .num {
+        font-size: 2.1rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0.25rem 0;
+        font-variant-numeric: tabular-nums;
+      }
+      .stat .desc {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        line-height: 1.4;
+      }
+
+      /* alert */
+      .alert {
+        border-radius: var(--radius-card);
+        padding: 0.85rem 1.1rem;
+        font-size: 0.9rem;
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+        line-height: 1.5;
+      }
+      .alert.warn {
+        background: #fff6e6;
+        border: 1px solid #ffe0a3;
+        color: #6b4e00;
+      }
+      .alert.info {
+        background: #eef2ff;
+        border: 1px solid #d3ddff;
+        color: #2a3a78;
+      }
+      .alert.ok {
+        background: #f0f8e9;
+        border: 1px solid #cfe6b6;
+        color: var(--forest);
+      }
+      .alert .ic {
+        font-size: 1.05rem;
+        line-height: 1.3;
+        flex: none;
+      }
+
+      /* table */
+      .fp-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        border-radius: var(--radius-card);
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+      .fp-table td {
+        padding: 0.6rem 0.9rem;
+        border-top: 1px solid var(--line);
+        vertical-align: top;
+      }
+      .fp-table tr:first-child td {
+        border-top: none;
+      }
+      .fp-table tr:nth-child(even) {
+        background: var(--surface-soft);
+      }
+      .fp-id {
+        font-family: ui-monospace, monospace;
+        font-weight: 600;
+        color: var(--navy);
+        width: 64px;
+        white-space: nowrap;
+      }
+
+      /* arch layer chips */
+      .layer {
+        background: var(--surface-soft);
+        border-radius: 12px;
+        padding: 0.8rem 0.9rem;
+      }
+      .layer .name {
+        font-family: ui-monospace, monospace;
+        font-weight: 600;
+        color: var(--navy-bright);
+        font-size: 0.95rem;
+      }
+      .layer .role {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+
+      .route {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        background: var(--surface-soft);
+        border-radius: 12px;
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+      }
+      .route .ico {
+        font-size: 1.3rem;
+        flex: none;
+      }
+
+      /* mermaid */
+      .mermaid-wrap {
+        overflow-x: auto;
+      }
+      .mermaid {
+        display: flex;
+        justify-content: center;
+        min-width: 540px;
+      }
+
+      /* alt list */
+      .alt {
+        border-left: 4px solid var(--line);
+      }
+      .alt.reject {
+        border-left-color: var(--burgundy);
+      }
+      .alt.close {
+        border-left-color: var(--star);
+      }
+      .alt.defer {
+        border-left-color: var(--dull-blue);
+      }
+      .alt-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .open {
+        border-left: 4px solid var(--line);
+      }
+      .open.warn {
+        border-left-color: var(--star);
+      }
+      .open.info {
+        border-left-color: var(--navy-bright);
+      }
+      .open.defer {
+        border-left-color: var(--dull-blue);
+      }
+
+      .legal-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+      @media (max-width: 620px) {
+        .legal-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .legal {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.85rem 1rem;
+        font-size: 0.9rem;
+      }
+      .legal.key {
+        border-color: #ffe0a3;
+        background: #fffaf0;
+      }
+      .legal small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        margin-top: 0.3rem;
+      }
+
+      footer {
+        background: var(--midnight);
+        color: var(--pale-blue);
+        font-size: 0.85rem;
+      }
+      .footer-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 1.6rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      footer .logomark {
+        width: 30px;
+        height: 30px;
+        color: var(--pale-blue);
+      }
+      footer code {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--pale-blue);
+      }
+
+      .tag-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .tech-tag {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--navy);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+      <div class="hero-inner">
+        <div style="margin-bottom: 1rem">
+          <span
+            class="pill pill-peach"
+            style="font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase"
+            >Zadání</span
+          >
+        </div>
+        <div class="brandrow">
+          <svg
+            class="logomark"
+            viewBox="0 0 325.28 304.59012"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              stroke-width="0"
+              d="m 248.02,164.43 c -0.69,0.76 -1.38,1.52 -2.06,2.28 -34.82,39.23 -53.48,94.14 -42,106.5 1.89,2.03 5.05,3.29 7.68,3.08 17.39,-1.42 39.61,-49.95 37.68,-95.78 -0.24,-5.7 -0.67,-11.06 -1.3,-16.08 m -122.37,-1.81 c -1.3,1.38 -2.55,2.74 -3.75,4.09 -34.82,39.23 -53.48,94.14 -42,106.5 1.89,2.03 5.04,3.29 7.68,3.08 14.74,-1.2 35.44,-47.12 37.69,-97.01 0.26,-5.78 0.38,-11.34 0.38,-16.66 m 85.47,141.97 c -10.31,0 -20.78,-4.51 -27.86,-12.13 -28.94,-31.14 5.54,-103.94 41.57,-144.52 4.6,-5.19 9.52,-10.15 14.73,-14.86 -2.43,-4.84 -5.3,-8.74 -8.57,-11.64 -5.84,-5.17 -13.35,-7.31 -22.95,-6.56 -18.6,1.47 -38.09,11.29 -55.04,23.65 1.05,12.61 1.22,26.63 0.53,42.03 -2.23,49.48 -23.46,120.64 -63.64,123.91 -11.15,0.94 -22.96,-3.69 -30.69,-12.02 -28.93,-31.14 5.55,-103.94 41.56,-144.52 6.41,-7.22 13.92,-14.65 22.24,-21.73 -3.89,-23.46 -11.97,-38.18 -23.67,-42.08 -18.18,-6.05 -52,11.44 -75,50.28 L 0,119.99 c 28.31,-47.81 73.84,-74.17 108.27,-62.7 19.45,6.48 32.73,23.39 39.75,50.48 18.01,-11.27 37.92,-19.52 57.77,-21.09 17.44,-1.35 32.2,3.19 43.93,13.58 4.7,4.16 8.81,9.22 12.34,15.16 16.31,-11.05 34.53,-20.07 54.13,-26.73 l 9.09,26.77 c -19.63,6.67 -37.22,15.68 -52.61,26.94 2.67,10.8 4.3,23.12 4.89,36.9 2.88,68.42 -31.22,122.51 -63.63,125.15 -0.94,0.08 -1.88,0.12 -2.83,0.12 M 113.54,20.29 c 0,11.2 -9.08,20.29 -20.29,20.29 C 82.04,40.58 72.96,31.5 72.96,20.29 72.96,9.08 82.04,0 93.25,0 c 11.21,0 20.29,9.08 20.29,20.29"
+            />
+          </svg>
+          <span class="brandname">Jedlík-nejedlík</span>
+        </div>
+        <h1>E-shop s video kurzy</h1>
+        <p class="hero-lead">
+          Vzdělávací platforma pro prodej digitálních videokurzů. Jednorázový nákup, trvalý přístup.
+          Sekce volitelně uzamčené testem.
+        </p>
+      </div>
+    </header>
+
+    <!-- ============ NAV ============ -->
+    <nav class="toc">
+      <div class="toc-inner">
+        <a href="#scope">Rozsah</a>
+        <a href="#rozhodnuti">Rozhodnutí</a>
+        <a href="#mechanika">Mechanika kurzů</a>
+        <a href="#platby">Platby & fakturace</a>
+        <a href="#dph">DPH</a>
+        <a href="#fp">Funkční požadavky</a>
+        <a href="#architektura">Architektura</a>
+        <a href="#ingestion">Nahrávání podkladů</a>
+        <a href="#diagram">Diagram</a>
+        <a href="#alternativy">Zamítnuté</a>
+        <a href="#otevrene">Otevřené</a>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ============ ROZSAH ============ -->
+      <section id="scope">
+        <div class="sec-head">
+          <h2>
+            Cíle a hranice
+            <span class="pill pill-ghost" style="vertical-align: middle">verze 1</span>
+          </h2>
+        </div>
+        <div class="grid g2">
+          <div class="card scope-in">
+            <h3>✓ V rozsahu</h3>
+            <ul>
+              <li>Prodej digitálních kurzů: <strong>jednorázový nákup, trvalý přístup</strong></li>
+              <li>Průběh: přihlášení → nákup → zpřístupnění kurzu</li>
+              <li>
+                Postupné procházení. Odemykání sekcí přes testy
+                <em>(volitelná funkce per-sekce)</em>
+              </li>
+              <li>Bezpečné zpřístupnění videí (nejdou snadno sdílet dál)</li>
+              <li>
+                Napojení na fakturační systém s automatickým vystavením faktury jménem spolku po
+                platbě
+              </li>
+              <li>Platby v CZK, čeština, malá rostoucí nabídka kurzů</li>
+            </ul>
+          </div>
+          <div class="card scope-out">
+            <h3>✗ Mimo rozsah</h3>
+            <ul>
+              <li>Fyzické produkty, doprava, sklad</li>
+              <li>Firemní nebo hromadné licence (více míst)</li>
+              <li>Předplatné nebo opakované platby</li>
+              <li>Vyhledávání, doporučování, marketingová automatizace</li>
+              <li>Více měn nebo ceny mimo CZK · jiný jazyk než čeština</li>
+              <li>
+                Certifikáty <em>(později)</em> · LLM hodnocení otevřených odpovědí
+                <em>(příští verze)</em>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ROZHODNUTÍ ============ -->
+      <section id="rozhodnuti">
+        <div class="sec-head">
+          <h2>Učiněná rozhodnutí</h2>
+          <p class="sec-sub">Body rozhodnuté z analýzy a grilování (byznysové).</p>
+        </div>
+        <div class="grid g2">
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-1</span>
+            <p>
+              <strong>Vzdělávací platforma, ne e-shop.</strong> Přidaná hodnota = správa přístupu,
+              postup, bezpečná videa.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-2</span>
+            <p>
+              <strong>Verze 1 jen digitální.</strong> Datový model připraven na pozdější fyzické,
+              ale teď se nestaví.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-3</span>
+            <p>
+              <strong>Jednorázový nákup, trvalý přístup.</strong> Žádné předplatné (zbytečně
+              komplikuje).
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-4</span>
+            <p>
+              <strong>Zachovat platební bránu, ukončit formulářový systém.</strong> Brána po platbě
+              notifikuje server → spolehlivé „zpřístupni kurz".
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-5</span>
+            <p>
+              <strong>Přístup vynucen na serveru.</strong> Skrytí ve frontendu není ochrana.
+              Evidence „uživatel × kurz × postup".
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-6</span>
+            <p>
+              <strong>Úspěšný test odemyká trvale.</strong> Splnění se uloží. Při návratu se sekce
+              znovu nezamyká.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-7</span>
+            <p>
+              <strong>Prodejcem je spolek.</strong> Na každé faktuře IČO a název spolku, bez ohledu
+              na to, kdo videa natočil.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-8</span>
+            <p>
+              <strong>Zatím neplátce DPH, ale s ohledem na hranici.</strong> Příjem z kurzů se do
+              hranice počítá (na rozdíl od darů).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MECHANIKA ============ -->
+      <section id="mechanika">
+        <div class="sec-head">
+          <h2>
+            Mechanika kurzů
+            <span class="pill pill-lime" style="vertical-align: middle">jádro projektu</span>
+          </h2>
+          <p class="sec-sub">
+            Obsah je po nákupu z velké části přístupný hned. Vybrané sekce se odemykají podle
+            <strong>pravidla na úrovni sekce</strong>.
+          </p>
+        </div>
+
+        <h3 style="margin-bottom: 0.9rem">Tři pravidla odemčení sekce</h3>
+        <div class="grid g3" style="margin-bottom: 1.6rem">
+          <div class="card">
+            <div class="rule-head">
+              <h4>a) Test</h4>
+            </div>
+            <p>
+              Jediná automatická brána. Sekce <em>může</em> obsahovat test, ten <em>může</em> být
+              <strong>blokující</strong> (pole <code>blocking</code>). Blokující je podmínka
+              postupu, jinak jde o nezávazné procvičení.
+            </p>
+          </div>
+          <div class="card">
+            <div class="rule-head">
+              <h4>b) Ručně adminem</h4>
+            </div>
+            <p>
+              Ruční odemčení administrátorem. Sem spadá i ručně hodnocená práce (žádná samostatná
+              entita „úkol").
+            </p>
+          </div>
+          <div class="card">
+            <div class="rule-head">
+              <h4>c) Čas od nákupu</h4>
+            </div>
+            <p>
+              Po uplynutí času od <strong>udělení oprávnění</strong>. Hodiny každého studenta běží
+              od jeho koupě (každý student zvlášť, ne absolutní datum).
+            </p>
+          </div>
+        </div>
+
+        <div class="grid g2">
+          <div class="card">
+            <h4>Testy</h4>
+            <ul>
+              <li>Hranice úspěšnosti <strong>nastavitelná pro každý kurz</strong></li>
+              <li>
+                Otázky typu <strong>výběr z možností</strong> (deterministicky vyhodnotitelné)
+              </li>
+              <li><strong>Neomezeně pokusů, bez prodlevy</strong></li>
+              <li>Otevřené odpovědi + LLM hodnocení → příští verze</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Identita & přístup</h4>
+            <ul>
+              <li><strong>Account-first:</strong> registrace nebo přihlášení před nákupem</li>
+              <li>Identitou je <strong>e-mail</strong></li>
+              <li>Objednávka i oprávnění se váží na známého studenta</li>
+              <li>Magic link odložen (Directus to nativně neumí)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PLATBY ============ -->
+      <section id="platby">
+        <div class="sec-head">
+          <h2>Platby & fakturace</h2>
+          <p class="sec-sub">
+            Serverová notifikace je zdroj pravdy, ne návrat prohlížeče. Vše idempotentní.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom: 1rem">
+          <div class="flow">
+            <span class="node pill-peach">Objednávka</span>
+            <span class="arrow">→ redirect →</span>
+            <span class="node pill-navy">GoPay (CZK)</span>
+            <span class="arrow">⤳ notifikace ⤳</span>
+            <span class="node pill-lime">Server (Nitro)</span>
+          </div>
+          <hr class="div" />
+          <p style="font-size: 0.92rem; font-weight: 600; margin-bottom: 0.6rem">
+            Po potvrzené platbě server idempotentně (dle ID platby):
+          </p>
+          <div class="steps">
+            <div class="step">
+              <span class="n">1. Udělí oprávnění</span><br /><span class="d"
+                >zpřístupní kurz studentovi</span
+              >
+            </div>
+            <div class="step">
+              <span class="n">2. Vystaví fakturu</span><br /><span class="d"
+                >Fakturoid API v3 (~3 requesty)</span
+              >
+            </div>
+            <div class="step">
+              <span class="n">3. Pošle potvrzení</span><br /><span class="d"
+                >Fakturoid odešle fakturu = potvrzení</span
+              >
+            </div>
+          </div>
+          <p class="note">
+            Opuštěné nebo neúspěšné platby zůstanou jako nezaplacená objednávka bez oprávnění a
+            faktury. Návratová URL slouží jen k UX.
+          </p>
+        </div>
+
+        <div class="grid g2">
+          <div class="card">
+            <h4>GoPay <span class="pill pill-ghost">platební brána</span></h4>
+            <p>
+              Nativně v CZK, účet pod spolkem připraven. Redirect + serverová notifikace.
+              Idempotence dle ID platby (notifikace se opakují).
+            </p>
+          </div>
+          <div class="card">
+            <h4>Fakturoid <span class="pill pill-ghost">fakturace</span></h4>
+            <p>
+              API v3, OAuth 2, tarif <strong>Na lehko</strong>. Jediný zdroj číselné řady. Jedna
+              platba = jedna faktura (ID faktury u objednávky). Hlídá i DPH hranici.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DPH ============ -->
+      <section id="dph">
+        <div class="sec-head">
+          <h2>DPH: sledování hranice</h2>
+          <p class="sec-sub">
+            Zatím neplátce. Faktury bez DPH s označením „neplátce DPH". Sledování řeší
+            <strong>Fakturoid</strong> (žádné vlastní počítadlo).
+          </p>
+        </div>
+        <div class="grid g2">
+          <div class="stat navy">
+            <div class="label">Hranice 2026 (kalendářní rok)</div>
+            <div class="num">2 000 000 Kč</div>
+            <div class="desc">
+              plátcovství od 1. 1. následujícího roku · přihláška do 10 prac. dnů
+            </div>
+          </div>
+          <div class="stat peachy">
+            <div class="label">Druhý limit (okamžité plátcovství)</div>
+            <div class="num">2 536 500 Kč</div>
+            <div class="desc">
+              = 100 000 € · obrat se sleduje za kalendářní rok (leden–prosinec)
+            </div>
+          </div>
+        </div>
+        <div class="alert warn" style="margin-top: 1rem">
+          <span
+            >Fakturaci připravit tak, aby šlo DPH (a režim pro EU zákazníky) zapnout později jako
+            <strong>nastavení, ne přestavbu</strong>.</span
+          >
+        </div>
+      </section>
+
+      <!-- ============ FP ============ -->
+      <section id="fp">
+        <div class="sec-head">
+          <h2>
+            Funkční požadavky
+            <span class="pill pill-ghost" style="vertical-align: middle">rámcově</span>
+          </h2>
+          <p class="sec-sub">12 funkčních bloků (FP-1 … FP-12).</p>
+        </div>
+        <table class="fp-table">
+          <tbody>
+            <tr>
+              <td class="fp-id">FP-1</td>
+              <td>Uživatelské účty: registrace, přihlášení, obnova hesla</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-2</td>
+              <td>Nabídka kurzů a detail prodejní stránky</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-3</td>
+              <td>Nákupní proces a přesměrování na platbu</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-4</td>
+              <td>Po platbě: zpřístupnění → faktura → potvrzovací e-mail s fakturou</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-5</td>
+              <td>Kontrola oprávnění vynucená serverem u každého chráněného obsahu</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-6</td>
+              <td>Přehrávač kurzu: navigace po sekcích a lekcích podle stavu odemčení</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-7</td>
+              <td>Video jen po ověření oprávnění, časově omezeným odkazem</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-8</td>
+              <td>Testovací modul: otázky, vyhodnocení, uložení výsledku a stavu</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-9</td>
+              <td>Stav postupu a dokončení pro uživatele</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-10</td>
+              <td>Faktura přes fakturační systém a odeslání, číselná řada spravována systémem</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-11</td>
+              <td>Správa obsahu kurzů, sekcí, lekcí a testů</td>
+            </tr>
+            <tr>
+              <td class="fp-id">FP-12</td>
+              <td>Nahrávání podkladů jedním rozhraním: web admin a CLI (viz níže)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ ARCHITEKTURA ============ -->
+      <section id="architektura">
+        <div class="sec-head">
+          <h2>
+            Architektura <span class="pill pill-ghost" style="vertical-align: middle">Část B</span>
+          </h2>
+          <p class="sec-sub">
+            Záměrně jednoduchá. Directus drží data i hranici. Nitro je tenká důvěryhodná vrstva.
+          </p>
+        </div>
+
+        <div class="grid g2" style="margin-bottom: 1.2rem">
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+              "
+            >
+              <h3 style="margin: 0">Directus</h3>
+              <span class="pill pill-navy">systém záznamu + hranice</span>
+            </div>
+            <p>
+              Obsah <em>i</em> transakční data (studenti, objednávky, oprávnění, postup, pokusy).
+              Poskytovatel <strong>identity</strong> i
+              <strong>primární brána přístupu</strong> (oprávnění Directu). Dělá on-the-fly
+              transformace obrázků.
+            </p>
+          </div>
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+              "
+            >
+              <h3 style="margin: 0">Nitro</h3>
+              <span class="pill pill-lime">tenká důvěryhodná vrstva</span>
+            </div>
+            <p>
+              Jen operace s tajným klíčem nebo serverovou logikou:
+              <strong>podpis URL videa</strong>, <strong>GoPay webhook</strong>,
+              <strong>volání Fakturoidu</strong>, <strong>příjem podkladů</strong>. Data vždy ukládá
+              zpět do Directu. Nikdy druhý systém záznamu.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.2rem">
+          <h3 style="margin-bottom: 0.4rem">
+            Jeden nasazovaný celek z Nuxt vrstev
+            <span class="pill pill-peach pill-mono" style="vertical-align: middle">TR-1b</span>
+          </h3>
+          <p style="margin-bottom: 0.8rem">
+            Žádná druhá aplikace. Stávající <code>web/</code> (Node/Nitro SSR, Nixpacks → Coolify)
+            se člení na vrstvy, jedna na oblast. Společný ohraničený kontext, sdílený jazyk.
+          </p>
+          <div class="grid g3">
+            <div class="layer">
+              <div class="name">customers</div>
+              <div class="role">identita / autentizace</div>
+            </div>
+            <div class="layer">
+              <div class="name">lms</div>
+              <div class="role">kurzy, sekce, lekce, postup, testy, video</div>
+            </div>
+            <div class="layer">
+              <div class="name">shop</div>
+              <div class="role">katalog, checkout, platby, fakturace</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom: 0.7rem">Technologický stack</h3>
+        <div class="tag-strip" style="margin-bottom: 1rem">
+          <span class="tech-tag">Nuxt + Vue 3 + TS</span>
+          <span class="tech-tag">Directus (CMS)</span>
+          <span class="tech-tag">Nitro</span>
+          <span class="tech-tag">GoPay (CZK)</span>
+          <span class="tech-tag">Fakturoid API v3 (OAuth2)</span>
+          <span class="tech-tag">Cloudflare Stream</span>
+          <span class="tech-tag">Cloudflare + VPS</span>
+          <span class="tech-tag">monorepo</span>
+        </div>
+
+        <div class="alert ok">
+          <span
+            ><strong>Video (TR-2):</strong> nenahrává se do Directu. Lekce drží jen ID videa ve
+            Stream. Nitro po ověření oprávnění vydá krátkodobý <strong>podepsaný token</strong> k
+            přehrání.</span
+          >
+        </div>
+      </section>
+
+      <!-- ============ INGESTION ============ -->
+      <section id="ingestion">
+        <div class="sec-head">
+          <h2>
+            Nahrávání podkladů
+            <span class="pill pill-blue" style="vertical-align: middle">součást v1.0</span>
+          </h2>
+          <p class="sec-sub">
+            Jedna serverová logika v Nitro, dvě tenká rozhraní. Routuje podle MIME typu.
+          </p>
+        </div>
+
+        <div class="card" style="margin-bottom: 1rem">
+          <div class="grid g2">
+            <div class="route">
+              <div>
+                obrázky / PDF / dokumenty <span style="color: var(--muted)">→</span>
+                <strong>Directus files</strong>
+                <small style="color: var(--muted)">(volitelně sharp preprocess)</small>
+              </div>
+            </div>
+            <div class="route">
+              <div>
+                video <span style="color: var(--muted)">→</span> <strong>Cloudflare Stream</strong>
+                <small style="color: var(--muted)">(Direct Creator Upload + ready webhook)</small>
+              </div>
+            </div>
+          </div>
+          <p class="note">
+            Prohlížeč/CLI nahrává video přímo do Streamu (tus URL), ne přes náš server. Ověření:
+            volající je Directus uživatel s rolí autor/admin.
+          </p>
+        </div>
+
+        <div class="grid g2">
+          <div class="card">
+            <h4>a) Web admin stránka</h4>
+            <p>Přihlášení jako Directus uživatel, drag-and-drop, průběh + stav „ready".</p>
+          </div>
+          <div class="card">
+            <h4>b) CLI <span class="pill pill-ghost">Deno + dax</span></h4>
+            <p>
+              Jeden příkaz <code>upload &lt;cesta&gt; [--lesson X]</code> — pro Claude Code.
+              <strong>MCP zvažováno a odloženo</strong>, endpointy ale MCP-ready (TR-7b).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DIAGRAM ============ -->
+      <section id="diagram">
+        <div class="sec-head">
+          <h2>Konceptuální diagram</h2>
+          <p class="sec-sub">
+            Vztahy mezi hlavními entitami a vnějšími službami (bez detailu polí).
+          </p>
+        </div>
+        <div class="card">
+          <div class="mermaid-wrap">
+            <pre class="mermaid">
+graph TD
+    U["Uživatel / Student"]
+    O["Objednávka"]
+    E["Oprávnění ke kurzu"]
+    K["Kurz"]
+    S["Sekce"]
+    L["Lekce"]
+    P["Postup uživatele"]
+    T["Pokus o test"]
+
+    GP(["GoPay — platba"])
+    FA(["Fakturoid — faktura"])
+    VID(["Cloudflare Stream — signed URL"])
+
+    U -->|vytvoří| O
+    O -->|platba| GP
+    GP -.->|notifikace o zaplacení| O
+    O -->|po zaplacení udělí| E
+    O -->|vystaví| FA
+    E --> K
+    K --> S
+    S --> L
+    L -->|přehrává| VID
+
+    U --> P
+    P -->|stav odemčení a dokončení| S
+
+    S -->|pravidlo odemčení| R{Pravidlo odemčení}
+    R --> R1["a) Test"]
+    R --> R2["b) Ručně adminem"]
+    R --> R3["c) Čas od nákupu"]
+
+    U --> T
+    T --> R1
+        </pre
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ALTERNATIVY ============ -->
+      <section id="alternativy">
+        <div class="sec-head">
+          <h2>Zvažované a zamítnuté alternativy</h2>
+          <p class="sec-sub">Proč ne jiné nástroje.</p>
+        </div>
+        <div class="grid" style="gap: 0.8rem">
+          <div class="card alt reject">
+            <div class="alt-head">
+              <span class="pill pill-burgundy">zamítnuto</span>
+              <h4 style="margin: 0">
+                Fakturovac.cz
+                <span style="color: var(--muted); font-weight: 400; font-size: 0.85rem"
+                  >(stávající)</span
+                >
+              </h4>
+            </div>
+            <p>Nemá API, jen ruční PDF. Nelze automatizovat vystavení faktury po platbě.</p>
+          </div>
+          <div class="card alt close">
+            <div class="alt-head">
+              <span class="pill pill-star">zamítnuto (těsně)</span>
+              <h4 style="margin: 0">Vyfakturuj.cz</h4>
+            </div>
+            <p>
+              Reálná alternativa k Fakturoidu (API v2, sleva pro neziskovky, příbuznost se
+              SimpleShop). Fakturoid vyhrál kvůli lepší dokumentaci a API ve všech tarifech. Rozdíl
+              malý — lze se vrátit.
+            </p>
+          </div>
+          <div class="card alt reject">
+            <div class="alt-head">
+              <span class="pill pill-burgundy">zamítnuto</span>
+              <h4 style="margin: 0">
+                FAPI
+                <span style="color: var(--muted); font-weight: 400; font-size: 0.85rem"
+                  >(celková platforma)</span
+                >
+              </h4>
+            </div>
+            <p>
+              LMS část je WordPress plugin (mimo stack) a
+              <strong>neumí test-gated progresi</strong> (odemyká podle platby). Unikátní jádro (LMS
+              s testy) by stejně bylo nutné psát vlastní.
+            </p>
+          </div>
+          <div class="card alt defer">
+            <div class="alt-head">
+              <span class="pill pill-ghost">odloženo</span>
+              <h4 style="margin: 0">
+                Stripe
+                <span style="color: var(--muted); font-weight: 400; font-size: 0.85rem"
+                  >místo GoPay</span
+                >
+              </h4>
+            </div>
+            <p>
+              Lepší EU OSS/DPH automatizace a předplatné. GoPay je zavedená, nativně v CZK a pro
+              jednorázový nákup stačí. Relevantní až při expanzi do EU.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OTEVŘENÉ ============ -->
+      <section id="otevrene">
+        <div class="sec-head">
+          <h2>Stále otevřené body</h2>
+          <p class="sec-sub">Většina otázek vyřešena. Build neblokují.</p>
+        </div>
+        <div class="grid" style="gap: 0.8rem">
+          <div class="card open warn">
+            <div class="alt-head">
+              <span class="pill pill-star pill-mono">O-14 ◐</span>
+              <h4 style="margin: 0">Právní dokumenty</h4>
+            </div>
+            <p>
+              Technika vyřešena (N záznamů souhlasu k objednávce, verze + časové razítko).
+              <strong>Otevřené (právní):</strong> sada dokumentů a finální forma checkboxů — zejm.
+              samostatný nepředzaškrtnutý §1837. K doladění s právníkem.
+            </p>
+          </div>
+          <div class="card open info">
+            <div class="alt-head">
+              <span class="pill pill-blue pill-mono">TO-10 ◐</span>
+              <h4 style="margin: 0">Asset ingestion — detaily</h4>
+            </div>
+            <p>
+              Součást v1.0. K doladění při implementaci: konkrétní podoba Stream Direct Creator
+              Upload (tus) a ready webhooku, autorizace CLI, mapování MIME → cíl, sharp preprocess.
+            </p>
+          </div>
+          <div class="card open defer">
+            <div class="alt-head">
+              <span class="pill pill-ghost pill-mono">TO-9</span>
+              <h4 style="margin: 0">LLM hodnocení otevřených odpovědí</h4>
+            </div>
+            <p>
+              Mimo rozsah v1 (příští verze): volba modelu, rubriky, práh, náklady/latence, ruční
+              přehodnocení, ochrana proti prompt injection.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRÁVNÍ ============ -->
+      <section id="pravni">
+        <div class="sec-head">
+          <h2>
+            Právní dokumenty
+            <span class="pill pill-ghost" style="vertical-align: middle">O-14</span>
+          </h2>
+          <p class="sec-sub">Potřebné dokumenty (není právní rada — ověřit s právníkem).</p>
+        </div>
+        <div class="legal-grid">
+          <div class="legal">Obchodní podmínky pro digitální obsah</div>
+          <div class="legal key">
+            <strong>Souhlas §1837</strong> — okamžité dodání + ztráta práva na odstoupení
+            <small
+              >Bez něj může zákazník odstoupit i po zhlédnutí kurzu. Konsenzus: samostatný
+              nepředzaškrtnutý souhlas.</small
+            >
+          </div>
+          <div class="legal">Předsmluvní informace (§1820 OZ)</div>
+          <div class="legal">Reklamační řád / pravidla vrácení peněz</div>
+          <div class="legal">Zásady zpracování osobních údajů (GDPR)</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <svg
+          class="logomark"
+          viewBox="0 0 325.28 304.59012"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            stroke-width="0"
+            d="m 248.02,164.43 c -0.69,0.76 -1.38,1.52 -2.06,2.28 -34.82,39.23 -53.48,94.14 -42,106.5 1.89,2.03 5.05,3.29 7.68,3.08 17.39,-1.42 39.61,-49.95 37.68,-95.78 -0.24,-5.7 -0.67,-11.06 -1.3,-16.08 m -122.37,-1.81 c -1.3,1.38 -2.55,2.74 -3.75,4.09 -34.82,39.23 -53.48,94.14 -42,106.5 1.89,2.03 5.04,3.29 7.68,3.08 14.74,-1.2 35.44,-47.12 37.69,-97.01 0.26,-5.78 0.38,-11.34 0.38,-16.66 m 85.47,141.97 c -10.31,0 -20.78,-4.51 -27.86,-12.13 -28.94,-31.14 5.54,-103.94 41.57,-144.52 4.6,-5.19 9.52,-10.15 14.73,-14.86 -2.43,-4.84 -5.3,-8.74 -8.57,-11.64 -5.84,-5.17 -13.35,-7.31 -22.95,-6.56 -18.6,1.47 -38.09,11.29 -55.04,23.65 1.05,12.61 1.22,26.63 0.53,42.03 -2.23,49.48 -23.46,120.64 -63.64,123.91 -11.15,0.94 -22.96,-3.69 -30.69,-12.02 -28.93,-31.14 5.55,-103.94 41.56,-144.52 6.41,-7.22 13.92,-14.65 22.24,-21.73 -3.89,-23.46 -11.97,-38.18 -23.67,-42.08 -18.18,-6.05 -52,11.44 -75,50.28 L 0,119.99 c 28.31,-47.81 73.84,-74.17 108.27,-62.7 19.45,6.48 32.73,23.39 39.75,50.48 18.01,-11.27 37.92,-19.52 57.77,-21.09 17.44,-1.35 32.2,3.19 43.93,13.58 4.7,4.16 8.81,9.22 12.34,15.16 16.31,-11.05 34.53,-20.07 54.13,-26.73 l 9.09,26.77 c -19.63,6.67 -37.22,15.68 -52.61,26.94 2.67,10.8 4.3,23.12 4.89,36.9 2.88,68.42 -31.22,122.51 -63.63,125.15 -0.94,0.08 -1.88,0.12 -2.83,0.12 M 113.54,20.29 c 0,11.2 -9.08,20.29 -20.29,20.29 C 82.04,40.58 72.96,31.5 72.96,20.29 72.96,9.08 82.04,0 93.25,0 c 11.21,0 20.29,9.08 20.29,20.29"
+          />
+        </svg>
+        <span
+          >Jedlík-nejedlík, z. s. · IČO 19971192 · PRD v0.2 · slovník pojmů v
+          <code>BOUNDED-CONTEXT.md</code></span
+        >
+      </div>
+    </footer>
+  </body>
+</html>
