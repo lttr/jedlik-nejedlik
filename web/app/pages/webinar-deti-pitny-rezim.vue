@@ -3,7 +3,7 @@
     <header class="page-header">
       <p class="badge">Webinář zdarma</p>
       <h1>Děti a&nbsp;pitný režim</h1>
-      <p class="subtitle">16.&nbsp;června od&nbsp;18:30 na&nbsp;Zoomu</p>
+      <p class="subtitle">25.&nbsp;června od&nbsp;19:30 na&nbsp;Zoomu</p>
     </header>
 
     <section class="info-section p-prose">
@@ -71,10 +71,10 @@
 
     <section class="signup-section">
       <h2>Přihlášení na webinář</h2>
-      <p class="signup-note">Přihlašujte se do&nbsp;15.&nbsp;června. Odkaz vám zašleme e-mailem.</p>
+      <p class="signup-note">Přihlašujte se do&nbsp;24.&nbsp;června. Odkaz vám zašleme e-mailem.</p>
       <WebinarSignupForm
         webinar-id="2026-06-deti-pitny-rezim"
-        success-message="Děkujeme za přihlášení! Těšíme se na vás 16. června v 18:30."
+        success-message="Děkujeme za přihlášení! Těšíme se na vás 25. června v 19:30."
       />
     </section>
   </PageWrapper>
@@ -87,7 +87,7 @@ const { data: alenaPhoto } = await useDirectusImage("588336e3-2a93-4bbd-b40c-aa8
 useSeoMeta({
   title: "Webinář zdarma – Děti a pitný režim",
   description:
-    "Bezplatný webinář pro rodiče o pitném režimu dětí. 16. června od 18:30 na Zoomu. Přihlášení do 15. června.",
+    "Bezplatný webinář pro rodiče o pitném režimu dětí. 25. června od 19:30 na Zoomu. Přihlášení do 24. června.",
 })
 </script>
 
