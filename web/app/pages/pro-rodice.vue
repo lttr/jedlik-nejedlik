@@ -27,7 +27,7 @@
             Získejte odborné informace, praktické tipy a&nbsp;větší klid kolem pitného režimu
             u&nbsp;dětí &ndash; z&nbsp;pohledu výživy, návyků i&nbsp;výchovy.
           </p>
-          <p class="webinar-meta"><strong>16.&nbsp;června od&nbsp;18:30</strong> na&nbsp;Zoomu</p>
+          <p class="webinar-meta"><strong>25.&nbsp;června od&nbsp;19:30</strong> na&nbsp;Zoomu</p>
           <p class="webinar-meta">Pro rodiče &middot; zdarma</p>
         </WebinarCard>
         <WebinarCard to="/webinar-generace-alfa" badge="Aktuální webinář">
