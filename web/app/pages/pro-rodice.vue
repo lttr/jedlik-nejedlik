@@ -59,7 +59,7 @@
         </div>
         <NuxtLink
           class="p-button p-button-brand"
-          href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-zakladni"
+          href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-42"
         >
           Více informací
         </NuxtLink>

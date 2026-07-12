@@ -45,9 +45,8 @@
       <NuxtLink to="/2026-online-kurz-deti" class="offer-link">
         Online kurz pro rodiče dětí s nadváhou a obezitou ve věku 3–7 let
       </NuxtLink>
-      <!-- TODO: add link to STOB course -->
       <a
-        href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-s-moznosti-cviceni"
+        href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-42"
         class="offer-link"
         target="_blank"
         rel="noopener"

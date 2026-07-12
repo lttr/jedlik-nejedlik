@@ -17,7 +17,11 @@
         </div>
         <div class="pricing-row">
           <dt>Následná konzultace</dt>
-          <dd>500&nbsp;Kč&nbsp;/&nbsp;60&nbsp;minut</dd>
+          <dd>500&nbsp;Kč&nbsp;/&nbsp;30&nbsp;minut</dd>
+        </div>
+        <div class="pricing-row">
+          <dt>Balíček následných konzultací</dt>
+          <dd>2&nbsp;250&nbsp;Kč&nbsp;/&nbsp;5&times;&nbsp;30&nbsp;minut</dd>
         </div>
       </dl>
     </section>
