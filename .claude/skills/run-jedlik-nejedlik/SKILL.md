@@ -1,13 +1,14 @@
 ---
 name: run-jedlik-nejedlik
-description: Build, run, and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build the site, smoke-test it, take a screenshot of a page, or interact with the running app in a browser.
+description: Build, run, and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, show/open a page in the browser, build the site, smoke-test it, take a screenshot of a page, or interact with the running app in a browser. For "show me a page", start dev and xdg-open the URL — do not use agent-browser or polling loops.
 ---
 
-Nuxt 4 site (SSR, Czech) in `web/`, content from Directus CMS. Driven two ways:
-**headless** via `scripts/smoke-dev.sh` (boots dev, curls `/`, exits — fast SSR
-sanity), and **visually** via `agent-browser` against a running dev server.
+Nuxt 4 site (SSR, Czech) in `web/`, content from Directus CMS. All paths below
+are relative to the repo root, and commands assume it as cwd.
 
-All paths below are relative to the repo root, and commands assume it as cwd.
+Three run modes, pick the lightest: **smoke** (fast SSR sanity), **show a page**
+(open in the user's browser — the default for "show me / open"), **agent-browser**
+(only when _you_ need a screenshot or DOM read).
 
 ## Prerequisites
 
@@ -52,19 +53,31 @@ Prints `smoke: HTTP 200` on success; `HTTP 500` + stack on SSR runtime errors.
 First run compiles cold (>60s) — bump the wrapper's curl loop or pre-warm `.nuxt`
 if it times out.
 
-### Visual — dev server + agent-browser
+### Show a page (headed browser)
 
-Launch dev (binds **:3000** by default), wait for the build, then drive it:
+Launch dev, wait once, `xdg-open` the URL. That's it — no `agent-browser`, no
+repeated polling.
 
 ```bash
-# 1. Launch dev detached (vp → @nuxt/cli → nuxt.mjs; the listener is the deepest pid)
+# Launch dev detached (vp → @nuxt/cli → nuxt.mjs; the listener is the deepest pid)
 setsid bash -c 'cd "$(git rev-parse --show-toplevel)" && vp run dev' > /tmp/nuxt-dev.log 2>&1 < /dev/null &
 disown
 
-# 2. Wait until it answers (cold compile ~20–40s)
-timeout 90 bash -c 'until curl -sf -o /dev/null http://localhost:3000/; do sleep 1; done'
+# Wait once, then hand it to the browser. If it never comes up, read the log — don't retry.
+timeout 120 bash -c 'until curl -sf -o /dev/null http://localhost:3000/<route>; do sleep 2; done' \
+  && xdg-open http://localhost:3000/<route> \
+  || tail -20 /tmp/nuxt-dev.log
+```
 
-# 3. Drive + screenshot (agent-browser cwd resets each call — pass absolute paths)
+A load that hangs is almost always an SSR 500 (broken import, bad runtime
+config), not a slow compile — tail `/tmp/nuxt-dev.log` rather than reopening.
+
+### agent-browser (screenshots / DOM reads)
+
+Only when _you_ need a screenshot or to inspect the DOM. Assumes dev is running.
+
+```bash
+# agent-browser cwd resets each call — pass absolute paths
 agent-browser open http://localhost:3000/
 agent-browser screenshot /tmp/jedlik-home.png
 agent-browser eval "location.pathname + ' | ' + document.title"
