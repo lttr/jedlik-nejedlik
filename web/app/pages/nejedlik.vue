@@ -123,6 +123,12 @@
       <h3>Následné konzultace</h3>
       <p class="price">500&nbsp;Kč / hodina</p>
       <p>Slouží k&nbsp;doladění, podpoře a&nbsp;úpravám podle vývoje situace.</p>
+
+      <h3>Vypracování písemné zprávy pro jiného odborníka či rodiče</h3>
+      <p class="price">250&nbsp;Kč</p>
+
+      <h3>Vypracování písemného individuálního plánu dle rozsahu a&nbsp;náročnosti</h3>
+      <p class="price">250&nbsp;&ndash;&nbsp;500&nbsp;Kč</p>
     </section>
 
     <!-- Webinar promo -->
