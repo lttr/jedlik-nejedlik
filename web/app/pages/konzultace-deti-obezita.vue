@@ -23,6 +23,14 @@
           <dt>Balíček následných konzultací</dt>
           <dd>2&nbsp;250&nbsp;Kč&nbsp;/&nbsp;5&times;&nbsp;30&nbsp;minut</dd>
         </div>
+        <div class="pricing-row">
+          <dt>Vypracování písemné zprávy pro jiného odborníka či rodiče</dt>
+          <dd>250&nbsp;Kč</dd>
+        </div>
+        <div class="pricing-row">
+          <dt>Vypracování písemného individuálního plánu dle rozsahu a&nbsp;náročnosti</dt>
+          <dd>250&nbsp;&ndash;&nbsp;500&nbsp;Kč</dd>
+        </div>
       </dl>
     </section>
 
