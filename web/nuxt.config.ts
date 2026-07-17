@@ -5,6 +5,7 @@ const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 export default defineNuxtConfig({
   modules: [
     "@lttr/nuxt-config-postcss",
+    "@lttr/nuxt-validated-runtime-config",
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@nuxt/icon",

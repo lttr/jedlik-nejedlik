@@ -48,3 +48,6 @@ peerDependencyRules:
   allowedVersions:
     vite: "*"
     vitest: "*"
+
+minimumReleaseAgeExclude:
+  - "@lttr/nuxt-validated-runtime-config@0.1.2"

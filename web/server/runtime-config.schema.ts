@@ -1,9 +1,10 @@
-// Runtime config schema for the safe-runtime-config module. See that module's
-// README for the authoring conventions and the why behind each piece.
+// Runtime config schema for the @lttr/nuxt-validated-runtime-config module. See
+// that module's README for the authoring conventions and the why behind each
+// piece.
 import type { z } from "zod"
 
-import { definePublicSchema, url } from "../modules/safe-runtime-config"
-import type { Url } from "../modules/safe-runtime-config"
+import { definePublicSchema, url } from "@lttr/nuxt-validated-runtime-config/schema"
+import type { Url } from "@lttr/nuxt-validated-runtime-config/schema"
 
 export const publicSchema = definePublicSchema({
   directusUrl: url("DIRECTUS_URL", { public: true }),

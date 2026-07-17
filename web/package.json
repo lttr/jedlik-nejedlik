@@ -26,6 +26,7 @@
     "@iconify-json/uil": "^1.2.3",
     "@lttr/nuxt-config-eslint": "^0.4.2",
     "@lttr/nuxt-config-postcss": "^0.0.8",
+    "@lttr/nuxt-validated-runtime-config": "^0.1.2",
     "@nuxt/devtools": "^3.1.1",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/fonts": "^0.14.0",
