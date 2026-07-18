@@ -1,34 +1,5 @@
 # Course Platform (Platforma kurzů)
 
-Sells digital video courses to Czech consumers and delivers the learning
-experience: purchase, entitlement, gated progression through sections, and
-secure video access. Issues invoices on behalf of Jedlík-nejedlík, z. s.
-
-## Boundary
-
-**Inside:** course catalog, the buy→pay→grant flow, per-student entitlement and
-progress, section unlock rules, the test module, secure video delivery,
-invoicing.
-
-**Outside (deliberately):** physical products / shipping / stock; subscriptions
-& recurring payments; B2B / multi-seat licences; multi-currency; non-Czech UI;
-catalog search & recommendations; completion certificates. Also outside: the
-existing marketing site, which is a separate concern this context sits beside.
-
-**External systems:** Directus, GoPay, Fakturoid, Cloudflare Stream (video), a
-transactional email provider.
-
-## Integration
-
-- **Directus** — system of record (content and transactional data) and the
-  identity / auth provider; its permissions are the primary access gate.
-- **Nitro (this app)** — trusted compute for secret-holding / server-side
-  operations; reads and writes Directus, never a second store of record.
-- **GoPay** — payment; its notification is what marks an Order paid.
-- **Fakturoid** — invoicing; owns the invoice number series and DPH handling.
-
-## Language
-
 **Course** (Kurz):
 A purchasable digital product made of Sections.
 _Avoid_: product (reserve for a future generic sellable), e-shop item.
@@ -89,10 +60,3 @@ One submitted run of a Test by a Student.
 **Invoice** (Faktura):
 A numbered invoice issued via Fakturoid on behalf of Jedlík-nejedlík, z. s.
 _Avoid_: bill, receipt.
-
-### Flagged ambiguities
-
-- **"User" / Uživatel** — resolved: the learner is the **Student**; reserve
-  "user" for Directus staff/admin only.
-- **"Task" / Úkol** — resolved: not a distinct concept; the only automatic gate
-  is a **Test**. Human-reviewed work is manual admin release.
