@@ -2,6 +2,18 @@
 // runtimeConfig.public.directusUrl via NUXT_PUBLIC_DIRECTUS_URL env override.
 const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 
+const isProduction = process.env.NODE_ENV === "production"
+
+const plausibleModules = isProduction ? ["@nuxtjs/plausible"] : []
+const plausibleConfig = isProduction
+  ? {
+      plausible: {
+        ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
+        apiHost: "https://plausible.lttr.cz",
+      },
+    }
+  : {}
+
 export default defineNuxtConfig({
   modules: [
     "@lttr/nuxt-config-postcss",
@@ -10,7 +22,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
-    "@nuxtjs/plausible",
+    ...plausibleModules,
     "@nuxtjs/seo",
     "nuxt-svgo",
     "@vueuse/nuxt",
@@ -108,10 +120,7 @@ export default defineNuxtConfig({
     zeroRuntime: true,
   },
 
-  plausible: {
-    ignoredHostnames: ["localhost", "jedlik-nejedlik-test.lttr.cz"],
-    apiHost: "https://plausible.lttr.cz",
-  },
+  ...plausibleConfig,
 
   sentry: {
     org: "lukas-trumm",
