@@ -67,6 +67,7 @@
 
       body {
         margin: 0;
+        overflow-x: hidden;
         font-family: "Poppins", sans-serif;
         font-size: 18px;
         line-height: 1.6;
@@ -79,7 +80,7 @@
       h2,
       h3,
       h4 {
-        line-height: 1.2;
+        line-height: 1.3;
         font-weight: 600;
         margin: 0;
         color: var(--navy);
@@ -145,6 +146,7 @@
       }
       .hero h1 {
         color: #fff;
+        padding-right: 4px;
       }
       .brandrow {
         display: flex;
@@ -226,9 +228,12 @@
 
       /* ---- LAYOUT ---- */
       main {
+        padding: 3rem 0 4rem;
+      }
+      main > section {
         max-width: 1080px;
-        margin: 0 auto;
-        padding: 3rem 1.5rem 4rem;
+        margin-inline: auto;
+        padding-inline: 1.5rem;
       }
       section {
         margin-bottom: 3.4rem;
@@ -577,6 +582,32 @@
         justify-content: center;
         min-width: 540px;
       }
+      /* full-bleed diagram: section spans full width, heading stays in column */
+      #diagram {
+        max-width: none;
+        padding-inline: 0;
+      }
+      #diagram .sec-head {
+        max-width: 1080px;
+        margin-inline: auto;
+        padding-inline: 1.5rem;
+      }
+      #diagram .card {
+        width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding-inline: clamp(1.5rem, 5vw, 6rem);
+      }
+      #diagram .mermaid {
+        min-width: 0;
+        width: 100%;
+      }
+      #diagram .mermaid svg {
+        width: 100%;
+        max-width: none !important;
+        height: auto;
+      }
 
       /* alt list */
       .alt {
@@ -718,14 +749,13 @@
     <nav class="toc">
       <div class="toc-inner">
         <a href="#scope">Rozsah</a>
-        <a href="#rozhodnuti">Rozhodnutí</a>
         <a href="#mechanika">Mechanika kurzů</a>
         <a href="#platby">Platby & fakturace</a>
-        <a href="#dph">DPH</a>
         <a href="#fp">Funkční požadavky</a>
         <a href="#architektura">Architektura</a>
         <a href="#ingestion">Nahrávání podkladů</a>
         <a href="#diagram">Diagram</a>
+        <a href="#rozhodnuti">Rozhodnutí</a>
         <a href="#alternativy">Zamítnuté</a>
         <a href="#otevrene">Otevřené</a>
       </div>
@@ -766,77 +796,12 @@
               <li>Předplatné nebo opakované platby</li>
               <li>Vyhledávání, doporučování, marketingová automatizace</li>
               <li>Více měn nebo ceny mimo CZK · jiný jazyk než čeština</li>
+              <li>Magic link / přihlášení bez hesla <em>(odloženo)</em></li>
               <li>
                 Certifikáty <em>(později)</em> · LLM hodnocení otevřených odpovědí
                 <em>(příští verze)</em>
               </li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ ROZHODNUTÍ ============ -->
-      <section id="rozhodnuti">
-        <div class="sec-head">
-          <h2>Učiněná rozhodnutí</h2>
-          <p class="sec-sub">Body rozhodnuté z analýzy a grilování (byznysové).</p>
-        </div>
-        <div class="grid g2">
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-1</span>
-            <p>
-              <strong>Vzdělávací platforma, ne e-shop.</strong> Přidaná hodnota = správa přístupu,
-              postup, bezpečná videa.
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-2</span>
-            <p>
-              <strong>Verze 1 jen digitální.</strong> Datový model připraven na pozdější fyzické,
-              ale teď se nestaví.
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-3</span>
-            <p>
-              <strong>Jednorázový nákup, trvalý přístup.</strong> Žádné předplatné (zbytečně
-              komplikuje).
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-4</span>
-            <p>
-              <strong>Zachovat platební bránu, ukončit formulářový systém.</strong> Brána po platbě
-              notifikuje server → spolehlivé „zpřístupni kurz".
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-5</span>
-            <p>
-              <strong>Přístup vynucen na serveru.</strong> Skrytí ve frontendu není ochrana.
-              Evidence „uživatel × kurz × postup".
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-6</span>
-            <p>
-              <strong>Úspěšný test odemyká trvale.</strong> Splnění se uloží. Při návratu se sekce
-              znovu nezamyká.
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-7</span>
-            <p>
-              <strong>Prodejcem je spolek.</strong> Na každé faktuře IČO a název spolku, bez ohledu
-              na to, kdo videa natočil.
-            </p>
-          </div>
-          <div class="card dcard">
-            <span class="pill pill-navy pill-mono">R-8</span>
-            <p>
-              <strong>Zatím neplátce DPH, ale s ohledem na hranici.</strong> Příjem z kurzů se do
-              hranice počítá (na rozdíl od darů).
-            </p>
           </div>
         </div>
       </section>
@@ -862,18 +827,15 @@
             </div>
             <p>
               Jediná automatická brána. Sekce <em>může</em> obsahovat test, ten <em>může</em> být
-              <strong>blokující</strong> (pole <code>blocking</code>). Blokující je podmínka
-              postupu, jinak jde o nezávazné procvičení.
+              <strong>blokující</strong>. Blokující je podmínka postupu, jinak jde o nezávazné
+              procvičení.
             </p>
           </div>
           <div class="card">
             <div class="rule-head">
               <h4>b) Ručně adminem</h4>
             </div>
-            <p>
-              Ruční odemčení administrátorem. Sem spadá i ručně hodnocená práce (žádná samostatná
-              entita „úkol").
-            </p>
+            <p>Ruční odemčení administrátorem. Sem spadá i ručně hodnocená práce.</p>
           </div>
           <div class="card">
             <div class="rule-head">
@@ -904,7 +866,6 @@
               <li><strong>Account-first:</strong> registrace nebo přihlášení před nákupem</li>
               <li>Identitou je <strong>e-mail</strong></li>
               <li>Objednávka i oprávnění se váží na známého studenta</li>
-              <li>Magic link odložen (Directus to nativně neumí)</li>
             </ul>
           </div>
         </div>
@@ -915,7 +876,9 @@
         <div class="sec-head">
           <h2>Platby & fakturace</h2>
           <p class="sec-sub">
-            Serverová notifikace je zdroj pravdy, ne návrat prohlížeče. Vše idempotentní.
+            O tom, že je zaplaceno, rozhoduje potvrzení od platební brány doručené na náš server —
+            ne to, že se zákazníkovi po platbě znovu načte stránka. I když potvrzení dorazí víckrát,
+            kurz se zpřístupní a faktura vystaví jen jednou.
           </p>
         </div>
 
@@ -969,39 +932,6 @@
               platba = jedna faktura (ID faktury u objednávky). Hlídá i DPH hranici.
             </p>
           </div>
-        </div>
-      </section>
-
-      <!-- ============ DPH ============ -->
-      <section id="dph">
-        <div class="sec-head">
-          <h2>DPH: sledování hranice</h2>
-          <p class="sec-sub">
-            Zatím neplátce. Faktury bez DPH s označením „neplátce DPH". Sledování řeší
-            <strong>Fakturoid</strong> (žádné vlastní počítadlo).
-          </p>
-        </div>
-        <div class="grid g2">
-          <div class="stat navy">
-            <div class="label">Hranice 2026 (kalendářní rok)</div>
-            <div class="num">2 000 000 Kč</div>
-            <div class="desc">
-              plátcovství od 1. 1. následujícího roku · přihláška do 10 prac. dnů
-            </div>
-          </div>
-          <div class="stat peachy">
-            <div class="label">Druhý limit (okamžité plátcovství)</div>
-            <div class="num">2 536 500 Kč</div>
-            <div class="desc">
-              = 100 000 € · obrat se sleduje za kalendářní rok (leden–prosinec)
-            </div>
-          </div>
-        </div>
-        <div class="alert warn" style="margin-top: 1rem">
-          <span
-            >Fakturaci připravit tak, aby šlo DPH (a režim pro EU zákazníky) zapnout později jako
-            <strong>nastavení, ne přestavbu</strong>.</span
-          >
         </div>
       </section>
 
@@ -1264,6 +1194,69 @@ graph TD
     T --> R1
         </pre
             >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ROZHODNUTÍ ============ -->
+      <section id="rozhodnuti">
+        <div class="sec-head">
+          <h2>Učiněná rozhodnutí</h2>
+          <p class="sec-sub">Body rozhodnuté z analýzy a grilování (byznysové).</p>
+        </div>
+        <div class="grid g2">
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-1</span>
+            <p>
+              <strong>Vzdělávací platforma, ne e-shop.</strong> Přidaná hodnota = správa přístupu,
+              postup, bezpečná videa.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-2</span>
+            <p>
+              <strong>Verze 1 jen digitální.</strong> Datový model připraven na pozdější fyzické,
+              ale teď se nestaví.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-3</span>
+            <p>
+              <strong>Jednorázový nákup, trvalý přístup.</strong> Žádné předplatné (zbytečně
+              komplikuje).
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-4</span>
+            <p>
+              <strong>Zachovat platební bránu, formulářový systém poběží paralelně.</strong> Brána
+              po platbě notifikuje server → spolehlivé „zpřístupni kurz".
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-5</span>
+            <p>
+              <strong>Přístup vynucen na serveru.</strong> Skrytí ve frontendu není ochrana.
+              Evidence „uživatel × kurz × postup".
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-6</span>
+            <p>
+              <strong>Úspěšný test odemyká trvale.</strong> Splnění se uloží. Při návratu se sekce
+              znovu nezamyká.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-7</span>
+            <p>
+              <strong>Prodejcem je spolek.</strong> Na každé faktuře IČO a název spolku, bez ohledu
+              na to, kdo videa natočil.
+            </p>
+          </div>
+          <div class="card dcard">
+            <span class="pill pill-navy pill-mono">R-8</span>
+            <p><strong>Zatím neplátce DPH.</strong> Hranici obratu zatím neřešíme.</p>
           </div>
         </div>
       </section>
