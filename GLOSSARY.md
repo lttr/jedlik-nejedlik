@@ -1,4 +1,12 @@
-# Course Platform (Platforma kurzů)
+# Kurzy
+
+**LMS**:
+The bounded context for selling and delivering Courses — identity, catalog,
+payment, and test-gated learning. In prose the system is _LMS_ (indeclinable: "v
+LMS", "náš LMS"); user-facing, the area is _Kurzy_ — never show "LMS" to
+Students.
+_Avoid_: Course Platform / platforma kurzů (too grand), e-learning, vzdělávací
+portál.
 
 **Course** (Kurz):
 A purchasable digital product made of Sections.
