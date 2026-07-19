@@ -21,6 +21,9 @@
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
+        <li>
+          <NuxtLink class="link link-courses" to="/kurzy">Kurzy</NuxtLink>
+        </li>
       </ul>
     </div>
   </nav>
@@ -63,5 +66,16 @@
 .link {
   color: var(--brand-color);
   text-decoration: none;
+}
+
+.links .link-courses {
+  color: white;
+  background-color: var(--brand-color);
+  border-radius: var(--radius-default);
+
+  &:hover {
+    background-color: var(--brand-color);
+    opacity: 0.9;
+  }
 }
 </style>
