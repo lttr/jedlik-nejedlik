@@ -29,13 +29,10 @@ const BiographyExpertSchema = z
     }),
   )
 
-// SDK Schema-level shape: every column the SDK can address. Fetched columns
-// (z.input) plus columns we filter on but don't fetch.
-export type BiographyExpertCollection = z.input<typeof BiographyExpertSchema> & {
-  status: string
-}
-
-const biographyExpertRequest = async () =>
+// The return annotation is a compile-time drift guard: the item shape the SDK
+// derives from the layer's hand-written BiographyExpertCollection wire type
+// must stay assignable to this zod schema's input (the layer cannot use zod).
+const biographyExpertRequest = async (): Promise<z.input<typeof BiographyExpertSchema>[]> =>
   getDirectusClient().request(
     readItems("biography_expert", {
       fields: ["name", "description", "url", { photo: ["id", "width", "height", "description"] }],

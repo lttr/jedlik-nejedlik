@@ -1,8 +1,5 @@
 import { createItem } from "@directus/sdk"
 import type { UseAsyncRequestResult } from "./async-request"
-import type { FormCollection } from "~/utils/directus-schema"
-
-export type FormSubmission = Record<string, unknown>
 
 const possibleError = new Error(
   `Omlouváme se, nepodařilo se odeslat formulář. Zkuste to prosím později.`,

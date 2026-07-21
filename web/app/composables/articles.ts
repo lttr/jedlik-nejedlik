@@ -1,16 +1,6 @@
 import { readItem, readItems } from "@directus/sdk"
 import type { AsyncData, NuxtError } from "nuxt/app"
 
-// Wire shape of `articles` collection in Directus. Used to type the SDK client
-// at the Schema level.
-export interface ArticleCollection {
-  id: number
-  title: string
-  perex: string
-  cover: string
-  status: string
-}
-
 export interface Article {
   cover: string
   perex: string
