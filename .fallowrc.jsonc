@@ -3,7 +3,16 @@
 
   // certificate/ is a standalone vanilla-JS cert renderer — app.js is its root.
   // (Knip listed the same file as a `.` workspace entry.)
-  "entry": ["certificate/app.js"],
+  "entry": [
+    "certificate/app.js",
+    // Nuxt layers under web/layers/ are auto-registered (pages routed,
+    // utils/shared auto-imported) — fallow's Nuxt detection only covers
+    // the root app dir, so layer files look unreachable without this.
+    "web/layers/*/nuxt.config.ts",
+    "web/layers/*/app/**",
+    "web/layers/*/shared/**",
+    "web/layers/*/server/**",
+  ],
 
   "ignorePatterns": [
     // Archived pages kept for reference, not wired into the app (Knip: `!archive/**`).

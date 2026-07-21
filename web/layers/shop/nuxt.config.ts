@@ -1,6 +1,8 @@
 // nuxt-robots 6.0.8 augments NitroRouteConfig with `robots` only for the app
 // context (.nuxt/nuxt.d.ts), not the node context that typechecks
-// nuxt.config files — reference the generated augmentation directly.
+// nuxt.config files — reference the generated augmentation directly
+// (a .d.ts path is not importable, so `import` style can't replace this).
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../.nuxt/types/nuxt-robots-nitro.d.ts" />
 
 // Marker so Nuxt registers this directory as a layer. Owns catalog,
