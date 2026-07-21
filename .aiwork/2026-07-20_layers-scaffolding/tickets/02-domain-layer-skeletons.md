@@ -22,4 +22,4 @@ later areas build inside, with the existing marketing site unaffected.
 - [x] `/_scaffold/customers`, `/_scaffold/lms`, `/_scaffold/shop` render
 - [x] Scaffold routes absent from `/sitemap.xml` and disallowed for robots
 - [x] Existing pages render unchanged in dev
-- [ ] Merged to `master`, Coolify deploy green, production pages unchanged
+- [x] Merged to `master`, Coolify deploy green, production pages unchanged

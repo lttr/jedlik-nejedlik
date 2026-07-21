@@ -33,4 +33,4 @@ fallback in the layer's own config and note the outcome in the spec.
 - [x] No Directus access code remains outside `layers/directus`
 - [x] Nitro-side auto-import of the layer's `shared/` verified (or fallback
       applied and recorded in the spec)
-- [ ] Merged to `master`, Coolify deploy green, production pages unchanged
+- [x] Merged to `master`, Coolify deploy green, production pages unchanged
