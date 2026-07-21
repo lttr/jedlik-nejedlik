@@ -1,5 +1,5 @@
 ---
-name: implement
+name: implement-spec-to-pr
 description: Full autonomous feature implementation from customer spec to PR. Use when user provides a customer spec (file path, inline text, or ticket reference) and wants end-to-end implementation including spec/plan artifacts, feature branch, coding, verification, commits, and PR creation.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Task, WebFetch, Skill
 argument-hint: <path-to-spec | inline text>

@@ -1,6 +1,6 @@
 ---
 name: gdoc-to-spec
-description: Download a Google Doc as markdown and turn it into an .aiwork spec ready for the `implement` skill. Detects inline editor notes (e.g. "Přeformulovala bych", "KLIKACÍ TLAČÍTKO", "@@", strike-through remarks) and converts them into `<!-- TODO: ... -->` markdown comments so the implementer sees them as actionable items. Trigger when the user pastes a docs.google.com URL and wants to import it as a spec, or says "stáhni gdoc", "import gdoc", "gdoc as spec", "gdoc → spec".
+description: Download a Google Doc as markdown and turn it into an .aiwork spec ready for the `implement-spec-to-pr` skill. Detects inline editor notes (e.g. "Přeformulovala bych", "KLIKACÍ TLAČÍTKO", "@@", strike-through remarks) and converts them into `<!-- TODO: ... -->` markdown comments so the implementer sees them as actionable items. Trigger when the user pastes a docs.google.com URL and wants to import it as a spec, or says "stáhni gdoc", "import gdoc", "gdoc as spec", "gdoc → spec".
 allowed-tools: Bash, Read, Write, Edit, Skill
 argument-hint: <google-doc-url> [slug]
 ---
@@ -94,10 +94,10 @@ Print:
 - The exact next command:
 
   ```
-  /implement .aiwork/{date}_{slug}/spec.md
+  /implement-spec-to-pr .aiwork/{date}_{slug}/spec.md
   ```
 
-Don't invoke `implement` yourself — the user runs it when ready.
+Don't invoke `implement-spec-to-pr` yourself — the user runs it when ready.
 
 ## Notes
 
