@@ -99,10 +99,12 @@ enforces nothing between them):
 
 Verified against installed Nuxt 4.4.4 source: each layer's `shared/utils`
 and `shared/types` are scanned for app-side auto-imports
-(`nuxt/dist/index.mjs:3782` iterates `_layers`). Nitro-side auto-import is
-confirmed for root `shared/` (generated `nitro-imports.d.ts`) but not
-proven for layer shared dirs — **check at implementation**; fallback is
-one line in the layer's own `nuxt.config.ts` (`nitro.imports.dirs`).
+(`nuxt/dist/index.mjs:3782` iterates `_layers`). Nitro-side auto-import of
+layer shared dirs is confirmed at implementation: after `nuxi prepare`,
+generated `.nuxt/types/nitro-imports.d.ts` declares `createDirectusClient`
+from `layers/directus/shared/utils/directus` and exports the types from
+`layers/directus/shared/types/directus` — no `nitro.imports.dirs` fallback
+needed.
 Do not use the `#shared` alias for this layer — it resolves to root
 `shared/` only.
 
