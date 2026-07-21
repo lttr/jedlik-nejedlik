@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: []
 references:
   - "Spec: ../spec.md"
@@ -18,8 +18,8 @@ later areas build inside, with the existing marketing site unaffected.
 
 ## Acceptance criteria
 
-- [ ] `vp run build` and `vp run typecheck` pass
-- [ ] `/_scaffold/customers`, `/_scaffold/lms`, `/_scaffold/shop` render
-- [ ] Scaffold routes absent from `/sitemap.xml` and disallowed for robots
-- [ ] Existing pages render unchanged in dev
+- [x] `vp run build` and `vp run typecheck` pass
+- [x] `/_scaffold/customers`, `/_scaffold/lms`, `/_scaffold/shop` render
+- [x] Scaffold routes absent from `/sitemap.xml` and disallowed for robots
+- [x] Existing pages render unchanged in dev
 - [ ] Merged to `master`, Coolify deploy green, production pages unchanged

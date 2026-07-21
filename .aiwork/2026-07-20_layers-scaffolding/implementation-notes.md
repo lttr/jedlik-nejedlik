@@ -4,6 +4,9 @@
 - 2026-07-21: ticket 01 started (status → in-progress).
 - 2026-07-21: ticket 01 done — code commit d835edd (`refactor(web): move Directus access code into layers/directus layer`). "Merged to master, Coolify deploy green" left unchecked for wrap-up.
 
+- 2026-07-21: ticket 02 started (status → in-progress).
+- 2026-07-21: ticket 02 done — code commit 2375a78 (`feat(web): scaffold customers, lms, shop domain layers`). "Merged to master, Coolify deploy green" left unchecked for wrap-up.
+
 ## Ticket 01 — substance
 
 - Nitro `shared/` auto-import finding: Nuxt 4.4.4 DOES scan a layer's `shared/utils` and `shared/types` for Nitro-side auto-imports — after `nuxi prepare`, `.nuxt/types/nitro-imports.d.ts` declares `createDirectusClient` from `layers/directus/shared/utils/directus` and exports the wire types from `layers/directus/shared/types/directus`. No `nitro.imports.dirs` fallback needed; spec Decision 3 updated accordingly.
@@ -11,3 +14,9 @@
 - `createDirectusClient` uses an explicit `DirectusClient<Schema> & RestClient<Schema>` return type; `ReturnType<typeof createDirectus<Schema>>` alone would erase the `rest()` extension (no `.request`).
 - Verification caveat: `/clanky` and `/clanky/1` return 404 in dev — identical to production (https://www.jedlik-nejedlik.cz/clanky is also 404 today), so pre-existing and not a refactor regression; homepage `BlogSection` is commented out, and no error reaches `watchAsyncDataError`. Live Directus data through the moved client verified on `/pro-odborniky` (all four biography experts SSR-rendered) and the exact articles query verified directly against the Directus API (returns the published article). Homepage renders 200 unchanged.
 - Simplify pass (4 review agents): reuse/efficiency clean; the single simplification/altitude finding (zod↔wire-type drift) fixed via the return-annotation guard above.
+
+## Ticket 02 — substance
+
+- Robots/sitemap mechanism: `routeRules: { "/_scaffold/<layer>": { robots: false } }` in each layer's own `nuxt.config.ts` (route rules merge across layers). nuxt-robots turns this into `X-Robots-Tag: noindex, nofollow` + meta robots, and @nuxtjs/sitemap's route-rules integration drops non-indexable routes from the sitemap — no separate sitemap `exclude` needed. Production robots.txt is untouched (empty `Disallow:`); exclusion is header/meta-based, verified via `?mockProductionEnv` (`data-production-content="noindex, nofollow"`, scaffold route noindex vs `/o-nas` index).
+- Typecheck gap in nuxt-robots 6.0.8: the `robots` route-rule augmentation of `NitroRouteConfig` lives only in generated `.nuxt/types/nuxt-robots-nitro.d.ts`, referenced from `.nuxt/nuxt.d.ts` (app context) but not `.nuxt/nuxt.node.d.ts` — the node-context program (`.nuxt/tsconfig.node.json`) that typechecks `nuxt.config` files. Fixed with a triple-slash `/// <reference path="../../.nuxt/types/nuxt-robots-nitro.d.ts" />` in each layer config; safe because `nuxi prepare` (run by both build and typecheck) generates the file first.
+- Isolation check for pre-existing `/clanky` 404 (already documented under ticket 01): reproduced identically with the three new layers temporarily removed, and production also returns 404 — confirmed unrelated to this ticket.
