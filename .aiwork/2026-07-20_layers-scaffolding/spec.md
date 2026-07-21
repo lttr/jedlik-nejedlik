@@ -142,5 +142,3 @@ the wiring proof.
   regression check).
 - `/_scaffold/customers|lms|shop` render; `/sitemap.xml` and robots do not
   list them.
-- After merge to `master`: Coolify deploy succeeds (monitor-deploy) and
-  production homepage unchanged.
