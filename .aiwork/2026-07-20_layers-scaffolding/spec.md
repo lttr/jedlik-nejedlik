@@ -72,6 +72,9 @@ layers/directus/
   nuxt.config.ts
   shared/utils/directus.ts   # createDirectusClient(url) — pure factory,
                              # no Vue/Nitro APIs
+  shared/utils/schemas.ts    # zod wire codecs (parse + null→undefined
+                             # normalisation); single source of collection
+                             # shapes — wire types derive from their inputs
   shared/types/directus.ts   # Schema + collection wire types
                              # (area 01 replaces content with kurzy schema)
   app/utils/directus.ts      # getDirectusClient() singleton via
@@ -94,8 +97,9 @@ enforces nothing between them):
 - Domain layers and the root app consume the `directus` layer only via its
   auto-imported functions and types.
 - The `directus` layer imports nothing from other layers or the root app,
-  and never gains domain logic — client construction, schema types, and
-  asset-URL helpers only.
+  and never gains domain logic — client construction, schema types, wire
+  codecs (zod parse/normalisation of Directus responses), and asset-URL
+  helpers only.
 
 Verified against installed Nuxt 4.4.4 source: each layer's `shared/utils`
 and `shared/types` are scanned for app-side auto-imports

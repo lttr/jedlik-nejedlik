@@ -2,6 +2,9 @@
 // Schema level. Kept free of app imports so both app and Nitro code can use
 // them.
 
+import type { z } from "zod"
+import type { BiographyExpertSchema } from "../utils/schemas"
+
 // Wire shape of `articles` collection in Directus.
 export interface ArticleCollection {
   id: number
@@ -11,21 +14,9 @@ export interface ArticleCollection {
   status: string
 }
 
-// Wire shape of `biography_expert`: every column the SDK can address —
-// fetched columns plus columns we filter on but don't fetch. NULLable
-// columns stay `| null` here; composables normalise for consumers.
-export interface BiographyExpertCollection {
-  name: string
-  description: string | null
-  url: string | null
-  photo: {
-    id: string
-    width: number | null
-    height: number | null
-    description: string | null
-  } | null
-  status: string
-}
+// Wire shape of `biography_expert`: the codec's input plus `status`, a
+// column we filter on but don't fetch.
+export type BiographyExpertCollection = z.input<typeof BiographyExpertSchema> & { status: string }
 
 export type FormSubmission = Record<string, unknown>
 
