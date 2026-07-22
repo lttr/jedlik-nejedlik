@@ -1,0 +1,35 @@
+{
+  "collection": "articles",
+  "meta": {
+    "accountability": "all",
+    "archive_app_filter": true,
+    "archive_field": "status",
+    "archive_value": "archived",
+    "collapse": "open",
+    "collection": "articles",
+    "color": null,
+    "display_template": null,
+    "group": null,
+    "hidden": true,
+    "icon": "article",
+    "item_duplication_fields": null,
+    "note": "Články",
+    "preview_url": "https://jedlik-nejedlik-test.lttr.cz/clanky/{{id}}",
+    "singleton": false,
+    "sort": null,
+    "sort_field": "sort",
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "plural": "Články",
+        "singular": "Článek",
+        "translation": "Články"
+      }
+    ],
+    "unarchive_value": "draft",
+    "versioning": false
+  },
+  "schema": {
+    "name": "articles"
+  }
+}

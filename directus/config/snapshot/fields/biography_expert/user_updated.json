@@ -1,0 +1,48 @@
+{
+  "collection": "biography_expert",
+  "field": "user_updated",
+  "meta": {
+    "collection": "biography_expert",
+    "conditions": null,
+    "display": "user",
+    "display_options": null,
+    "field": "user_updated",
+    "group": null,
+    "hidden": true,
+    "interface": "select-dropdown-m2o",
+    "note": null,
+    "options": {
+      "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+    },
+    "readonly": true,
+    "required": false,
+    "searchable": true,
+    "sort": 6,
+    "special": [
+      "user-updated"
+    ],
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "char",
+    "default_value": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "directus_users",
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": 36,
+    "name": "user_updated",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "biography_expert"
+  },
+  "type": "string"
+}

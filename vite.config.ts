@@ -1,6 +1,9 @@
 import { defineConfig } from "vite-plus"
 
 const ignorePatterns = [
+  // Machine-generated directus-sync dump — formatting it would fight
+  // every `vp run directus:pull`.
+  "directus/config/**",
   "**/.nuxt/**",
   "**/.output/**",
   "**/cache/**",
@@ -38,6 +41,10 @@ export default defineConfig({
       "verify:typecheck": { command: "nuxi typecheck", cwd: "web", input: srcInput },
       "verify:fallow": { command: "fallow", input: srcInput },
       "verify:smoke": { command: "scripts/smoke-dev.sh" },
+      // Network-facing Directus config-as-code commands — never cache, a
+      // replayed result would mask drift on the live instance.
+      "directus:pull": { command: "directus-sync pull", cache: false },
+      "directus:diff": { command: "directus-sync diff", cache: false },
       "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
       "verify:all": {
         command: "echo verify done",

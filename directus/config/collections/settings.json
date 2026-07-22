@@ -1,0 +1,97 @@
+[
+  {
+    "_syncId": "_sync_default_settings",
+    "auth_login_attempts": 7,
+    "auth_password_policy": "/^.{8,}$/",
+    "basemaps": null,
+    "custom_aspect_ratios": null,
+    "custom_css": null,
+    "default_appearance": "auto",
+    "default_language": "cs-CZ",
+    "default_theme_dark": null,
+    "default_theme_light": null,
+    "mapbox_key": null,
+    "mcp_allow_deletes": false,
+    "mcp_enabled": true,
+    "mcp_prompts_collection": null,
+    "mcp_system_prompt": null,
+    "mcp_system_prompt_enabled": true,
+    "module_bar": [
+      {
+        "enabled": true,
+        "id": "content",
+        "type": "module"
+      },
+      {
+        "enabled": false,
+        "id": "visual",
+        "type": "module"
+      },
+      {
+        "enabled": true,
+        "id": "users",
+        "type": "module"
+      },
+      {
+        "enabled": true,
+        "id": "files",
+        "type": "module"
+      },
+      {
+        "enabled": true,
+        "id": "insights",
+        "type": "module"
+      },
+      {
+        "enabled": true,
+        "id": "settings",
+        "locked": true,
+        "type": "module"
+      },
+      {
+        "enabled": true,
+        "icon": "arrow_selector_tool",
+        "id": "bOiMQeqqoP1JfmIQZtz9Q",
+        "name": "jedlik-nejedlik.cz",
+        "type": "link",
+        "url": "https://jedlik-nejedlik.cz"
+      }
+    ],
+    "org_name": "Lukáš Trumm",
+    "product_updates": false,
+    "project_color": "#ABC2FF",
+    "project_descriptor": "Jídlo je radost",
+    "project_name": "Jedlík-nejedlík",
+    "project_owner": "lukas.trumm@gmail.com",
+    "project_status": null,
+    "project_usage": "commercial",
+    "public_note": null,
+    "public_registration": false,
+    "public_registration_email_filter": null,
+    "public_registration_role": null,
+    "public_registration_verify_email": true,
+    "report_bug_url": null,
+    "report_error_url": null,
+    "report_feature_url": null,
+    "storage_asset_presets": [
+      {
+        "fit": "contain",
+        "format": "jpeg",
+        "key": "light",
+        "quality": 80,
+        "transforms": [
+          [
+            "progressive",
+            true
+          ]
+        ],
+        "withoutEnlargement": true
+      }
+    ],
+    "storage_asset_transform": "all",
+    "storage_default_folder": null,
+    "theme_dark_overrides": null,
+    "theme_light_overrides": null,
+    "visual_editor_urls": null
+  }
+]

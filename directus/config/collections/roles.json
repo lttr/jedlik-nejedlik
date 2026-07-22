@@ -1,0 +1,23 @@
+[
+  {
+    "_syncId": "_sync_default_admin_role",
+    "description": null,
+    "icon": "all_out",
+    "name": "MCP",
+    "parent": null
+  },
+  {
+    "_syncId": "28434dcf-c51d-46c1-ae7d-6b8a1dff04bf",
+    "description": "$t:admin_description",
+    "icon": "verified",
+    "name": "Administrator",
+    "parent": null
+  },
+  {
+    "_syncId": "4efe25ac-0d3c-4130-8197-9f05a25e0858",
+    "description": "Může zadávat data a nahrávat soubory",
+    "icon": "supervised_user_circle",
+    "name": "Redaktor",
+    "parent": null
+  }
+]

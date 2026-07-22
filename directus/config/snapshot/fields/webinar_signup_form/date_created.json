@@ -1,0 +1,54 @@
+{
+  "collection": "webinar_signup_form",
+  "field": "date_created",
+  "meta": {
+    "collection": "webinar_signup_form",
+    "conditions": null,
+    "display": "datetime",
+    "display_options": {
+      "relative": true
+    },
+    "field": "date_created",
+    "group": null,
+    "hidden": false,
+    "interface": "datetime",
+    "note": null,
+    "options": null,
+    "readonly": true,
+    "required": false,
+    "searchable": true,
+    "sort": 2,
+    "special": [
+      "date-created",
+      "cast-timestamp"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Datum vytvoření"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "data_type": "datetime",
+    "default_value": null,
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": null,
+    "name": "date_created",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "webinar_signup_form"
+  },
+  "type": "timestamp"
+}

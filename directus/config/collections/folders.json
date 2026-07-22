@@ -1,0 +1,32 @@
+[
+  {
+    "_syncId": "0f2d2301-18dc-4d09-a77b-ab39adba1efc",
+    "name": "ebook-cukrovi",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  },
+  {
+    "_syncId": "34456a3d-e977-4a61-8b2f-01b70904c890",
+    "name": "média",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  },
+  {
+    "_syncId": "532bfb77-87fb-46c5-94e7-addfb04e79a0",
+    "name": "Public",
+    "parent": null
+  },
+  {
+    "_syncId": "77f401bf-6866-4914-b5a5-8f25a4fafd30",
+    "name": "lidé",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  },
+  {
+    "_syncId": "ab695468-ca77-4611-8b00-cce3fc0eb8f5",
+    "name": "přednášky",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  },
+  {
+    "_syncId": "e08ff789-3b86-4470-bdf9-c176ea11dbe8",
+    "name": "dokumenty",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  }
+]

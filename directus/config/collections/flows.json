@@ -1,0 +1,82 @@
+[
+  {
+    "_syncId": "41cf85fe-e428-4edc-bc90-16aa5c69167c",
+    "accountability": "all",
+    "color": "#FFC23B",
+    "description": null,
+    "icon": "book_ribbon",
+    "name": "Vyplněn formulář \"Newsletter pro odborníky\"",
+    "operation": "edcfbaa1-bd11-4a19-bcab-e51320725bf7",
+    "options": {
+      "collections": [
+        "newsletter_experts_form"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "action"
+    },
+    "status": "active",
+    "trigger": "event"
+  },
+  {
+    "_syncId": "7ee6e584-634f-4a10-9299-ee7d41755433",
+    "accountability": "all",
+    "color": "#3399FF",
+    "description": null,
+    "icon": "newspaper",
+    "name": "Vyplněn formulář \"Podcast otázky\"",
+    "operation": "3e26326e-963d-4918-8aef-649113b27a5c",
+    "options": {
+      "collections": [
+        "podcast_question_form"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "filter"
+    },
+    "status": "active",
+    "trigger": "event"
+  },
+  {
+    "_syncId": "ce9afe0c-572e-41b7-b03d-d187e3a13cc7",
+    "accountability": "all",
+    "color": null,
+    "description": null,
+    "icon": "contact_phone",
+    "name": "Vyplněn formulář \"Poptávka konzultace\"",
+    "operation": "1e2b25ce-40a7-496e-9770-f4f2e4c5802d",
+    "options": {
+      "collections": [
+        "consultation_form"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "filter"
+    },
+    "status": "active",
+    "trigger": "event"
+  },
+  {
+    "_syncId": "e21b879f-7f45-4a4b-8a90-c06c48ac9b75",
+    "accountability": "all",
+    "color": "#FFA439",
+    "description": null,
+    "icon": "child_care",
+    "name": "Vyplněn formulář \"Newsletter pro rodiče\"",
+    "operation": "47d11287-5ce5-4f8a-8492-24ab6aded91e",
+    "options": {
+      "collections": [
+        "newsletter_parents_form"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "action"
+    },
+    "status": "active",
+    "trigger": "event"
+  }
+]

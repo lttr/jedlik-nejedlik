@@ -1,0 +1,25 @@
+{
+  "collection": "biography_expert",
+  "field": "photo",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "biography_expert",
+    "many_field": "photo",
+    "one_allowed_collections": null,
+    "one_collection": "directus_files",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": null,
+    "sort_field": null
+  },
+  "related_collection": "directus_files",
+  "schema": {
+    "column": "photo",
+    "constraint_name": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "directus_files",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "table": "biography_expert"
+  }
+}

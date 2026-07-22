@@ -1,0 +1,49 @@
+{
+  "collection": "consultation_form",
+  "field": "service",
+  "meta": {
+    "collection": "consultation_form",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "service",
+    "group": null,
+    "hidden": false,
+    "interface": "input",
+    "note": "Konzultace, webinář, přednáška, měření na inbody 270",
+    "options": null,
+    "readonly": false,
+    "required": true,
+    "searchable": true,
+    "sort": 4,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Služba"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "data_type": "varchar",
+    "default_value": null,
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": false,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": 255,
+    "name": "service",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "consultation_form"
+  },
+  "type": "string"
+}

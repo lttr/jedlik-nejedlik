@@ -1,0 +1,72 @@
+[
+  {
+    "_syncId": "72729707-ccca-4f3b-b882-2b23c62cffc8",
+    "color": null,
+    "dashboard": "44ec801d-64fc-4fc7-8003-d9c78bdb25c7",
+    "height": 23,
+    "icon": null,
+    "name": "Počet přihlášení k newsletteru měsíčně",
+    "note": null,
+    "options": {
+      "aggregation": "count",
+      "collection": "newsletter_parents_form",
+      "color": "#FFA439",
+      "curveType": "stepline",
+      "dateField": "date_created",
+      "function": "count",
+      "grouping": null,
+      "missingData": "0",
+      "precision": "month",
+      "range": "auto",
+      "showLegend": true,
+      "valueField": "id",
+      "xAxis": "date_created"
+    },
+    "position_x": 1,
+    "position_y": 2,
+    "show_header": true,
+    "type": "time-series",
+    "width": 36
+  },
+  {
+    "_syncId": "abbf1215-6237-4f82-a67c-2d395e38f4b5",
+    "color": null,
+    "dashboard": "44ec801d-64fc-4fc7-8003-d9c78bdb25c7",
+    "height": 24,
+    "icon": null,
+    "name": null,
+    "note": null,
+    "options": {
+      "collection": "webinar_signup_form",
+      "color": "#D0495F",
+      "function": "countDistinct",
+      "xAxis": "webinar",
+      "yAxis": "id"
+    },
+    "position_x": 1,
+    "position_y": 27,
+    "show_header": false,
+    "type": "bar-chart",
+    "width": 36
+  },
+  {
+    "_syncId": "b8325ffb-bfc0-4257-b941-becb70bb5720",
+    "color": "#FFA348",
+    "dashboard": "44ec801d-64fc-4fc7-8003-d9c78bdb25c7",
+    "height": 6,
+    "icon": null,
+    "name": "Počet přihlášených do newsletteru",
+    "note": null,
+    "options": {
+      "collection": "newsletter_parents_form",
+      "field": "id",
+      "function": "count",
+      "sortField": null
+    },
+    "position_x": 38,
+    "position_y": 2,
+    "show_header": true,
+    "type": "metric",
+    "width": 19
+  }
+]

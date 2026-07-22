@@ -70,6 +70,24 @@ claude mcp add --transport http directus <directus-url>/mcp \
   --header "Authorization: Bearer <your-mcp-user-token>"
 ```
 
+### Directus config as code (pull-only)
+
+The instance's configuration (roles, policies, permissions, flows, settings, …)
+and schema snapshot are committed under `directus/config/`, dumped with
+[directus-sync](https://github.com/tractr/directus-sync) (config in
+`directus-sync.config.cjs`; requires the `directus-extension-sync` extension on
+the instance):
+
+```bash
+DIRECTUS_TOKEN=<admin-token> vp run directus:pull   # refresh the committed dump
+DIRECTUS_TOKEN=<admin-token> vp run directus:diff   # detect drift against the dump
+```
+
+The workflow is **pull-only**: Directus is configured in its admin app and
+changes are pulled into the repo as reviewable diffs — the dump is never pushed
+back. Flow `operations` are excluded from the dump because they embed
+third-party API keys (see the note in `directus-sync.config.cjs`).
+
 ## Deployment
 
 Hosted on **Coolify**, built with **Nixpacks**. The

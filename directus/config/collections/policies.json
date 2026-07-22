@@ -1,0 +1,70 @@
+[
+  {
+    "_syncId": "_sync_default_admin_policy",
+    "admin_access": true,
+    "app_access": false,
+    "description": "Použití přes AI nástroje",
+    "enforce_tfa": false,
+    "icon": "all_out",
+    "ip_access": [],
+    "name": "MCP",
+    "roles": [
+      {
+        "role": "_sync_default_admin_role",
+        "sort": null,
+        "user": null
+      }
+    ]
+  },
+  {
+    "_syncId": "_sync_default_public_policy",
+    "admin_access": false,
+    "app_access": false,
+    "description": "$t:public_description",
+    "enforce_tfa": false,
+    "icon": "public",
+    "ip_access": null,
+    "name": "$t:public_label",
+    "roles": [
+      {
+        "role": null,
+        "sort": 1,
+        "user": null
+      }
+    ]
+  },
+  {
+    "_syncId": "0d1d6890-e650-4dec-b0b2-16025e80ff4d",
+    "admin_access": false,
+    "app_access": true,
+    "description": null,
+    "enforce_tfa": false,
+    "icon": "badge",
+    "ip_access": null,
+    "name": "Redaktor",
+    "roles": [
+      {
+        "role": "4efe25ac-0d3c-4130-8197-9f05a25e0858",
+        "sort": 1,
+        "user": null
+      }
+    ]
+  },
+  {
+    "_syncId": "1e4bed25-34f6-4644-9996-442524964223",
+    "admin_access": true,
+    "app_access": true,
+    "description": "$t:admin_description",
+    "enforce_tfa": false,
+    "icon": "verified",
+    "ip_access": null,
+    "name": "Administrator",
+    "roles": [
+      {
+        "role": "28434dcf-c51d-46c1-ae7d-6b8a1dff04bf",
+        "sort": null,
+        "user": null
+      }
+    ]
+  }
+]

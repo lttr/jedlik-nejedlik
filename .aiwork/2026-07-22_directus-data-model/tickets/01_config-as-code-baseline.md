@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: []
 references:
   - "Spec: ../spec.md"
@@ -14,9 +14,9 @@ diffs against this baseline.
 
 ## Acceptance criteria
 
-- [ ] Directus instance version checked; either ≥ 11.16.1 or directus-sync
+- [x] Directus instance version checked; either ≥ 11.16.1 or directus-sync
       pinned to a compatible release (record which in implementation notes)
-- [ ] `directus-extension-sync` installed on the instance
-- [ ] directus-sync configured **pull-only** in the repo (no push workflow)
-- [ ] Baseline dump of the current (pre-Kurzy) instance config committed
-- [ ] `diff` against the instance reports clean immediately after pull
+- [x] `directus-extension-sync` installed on the instance
+- [x] directus-sync configured **pull-only** in the repo (no push workflow)
+- [x] Baseline dump of the current (pre-Kurzy) instance config committed
+- [x] `diff` against the instance reports clean immediately after pull
