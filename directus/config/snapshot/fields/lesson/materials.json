@@ -1,0 +1,33 @@
+{
+  "collection": "lesson",
+  "field": "materials",
+  "meta": {
+    "collection": "lesson",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "materials",
+    "group": null,
+    "hidden": false,
+    "interface": "files",
+    "note": "Soubory ke stažení (např. PDF pracovní listy)",
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 15,
+    "special": [
+      "files"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Doplňkové materiály"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}

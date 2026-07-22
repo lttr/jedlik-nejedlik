@@ -1,0 +1,60 @@
+{
+  "collection": "lesson",
+  "field": "type",
+  "meta": {
+    "collection": "lesson",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "type",
+    "group": null,
+    "hidden": false,
+    "interface": "select-dropdown",
+    "note": null,
+    "options": {
+      "choices": [
+        {
+          "text": "Video",
+          "value": "video"
+        },
+        {
+          "text": "Text",
+          "value": "text"
+        }
+      ]
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 12,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Typ"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "varchar",
+    "default_value": "video",
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": false,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": 255,
+    "name": "type",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "lesson"
+  },
+  "type": "string"
+}

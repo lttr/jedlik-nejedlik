@@ -1,0 +1,25 @@
+{
+  "collection": "lesson",
+  "field": "section",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "lesson",
+    "many_field": "section",
+    "one_allowed_collections": null,
+    "one_collection": "section",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "lessons",
+    "sort_field": "sort"
+  },
+  "related_collection": "section",
+  "schema": {
+    "column": "section",
+    "constraint_name": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "section",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "table": "lesson"
+  }
+}

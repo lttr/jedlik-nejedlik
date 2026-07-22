@@ -69,6 +69,34 @@
     "validation": null
   },
   {
+    "_syncId": "458062ff-a499-4cba-be2a-e07faf77a467",
+    "action": "read",
+    "collection": "course",
+    "fields": [
+      "id",
+      "status",
+      "sort",
+      "title",
+      "slug",
+      "description",
+      "cover",
+      "price_czk",
+      "sections"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "status": {
+            "_eq": "published"
+          }
+        }
+      ]
+    },
+    "policy": "_sync_default_public_policy",
+    "presets": null,
+    "validation": null
+  },
+  {
     "_syncId": "fd5f87d9-4f3f-4cd5-90f6-596bb38a7be8",
     "action": "read",
     "collection": "directus_files",
@@ -96,6 +124,34 @@
               }
             }
           ]
+        }
+      ]
+    },
+    "policy": "_sync_default_public_policy",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "a7be2060-c2ed-426a-894d-4af4805e0a78",
+    "action": "read",
+    "collection": "lesson",
+    "fields": [
+      "id",
+      "sort",
+      "section",
+      "title",
+      "type"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "section": {
+            "course": {
+              "status": {
+                "_eq": "published"
+              }
+            }
+          }
         }
       ]
     },
@@ -141,6 +197,32 @@
       "question"
     ],
     "permissions": null,
+    "policy": "_sync_default_public_policy",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "d11e598a-cfe5-41d1-b546-7aaaa520b191",
+    "action": "read",
+    "collection": "section",
+    "fields": [
+      "id",
+      "sort",
+      "course",
+      "title",
+      "lessons"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "course": {
+            "status": {
+              "_eq": "published"
+            }
+          }
+        }
+      ]
+    },
     "policy": "_sync_default_public_policy",
     "presets": null,
     "validation": null

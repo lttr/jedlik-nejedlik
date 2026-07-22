@@ -1,0 +1,68 @@
+{
+  "collection": "section",
+  "field": "unlock_rule",
+  "meta": {
+    "collection": "section",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "unlock_rule",
+    "group": null,
+    "hidden": false,
+    "interface": "select-dropdown",
+    "note": "Kdy se sekce studentovi odemkne",
+    "options": {
+      "choices": [
+        {
+          "text": "Ihned",
+          "value": "immediate"
+        },
+        {
+          "text": "Po splnění testu",
+          "value": "test"
+        },
+        {
+          "text": "Ručně",
+          "value": "manual"
+        },
+        {
+          "text": "Po čase od nákupu",
+          "value": "time_since_purchase"
+        }
+      ]
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 12,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Pravidlo odemčení"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "varchar",
+    "default_value": "immediate",
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": false,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": 255,
+    "name": "unlock_rule",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "section"
+  },
+  "type": "string"
+}

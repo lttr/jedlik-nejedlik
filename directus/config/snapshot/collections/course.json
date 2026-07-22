@@ -1,0 +1,35 @@
+{
+  "collection": "course",
+  "meta": {
+    "accountability": "all",
+    "archive_app_filter": true,
+    "archive_field": "status",
+    "archive_value": "archived",
+    "collapse": "open",
+    "collection": "course",
+    "color": null,
+    "display_template": "{{title}}",
+    "group": "kurzy",
+    "hidden": false,
+    "icon": "school",
+    "item_duplication_fields": null,
+    "note": "Kurz — prodávaný digitální produkt složený ze sekcí",
+    "preview_url": null,
+    "singleton": false,
+    "sort": 1,
+    "sort_field": "sort",
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "plural": "Kurzy",
+        "singular": "Kurz",
+        "translation": "Kurzy"
+      }
+    ],
+    "unarchive_value": "draft",
+    "versioning": false
+  },
+  "schema": {
+    "name": "course"
+  }
+}

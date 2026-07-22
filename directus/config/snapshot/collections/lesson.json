@@ -1,0 +1,35 @@
+{
+  "collection": "lesson",
+  "meta": {
+    "accountability": "all",
+    "archive_app_filter": true,
+    "archive_field": null,
+    "archive_value": null,
+    "collapse": "open",
+    "collection": "lesson",
+    "color": null,
+    "display_template": "{{title}}",
+    "group": "kurzy",
+    "hidden": false,
+    "icon": "play_lesson",
+    "item_duplication_fields": null,
+    "note": "Lekce — video nebo text s doplňkovými materiály",
+    "preview_url": null,
+    "singleton": false,
+    "sort": 3,
+    "sort_field": "sort",
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "plural": "Lekce",
+        "singular": "Lekce",
+        "translation": "Lekce"
+      }
+    ],
+    "unarchive_value": null,
+    "versioning": false
+  },
+  "schema": {
+    "name": "lesson"
+  }
+}

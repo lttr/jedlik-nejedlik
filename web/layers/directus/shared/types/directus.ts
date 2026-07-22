@@ -3,7 +3,12 @@
 // them.
 
 import type { z } from "zod"
-import type { BiographyExpertSchema } from "../utils/schemas"
+import type {
+  BiographyExpertSchema,
+  CourseSchema,
+  LessonSchema,
+  SectionSchema,
+} from "../utils/schemas"
 
 // Wire shape of `articles` collection in Directus.
 export interface ArticleCollection {
@@ -20,9 +25,49 @@ export type BiographyExpertCollection = z.input<typeof BiographyExpertSchema> & 
 
 export type FormSubmission = Record<string, unknown>
 
+// Wire shapes of the Kurzy collections: the codec's input plus columns that
+// exist on the wire but aren't part of the public codec (status is filtered
+// on; the rest are config/paid fields for later areas).
+export type CourseCollection = z.input<typeof CourseSchema> & {
+  status: string
+  test_pass_threshold: number | null
+  user_created: string | null
+  date_created: string | null
+  date_updated: string | null
+  sections: number[]
+}
+
+export type SectionCollection = z.input<typeof SectionSchema> & {
+  unlock_rule: string
+  unlock_delay_days: number | null
+  date_created: string | null
+  date_updated: string | null
+  lessons: number[]
+}
+
+export type LessonCollection = z.input<typeof LessonSchema> & {
+  body: string | null
+  video_uid: string | null
+  date_created: string | null
+  date_updated: string | null
+  materials: number[]
+}
+
+// Junction rows behind `lesson.materials` (M2M to directus_files).
+export interface LessonMaterialCollection {
+  id: number
+  lesson_id: number
+  directus_files_id: string
+  sort: number | null
+}
+
 export interface Schema {
   articles: ArticleCollection[]
   biography_expert: BiographyExpertCollection[]
+  course: CourseCollection[]
+  section: SectionCollection[]
+  lesson: LessonCollection[]
+  lesson_material: LessonMaterialCollection[]
   cooperation_form: FormSubmission[]
   newsletter_experts_form: FormSubmission[]
   podcast_question_form: FormSubmission[]

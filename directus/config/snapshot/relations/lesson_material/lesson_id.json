@@ -1,0 +1,25 @@
+{
+  "collection": "lesson_material",
+  "field": "lesson_id",
+  "meta": {
+    "junction_field": "directus_files_id",
+    "many_collection": "lesson_material",
+    "many_field": "lesson_id",
+    "one_allowed_collections": null,
+    "one_collection": "lesson",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "materials",
+    "sort_field": "sort"
+  },
+  "related_collection": "lesson",
+  "schema": {
+    "column": "lesson_id",
+    "constraint_name": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "lesson",
+    "on_delete": "CASCADE",
+    "on_update": "NO ACTION",
+    "table": "lesson_material"
+  }
+}

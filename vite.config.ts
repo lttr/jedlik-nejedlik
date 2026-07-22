@@ -45,6 +45,17 @@ export default defineConfig({
       // replayed result would mask drift on the live instance.
       "directus:pull": { command: "directus-sync pull", cache: false },
       "directus:diff": { command: "directus-sync diff", cache: false },
+      // On-demand permission probes against the production instance; not in
+      // verify:all on purpose. Runs upstream vitest via the `vitest-probe`
+      // alias: the aliased vitest→vite-plus-test drop-in (0.1.24) ships no
+      // `vitest` bin for `vp test` and its bundled rolldown is version-skewed
+      // against the vite-plus 0.2.5 native binding. DELETE the alias and
+      // switch to `vp test` once vite-plus-test catches up with the CLI.
+      "directus:probe": {
+        command: "node node_modules/vitest-probe/vitest.mjs run --config vitest.probes.config.ts",
+        cwd: "web",
+        cache: false,
+      },
       "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
       "verify:all": {
         command: "echo verify done",
@@ -178,6 +189,14 @@ export default defineConfig({
       {
         // Build config files legitimately read process.env at build time.
         files: ["**/*.config.{ts,js,mjs,cjs}"],
+        rules: {
+          "node/no-process-env": "off",
+        },
+      },
+      {
+        // Directus API probes read role tokens from the environment at
+        // runtime (see web/tests/probes/support.ts).
+        files: ["web/tests/**"],
         rules: {
           "node/no-process-env": "off",
         },

@@ -1,0 +1,49 @@
+{
+  "collection": "lesson",
+  "field": "body",
+  "meta": {
+    "collection": "lesson",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "body",
+    "group": null,
+    "hidden": false,
+    "interface": "input-rich-text-html",
+    "note": "Text lekce, u videa doplňkové poznámky",
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 14,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Obsah"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "data_type": "text",
+    "default_value": null,
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": null,
+    "name": "body",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "lesson"
+  },
+  "type": "text"
+}

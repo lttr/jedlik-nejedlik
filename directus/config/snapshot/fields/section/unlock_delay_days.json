@@ -1,0 +1,64 @@
+{
+  "collection": "section",
+  "field": "unlock_delay_days",
+  "meta": {
+    "collection": "section",
+    "conditions": [
+      {
+        "hidden": true,
+        "name": "Skrýt mimo pravidlo „Po čase od nákupu“",
+        "options": {},
+        "rule": {
+          "_and": [
+            {
+              "unlock_rule": {
+                "_neq": "time_since_purchase"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "display": null,
+    "display_options": null,
+    "field": "unlock_delay_days",
+    "group": null,
+    "hidden": false,
+    "interface": "input",
+    "note": "Počet dní od nákupu — jen pro pravidlo „Po čase od nákupu“",
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 13,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Odemknout po (dnech)"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "integer",
+    "default_value": null,
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": null,
+    "name": "unlock_delay_days",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "section"
+  },
+  "type": "integer"
+}

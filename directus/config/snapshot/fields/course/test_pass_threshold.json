@@ -1,0 +1,60 @@
+{
+  "collection": "course",
+  "field": "test_pass_threshold",
+  "meta": {
+    "collection": "course",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "test_pass_threshold",
+    "group": null,
+    "hidden": false,
+    "interface": "input",
+    "note": "Procento správných odpovědí nutné ke splnění testů v tomto kurzu",
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 15,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Hranice úspěšnosti testu (%)"
+      }
+    ],
+    "validation": {
+      "_and": [
+        {
+          "test_pass_threshold": {
+            "_between": [
+              0,
+              100
+            ]
+          }
+        }
+      ]
+    },
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "integer",
+    "default_value": null,
+    "foreign_key_column": null,
+    "foreign_key_table": null,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": null,
+    "name": "test_pass_threshold",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "course"
+  },
+  "type": "integer"
+}

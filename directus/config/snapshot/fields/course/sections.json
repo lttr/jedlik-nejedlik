@@ -1,0 +1,36 @@
+{
+  "collection": "course",
+  "field": "sections",
+  "meta": {
+    "collection": "course",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "sections",
+    "group": null,
+    "hidden": false,
+    "interface": "list-o2m",
+    "note": null,
+    "options": {
+      "enableSelect": false,
+      "template": "{{title}}"
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 16,
+    "special": [
+      "o2m"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Sekce"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}
