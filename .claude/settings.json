@@ -43,5 +43,16 @@
         ]
       }
     ]
+  },
+  "extraKnownMarketplaces": {
+    "lttr-claude-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "lttr/claude-marketplace"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "aiwork@lttr-claude-marketplace": true
   }
 }
