@@ -83,5 +83,22 @@
         "user": null
       }
     ]
+  },
+  {
+    "_syncId": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "admin_access": false,
+    "app_access": true,
+    "description": "Správa obsahu kurzů + podpora: čtení objednávek a souhlasů, ruční přidělení oprávnění ke kurzu",
+    "enforce_tfa": false,
+    "icon": "edit_note",
+    "ip_access": null,
+    "name": "Autor",
+    "roles": [
+      {
+        "role": "a42dc8e2-5f1d-4d11-9bea-3b5327c4279a",
+        "sort": 1,
+        "user": null
+      }
+    ]
   }
 ]

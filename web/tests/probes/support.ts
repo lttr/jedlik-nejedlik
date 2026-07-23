@@ -44,6 +44,26 @@ export async function probeSend(
   }
 }
 
+// Multipart file upload (POST /files). Field order matters to Directus:
+// scalar metadata first, the binary part last.
+export async function probeUpload(
+  token: string,
+  file: { name: string; content: string; type: string },
+  fields: Record<string, string> = {},
+): Promise<ProbeResponse> {
+  const form = new FormData()
+  for (const [key, value] of Object.entries(fields)) {
+    form.append(key, value)
+  }
+  form.append("file", new Blob([file.content], { type: file.type }), file.name)
+  const response = await fetch(`${DIRECTUS_URL}/files`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: form,
+  })
+  return { status: response.status, body: (await response.json()) as ProbeResponse["body"] }
+}
+
 // Raw GET (e.g. /assets file downloads) where only the status matters.
 export async function probeStatus(path: string, token?: string): Promise<number> {
   const response = await fetch(`${DIRECTUS_URL}${path}`, {

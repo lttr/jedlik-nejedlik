@@ -26,5 +26,12 @@
     "icon": "supervised_user_circle",
     "name": "Redaktor",
     "parent": null
+  },
+  {
+    "_syncId": "a42dc8e2-5f1d-4d11-9bea-3b5327c4279a",
+    "description": "Autor kurzů — spravuje obsah kurzů (Kurzy, Sekce, Lekce, materiály) v administraci",
+    "icon": "edit_note",
+    "name": "Autor",
+    "parent": null
   }
 ]

@@ -298,3 +298,123 @@ Chronological log. Newest entries at the bottom.
 apply`, 0/0/0 across all tracked collections); dump diff reviewed — no
   secrets (user tokens are not dumped; the new flow row carries none).
 - **Ticket 03 done.**
+- **Ticket 04 started** (author role + dummy course, FP-11).
+- Goal understanding: an Author role + policy on production that lets the
+  content author manage the whole Kurzy content model in the Directus admin
+  app (app_access true, admin_access false): full CRUD on `course` /
+  `section` / `lesson` / `lesson_material` + file uploads; read-only on
+  `order` / `order_consent`; read + create + delete on `entitlement` (the
+  manual grant/unlock support path, no update). Probe coverage extends the
+  harness with an author matrix; the dummy-course build, friction findings,
+  and the manual entitlement grant are HUMAN-ONLY (they verify FP-11 — the
+  author working without a developer) and stay unchecked here.
+- Naming: glossary has no Author entry; role name **Autor** follows the
+  existing Czech role names (Student, Redaktor). New role + new policy
+  mirroring the Student structure (role ↔ single policy, sync-tracked).
+- Intended build order: (1) inspect instance (existing Redaktor role users —
+  decide how the real author's account gets the policy); (2) create Autor
+  role + policy + permissions via REST (admin token via the ticket-01
+  `claude mcp get directus` extraction, curl-like UA for Cloudflare);
+  (3) author needs support reads the spec implies but doesn't spell out:
+  `directus_users` read (limited fields) so the admin app can render/pick
+  the student on order/entitlement rows, `directus_folders` read so the
+  file library is browsable; (4) [TEST] probe author user + static token
+  (env var `DIRECTUS_PROBE_AUTHOR_TOKEN`, value never committed; student
+  probe tokens will be regenerated the same documented way since values
+  aren't stored anywhere); (5) `author.probe.ts` — content CRUD allowed
+  incl. multipart file upload, draft visibility, transactional write
+  denials (order create/update, order_consent create, entitlement update),
+  entitlement create+delete allowed, transactional reads allowed; self-
+  cleaning; (6) run full probe suite (public + student + author) against
+  production; (7) review field metadata for authoring UX; (8) author
+  checklist for the human FP-11 steps recorded here; (9) re-pull dump +
+  diff, typecheck, commit; ticket stays `in-progress` pending the human
+  steps.
+- File permissions decision: `directus_files` create/read/update for the
+  author; delete only inside the "Materiály kurzů" folder subtree so a
+  mis-click cannot destroy marketing assets (authors still fully manage
+  their own Materials). Will verify empirically that upload + admin file
+  library work with this shape.
+- **Autor role + policy created on production** (role
+  1dd066f4-e130-40e2-8585-247b3b2e7a0a, policy
+  67bf15ab-fa2c-4d33-8961-ea4337cc4446; sync ids a42dc8e2… / d15b2dbf… in
+  the dump). Policy `app_access: true`, `admin_access: false` — the admin
+  app works, instance administration does not (probe-verified: `POST
+/collections` and `POST /permissions` are 403). 27 permissions:
+  - `course` / `section` / `lesson` / `lesson_material`: create + read +
+    update + delete, all fields, **no status filter** — authors see drafts
+    and config fields (`test_pass_threshold`, `unlock_rule`,
+    `unlock_delay_days`), verified by probe.
+  - `directus_files`: create/read/update everywhere; **delete only inside
+    "Materiály kurzů"** (filter `folder == 6173b74f-…`) so an author
+    mis-click cannot destroy marketing assets. Verified: delete of an
+    uploaded Material 204, delete of a file outside the folder 403.
+  - `order` / `order_consent`: read all fields (support view), no writes —
+    order create/update/delete and consent create are 403 by omission.
+  - `entitlement`: read + create + delete, **no update** (granted_at is
+    immutable history; regrant = delete + create). Create carries preset
+    `granted_at: "$NOW"` — empirically confirmed: a create WITHOUT
+    `granted_at` passes the required-field validation and lands with the
+    server timestamp, so the manual grant in the admin app needs only
+    Student + Kurz. Fields limited to student/course/order/granted_at.
+  - Admin-app support reads the spec implies: `directus_users` read limited
+    to id/first_name/last_name/email (the M2O student picker template
+    `{{first_name}} {{last_name}} ({{email}})` renders; `token`, `password`,
+    `role` etc. stay denied — explicit field request is 403),
+    `directus_folders` read (file-library tree).
+- **Probe author fixture**: user `probe-author@jedlik-nejedlik.cz`
+  ("[TEST] Autor Probe (nemazat)", id 67f8098f-2852-465d-bd9c-8738565dd740,
+  role Autor, active) with a static token supplied to probes via
+  **`DIRECTUS_PROBE_AUTHOR_TOKEN`**. Regeneration (same as the student
+  tokens): with the admin token (`claude mcp get directus` from the repo
+  cwd) `PATCH /users/67f8098f-…` with a fresh random `token`. Note: the two
+  student probe tokens were **rotated** during this ticket (their values
+  were never stored anywhere; rotation is the documented path) — any
+  locally saved env values must be refreshed the same way.
+- **Author probes**: `web/tests/probes/author.probe.ts` (18 tests) — full
+  content lifecycle (draft course incl. config fields, section with unlock
+  rule, text lesson create/update, multipart Material upload into the
+  materials folder via new `probeUpload` helper in `support.ts`, junction
+  attach + expansion read, deletes), folder-scoped file delete (in-folder
+  204 / outside 403), transactional reads allowed + writes denied (order
+  create/update/delete, consent create, entitlement update), manual
+  grant/revoke path (create without granted_at → server-side $NOW, delete
+  204), and no-administration checks. Suite self-cleans; afterAll admin
+  sweep only as failure safety net. **Full matrix 59/59 green** (14 public
+  - 27 student + 18 author) against production, `vp run typecheck` green,
+    eslint clean.
+- Verification: `vp run directus:pull` + `diff` clean (0 to-create/update/
+  delete across all tracked collections); dump gains the Autor role, policy,
+  and 27 permissions; schema snapshot unchanged (no schema was touched this
+  ticket). Dump reviewed — no secrets (user tokens are not dumped).
+- **Remaining: HUMAN-ONLY FP-11 steps** (dummy course authored in the admin
+  app, friction findings, manual entitlement grant). Ticket 04 stays
+  `in-progress`; checklist below.
+
+### Checklist for the author (FP-11 verification — do in the admin app, no developer)
+
+Předpoklad (jednorázově, admin): pozvat skutečnou autorku v administraci
+(Nastavení → Uživatelé → Pozvat, role **Autor**), nebo nastavit heslo
+účtu `probe-author@jedlik-nejedlik.cz` (jeho statický token pro proby tím
+nezanikne). Administrace: https://obsah-jedlika.lttr.cz/admin
+
+1. **Založit zkušební kurz** (Kurzy → +): název, slug, prodejní popis,
+   obálka, cena v Kč, hranice úspěšnosti testu; stav nejdřív „Koncept",
+   na závěr „Publikováno".
+2. **Sekce — pokrýt všechna čtyři pravidla odemčení**: jedna sekce
+   `immediate` (hned), jedna `test`, jedna `manual` (ruční), jedna
+   `time_since_purchase` (s vyplněným počtem dní — pole se ukáže až po
+   zvolení tohoto pravidla). Seřadit přetažením.
+3. **Lekce**: alespoň jedna video lekce (Cloudflare Stream UID do pole
+   Video UID + poznámky do těla) a jedna textová lekce (tělo). Seřadit.
+4. **Doplňkový materiál**: k jedné lekci nahrát alespoň jeden soubor
+   (PDF); při nahrání zvolit složku **Materiály kurzů**.
+5. **Ruční přidělení oprávnění**: Oprávnění ke kurzům → + → vybrat
+   studenta „[TEST] Student Bez opravneni" a nový zkušební kurz, uložit
+   (Čas přidělení se předvyplní). Ověřit, že záznam vznikl, a potom ho
+   zase **smazat** (mazání je zároveň postup pro ruční odebrání přístupu).
+   Pozn.: nemazat existující oprávnění „[TEST] Student S opravnenim ×
+   [TEST] kurz publikovaný" — je to fixture pro proby.
+6. **Zapsat si každé zadrhnutí** (co nešlo najít, co bylo matoucí, kde
+   bylo potřeba rady) — nálezy se zapíší jako spec-level findings do
+   tohoto souboru a teprve pak se ticket 04 uzavře.

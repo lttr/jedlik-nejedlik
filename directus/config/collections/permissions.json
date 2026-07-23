@@ -1206,5 +1206,345 @@
     "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
     "presets": null,
     "validation": null
+  },
+  {
+    "_syncId": "fdf209ec-7a17-463f-ab92-8c780b5c9b72",
+    "action": "create",
+    "collection": "course",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "dcc1f8cf-1c1c-4244-82f5-3a005c761610",
+    "action": "delete",
+    "collection": "course",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "cd85ff43-41e9-4f3f-9087-5c92351fc1fc",
+    "action": "read",
+    "collection": "course",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "3cdb8a2f-c788-42f6-805a-ccfcbdd2613e",
+    "action": "update",
+    "collection": "course",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "79f4917c-c5ac-4126-90a2-b23ca2626bea",
+    "action": "create",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "5d970e73-541b-4237-913b-5f826ae375de",
+    "action": "delete",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "folder": {
+            "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+          }
+        }
+      ]
+    },
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "f6e20624-cb13-41ac-a526-dbab636f49e7",
+    "action": "read",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "8138007f-8d56-4614-a172-82117f52f620",
+    "action": "update",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "a0f72917-5731-4e63-ac2b-9c6ddd20ccc4",
+    "action": "read",
+    "collection": "directus_folders",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "6a156df7-9e9f-48c6-9a92-c6195b384784",
+    "action": "read",
+    "collection": "directus_users",
+    "fields": [
+      "id",
+      "first_name",
+      "last_name",
+      "email"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "ae6d403c-50b5-421a-a991-6745182c404c",
+    "action": "create",
+    "collection": "entitlement",
+    "fields": [
+      "student",
+      "course",
+      "order",
+      "granted_at"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": {
+      "granted_at": "$NOW"
+    },
+    "validation": null
+  },
+  {
+    "_syncId": "f1a35f17-04c9-42c9-92f0-e395591a2e25",
+    "action": "delete",
+    "collection": "entitlement",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "8c5323a3-5887-4385-b29d-a4900654e213",
+    "action": "read",
+    "collection": "entitlement",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "ede436c9-92e7-4c4c-94d1-cd4b6e693d4a",
+    "action": "create",
+    "collection": "lesson_material",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "972a55be-a678-47ce-99f6-952160fa8cfe",
+    "action": "delete",
+    "collection": "lesson_material",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "e8e8c8f0-add8-492e-b32a-5975d629fbc0",
+    "action": "read",
+    "collection": "lesson_material",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "3bb7fcf9-8a63-42fe-8e33-015b1662d576",
+    "action": "update",
+    "collection": "lesson_material",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "af96ed72-1bbf-4434-b614-208a76dc1e3a",
+    "action": "create",
+    "collection": "lesson",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "b80e93ff-6f4d-4282-9ed7-29fedd8dbc66",
+    "action": "delete",
+    "collection": "lesson",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "5a8b11a9-f059-4d5d-bff2-c3c58bcdaa05",
+    "action": "read",
+    "collection": "lesson",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "60c016e7-a547-4998-851f-e791e8b962a8",
+    "action": "update",
+    "collection": "lesson",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "93f68e60-4935-4a4a-8eee-4f573da33c3b",
+    "action": "read",
+    "collection": "order_consent",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "494c33b6-20b0-4433-a276-9362db550480",
+    "action": "read",
+    "collection": "order",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "0184b343-06a4-4db7-b6dc-9a528c4d4f19",
+    "action": "create",
+    "collection": "section",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "a154d8c1-5f89-4e81-9bf8-4c4f7fc95f93",
+    "action": "delete",
+    "collection": "section",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "f78839a7-c7b3-4425-a62d-947ac8ec22eb",
+    "action": "read",
+    "collection": "section",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "cb5b9735-e109-4727-ac22-d9ba947421fa",
+    "action": "update",
+    "collection": "section",
+    "fields": [
+      "*"
+    ],
+    "permissions": {},
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
   }
 ]
