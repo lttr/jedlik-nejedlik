@@ -1,139 +1,31 @@
 ---
 name: run-jedlik-nejedlik
-description: Build, run, and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, show/open a page in the browser, build the site, smoke-test it, take a screenshot of a page, or interact with the running app in a browser. For "show me a page", start dev and xdg-open the URL — do not use agent-browser or polling loops.
+description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Verify with agent-browser yourself; xdg-open only when the user wants to look.
 ---
 
-Nuxt 4 site (SSR, Czech) in `web/`, content from Directus CMS. All paths below
-are relative to the repo root, and commands assume it as cwd.
+Nuxt 4 site in `web/`, repo root as cwd. Build with `vp run build` — never
+`vp build` (raw Vite, fails).
 
-Three run modes, pick the lightest: **smoke** (fast SSR sanity), **show a page**
-(open in the user's browser — the default for "show me / open"), **agent-browser**
-(only when _you_ need a screenshot or DOM read).
+## Dev server
 
-## Prerequisites
-
-- **Node 24.15.0** (pinned in `.node-version`).
-- **Vite+ toolchain** — `vp` on PATH (`~/.vite-plus/bin`). `agent-browser`
-  ships with it (bundled Chromium) — no `apt-get`, no Playwright install.
-- No system packages needed; this is a web app, not a desktop GUI.
-
-## Setup
+Run it inside a persistent Monitor so errors reach you as events and server
+death notifies:
 
 ```bash
-vp install                 # pnpm workspace install (postinstall runs nuxi prepare)
+# Monitor tool, persistent: true
+cd "$(git rev-parse --show-toplevel)" && vp run dev 2>&1 | grep -E --line-buffered -A 12 "ERROR|Error:|✘|Internal server error|Using alternative port"
 ```
 
-Env (`web/.env`, seed from `web/.env.example`):
+Wait until `curl -sf http://localhost:3000/` succeeds (up to ~2 min cold).
+`Using alternative port` event = :3000 was taken; free it and restart.
+
+Stop: TaskStop the monitor, then kill the listener by port (it's a grandchild
+of `vp`): `kill "$(ss -ltnp | grep ':3000' | grep -oP 'pid=\K[0-9]+' | head -1)"`
+
+## Verify / show
 
 ```bash
-NUXT_PUBLIC_DIRECTUS_URL=https://obsah-jedlika.lttr.cz   # required for content
+agent-browser open http://localhost:3000/        # default: check it yourself
+agent-browser screenshot /tmp/jedlik-home.png    # absolute paths
+xdg-open http://localhost:3000/                  # only when the user wants to look
 ```
-
-`nuxi dev` auto-loads `web/.env`. The **production** `node` server does **not**
-(see Gotchas) — pass the var on the command line.
-
-## Build
-
-```bash
-vp run build               # = pnpm -r build → nuxi build. ~3–5 min cold.
-```
-
-Writes `web/.output/`. **Do not run `vp build`** — it invokes raw Vite (no
-`index.html` entry) and fails. Always `vp run build`.
-
-## Run (agent path)
-
-### Headless smoke (fastest — confirms SSR boots without errors)
-
-```bash
-vp run smoke               # scripts/smoke-dev.sh: boots nuxi dev on :3199, curls /, kills it
-```
-
-Prints `smoke: HTTP 200` on success; `HTTP 500` + stack on SSR runtime errors.
-First run compiles cold (>60s) — bump the wrapper's curl loop or pre-warm `.nuxt`
-if it times out.
-
-### Show a page (headed browser)
-
-Launch dev, wait once, `xdg-open` the URL. That's it — no `agent-browser`, no
-repeated polling.
-
-```bash
-# Launch dev detached (vp → @nuxt/cli → nuxt.mjs; the listener is the deepest pid)
-setsid bash -c 'cd "$(git rev-parse --show-toplevel)" && vp run dev' > /tmp/nuxt-dev.log 2>&1 < /dev/null &
-disown
-
-# Wait once, then hand it to the browser. If it never comes up, read the log — don't retry.
-timeout 120 bash -c 'until curl -sf -o /dev/null http://localhost:3000/<route>; do sleep 2; done' \
-  && xdg-open http://localhost:3000/<route> \
-  || tail -20 /tmp/nuxt-dev.log
-```
-
-A load that hangs is almost always an SSR 500 (broken import, bad runtime
-config), not a slow compile — tail `/tmp/nuxt-dev.log` rather than reopening.
-
-### agent-browser (screenshots / DOM reads)
-
-Only when _you_ need a screenshot or to inspect the DOM. Assumes dev is running.
-
-```bash
-# agent-browser cwd resets each call — pass absolute paths
-agent-browser open http://localhost:3000/
-agent-browser screenshot /tmp/jedlik-home.png
-agent-browser eval "location.pathname + ' | ' + document.title"
-```
-
-Routes (all SSR): `/`, `/o-nas`, `/pro-rodice`, `/pro-odborniky`, `/podcast`,
-`/kontakt`. Navigate with `agent-browser open http://localhost:3000/<route>`.
-
-Screenshots → wherever you point them (use `/tmp/*.png`). Dev log → `/tmp/nuxt-dev.log`.
-
-**Stop the dev server** — `kill` won't reach it via the `vp` parent; target the
-listener:
-
-```bash
-kill "$(ss -ltnp 2>/dev/null | grep ':3000' | grep -oP 'pid=\K[0-9]+' | head -1)"
-```
-
-## Run (human path)
-
-```bash
-vp run dev                 # → http://localhost:3000, Ctrl-C to stop
-```
-
-Identical to the agent path's server; just foregrounded.
-
-## Production server (deployed shape)
-
-Coolify/nixpacks runs the root `start` script. Locally:
-
-```bash
-NUXT_PUBLIC_DIRECTUS_URL=https://obsah-jedlika.lttr.cz \
-  node web/.output/server/index.mjs    # serves :3000 from .output/
-```
-
-## Gotchas
-
-- **Prod `node` start needs the env var explicitly.** `node .output/server/index.mjs`
-  does NOT read `web/.env`. Without `NUXT_PUBLIC_DIRECTUS_URL` it dies at boot:
-  `Runtime config validation failed: public.directusUrl: Invalid URL`. Dev (`nuxi`)
-  loads `.env` automatically; prod doesn't.
-- **Dev server hides behind `vp`.** `vp run dev` spawns `@nuxt/cli` which spawns
-  `nuxt.mjs dev` — that grandchild holds the port. Kill the port's actual pid
-  (via `ss`), not the `vp` process, or the server keeps listening.
-- **`agent-browser` resets cwd** after each command and `text=` CSS selectors
-  may miss NuxtLinks — navigate by URL or read hrefs with `eval`, don't rely on
-  `click "text=..."`.
-- **`nuxt-og-image` is disabled in dev** on purpose (`$development.ogImage.enabled:
-false` in `nuxt.config.ts`) — its renderer prompt crashes `nuxi dev` with
-  `uv_tty_init EINVAL`. OG images generate at build, so dev loses nothing.
-
-## Troubleshooting
-
-- **`smoke: timeout — dev never listened`**: cold compile exceeded the wrapper's
-  loop. Run `vp run dev` once to warm `.nuxt`, then re-run, or raise `SMOKE_PORT`'s
-  wait loop in `scripts/smoke-dev.sh`.
-- **Prod server stack trace `public.directusUrl: Invalid URL`**: missing env var —
-  prefix the command with `NUXT_PUBLIC_DIRECTUS_URL=…` (see Gotchas).
-- **`[Vue Router warn]: No match found for ... "/_nuxt/"`** in the prod log:
-  harmless asset-prefetch probing; the page still serves 200.
