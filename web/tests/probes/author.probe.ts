@@ -1,5 +1,17 @@
 import { afterAll, describe, expect, it } from "vitest"
-import { probe, probeSend, probeUpload, roleToken } from "./support"
+import {
+  ENTITLED_ID,
+  MATERIALS_FOLDER_ID,
+  PUBLISHED_COURSE_ID,
+  UNENTITLED_ID,
+  forget,
+  item,
+  items,
+  probe,
+  probeSend,
+  probeUpload,
+  roleToken,
+} from "./support"
 
 // Author-role permission matrix: full content CRUD (course/section/lesson,
 // Materials junction, file uploads), read-only transactional collections,
@@ -13,12 +25,6 @@ import { probe, probeSend, probeUpload, roleToken } from "./support"
 
 const AUTHOR = roleToken("DIRECTUS_PROBE_AUTHOR_TOKEN")
 const ADMIN = roleToken("DIRECTUS_PROBE_ADMIN_TOKEN")
-
-// Stable fixture identifiers on the production instance (not secrets).
-const ENTITLED_ID = "42ea0c6c-9e85-4ae1-a63d-336dc63a8b54"
-const UNENTITLED_ID = "70975566-e359-4d67-9bf7-81d69d5b8a79"
-const PUBLISHED_COURSE_ID = 1
-const MATERIALS_FOLDER_ID = "6173b74f-9990-41a2-b931-ff591ee6a5ed"
 
 // Everything the suite creates, removed again by the author within the tests
 // themselves; the afterAll admin sweep only fires if a test failed mid-way.
@@ -39,19 +45,6 @@ afterAll(async () => {
     await probeSend("DELETE", `/files/${id}`, undefined, ADMIN)
   }
 })
-
-function items(response: { body: { data?: unknown } }): Record<string, unknown>[] {
-  expect(Array.isArray(response.body.data)).toBe(true)
-  return response.body.data as Record<string, unknown>[]
-}
-
-function item(response: { body: { data?: unknown } }): Record<string, unknown> {
-  return response.body.data as Record<string, unknown>
-}
-
-function forget<T>(list: T[], value: T) {
-  list.splice(list.indexOf(value), 1)
-}
 
 describe("author content management", () => {
   let courseId: number
@@ -235,7 +228,7 @@ describe("author transactional boundaries", () => {
     const fixture = await probe("/items/entitlement?fields=id&limit=1", AUTHOR)
     const response = await probeSend(
       "PATCH",
-      `/items/entitlement/${items(fixture)[0].id}`,
+      `/items/entitlement/${items(fixture)[0].id as number}`,
       { granted_at: "2030-01-01T00:00:00Z" },
       AUTHOR,
     )

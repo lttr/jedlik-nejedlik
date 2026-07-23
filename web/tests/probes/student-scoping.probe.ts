@@ -1,5 +1,19 @@
 import { afterAll, describe, expect, it } from "vitest"
-import { probe, probeSend, probeStatus, roleToken } from "./support"
+import {
+  DRAFT_SLUG,
+  ENTITLED_ID,
+  MATERIAL_FILE_ID,
+  PUBLISHED_COURSE_ID,
+  UNENTITLED_ID,
+  errorCode,
+  item,
+  items,
+  nonEmptyItems,
+  probe,
+  probeSend,
+  probeStatus,
+  roleToken,
+} from "./support"
 
 // Student-role permission matrix for the transactional collections and the
 // entitlement-gated lesson content. Relies on the [TEST]-marked fixtures on
@@ -16,35 +30,17 @@ const ENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN")
 const UNENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN")
 const ADMIN = roleToken("DIRECTUS_PROBE_ADMIN_TOKEN")
 
-// Stable fixture identifiers on the production instance (not secrets).
-const ENTITLED_ID = "42ea0c6c-9e85-4ae1-a63d-336dc63a8b54"
-const UNENTITLED_ID = "70975566-e359-4d67-9bf7-81d69d5b8a79"
-const PUBLISHED_COURSE_ID = 1
-const DRAFT_SLUG = "test-kurz-draft"
-const MATERIAL_FILE_ID = "c1cee206-b8e2-41fb-975c-862b84f65a84"
-
 // Orders created during the run; deleted (consents cascade) in afterAll.
 const createdOrders: number[] = []
 
 afterAll(async () => {
   if (createdOrders.length > 0) {
     const response = await probeSend("DELETE", "/items/order", createdOrders, ADMIN)
-    expect(response.status).toBe(204)
+    if (response.status !== 204) {
+      throw new Error(`Probe cleanup failed: DELETE /items/order returned ${response.status}`)
+    }
   }
 })
-
-function items(response: { body: { data?: unknown } }): Record<string, unknown>[] {
-  expect(Array.isArray(response.body.data)).toBe(true)
-  return response.body.data as Record<string, unknown>[]
-}
-
-function item(response: { body: { data?: unknown } }): Record<string, unknown> {
-  return response.body.data as Record<string, unknown>
-}
-
-function errorCode(response: { body: { errors?: { extensions?: { code?: string } }[] } }) {
-  return response.body.errors?.[0]?.extensions?.code
-}
 
 async function createOrder(token: string, payload: Record<string, unknown>) {
   const response = await probeSend("POST", "/items/order", payload, token)
@@ -236,7 +232,7 @@ describe("student entitlements", () => {
     const own = await probe("/items/entitlement?fields=id&limit=-1", ENTITLED)
     const response = await probeSend(
       "PATCH",
-      `/items/entitlement/${items(own)[0].id}`,
+      `/items/entitlement/${items(own)[0].id as number}`,
       { granted_at: "2030-01-01T00:00:00Z" },
       ENTITLED,
     )
@@ -247,7 +243,7 @@ describe("student entitlements", () => {
     const own = await probe("/items/entitlement?fields=id&limit=-1", ENTITLED)
     const response = await probeSend(
       "DELETE",
-      `/items/entitlement/${items(own)[0].id}`,
+      `/items/entitlement/${items(own)[0].id as number}`,
       undefined,
       ENTITLED,
     )
@@ -261,9 +257,7 @@ describe("entitlement-gated lesson content", () => {
       "/items/lesson?fields=id,type,body,video_uid&limit=-1&sort=id",
       ENTITLED,
     )
-    expect(response.status).toBe(200)
-    const lessons = items(response)
-    expect(lessons.length).toBeGreaterThan(0)
+    const lessons = nonEmptyItems(response)
     for (const lesson of lessons) {
       expect(lesson.body).toEqual(expect.any(String))
     }
@@ -290,9 +284,7 @@ describe("entitlement-gated lesson content", () => {
       "/items/lesson?fields=id,body,video_uid,materials&limit=-1",
       UNENTITLED,
     )
-    expect(response.status).toBe(200)
-    const lessons = items(response)
-    expect(lessons.length).toBeGreaterThan(0)
+    const lessons = nonEmptyItems(response)
     for (const lesson of lessons) {
       expect(lesson.body).toBeNull()
       expect(lesson.video_uid).toBeNull()
@@ -306,9 +298,7 @@ describe("entitlement-gated lesson content", () => {
         "/items/lesson?fields=id,title,type,section.course.slug&limit=-1",
         token,
       )
-      expect(response.status).toBe(200)
-      const lessons = items(response)
-      expect(lessons.length).toBeGreaterThan(0)
+      const lessons = nonEmptyItems(response)
       for (const lesson of lessons) {
         expect((lesson.section as { course: { slug: string } }).course.slug).not.toBe(DRAFT_SLUG)
       }

@@ -12,6 +12,14 @@
     "web/layers/*/app/**",
     "web/layers/*/shared/**",
     "web/layers/*/server/**",
+    // On-demand Directus permission probes, run via `vp run directus:probe`
+    // with their own vitest config — not reachable from any default entry.
+    "web/vitest.probes.config.ts",
+    "web/tests/probes/**",
+    // Read by the directus-sync CLI (directus:pull/diff tasks), never imported.
+    "directus-sync.config.cjs",
+    // Loaded by @lttr/nuxt-validated-runtime-config via path convention.
+    "web/server/runtime-config.schema.ts",
   ],
 
   "ignorePatterns": [
@@ -33,6 +41,17 @@
     "@vueuse/core",
     // Transitive: provided by eslint config, imported directly.
     "eslint-plugin-es-x",
+    // Nuxt module registered via a conditional string in nuxt.config.ts
+    // (production only) — not statically traceable.
+    "@nuxtjs/plausible",
+    // CLI-only, invoked by the directus:pull/diff tasks, never imported.
+    "directus-sync",
+    // vitest 4 alias for the probe runner (see vite.config.ts directus:probe);
+    // invoked via its vitest.mjs bin, never imported by name.
+    "vitest-probe",
+    // What bare `vitest` imports resolve to under the pnpm workspace override;
+    // provided by the vite-plus toolchain, intentionally unlisted.
+    "@voidzero-dev/vite-plus-test",
   ],
 
   "rules": {

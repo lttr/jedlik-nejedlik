@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { probe } from "./support"
+import { DRAFT_SLUG, PUBLISHED_SLUG, errorCode, items, nonEmptyItems, probe } from "./support"
 
 // Anonymous (public role) visibility matrix for the Kurzy collections.
 // Relies on the [TEST]-marked seed data on the production instance (one
@@ -7,20 +7,10 @@ import { probe } from "./support"
 // published video lesson carries a Material). See
 // .aiwork/2026-07-22_directus-data-model/implementation-notes.md.
 
-const PUBLISHED_SLUG = "test-kurz-publikovany"
-const DRAFT_SLUG = "test-kurz-draft"
-
-function items(response: { body: { data?: unknown } }): Record<string, unknown>[] {
-  expect(Array.isArray(response.body.data)).toBe(true)
-  return response.body.data as Record<string, unknown>[]
-}
-
 describe("anonymous course visibility", () => {
   it("lists only published courses, with sales fields", async () => {
     const response = await probe("/items/course?fields=id,status,title,slug,price_czk&limit=-1")
-    expect(response.status).toBe(200)
-    const courses = items(response)
-    expect(courses.length).toBeGreaterThan(0)
+    const courses = nonEmptyItems(response)
     for (const course of courses) {
       expect(course.status).toBe("published")
     }
@@ -38,15 +28,13 @@ describe("anonymous course visibility", () => {
   it("denies non-public course fields (test_pass_threshold)", async () => {
     const response = await probe("/items/course?fields=test_pass_threshold")
     expect(response.status).toBe(403)
-    expect(response.body.errors?.[0]?.extensions?.code).toBe("FORBIDDEN")
+    expect(errorCode(response)).toBe("FORBIDDEN")
   })
 })
 
 describe("anonymous outline visibility", () => {
   it("reads the section outline (title, sort, course id)", async () => {
-    const response = await probe("/items/section?fields=id,course,title,sort&limit=-1")
-    expect(response.status).toBe(200)
-    expect(items(response).length).toBeGreaterThan(0)
+    nonEmptyItems(await probe("/items/section?fields=id,course,title,sort&limit=-1"))
   })
 
   it("denies section unlock configuration", async () => {
@@ -56,9 +44,7 @@ describe("anonymous outline visibility", () => {
 
   it("reads the lesson outline (title, sort, type, section id)", async () => {
     const response = await probe("/items/lesson?fields=id,section,title,sort,type&limit=-1")
-    expect(response.status).toBe(200)
-    const lessons = items(response)
-    expect(lessons.length).toBeGreaterThan(0)
+    const lessons = nonEmptyItems(response)
     for (const lesson of lessons) {
       expect(["video", "text"]).toContain(lesson.type)
     }
@@ -90,7 +76,7 @@ describe("anonymous denial of paid lesson content", () => {
   it("denies lesson.body", async () => {
     const response = await probe("/items/lesson?fields=body")
     expect(response.status).toBe(403)
-    expect(response.body.errors?.[0]?.extensions?.code).toBe("FORBIDDEN")
+    expect(errorCode(response)).toBe("FORBIDDEN")
   })
 
   it("denies lesson.video_uid", async () => {

@@ -195,10 +195,21 @@ export default defineConfig({
       },
       {
         // Directus API probes read role tokens from the environment at
-        // runtime (see web/tests/probes/support.ts).
+        // runtime (see web/tests/probes/support.ts) and assert on dynamic
+        // API JSON, where narrowing assertions are the test idiom. Probes
+        // run sequentially on purpose (deletion order, dependent state),
+        // and describe() blocks routinely exceed the function-length cap.
         files: ["web/tests/**"],
         rules: {
           "node/no-process-env": "off",
+          "typescript/no-unsafe-type-assertion": "off",
+          "no-await-in-loop": "off",
+          "max-lines-per-function": "off",
+          // Shared probe helpers assert internally (nonEmptyItems/items).
+          "vitest/expect-expect": [
+            "error",
+            { assertFunctionNames: ["expect", "items", "nonEmptyItems"] },
+          ],
         },
       },
       {
