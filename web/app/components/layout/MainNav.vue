@@ -21,10 +21,20 @@
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
+        <li>
+          <NuxtLink v-if="isLoggedIn" class="link" to="/ucet">Můj účet</NuxtLink>
+          <NuxtLink v-else class="link" to="/prihlaseni">Přihlášení</NuxtLink>
+        </li>
       </ul>
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+// `useAuth` is auto-imported from the customers layer; session state is
+// resolved during SSR by that layer's auth plugin.
+const { isLoggedIn } = useAuth()
+</script>
 
 <style scoped>
 .main-nav {
