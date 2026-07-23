@@ -1,0 +1,36 @@
+{
+  "collection": "order",
+  "field": "consents",
+  "meta": {
+    "collection": "order",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "consents",
+    "group": null,
+    "hidden": false,
+    "interface": "list-o2m",
+    "note": "Souhlasy udělené při této objednávce",
+    "options": {
+      "enableSelect": false,
+      "template": "{{document}} {{document_version}}"
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 8,
+    "special": [
+      "o2m"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Souhlasy"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}

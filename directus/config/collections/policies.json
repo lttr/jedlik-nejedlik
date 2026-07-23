@@ -66,5 +66,22 @@
         "user": null
       }
     ]
+  },
+  {
+    "_syncId": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "admin_access": false,
+    "app_access": false,
+    "description": "Přístupová pravidla studenta: vlastní objednávky a souhlasy, obsah kurzů podle oprávnění",
+    "enforce_tfa": false,
+    "icon": "school",
+    "ip_access": null,
+    "name": "Student",
+    "roles": [
+      {
+        "role": "186fdb62-3231-4322-8491-2c3dd8124842",
+        "sort": 1,
+        "user": null
+      }
+    ]
   }
 ]

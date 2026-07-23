@@ -1,0 +1,16 @@
+{
+  "collection": "order",
+  "field": "student",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "order",
+    "many_field": "student",
+    "one_allowed_collections": null,
+    "one_collection": "directus_users",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "orders",
+    "sort_field": null
+  },
+  "related_collection": "directus_users"
+}

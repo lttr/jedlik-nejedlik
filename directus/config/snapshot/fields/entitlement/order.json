@@ -1,0 +1,53 @@
+{
+  "collection": "entitlement",
+  "field": "order",
+  "meta": {
+    "collection": "entitlement",
+    "conditions": null,
+    "display": "related-values",
+    "display_options": {
+      "template": "{{id}}"
+    },
+    "field": "order",
+    "group": null,
+    "hidden": false,
+    "interface": "select-dropdown-m2o",
+    "note": "Objednávka, která přístup založila; prázdné = ruční přidělení",
+    "options": {
+      "template": "{{id}}"
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 4,
+    "special": null,
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Objednávka"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "half"
+  },
+  "schema": {
+    "data_type": "integer",
+    "default_value": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "order",
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "is_generated": false,
+    "is_indexed": false,
+    "is_nullable": true,
+    "is_primary_key": false,
+    "is_unique": false,
+    "max_length": null,
+    "name": "order",
+    "numeric_precision": null,
+    "numeric_scale": null,
+    "table": "entitlement"
+  },
+  "type": "integer"
+}

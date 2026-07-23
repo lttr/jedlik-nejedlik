@@ -169,3 +169,132 @@ Chronological log. Newest entries at the bottom.
   snapshot, three public permissions in the dump). Pre-existing `vp check`
   formatting complaints in three old `.aiwork` files left untouched.
 - **Ticket 02 done.**
+- **Ticket 03 started** (transactional collections + student scoping).
+- Goal understanding: additive schema for `order` / `order_consent` /
+  `entitlement` (kurzy folder, Czech labels, integer PKs like ticket 02),
+  DB-enforced idempotency constraints (`order.gopay_payment_id` unique,
+  `entitlement` composite unique on (student, course)), a Student role +
+  policy whose permissions ARE the enforcement boundary (own-row scoping on
+  transactional rows, create-order-as-self only, no writes to status/payment
+  fields or entitlements, entitlement-gated full-lesson + Material-file
+  access, public-equivalent course/section visibility), probe fixtures (two
+  test students with static tokens, one entitled to course 1), a full student
+  probe matrix, layer codecs for the three collections, and a re-pulled
+  dump/snapshot.
+- Intended build order: (1) inspect instance (DB vendor, existing relations)
+  with the ticket-01 admin-token extraction; (2) create collections + fields
+  - relations via REST, incl. O2M alias fields needed by permission filters
+    (`course.entitlements`, a hidden alias on `directus_files` walking back
+    through `lesson_material`); (3) apply the composite unique constraint —
+    Directus fields API has no composite uniqueness, expect DB-level DDL (route
+    TBD: Coolify exec into the DB container); (4) dedicated course-materials
+    folder, move the seeded Material file in; (5) Student role + policy +
+    permissions — key risk: Directus 11 merges multiple same-action permissions
+    with per-permission field "cases" (outline perm + entitlement-gated full
+    perm on `lesson` must NOT union fields across rows; verify empirically via
+    probes before trusting); (6) two [TEST] student users + static tokens +
+    admin-granted entitlement for one; (7) student probe matrix in
+    `web/tests/probes/` (env vars documented, values never committed);
+    (8) codecs + Schema + typecheck; (9) pull + diff + commit.
+- Open questions to resolve empirically: whether create-permission
+  `validation` supports relational rules (`order.student == $CURRENT_USER`
+  for `order_consent` create), and what error shape a DB unique violation
+  surfaces at the API (RECORD_NOT_UNIQUE vs 500) — probes assert observed
+  behaviour.
+
+## 2026-07-23
+
+- **Schema applied on production**: `order` / `order_consent` / `entitlement`
+  in the `kurzy` folder (sorts 5–7), integer PKs, Czech labels, same REST
+  route as ticket 02. Relations incl. O2M aliases: `order.consents` (admin
+  nested create + reads), `course.entitlements` (hidden — the field the
+  permission filters walk), `directus_users.orders` (hidden, left in place
+  for future rules), and `directus_files.lesson_materials` (hidden, wired
+  into the existing `lesson_material.directus_files_id` relation) so file
+  permissions can walk back file → junction → lesson → … → entitlement.
+- **Composite unique (student, course)**: Directus 11.13 collections/fields
+  API cannot express composite constraints (only per-column `is_unique`).
+  Applied directly to the underlying DB — the instance runs SQLite
+  (`DB_CLIENT: sqlite3`, per Coolify compose): SSH to the Coolify host →
+  `docker exec` into the Directus container → node script using the image's
+  bundled `sqlite3` driver (no sqlite CLI in the image) →
+  `CREATE UNIQUE INDEX entitlement_student_course_unique ON entitlement
+(student, course)`. Duplicate inserts surface as **400 RECORD_NOT_UNIQUE**
+  at the API (Directus translates the driver error), same as the
+  `order.gopay_payment_id` single-column unique. **Known limitation**: the
+  composite index is NOT representable in the schema snapshot (both columns
+  show `is_unique: false`), so reapplying the snapshot to a fresh instance
+  requires re-running that one DDL statement manually; the gopay unique IS
+  in the snapshot. Side note: `~/.ssh/known_hosts` has a stale key for the
+  VPS (77.37.124.219) — connection was made with a scratchpad known-hosts
+  file; the user may want to refresh their entry.
+- **Student role + policy** (role 186fdb62…, policy a17cfc9d… in sync ids;
+  `app_access: false` — students are API-only identities). 11 permissions.
+  Empirical findings that shaped them:
+  - **Directus 11 merges same-collection read permissions with per-rule
+    field "cases"**: the outline rule (published courses, outline fields) and
+    the full rule (entitlement chain, + body/video_uid/materials) on `lesson`
+    do NOT union fields across rows — non-entitled rows return paid fields as
+    `null` (HTTP 200), entitled rows return values. Verified no leak; the
+    probes assert the null-not-403 shape and document it.
+  - **Create-permission `validation` cannot walk relations**:
+    `{"order":{"student":{"_eq":"$CURRENT_USER"}}}` fails Joi validation for
+    every payload ("Value is required"), and
+    `{"order":{"_in":"$CURRENT_USER.orders"}}` silently passes everything
+    (it leaked two rows during testing — deleted). Nested-create-only
+    enforcement (dropping `order` from create fields) is also impossible:
+    Directus injects the parent FK into the child payload BEFORE field
+    permission and validation checks, so nested and standalone creates are
+    indistinguishable at the permission layer.
+  - **Deviation — consent ownership is enforced by a blocking filter flow**
+    ("Souhlas jen k vlastní objednávce", `items.create` on `order_consent`):
+    its single `item-read` operation reads `{{$trigger.payload.order}}` from
+    `order` with `$trigger` (requester) permissions; an unreadable (foreign
+    or missing) order rejects the create with 403 and no row is written.
+    Own-order standalone creates and nested order+consents creates both
+    pass. The flow row is in the directus-sync dump; its operation is NOT
+    (ticket-01 global `operations` exclusion) — it contains no secrets, but
+    must be re-created by hand on a fresh instance.
+  - Order create: preset `student: $CURRENT_USER` + validation `_eq` +
+    fields `student, course, price_czk, consents`. `status` (DB default
+    `created`) and payment fields are outside the field list ⇒ passing them
+    is a 403 FORBIDDEN; foreign `student` is a 400 FAILED_VALIDATION.
+    No update/delete permissions on any transactional collection.
+  - **File gating**: folder "Materiály kurzů" created and the seed Material
+    file moved into it (authoring organization, per spec), but the student
+    `directus_files` read rule is the entitlement chain itself (via the
+    `lesson_materials` alias), not folder membership — folder-based rules
+    only add failure modes (file outside folder ⇒ entitled student blocked)
+    without adding enforcement. `/assets/<id>` honours it: 200 entitled,
+    403 unentitled and anonymous. Public/marketing file access untouched
+    (public policy had and has no rule for non-public files).
+- **Probe fixtures**: users `probe-student-entitled@jedlik-nejedlik.cz` and
+  `probe-student-unentitled@jedlik-nejedlik.cz` ([TEST]-titled "nemazat",
+  role Student, status active) with static tokens; admin-granted Entitlement
+  (entitled user, course 1) — the only persistent transactional row. Token
+  env vars for `vp run directus:probe`:
+  `DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN`,
+  `DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN`, and
+  `DIRECTUS_PROBE_ADMIN_TOKEN` (admin used only for uniqueness fixtures and
+  cleanup). Values are never stored in the repo; to (re)generate: with the
+  admin token (extract via `claude mcp get directus` from the repo cwd)
+  `PATCH /users/<id>` with a fresh random `token` value.
+- **Probes**: `web/tests/probes/student-scoping.probe.ts` (27 tests) covers
+  order create-as-self/as-other/status/gopay spoofing, own-row read scoping
+  on order/order_consent/entitlement, order update/delete denials,
+  nested + standalone + foreign consent creates, entitlement write denials,
+  entitlement-gated lesson fields + Materials expansion + file metadata +
+  `/assets` download (incl. anonymous), public-equivalent course/section
+  visibility, and both uniqueness violations. Suite self-cleans (afterAll
+  deletes the orders it created; consents CASCADE) — verified re-runnable,
+  41/41 green (14 public + 27 student) on two consecutive runs, instance
+  left with only the fixture entitlement. `support.ts` gained `probeSend`
+  (mutations) and `probeStatus` (asset downloads).
+- **Wire types**: `OrderSchema` / `OrderConsentSchema` / `EntitlementSchema`
+  codecs (null→undefined; status/document as z.enum) + `*Collection` wire
+  types + three new `Schema` entries. `vp run typecheck` green.
+- Verification: probes 41/41 green; typecheck green; eslint clean on changed
+  files; `vp run directus:pull` + `diff` clean (`[snapshot] No changes to
+apply`, 0/0/0 across all tracked collections); dump diff reviewed — no
+  secrets (user tokens are not dumped; the new flow row carries none).
+- **Ticket 03 done.**

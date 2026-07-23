@@ -22,6 +22,37 @@ export async function probe(path: string, token?: string): Promise<ProbeResponse
   return { status: response.status, body: (await response.json()) as ProbeResponse["body"] }
 }
 
+// Mutating request (POST/PATCH/DELETE) with a JSON payload.
+export async function probeSend(
+  method: "POST" | "PATCH" | "DELETE",
+  path: string,
+  body: unknown,
+  token?: string,
+): Promise<ProbeResponse> {
+  const response = await fetch(`${DIRECTUS_URL}${path}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token === undefined ? {} : { Authorization: `Bearer ${token}` }),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  })
+  const text = await response.text()
+  return {
+    status: response.status,
+    body: text === "" ? {} : (JSON.parse(text) as ProbeResponse["body"]),
+  }
+}
+
+// Raw GET (e.g. /assets file downloads) where only the status matters.
+export async function probeStatus(path: string, token?: string): Promise<number> {
+  const response = await fetch(`${DIRECTUS_URL}${path}`, {
+    headers: token === undefined ? {} : { Authorization: `Bearer ${token}` },
+  })
+  await response.arrayBuffer()
+  return response.status
+}
+
 // Role tokens for authenticated probes (student/author tickets): supply
 // them via environment, e.g. DIRECTUS_PROBE_STUDENT_TOKEN. Never commit
 // tokens.

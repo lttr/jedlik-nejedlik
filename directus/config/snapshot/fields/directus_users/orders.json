@@ -1,0 +1,30 @@
+{
+  "collection": "directus_users",
+  "field": "orders",
+  "meta": {
+    "collection": "directus_users",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "orders",
+    "group": null,
+    "hidden": true,
+    "interface": "list-o2m",
+    "note": "Objednávky studenta (podklad pro přístupová pravidla)",
+    "options": {
+      "enableSelect": false
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 1,
+    "special": [
+      "o2m"
+    ],
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}

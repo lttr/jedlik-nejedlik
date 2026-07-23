@@ -1,0 +1,35 @@
+{
+  "collection": "directus_files",
+  "field": "lesson_materials",
+  "meta": {
+    "collection": "directus_files",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "lesson_materials",
+    "group": null,
+    "hidden": true,
+    "interface": "list-o2m",
+    "note": "Lekce, ke kterým je soubor připojen jako materiál (podklad pro přístupová pravidla)",
+    "options": {
+      "enableSelect": false
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 1,
+    "special": [
+      "o2m"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Použití v lekcích"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}

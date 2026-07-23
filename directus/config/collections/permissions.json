@@ -903,5 +903,308 @@
     "policy": "0d1d6890-e650-4dec-b0b2-16025e80ff4d",
     "presets": null,
     "validation": null
+  },
+  {
+    "_syncId": "22c9cc3e-6fca-4124-a934-69fe6016aecb",
+    "action": "read",
+    "collection": "course",
+    "fields": [
+      "id",
+      "status",
+      "sort",
+      "title",
+      "slug",
+      "description",
+      "cover",
+      "price_czk",
+      "sections"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "status": {
+            "_eq": "published"
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "eeb4a342-d421-41c2-83a2-1970f74cf171",
+    "action": "read",
+    "collection": "directus_files",
+    "fields": [
+      "id",
+      "title",
+      "type",
+      "filesize",
+      "width",
+      "height",
+      "duration",
+      "filename_download",
+      "uploaded_on"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "lesson_materials": {
+            "lesson_id": {
+              "section": {
+                "course": {
+                  "entitlements": {
+                    "student": {
+                      "_eq": "$CURRENT_USER"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "1902978b-d31b-46c5-96c5-3551e7ba5e31",
+    "action": "read",
+    "collection": "entitlement",
+    "fields": [
+      "id",
+      "student",
+      "course",
+      "order",
+      "granted_at"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "student": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "965c8eac-dac1-4c62-857e-eb0dd0694d47",
+    "action": "read",
+    "collection": "lesson_material",
+    "fields": [
+      "id",
+      "lesson_id",
+      "directus_files_id",
+      "sort"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "lesson_id": {
+            "section": {
+              "course": {
+                "entitlements": {
+                  "student": {
+                    "_eq": "$CURRENT_USER"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "0daa9756-0acd-47b4-a58c-544e59fcfe1f",
+    "action": "read",
+    "collection": "lesson",
+    "fields": [
+      "id",
+      "sort",
+      "section",
+      "title",
+      "type"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "section": {
+            "course": {
+              "status": {
+                "_eq": "published"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "c55272c4-0c73-4c0e-95b1-e8986487648c",
+    "action": "read",
+    "collection": "lesson",
+    "fields": [
+      "id",
+      "sort",
+      "section",
+      "title",
+      "type",
+      "body",
+      "video_uid",
+      "materials"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "section": {
+            "course": {
+              "entitlements": {
+                "student": {
+                  "_eq": "$CURRENT_USER"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "f31dddbe-78bc-4d73-825b-c9d967ac544a",
+    "action": "create",
+    "collection": "order_consent",
+    "fields": [
+      "order",
+      "document",
+      "document_version",
+      "granted_at"
+    ],
+    "permissions": null,
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "79bb9e6b-5790-45b5-a71b-272c755f80de",
+    "action": "read",
+    "collection": "order_consent",
+    "fields": [
+      "id",
+      "order",
+      "document",
+      "document_version",
+      "granted_at"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "order": {
+            "student": {
+              "_eq": "$CURRENT_USER"
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "6dc15a8c-642e-4755-bd6d-7dd87eac8a44",
+    "action": "create",
+    "collection": "order",
+    "fields": [
+      "student",
+      "course",
+      "price_czk",
+      "consents"
+    ],
+    "permissions": null,
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": {
+      "student": "$CURRENT_USER"
+    },
+    "validation": {
+      "_and": [
+        {
+          "student": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "_syncId": "718069b7-62fe-423d-a7d6-4b1a75fdaf7a",
+    "action": "read",
+    "collection": "order",
+    "fields": [
+      "id",
+      "student",
+      "course",
+      "status",
+      "price_czk",
+      "gopay_payment_id",
+      "fakturoid_invoice_id",
+      "date_created",
+      "date_updated",
+      "consents"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "student": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "9ac4c7b0-b7c0-4817-a1c2-5fb9b52da28d",
+    "action": "read",
+    "collection": "section",
+    "fields": [
+      "id",
+      "sort",
+      "course",
+      "title",
+      "lessons"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "course": {
+            "status": {
+              "_eq": "published"
+            }
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
   }
 ]

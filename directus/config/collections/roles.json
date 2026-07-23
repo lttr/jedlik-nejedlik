@@ -7,6 +7,13 @@
     "parent": null
   },
   {
+    "_syncId": "186fdb62-3231-4322-8491-2c3dd8124842",
+    "description": "Student — koncový uživatel kurzů; přiřazováno při registraci",
+    "icon": "school",
+    "name": "Student",
+    "parent": null
+  },
+  {
     "_syncId": "28434dcf-c51d-46c1-ae7d-6b8a1dff04bf",
     "description": "$t:admin_description",
     "icon": "verified",

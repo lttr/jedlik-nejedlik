@@ -6,7 +6,10 @@ import type { z } from "zod"
 import type {
   BiographyExpertSchema,
   CourseSchema,
+  EntitlementSchema,
   LessonSchema,
+  OrderConsentSchema,
+  OrderSchema,
   SectionSchema,
 } from "../utils/schemas"
 
@@ -61,6 +64,18 @@ export interface LessonMaterialCollection {
   sort: number | null
 }
 
+// Wire shapes of the transactional Kurzy collections: the codec's input plus
+// columns/aliases that exist on the wire but aren't part of the codec.
+export type OrderCollection = z.input<typeof OrderSchema> & {
+  date_created: string | null
+  date_updated: string | null
+  consents: number[]
+}
+
+export type OrderConsentCollection = z.input<typeof OrderConsentSchema>
+
+export type EntitlementCollection = z.input<typeof EntitlementSchema>
+
 export interface Schema {
   articles: ArticleCollection[]
   biography_expert: BiographyExpertCollection[]
@@ -68,6 +83,9 @@ export interface Schema {
   section: SectionCollection[]
   lesson: LessonCollection[]
   lesson_material: LessonMaterialCollection[]
+  order: OrderCollection[]
+  order_consent: OrderConsentCollection[]
+  entitlement: EntitlementCollection[]
   cooperation_form: FormSubmission[]
   newsletter_experts_form: FormSubmission[]
   podcast_question_form: FormSubmission[]

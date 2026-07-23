@@ -1,0 +1,25 @@
+{
+  "collection": "order",
+  "field": "course",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "order",
+    "many_field": "course",
+    "one_allowed_collections": null,
+    "one_collection": "course",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": null,
+    "sort_field": null
+  },
+  "related_collection": "course",
+  "schema": {
+    "column": "course",
+    "constraint_name": null,
+    "foreign_key_column": "id",
+    "foreign_key_table": "course",
+    "on_delete": "SET NULL",
+    "on_update": "NO ACTION",
+    "table": "order"
+  }
+}

@@ -78,5 +78,25 @@
     },
     "status": "active",
     "trigger": "event"
+  },
+  {
+    "_syncId": "fe0e5400-9a3f-47c5-a5f1-e0ef752c219a",
+    "accountability": "all",
+    "color": null,
+    "description": "Blokuje vytvoření souhlasu k objednávce, kterou žadatel nesmí číst (tj. cizí objednávce)",
+    "icon": "verified_user",
+    "name": "Souhlas jen k vlastní objednávce",
+    "operation": "caab183b-038c-4f27-8e00-029d91cf8ae0",
+    "options": {
+      "collections": [
+        "order_consent"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "filter"
+    },
+    "status": "active",
+    "trigger": "event"
   }
 ]

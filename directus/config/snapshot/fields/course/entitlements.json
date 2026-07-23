@@ -1,0 +1,35 @@
+{
+  "collection": "course",
+  "field": "entitlements",
+  "meta": {
+    "collection": "course",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "entitlements",
+    "group": null,
+    "hidden": true,
+    "interface": "list-o2m",
+    "note": "Oprávnění studentů k tomuto kurzu (podklad pro přístupová pravidla)",
+    "options": {
+      "enableSelect": false
+    },
+    "readonly": false,
+    "required": false,
+    "searchable": true,
+    "sort": 17,
+    "special": [
+      "o2m"
+    ],
+    "translations": [
+      {
+        "language": "cs-CZ",
+        "translation": "Oprávnění ke kurzu"
+      }
+    ],
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "type": "alias"
+}

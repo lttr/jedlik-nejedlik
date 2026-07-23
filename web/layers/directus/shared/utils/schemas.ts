@@ -134,3 +134,87 @@ export const LessonSchema = z
       sort: o.sort ?? undefined,
     }),
   )
+
+// --- Kurzy transactional collections (order, consents, entitlement) --------
+
+// Consumer contract: an Order as its owning Student (or the server flows)
+// read it. `student` is the user's uuid, `course` the course id.
+export interface Order {
+  id: number
+  student: string
+  course: number
+  status: "created" | "paid" | "cancelled"
+  price_czk: number
+  gopay_payment_id?: string
+  fakturoid_invoice_id?: string
+}
+
+export const OrderSchema = z
+  .object({
+    id: z.number(),
+    student: z.string(),
+    course: z.number(),
+    status: z.enum(["created", "paid", "cancelled"]),
+    price_czk: z.number(),
+    gopay_payment_id: z.string().nullable(),
+    fakturoid_invoice_id: z.string().nullable(),
+  })
+  .transform(
+    (o): Order => ({
+      id: o.id,
+      student: o.student,
+      course: o.course,
+      status: o.status,
+      price_czk: o.price_czk,
+      gopay_payment_id: o.gopay_payment_id ?? undefined,
+      fakturoid_invoice_id: o.fakturoid_invoice_id ?? undefined,
+    }),
+  )
+
+// Consumer contract: one consent record of an Order. `order` is the parent's
+// id; `granted_at` is an ISO timestamp.
+export interface OrderConsent {
+  id: number
+  order: number
+  document: "terms" | "withdrawal_1837" | "gdpr"
+  document_version: string
+  granted_at: string
+}
+
+export const OrderConsentSchema = z
+  .object({
+    id: z.number(),
+    order: z.number(),
+    document: z.enum(["terms", "withdrawal_1837", "gdpr"]),
+    document_version: z.string(),
+    granted_at: z.string(),
+  })
+  .transform((o): OrderConsent => o)
+
+// Consumer contract: an Entitlement (Oprávnění ke kurzu). `order` is absent
+// for manual grants; `granted_at` is an ISO timestamp.
+export interface Entitlement {
+  id: number
+  student: string
+  course: number
+  order?: number
+  granted_at?: string
+}
+
+export const EntitlementSchema = z
+  .object({
+    id: z.number(),
+    student: z.string(),
+    course: z.number(),
+    order: z.number().nullable(),
+    granted_at: z.string().nullable(),
+  })
+  .transform(
+    (o): Entitlement => ({
+      id: o.id,
+      student: o.student,
+      course: o.course,
+      order: o.order ?? undefined,
+      granted_at: o.granted_at ?? undefined,
+    }),
+  )
