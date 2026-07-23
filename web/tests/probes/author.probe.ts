@@ -166,6 +166,29 @@ describe("author content management", () => {
     forget(leftovers.courses, courseId)
   })
 
+  it("cannot touch files uploaded by others outside the materials folder", async () => {
+    // A stand-in for a marketing asset: admin-uploaded, no folder. The author
+    // must not be able to update it — moving it into the materials folder
+    // would otherwise open a path to deleting marketing assets.
+    const asset = await probeUpload(ADMIN, {
+      name: "test-marketing-asset.txt",
+      content: "marketing",
+      type: "text/plain",
+    })
+    expect(asset.status).toBe(200)
+    const assetId = item(asset).id as string
+    leftovers.files.push(assetId)
+    const moved = await probeSend(
+      "PATCH",
+      `/files/${assetId}`,
+      { folder: MATERIALS_FOLDER_ID },
+      AUTHOR,
+    )
+    expect(moved.status).toBe(403)
+    expect((await probeSend("DELETE", `/files/${assetId}`, undefined, ADMIN)).status).toBe(204)
+    forget(leftovers.files, assetId)
+  })
+
   it("deletes files inside the materials folder only", async () => {
     const inFolder = await probeSend("DELETE", `/files/${materialFileId}`, undefined, AUTHOR)
     expect(inFolder.status).toBe(204)

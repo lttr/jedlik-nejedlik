@@ -119,5 +119,8 @@ export function errorCode(response: ProbeResponse): string | undefined {
 }
 
 export function forget<T>(list: T[], value: T): void {
-  list.splice(list.indexOf(value), 1)
+  const index = list.indexOf(value)
+  if (index !== -1) {
+    list.splice(index, 1)
+  }
 }

@@ -1093,12 +1093,13 @@
     "fields": [
       "order",
       "document",
-      "document_version",
-      "granted_at"
+      "document_version"
     ],
     "permissions": null,
     "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
-    "presets": null,
+    "presets": {
+      "granted_at": "$NOW"
+    },
     "validation": null
   },
   {
@@ -1306,7 +1307,20 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
+    "permissions": {
+      "_or": [
+        {
+          "folder": {
+            "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+          }
+        },
+        {
+          "uploaded_by": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
     "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
     "presets": null,
     "validation": null

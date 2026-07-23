@@ -418,3 +418,48 @@ nezanikne). Administrace: https://obsah-jedlika.lttr.cz/admin
 6. **Zapsat si každé zadrhnutí** (co nešlo najít, co bylo matoucí, kde
    bylo potřeba rady) — nálezy se zapíší jako spec-level findings do
    tohoto souboru a teprve pak se ticket 04 uzavře.
+
+## 2026-07-23 — Wrap-up (orchestrator)
+
+- **Wrap-up started** after tickets 01–03 done and ticket 04's automatable
+  half done (04 stays in-progress on the human FP-11 steps above).
+- Project checks greened up (commit a61a9d3): shared probe helpers/fixtures
+  extracted to `web/tests/probes/support.ts` (fallow clone groups), fallow
+  entries/ignores for probe files + CLI-only deps + config-by-convention
+  files, test-scoped oxlint overrides (`no-unsafe-type-assertion`,
+  `no-await-in-loop`, `max-lines-per-function`, `vitest/expect-expect`
+  assertFunctionNames) — `vp check` had been red on the probe files because
+  its type-aware oxlint pass is stricter than the eslint pass the ticket
+  sessions ran. Also formatted 3 stale `.aiwork` artifacts `vp check` was
+  flagging (pre-existing, unrelated to this area).
+- **Branch review** (medium effort, whole 5446604..HEAD diff) findings and
+  resolutions — see `review.md`:
+  1. `order_consent.granted_at` was client-writable — the only timestamp on
+     a consent record rested on a client-controlled value (TO-7
+     provability). Fixed on the instance: student create permission now
+     presets `granted_at: $NOW` and drops the field from the writable list;
+     probes assert the server-set timestamp and the 403 on supplying one.
+     **Contract change for 04a: checkout must NOT send `granted_at`.**
+  2. `order.price_czk` is a client-supplied snapshot with no relational
+     validation possible at create. **Contract for 04b: never build the
+     GoPay charge from `order.price_czk`; re-read `course.price_czk`
+     server-side.** (Recorded here as the load-bearing note; no schema
+     change.)
+  3. Entitled-lesson probes asserted on ALL published courses' lessons —
+     they would break the moment the author publishes the dummy course.
+     Fixed: scoped to the entitled course via `filter[section][course]`.
+  4. Author `directus_files` update was unrestricted (`fields: *` incl.
+     `folder`), so the folder-scoped delete rule was bypassable by moving a
+     marketing asset into Materiály kurzů first. Fixed: author file update
+     now requires the file to be in the materials folder OR uploaded by the
+     author; probe added (admin-uploaded stand-in asset, author PATCH 403).
+  - Minor review notes accepted without change: author reads name+email of
+    all users (needed for the M2O picker, fields probe-verified limited);
+    reapplicability gaps (composite unique index + consent-flow operation)
+    already documented above; `forget()` hardened against absent values.
+- Probe suite after fixes: **61/61 green** against production (14 public +
+  29 student + 18 author), two consecutive concerns covered by new tests.
+  Probe tokens rotated again during wrap-up (documented regeneration path).
+- Full checks: `vp check` green, eslint green, `nuxi typecheck` green,
+  fallow green, `nuxi build` green, directus-sync `diff` clean after
+  re-pull.

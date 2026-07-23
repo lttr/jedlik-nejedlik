@@ -152,19 +152,29 @@ describe("student consent records", () => {
       course: PUBLISHED_COURSE_ID,
       price_czk: 1990,
       consents: [
-        { document: "terms", document_version: "2026-01", granted_at: "2026-07-22T12:00:00Z" },
-        {
-          document: "withdrawal_1837",
-          document_version: "2026-01",
-          granted_at: "2026-07-22T12:00:00Z",
-        },
+        { document: "terms", document_version: "2026-01" },
+        { document: "withdrawal_1837", document_version: "2026-01" },
       ],
     })
     expect(response.status).toBe(200)
     expect((item(response).consents as unknown[]).length).toBe(2)
   })
 
-  it("creates a standalone consent for their own order", async () => {
+  it("creates a standalone consent with a server-set timestamp", async () => {
+    const [entitledOrder] = createdOrders
+    const response = await probeSend(
+      "POST",
+      "/items/order_consent",
+      { order: entitledOrder, document: "gdpr", document_version: "2026-01" },
+      ENTITLED,
+    )
+    expect(response.status).toBe(200)
+    // granted_at comes from the permission preset ($NOW), never the client.
+    const grantedAt = new Date(item(response).granted_at as string).getTime()
+    expect(Math.abs(Date.now() - grantedAt)).toBeLessThan(5 * 60 * 1000)
+  })
+
+  it("denies supplying granted_at on a consent", async () => {
     const [entitledOrder] = createdOrders
     const response = await probeSend(
       "POST",
@@ -173,11 +183,11 @@ describe("student consent records", () => {
         order: entitledOrder,
         document: "gdpr",
         document_version: "2026-01",
-        granted_at: "2026-07-22T12:00:00Z",
+        granted_at: "1999-01-01T00:00:00Z",
       },
       ENTITLED,
     )
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(403)
   })
 
   it("denies creating a consent for a foreign order", async () => {
@@ -185,12 +195,7 @@ describe("student consent records", () => {
     const response = await probeSend(
       "POST",
       "/items/order_consent",
-      {
-        order: entitledOrder,
-        document: "gdpr",
-        document_version: "2026-01",
-        granted_at: "2026-07-22T12:00:00Z",
-      },
+      { order: entitledOrder, document: "gdpr", document_version: "2026-01" },
       UNENTITLED,
     )
     expect(response.status).toBe(403)
@@ -253,8 +258,9 @@ describe("student entitlements", () => {
 
 describe("entitlement-gated lesson content", () => {
   it("serves full lesson fields to the entitled student", async () => {
+    // Scoped to the entitled course: other published courses stay nulled.
     const response = await probe(
-      "/items/lesson?fields=id,type,body,video_uid&limit=-1&sort=id",
+      `/items/lesson?fields=id,type,body,video_uid&limit=-1&sort=id&filter[section][course][_eq]=${PUBLISHED_COURSE_ID}`,
       ENTITLED,
     )
     const lessons = nonEmptyItems(response)
@@ -267,7 +273,8 @@ describe("entitlement-gated lesson content", () => {
 
   it("expands Materials for the entitled student", async () => {
     const response = await probe(
-      "/items/lesson?fields=id,materials.directus_files_id&filter[type][_eq]=video",
+      "/items/lesson?fields=id,materials.directus_files_id&filter[type][_eq]=video" +
+        `&filter[section][course][_eq]=${PUBLISHED_COURSE_ID}`,
       ENTITLED,
     )
     expect(response.status).toBe(200)
