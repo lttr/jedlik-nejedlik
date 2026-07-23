@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vp run -F web dev",
+    "dev:agent": "NUXT_NO_WS=1 pnpm --filter web exec nuxi dev",
     "build": "vp run -r build",
     "check": "vp check",
     "lint:slow": "vp run -r lint:slow",

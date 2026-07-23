@@ -4,6 +4,10 @@ const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 
 const isProduction = process.env.NODE_ENV === "production"
 
+// `pnpm dev:agent` sets NUXT_NO_WS to disable Vite's HMR websocket, which
+// vite-plus 0.2.5 double-upgrades — crashing the dev server on browser connect.
+const ws = process.env.NUXT_NO_WS === undefined ? undefined : false
+
 const plausibleModules = isProduction ? ["@nuxtjs/plausible"] : []
 const plausibleConfig = isProduction
   ? {
@@ -79,6 +83,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-12-01",
 
   vite: {
+    server: { ws },
     optimizeDeps: {
       include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
     },
