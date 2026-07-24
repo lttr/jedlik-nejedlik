@@ -44,6 +44,8 @@ Visual check in the browser.
 
 Commit changes (split if logically separate).
 
+Lint and format are enforced by the pre-commit hook — don't run a linter by name beforehand. If the hook fails, fix what it reports and re-commit. `--no-verify` is not an option.
+
 Ask whether to create a PR.
 If yes: Create PR with `gh pr create` (summary, changes, acceptance criteria). Push.
 
