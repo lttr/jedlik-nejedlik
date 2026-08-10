@@ -25,7 +25,7 @@ const srcInput = [
 
 export default defineConfig({
   staged: {
-    "*": "vp check --fix",
+    "*": [() => "vp run nuxt:prepare", "vp check --fix"],
   },
   run: {
     cache: {
@@ -34,11 +34,28 @@ export default defineConfig({
       scripts: process.env.CI !== "true",
     },
     tasks: {
+      // Type-aware linters read `.nuxt` types from disk without regenerating.
+      "nuxt:prepare": {
+        command: "nuxi prepare",
+        cwd: "web",
+        input: srcInput,
+        output: ["web/.nuxt/**", "!web/.nuxt/cache/**", "!web/.nuxt/dev/**", "!web/.nuxt/dist/**"],
+      },
       // Tools run directly (not via nested `vp run -r`) so the cached unit is
       // the leaf command and `srcInput` applies to it.
-      "verify:check": { command: "vp check", input: srcInput },
-      "verify:lint": { command: "eslint .", cwd: "web", input: srcInput },
-      "verify:typecheck": { command: "nuxi typecheck", cwd: "web", input: srcInput },
+      "verify:check": { command: "vp check", input: srcInput, dependsOn: ["nuxt:prepare"] },
+      "verify:lint": {
+        command: "eslint .",
+        cwd: "web",
+        input: srcInput,
+        dependsOn: ["nuxt:prepare"],
+      },
+      "verify:typecheck": {
+        command: "nuxi typecheck",
+        cwd: "web",
+        input: srcInput,
+        dependsOn: ["nuxt:prepare"],
+      },
       "verify:fallow": { command: "fallow", input: srcInput },
       "verify:smoke": { command: "scripts/smoke-dev.sh" },
       // Network-facing Directus config-as-code commands — never cache, a
