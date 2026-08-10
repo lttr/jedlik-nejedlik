@@ -12,3 +12,4 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 - `session-bootstrap.sh` SessionStart hook runs `pnpm install` when `node_modules` is missing. Env vars are always supplied by the environment (web env config; local `web/.env`), never by the hook or by a generated file. `NUXT_PUBLIC_DIRECTUS_URL` missing → dev 500s; ask the user for the value, don't invent or scaffold one.
 - To drive the dev server with a browser use `pnpm dev:agent`: sets `NUXT_NO_WS=1` to drop the HMR socket (vite-plus 0.2.5 double-upgrades it and crashes on connect). Page still SSRs; human `pnpm dev` keeps HMR. See the `run-jedlik-nejedlik` skill.
 - oxlint does not type-check `.vue` files yet — only eslint and `nuxi typecheck` cover SFCs.
+- Never grep barrel `.d.ts` files in `node_modules`; read the specific declaration.
