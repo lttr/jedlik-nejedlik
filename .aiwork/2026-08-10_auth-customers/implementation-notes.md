@@ -162,3 +162,34 @@ Verified after the change, with Directus unreachable: registration and
 login both answer 502 with a "temporarily unavailable" message instead of
 a false "check your inbox" and a false "wrong password". Validation still
 answers 400 ahead of any Directus call.
+
+- Ticket 02 done (f96c059). Ticket 03 done (bb90c82). Wrap-up: see review.md.
+
+### Reset tokens were being sent to Sentry
+
+Found in the branch review, not by any check. Directus mails reset and
+verification links with the token in the query string, and both Sentry
+configs run `sendDefaultPii: true` with `tracesSampleRate: 1.0` — so every
+pageload of `/nove-heslo?token=…` would have reported an account-takeover
+credential to sentry.io and kept it for the retention window.
+
+Fixed with `redactSensitiveParams` (`web/shared/utils/redact.ts`) wired
+through `scrubSensitiveParams` into `beforeSend` and
+`beforeSendTransaction` in both configs. The parameter list is a constant,
+so adding one later is a one-line change.
+
+Touching the Sentry configs is outside the customers layer, but the leak is
+created by this branch putting tokens in URLs, so it is fixed here rather
+than left for someone to find in Sentry.
+
+### The same mistake, twice
+
+Two of the six review findings were the same error: treating "the
+dependency did not answer" as "the dependency said no". Login reported an
+outage as a wrong password; `getStudentToken` cleared the session — logging
+every Student out — when a refresh merely failed to reach Directus. Both
+now branch on whether Directus returned an error code at all.
+
+Worth carrying into areas 04–05: GoPay and Fakturoid have the identical
+shape, and there the wrong branch means a payment recorded as failed
+rather than pending.

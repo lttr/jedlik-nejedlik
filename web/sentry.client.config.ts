@@ -1,6 +1,14 @@
 import * as Sentry from "@sentry/nuxt"
 
+import { scrubSensitiveParams } from "./sentry-scrub"
+
 Sentry.init({
+  // Registration and password-reset links carry single-use tokens in the URL.
+  // With sendDefaultPii and full trace sampling below, every such pageload would
+  // otherwise ship the token to Sentry.
+  beforeSend: scrubSensitiveParams,
+  beforeSendTransaction: scrubSensitiveParams,
+
   // If set up, you can use your runtime config here
   // dsn: useRuntimeConfig().public.sentry.dsn,
   dsn: "https://670cc9796dc78041f2d9c234db7f9f5c@o4510533326602240.ingest.de.sentry.io/4510533327978576",

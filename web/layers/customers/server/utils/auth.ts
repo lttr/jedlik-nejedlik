@@ -145,7 +145,18 @@ export async function getStudentToken(event: H3Event): Promise<string> {
     refreshed = await getServerDirectusClient().request(
       refresh({ refresh_token: secure.refreshToken, mode: "json" }),
     )
-  } catch {
+  } catch (error) {
+    // Only a refusal from Directus means the session is dead. If Directus
+    // never answered we keep the cookie: sessions last 30 days, and clearing
+    // them on a transient outage would sign out every Student at once and make
+    // them all log in again — through a login that is down for the same reason.
+    if (directusErrorCode(error) === undefined) {
+      throw createError({
+        statusCode: 503,
+        statusMessage: "Service Unavailable",
+        message: "Služba je dočasně nedostupná. Zkuste to prosím za chvíli.",
+      })
+    }
     return signedOut()
   }
 
