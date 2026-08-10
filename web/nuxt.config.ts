@@ -130,6 +130,10 @@ export default defineNuxtConfig({
   sentry: {
     org: "lukas-trumm",
     project: "jedlik-nejedlik",
+    // No source-map upload or telemetry: both shell out to sentry.io and add
+    // ~17s to every build.
+    sourcemaps: { disable: true },
+    telemetry: false,
   },
 
   svgo: {
