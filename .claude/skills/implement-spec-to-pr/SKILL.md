@@ -38,13 +38,26 @@ Improve all rendered text with `/czech-typography` skill.
 
 ## Step 5 - Verify
 
-Visual check in the browser.
+Run `pnpm check` (= `vp check`) and `pnpm fallow` BEFORE committing. These are
+what the pre-commit hook gates on. Plain `eslint .` is a much weaker rule set
+here — passing it says nothing about `vp check`, which adds strict oxlint rules
+(`explicit-module-boundary-types`, `strict-boolean-expressions`,
+`no-unsafe-type-assertion`, `consistent-function-scoping`) and complexity
+limits. Gating on eslint alone means the hook rejects the commit and reverts it.
+
+Then a visual check in the browser.
+
+Don't hand-start a dev server just to verify — the pre-commit smoke test boots
+one, and Nuxt's dev lock is per-directory, so an orphaned `nuxi dev` from a
+killed run blocks the next one ("Another Nuxt dev server is already running").
+If one is stuck: `pkill -f "nuxi dev"`, or launch with `NUXT_IGNORE_LOCK=1`.
 
 ## Step 6 - Ship
 
 Commit changes (split if logically separate).
 
 Ask whether to create a PR.
-If yes: Create PR with `gh pr create` (summary, changes, acceptance criteria). Push.
+If yes: create the PR (GitHub MCP tools, or `gh pr create` where available) with
+summary, changes, and acceptance criteria. Push.
 
 Output report: branch, PR URL, files changed, verification status, open questions.
