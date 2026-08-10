@@ -40,6 +40,13 @@ export default defineConfig({
       "verify:lint": { command: "eslint .", cwd: "web", input: srcInput },
       "verify:typecheck": { command: "nuxi typecheck", cwd: "web", input: srcInput },
       "verify:fallow": { command: "fallow", input: srcInput },
+      // Unit tests over pure modules. Runs through the `vitest-probe` alias for
+      // the same reason `directus:probe` does — see the note there.
+      "verify:test": {
+        command: "node node_modules/vitest-probe/vitest.mjs run --config vitest.unit.config.ts",
+        cwd: "web",
+        input: srcInput,
+      },
       "verify:smoke": { command: "scripts/smoke-dev.sh" },
       // Network-facing Directus config-as-code commands — never cache, a
       // replayed result would mask drift on the live instance.
@@ -64,6 +71,7 @@ export default defineConfig({
           "verify:lint",
           "verify:typecheck",
           "verify:fallow",
+          "verify:test",
           "verify:smoke",
           "verify:build",
         ],
@@ -210,6 +218,37 @@ export default defineConfig({
             "error",
             { assertFunctionNames: ["expect", "items", "nonEmptyItems"] },
           ],
+        },
+      },
+      {
+        // `nuxt-auth-utils` types its session API through the `#auth-utils`
+        // specifier. oxlint's type-aware pass does not resolve it — `#`-prefixed
+        // specifiers are Node subpath imports, and the package declares none —
+        // so `useUserSession`, `getUserSession`, `setUserSession` and anything
+        // derived from them arrive as `any` and trip the no-unsafe family.
+        //
+        // `nuxi typecheck` (vue-tsc, via .nuxt/tsconfig.json) resolves the alias
+        // and type-checks these files properly; it runs in verify:all, so the
+        // types are still enforced — just not here.
+        //
+        // Scoped to the files that touch the session API on purpose. New auth
+        // routes that do not read a session must not be added to this list.
+        // DELETE WHEN: oxlint resolves `#`-aliased module specifiers.
+        files: [
+          "web/layers/customers/nuxt.config.ts",
+          "web/layers/customers/app/middleware/auth.ts",
+          "web/layers/customers/server/api/auth/login.post.ts",
+          "web/layers/customers/server/api/auth/logout.post.ts",
+          "web/layers/customers/server/utils/auth.ts",
+          "web/tests/unit/auth-server.test.ts",
+        ],
+        rules: {
+          "typescript/no-unsafe-argument": "off",
+          "typescript/no-unsafe-assignment": "off",
+          "typescript/no-unsafe-member-access": "off",
+          "typescript/no-unsafe-return": "off",
+          "typescript/no-unnecessary-condition": "off",
+          "typescript/strict-boolean-expressions": "off",
         },
       },
       {

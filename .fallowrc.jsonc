@@ -16,6 +16,10 @@
     // with their own vitest config — not reachable from any default entry.
     "web/vitest.probes.config.ts",
     "web/tests/probes/**",
+    // Unit tests over pure modules, run via `vp run verify:test` — same story
+    // as the probes above: reached only through their own vitest config.
+    "web/vitest.unit.config.ts",
+    "web/tests/unit/**",
     // Read by the directus-sync CLI (directus:pull/diff tasks), never imported.
     "directus-sync.config.cjs",
     // Loaded by @lttr/nuxt-validated-runtime-config via path convention.

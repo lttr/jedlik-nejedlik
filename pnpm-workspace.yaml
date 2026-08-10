@@ -13,10 +13,18 @@ allowBuilds:
   vue-demi: false
 
 # Adopt vite-plus: alias `vite`/`vitest` to VoidZero's drop-in builds.
+#
+# Pinned, not `latest`: with a floating specifier every `pnpm add` re-resolves
+# the whole toolchain as a side effect. Bumping 0.2.5 → 0.2.8 that way left
+# vite-plus-core@0.1.24 (pulled in by vite-plus-test) resolved against a new
+# peer hash whose optional `@voidzero-dev/vite-plus-linux-x64-gnu` binding
+# pnpm then skipped, and `vp config` died on "Cannot find native binding".
+# Bump these deliberately, in their own commit, so a toolchain upgrade is
+# never collateral damage from adding an unrelated dependency.
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: latest
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.5
+  vitest: npm:@voidzero-dev/vite-plus-test@0.1.24
+  vite-plus: 0.2.5
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
 # enable enableGlobalVirtualStore — breaks resolution the same way.

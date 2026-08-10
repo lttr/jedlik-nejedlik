@@ -15,6 +15,7 @@
     "@directus/sdk": "^21.3.0",
     "@lttr/puleo": "^0.8.1",
     "@sentry/nuxt": "^10.51.0",
+    "nuxt-auth-utils": "^0.5.30",
     "zod": "^4.4.3"
   },
   "devDependencies": {
