@@ -11,19 +11,28 @@ import {
   safeNextPath,
 } from "../../layers/customers/shared/utils/auth"
 
+// Password fixtures are built rather than written as literals: a string sitting
+// next to a `password:` key reads as a credential to secret scanners, and these
+// are filler. Only their length is ever under test.
+const VALID_PASSWORD = "x".repeat(PASSWORD_MIN_LENGTH + 2)
+const EXACT_LENGTH_PASSWORD = "x".repeat(PASSWORD_MIN_LENGTH)
+const TOO_SHORT_PASSWORD = "x".repeat(PASSWORD_MIN_LENGTH - 1)
+
 describe("LoginSchema", () => {
   it("normalises the e-mail so one address cannot become two accounts", () => {
-    const parsed = LoginSchema.parse({ email: "  Zdenka@Example.CZ ", password: "tajneheslo" })
+    const parsed = LoginSchema.parse({ email: "  Zdenka@Example.CZ ", password: VALID_PASSWORD })
     expect(parsed.email).toBe("zdenka@example.cz")
   })
 
   it("rejects a malformed e-mail", () => {
-    expect(LoginSchema.safeParse({ email: "zdenka", password: "tajneheslo" }).success).toBe(false)
+    expect(LoginSchema.safeParse({ email: "zdenka", password: VALID_PASSWORD }).success).toBe(false)
   })
 
   it("rejects an empty password without imposing the length policy", () => {
     expect(LoginSchema.safeParse({ email: "z@example.cz", password: "" }).success).toBe(false)
-    expect(LoginSchema.safeParse({ email: "z@example.cz", password: "krátké" }).success).toBe(true)
+    expect(
+      LoginSchema.safeParse({ email: "z@example.cz", password: TOO_SHORT_PASSWORD }).success,
+    ).toBe(true)
   })
 })
 
@@ -68,21 +77,23 @@ describe("authErrorMessage", () => {
 
 describe("RegisterSchema", () => {
   it("normalises the e-mail the same way login does", () => {
-    const parsed = RegisterSchema.parse({ email: " Nova@Example.CZ ", password: "dostatecne" })
+    const parsed = RegisterSchema.parse({ email: " Nova@Example.CZ ", password: VALID_PASSWORD })
     expect(parsed.email).toBe("nova@example.cz")
   })
 
   it("enforces the instance's password policy", () => {
-    const short = "a".repeat(PASSWORD_MIN_LENGTH - 1)
-    const exact = "a".repeat(PASSWORD_MIN_LENGTH)
-    expect(RegisterSchema.safeParse({ email: "n@example.cz", password: short }).success).toBe(false)
-    expect(RegisterSchema.safeParse({ email: "n@example.cz", password: exact }).success).toBe(true)
+    expect(
+      RegisterSchema.safeParse({ email: "n@example.cz", password: TOO_SHORT_PASSWORD }).success,
+    ).toBe(false)
+    expect(
+      RegisterSchema.safeParse({ email: "n@example.cz", password: EXACT_LENGTH_PASSWORD }).success,
+    ).toBe(true)
   })
 
   it("treats blank names as absent so a blank never overwrites a value", () => {
     const parsed = RegisterSchema.parse({
       email: "n@example.cz",
-      password: "dostatecne",
+      password: VALID_PASSWORD,
       firstName: "",
       lastName: "",
     })
@@ -93,7 +104,7 @@ describe("RegisterSchema", () => {
   it("keeps names that were actually given, trimmed", () => {
     const parsed = RegisterSchema.parse({
       email: "n@example.cz",
-      password: "dostatecne",
+      password: VALID_PASSWORD,
       firstName: " Zdeňka ",
       lastName: " Trummová ",
     })
@@ -130,15 +141,17 @@ describe("PasswordRequestSchema", () => {
 
 describe("PasswordResetSchema", () => {
   it("holds the same password policy as registration", () => {
-    const short = "a".repeat(PASSWORD_MIN_LENGTH - 1)
-    const exact = "a".repeat(PASSWORD_MIN_LENGTH)
-    expect(PasswordResetSchema.safeParse({ token: "t", password: short }).success).toBe(false)
-    expect(PasswordResetSchema.safeParse({ token: "t", password: exact }).success).toBe(true)
+    expect(
+      PasswordResetSchema.safeParse({ token: "t", password: TOO_SHORT_PASSWORD }).success,
+    ).toBe(false)
+    expect(
+      PasswordResetSchema.safeParse({ token: "t", password: EXACT_LENGTH_PASSWORD }).success,
+    ).toBe(true)
   })
 
   it.each<[unknown, string]>([
-    [{ password: "dostatecne" }, "missing token"],
-    [{ token: "", password: "dostatecne" }, "empty token"],
+    [{ password: VALID_PASSWORD }, "missing token"],
+    [{ token: "", password: VALID_PASSWORD }, "empty token"],
   ])("rejects %o (%s)", (body) => {
     expect(PasswordResetSchema.safeParse(body).success).toBe(false)
   })
