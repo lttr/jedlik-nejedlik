@@ -43,3 +43,27 @@ In the deployed app's env:
       visitor
 - [ ] Friction encountered is recorded in `../implementation-notes.md`
 - [ ] `vp run directus:pull` re-run and the settings diff committed
+
+## Also owns every Directus interaction in tickets 01–03
+
+`obsah-jedlika.lttr.cz` is not in the agent environment's network egress
+allowlist, so **no agent session could exercise a single Directus call** —
+the marketing site's own `/clanky` 404s there for the same reason. Tickets
+01–03 verified everything up to the Directus boundary (validation, status
+codes, messages, session redirects, page rendering) and nothing past it.
+
+So this ticket is the first check of:
+
+- [ ] Login with correct credentials sets a session; wrong credentials give
+      the single generic message
+- [ ] The signed-in `GET /api/_auth/session` payload carries `user` and no
+      token fields, and the session cookie is httpOnly + `SameSite=Lax` +
+      Secure with a 30-day `maxAge`
+- [ ] The session survives a page reload, and an expired access token is
+      refreshed transparently rather than logging the Student out
+- [ ] Logout revokes the refresh token at Directus, not just locally
+- [ ] An expired or reused verification token yields the 410 message
+      rather than the generic 502 — the code mapping in `verify.post.ts`
+      (`TOKEN_EXPIRED` / `INVALID_TOKEN` / `INVALID_PAYLOAD`) is a
+      documented guess, unverifiable while registration is disabled, and
+      should be corrected against what Directus actually returns

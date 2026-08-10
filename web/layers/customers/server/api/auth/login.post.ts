@@ -9,22 +9,33 @@ import { login, readMe, withToken } from "@directus/sdk"
 // for which addresses have accounts.
 const LOGIN_FAILED = "Nesprávný e-mail nebo heslo."
 
+// Directus answered, but not with something we can build a session from. Never
+// reported as a credentials problem — that would have the Student retype a
+// password that was right all along.
+function upstreamProblem(message: string) {
+  return createError({ statusCode: 502, statusMessage: "Bad Gateway", message })
+}
+
 function rejectedLogin(error: unknown) {
-  if (directusErrorCode(error) === "REQUESTS_EXCEEDED") {
+  const code = directusErrorCode(error)
+
+  if (code === "REQUESTS_EXCEEDED") {
     return createError({
       statusCode: 429,
       statusMessage: "Too Many Requests",
       message: "Příliš mnoho pokusů o přihlášení. Zkuste to prosím za chvíli.",
     })
   }
-  return createError({ statusCode: 401, statusMessage: "Unauthorized", message: LOGIN_FAILED })
-}
 
-// Directus answered, but not with something we can build a session from. Never
-// reported as a credentials problem — that would have the Student retype a
-// password that was right all along.
-function upstreamProblem(message: string) {
-  return createError({ statusCode: 502, statusMessage: "Bad Gateway", message })
+  // No Directus error code means Directus never answered — DNS, TLS, a network
+  // policy, an outage. Reporting that as bad credentials would tell every
+  // Student their password is wrong during an incident, and would send them to
+  // the password-reset flow, which is down for the same reason.
+  if (code === undefined) {
+    return upstreamProblem("Přihlášení je dočasně nedostupné. Zkuste to prosím za chvíli.")
+  }
+
+  return createError({ statusCode: 401, statusMessage: "Unauthorized", message: LOGIN_FAILED })
 }
 
 export default defineEventHandler(async (event) => {

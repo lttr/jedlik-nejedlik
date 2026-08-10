@@ -10,6 +10,8 @@ export const PASSWORD_MIN_LENGTH = 8
 
 export const LOGIN_PATH = "/prihlaseni"
 export const ACCOUNT_PATH = "/ucet"
+export const REGISTER_PATH = "/registrace"
+export const REGISTER_VERIFY_PATH = "/registrace/overeni"
 
 // Trim and lowercase before validating: e-mail is the identity (O-17), and a
 // stray capital or trailing space must not create a second account.
@@ -23,6 +25,34 @@ export const LoginSchema = z.object({
 })
 
 export type LoginInput = z.infer<typeof LoginSchema>
+
+export const RegisterSchema = z.object({
+  email: emailField,
+  password: z.string().min(PASSWORD_MIN_LENGTH),
+  // Directus stores these on the user; both optional, since a Student can buy a
+  // Course without volunteering a name. Empty strings normalise to undefined so
+  // we never write a blank over a value.
+  firstName: z
+    .string()
+    .trim()
+    .min(1)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  lastName: z
+    .string()
+    .trim()
+    .min(1)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+})
+
+export type RegisterInput = z.infer<typeof RegisterSchema>
+
+// Directus's verification and reset tokens are opaque strings; we only check
+// that something arrived, and let Directus judge validity.
+export const TokenSchema = z.object({
+  token: z.string().min(1),
+})
 
 /**
  * Sanitise a `?next=` value into a path we are willing to redirect to.

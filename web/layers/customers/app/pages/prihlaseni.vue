@@ -36,6 +36,10 @@
 
         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       </form>
+
+      <p class="alternative">
+        Nemáte ještě účet? <NuxtLink :to="REGISTER_PATH">Zaregistrujte se</NuxtLink>.
+      </p>
     </div>
   </PageWrapper>
 </template>
@@ -80,5 +84,10 @@ h1 {
 form {
   max-width: 40ch;
   margin-inline: auto;
+}
+
+.alternative {
+  text-align: center;
+  margin-top: var(--space-5);
 }
 </style>

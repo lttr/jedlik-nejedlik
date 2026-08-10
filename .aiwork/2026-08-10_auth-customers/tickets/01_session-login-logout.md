@@ -48,17 +48,25 @@ Covers spec decisions 1, 2, 5, 6 (login half), 7.
 
 ## Verification notes
 
-Observed against a dev server on real Directus: signed-out `/ucet` → 302
-`/prihlaseni?next=/ucet`; `/api/_auth/session` anonymous → `{"id":…}` with
-no `user` and no tokens; `/prihlaseni` renders the form; bad credentials →
-401 "Nesprávný e-mail nebo heslo."; malformed body → 400, same message.
+**Directus is unreachable from the agent environment** — its host is not in
+the network egress allowlist (`Host not in allowlist:
+obsah-jedlika.lttr.cz`), which also makes `/clanky` 404 on the existing
+marketing site. So nothing below touched Directus, and an earlier note
+claiming otherwise was wrong: the 401 observed for "bad credentials" came
+from this route's own catch-all, which at the time mapped _every_ thrown
+error to the same response. See implementation-notes.
 
-Two things could not be observed without Student credentials, which no
-agent session has: the **signed-in** session payload and the cookie
-attributes (both need a successful login). The payload is guaranteed by
-construction — `nuxt-auth-utils`' session route does
-`const { secure, ...data } = session`, read at source, which is the whole
-reason tokens live in `secure`. The cookie attributes come from the
-module's `sameSite: "lax"` default plus h3's `useSession` defaults
-(httpOnly, secure, path `/`), with `maxAge` set explicitly here. Both get
-their real check in ticket 04's live round-trip.
+Genuinely observed against a dev server: signed-out `/ucet` → 302
+`/prihlaseni?next=/ucet`; `/api/_auth/session` anonymous → `{"id":…}` with
+no `user` and no tokens; `/prihlaseni` renders the form; malformed body →
+400 with the Czech message.
+
+Not observed, deferred to ticket 04's live round-trip: every Directus
+interaction (successful login, credential rejection, token refresh,
+logout revocation), the **signed-in** session payload, and the cookie
+attributes. The payload is guaranteed by construction —
+`nuxt-auth-utils`' session route does `const { secure, ...data } = session`,
+read at source, which is the whole reason tokens live in `secure`. The
+cookie attributes come from the module's `sameSite: "lax"` default plus
+h3's `useSession` defaults (httpOnly, secure, path `/`), with `maxAge` set
+explicitly here.

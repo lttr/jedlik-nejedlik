@@ -118,3 +118,47 @@ run. Now imported explicitly with a comment; Nitro resolves the relative
 path the same way. Worth remembering for tickets 02–03: **anything a unit
 test loads must import its dependencies explicitly**, auto-imports are not
 available there.
+
+- Ticket 01 done (bcf66cc). Ticket 02 started.
+
+### Directus is unreachable from the agent environment
+
+The container's network egress allowlist does not include
+`obsah-jedlika.lttr.cz`. The Directus SDK reports `Host not in allowlist`,
+and the symptom is not limited to new code: `/clanky` on the existing
+marketing site 404s because its article fetch comes back empty.
+
+This invalidated a verification claim made during ticket 01. Posting bad
+credentials to `/api/auth/login` returned 401 "Nesprávný e-mail nebo
+heslo.", which was read as Directus rejecting the credentials. It was not
+— the route mapped _every_ thrown error to that response, so an
+unreachable Directus was indistinguishable from a wrong password. Ticket
+01's verification notes have been corrected.
+
+**Consequence for this area:** no Directus interaction can be verified by
+an agent here. Route wiring, validation, status codes, message plumbing,
+session redirects and page rendering all remain verifiable; login,
+registration, verification, reset and refresh do not. Ticket 04 now owns
+all of it.
+
+**Design change it prompted.** Mapping an unreachable Directus to 401 is
+wrong beyond the test: during an outage every Student would be told their
+password is wrong, and would be sent to a password-reset flow that is down
+for the same reason. `directusErrorCode(error) === undefined` now means
+"Directus never answered" and yields 502 with a "temporarily unavailable"
+message, in login and registration alike. Registration keeps swallowing
+every error Directus _does_ report, so the anti-enumeration property is
+untouched — a 502 says the service is down, not whether the address is
+taken.
+
+Note what this does **not** establish. `POST /api/auth/register` was seen
+answering 204 while registration was failing, which looked like proof of
+the anti-enumeration path. It was not: the failure was the unreachable
+host, not a rejection Directus reported. The 204-on-Directus-rejection
+branch — the one that actually hides an already-registered address — has
+never executed. Ticket 04 owns it.
+
+Verified after the change, with Directus unreachable: registration and
+login both answer 502 with a "temporarily unavailable" message instead of
+a false "check your inbox" and a false "wrong password". Validation still
+answers 400 ahead of any Directus call.

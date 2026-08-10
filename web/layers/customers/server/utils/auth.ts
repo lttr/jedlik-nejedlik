@@ -46,6 +46,23 @@ export function sessionTokensFrom(auth: AuthenticationData, now: number): Secure
 }
 
 /**
+ * Absolute URL for one of our own pages, for links Directus mails out.
+ *
+ * Built from the configured site URL rather than the request's Host header:
+ * the header is attacker-controllable, and this string ends up in an e-mail
+ * sent to the address someone else typed. Directus also matches it against
+ * `USER_REGISTER_URL_ALLOW_LIST` / `PASSWORD_RESET_URL_ALLOW_LIST`, so it has
+ * to be the canonical domain regardless.
+ */
+export function siteUrlFor(event: H3Event, path: string): string {
+  const { url } = getSiteConfig(event)
+  if (url === undefined) {
+    throw createError({ statusCode: 500, statusMessage: "Site URL is not configured" })
+  }
+  return new URL(path, url).href
+}
+
+/**
  * The Directus error code behind a thrown SDK request, when there is one.
  * Directus answers `{ errors: [{ extensions: { code } }] }`; anything else
  * (a network failure, a proxy error page) yields `undefined`.
