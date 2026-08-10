@@ -12,9 +12,8 @@
     "web/layers/*/app/**",
     "web/layers/*/shared/**",
     "web/layers/*/server/**",
-    // On-demand Directus permission probes, run via `vp run directus:probe`
-    // with their own vitest config — not reachable from any default entry.
-    "web/vitest.probes.config.ts",
+    // Test-runner configs invoked by their own task, never imported.
+    "web/vitest.*.config.ts",
     "web/tests/probes/**",
     // Read by the directus-sync CLI (directus:pull/diff tasks), never imported.
     "directus-sync.config.cjs",
