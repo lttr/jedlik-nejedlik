@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest"
 import {
   LoginSchema,
   PASSWORD_MIN_LENGTH,
+  PasswordRequestSchema,
+  PasswordResetSchema,
   RegisterSchema,
   TokenSchema,
   authErrorMessage,
@@ -111,5 +113,33 @@ describe("TokenSchema", () => {
     [{ token: 42 }, "non-string token"],
   ])("rejects %o (%s)", (body) => {
     expect(TokenSchema.safeParse(body).success).toBe(false)
+  })
+})
+
+describe("PasswordRequestSchema", () => {
+  it("normalises the e-mail so a reset finds the same account as login", () => {
+    expect(PasswordRequestSchema.parse({ email: " Zdenka@Example.CZ " }).email).toBe(
+      "zdenka@example.cz",
+    )
+  })
+
+  it("rejects a malformed address before Directus is asked", () => {
+    expect(PasswordRequestSchema.safeParse({ email: "zdenka" }).success).toBe(false)
+  })
+})
+
+describe("PasswordResetSchema", () => {
+  it("holds the same password policy as registration", () => {
+    const short = "a".repeat(PASSWORD_MIN_LENGTH - 1)
+    const exact = "a".repeat(PASSWORD_MIN_LENGTH)
+    expect(PasswordResetSchema.safeParse({ token: "t", password: short }).success).toBe(false)
+    expect(PasswordResetSchema.safeParse({ token: "t", password: exact }).success).toBe(true)
+  })
+
+  it.each<[unknown, string]>([
+    [{ password: "dostatecne" }, "missing token"],
+    [{ token: "", password: "dostatecne" }, "empty token"],
+  ])("rejects %o (%s)", (body) => {
+    expect(PasswordResetSchema.safeParse(body).success).toBe(false)
   })
 })

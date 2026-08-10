@@ -12,6 +12,8 @@ export const LOGIN_PATH = "/prihlaseni"
 export const ACCOUNT_PATH = "/ucet"
 export const REGISTER_PATH = "/registrace"
 export const REGISTER_VERIFY_PATH = "/registrace/overeni"
+export const PASSWORD_FORGOTTEN_PATH = "/zapomenute-heslo"
+export const PASSWORD_RESET_PATH = "/nove-heslo"
 
 // Trim and lowercase before validating: e-mail is the identity (O-17), and a
 // stray capital or trailing space must not create a second account.
@@ -52,6 +54,17 @@ export type RegisterInput = z.infer<typeof RegisterSchema>
 // that something arrived, and let Directus judge validity.
 export const TokenSchema = z.object({
   token: z.string().min(1),
+})
+
+export const PasswordRequestSchema = z.object({
+  email: emailField,
+})
+
+export const PasswordResetSchema = z.object({
+  token: z.string().min(1),
+  // Same policy as registration — this sets a password, so it must hold the
+  // line Directus would hold anyway.
+  password: z.string().min(PASSWORD_MIN_LENGTH),
 })
 
 /**

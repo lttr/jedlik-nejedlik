@@ -3,6 +3,10 @@
     <div class="form-wrapper">
       <h1>Přihlášení</h1>
 
+      <p v-if="justReset" class="success-message">
+        Heslo je nastavené. Přihlaste se prosím novým heslem.
+      </p>
+
       <form class="form" @submit.prevent="onSubmit">
         <div class="p-form-group">
           <label for="login-email">E-mail</label>
@@ -38,6 +42,10 @@
       </form>
 
       <p class="alternative">
+        <NuxtLink :to="PASSWORD_FORGOTTEN_PATH">Zapomněli jste heslo?</NuxtLink>
+      </p>
+
+      <p class="alternative">
         Nemáte ještě účet? <NuxtLink :to="REGISTER_PATH">Zaregistrujte se</NuxtLink>.
       </p>
     </div>
@@ -50,6 +58,7 @@ const { fetch: refreshSession } = useUserSession()
 
 const email = ref("")
 const password = ref("")
+const justReset = computed(() => route.query.obnoveno === "1")
 
 const { execute, pending, errorMessage } = useAuthRequest(() =>
   $fetch("/api/auth/login", {

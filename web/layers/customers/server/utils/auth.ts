@@ -78,6 +78,43 @@ export function directusErrorCode(error: unknown): string | undefined {
 }
 
 /**
+ * Failure handling for the two endpoints that must not reveal whether an
+ * address has an account: registration and the password-reset request.
+ *
+ * Throws for the two failures that are safe — and necessary — to report, and
+ * returns for everything else so the caller can answer 204 as if nothing went
+ * wrong. Swallowing is the point: "already registered" and "no such user" have
+ * to be indistinguishable from success, or the form becomes a way to test which
+ * addresses have accounts.
+ *
+ * `subject` names the flow for the outage message and must be feminine to agree
+ * with "dočasně nedostupná" ("Registrace", "Obnova hesla").
+ */
+export function swallowRejection(error: unknown, subject: string): void {
+  const code = directusErrorCode(error)
+
+  if (code === "REQUESTS_EXCEEDED") {
+    throw createError({
+      statusCode: 429,
+      statusMessage: "Too Many Requests",
+      message: "Příliš mnoho pokusů. Zkuste to prosím za chvíli.",
+    })
+  }
+
+  // No code means Directus never answered. Swallowing that would show "check
+  // your inbox" for a mail that will never arrive, and the visitor would wait
+  // instead of retrying. Leaks nothing: it says the service is down, not
+  // whether the address is taken.
+  if (code === undefined) {
+    throw createError({
+      statusCode: 502,
+      statusMessage: "Bad Gateway",
+      message: `${subject} je dočasně nedostupná. Zkuste to prosím za chvíli.`,
+    })
+  }
+}
+
+/**
  * Read the session's access token, refreshing it through Directus first if it
  * is at or near expiry. The returned token is valid for the rest of the
  * request. A session that cannot be refreshed is cleared and rejected — the
