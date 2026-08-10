@@ -44,6 +44,9 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "aiwork@lttr-claude-marketplace": true
+  },
   "extraKnownMarketplaces": {
     "lttr-claude-marketplace": {
       "source": {
@@ -51,8 +54,5 @@
         "repo": "lttr/claude-marketplace"
       }
     }
-  },
-  "enabledPlugins": {
-    "aiwork@lttr-claude-marketplace": true
   }
 }
