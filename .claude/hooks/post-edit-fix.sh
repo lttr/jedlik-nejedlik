@@ -13,4 +13,5 @@ f=$(jq -r '.tool_input.file_path // empty')
 [ -z "$f" ] && exit 0
 [ ! -f "$f" ] && exit 0
 
-vp lint --fix "$f" 2>/dev/null || true
+# stdout too: `vp lint` prints a summary that would land in the transcript.
+vp lint --fix "$f" >/dev/null 2>&1 || true
