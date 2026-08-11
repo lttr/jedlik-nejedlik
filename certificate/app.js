@@ -31,7 +31,9 @@
   ]
 
   function formatCzechDate(isoDate) {
-    if (!isoDate) return ""
+    if (!isoDate) {
+      return ""
+    }
     const [y, m, d] = isoDate.split("-").map(Number)
     return `${d}. ${CZ_MONTHS[m - 1]} ${y}`
   }
@@ -149,7 +151,9 @@
   function scalePreview() {
     const wrap = document.querySelector(".preview-wrap")
     const scaler = document.getElementById("previewScaler")
-    if (!wrap || !scaler) return
+    if (!wrap || !scaler) {
+      return
+    }
     const certWidthPx = (297 * 96) / 25.4 // mm -> px @ 96dpi
     const certHeightPx = (210 * 96) / 25.4
     const available = wrap.clientWidth - 24
@@ -168,7 +172,9 @@
     const imgs = certEl.querySelectorAll("img")
     await Promise.all(
       [...imgs].map(async (img) => {
-        if (img.complete) return
+        if (img.complete) {
+          return
+        }
         await new Promise((res) => {
           img.addEventListener("load", res, { once: true })
           img.addEventListener("error", res, { once: true })
@@ -230,10 +236,18 @@
   }
 
   function validate(state) {
-    if (state.names.length === 0) return "Zadej alespoň jedno jméno."
-    if (!state.workshop.trim()) return "Zadej název workshopu."
-    if (!state.workshopDate) return "Zadej datum workshopu."
-    if (!state.issueDate) return "Zadej datum vystavení."
+    if (state.names.length === 0) {
+      return "Zadej alespoň jedno jméno."
+    }
+    if (!state.workshop.trim()) {
+      return "Zadej název workshopu."
+    }
+    if (!state.workshopDate) {
+      return "Zadej datum workshopu."
+    }
+    if (!state.issueDate) {
+      return "Zadej datum vystavení."
+    }
     return null
   }
 

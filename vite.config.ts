@@ -175,6 +175,7 @@ export default defineConfig({
       "unicorn/no-array-for-each": "error",
       "unicorn/no-array-reduce": "error",
       // Style
+      curly: "error",
       "prefer-const": "error",
       "object-shorthand": "error",
       "prefer-template": "error",
