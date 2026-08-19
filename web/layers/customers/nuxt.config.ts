@@ -7,11 +7,19 @@
 // Marker so Nuxt registers this directory as a layer. Owns identity flows:
 // register, login, logout, reset (area 02).
 export default defineNuxtConfig({
+  runtimeConfig: {
+    // Static token of the Directus service user whose policy allows creating
+    // Student-role users and nothing else. Env: NUXT_DIRECTUS_SERVICE_TOKEN.
+    // Private — it must never reach the browser.
+    directusServiceToken: "",
+  },
+
   routeRules: {
     // Identity pages are for one Student at a time, never for search
     // results. `robots: false` sets X-Robots-Tag + meta noindex and drops
     // the route from the sitemap.
     "/muj-ucet": { robots: false },
     "/prihlaseni": { robots: false },
+    "/registrace": { robots: false },
   },
 })

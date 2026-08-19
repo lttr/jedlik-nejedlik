@@ -30,6 +30,11 @@
 
         <AuthFormError :message="errorMessage" />
       </form>
+
+      <p>
+        Nemáte účet?
+        <NuxtLink :to="{ path: '/registrace', query: route.query }">Zaregistrujte se</NuxtLink>
+      </p>
     </AuthPanel>
   </PageWrapper>
 </template>

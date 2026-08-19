@@ -69,3 +69,34 @@ Chronological log. Newest entries at the bottom.
   path needs a Student account with a known password — no such credential
   exists in this session, so it is covered by ticket 06's round-trip.
   `nuxi typecheck` clean, `scripts/smoke-dev.sh` HTTP 200.
+
+### Ticket 03 — registration
+
+- **Ticket 03 started** (status → in-progress).
+- Goal understanding: `/registrace` takes e-mail + password only, creates the
+  Directus user through the ticket-01 service token with the Student role,
+  logs the new Student straight in, honours `?redirect=`, and is rate-limited
+  per IP. Czech errors for a duplicate e-mail and a too-short password, the
+  latter also client-side. A passive privacy-policy line, no checkbox.
+- **Runtime config.** The service token is the private key
+  `directusServiceToken` (env `NUXT_DIRECTUS_SERVICE_TOKEN`), declared in the
+  customers layer's `nuxt.config.ts` and validated by
+  `web/server/runtime-config.schema.ts` — Nitro now refuses to boot without
+  it, matching how `directusUrl` behaves. No hand-written `RuntimeConfig`
+  augmentation: Nuxt already generates the key's type from the layer config,
+  and adding one conflicts (TS2430). Only the branded public keys need the
+  by-hand augmentation the module's README describes.
+- **Validation runs before the rate limit.** The first cut counted every
+  request, so two form typos ate 40% of a Student's hourly budget. A
+  malformed payload never reaches Directus and now costs nothing; the limit
+  (5/hour/IP) guards actual creation attempts.
+- **Role is pinned twice**: `STUDENT_ROLE_ID` in the route and the service
+  user's policy on the instance. Either alone would do; together a bug in
+  one cannot mint a privileged user.
+- Verified against the dev server (port 3211, dummy service token — the real
+  one is not available in this session): `/registrace` SSRs with the privacy
+  note and the password hint; short password → 400 "Heslo musí mít alespoň 8
+  znaků."; malformed e-mail → 400 "Zadejte prosím platnou e-mailovou
+  adresu."; five real attempts pass, the sixth → 429 with the Czech message;
+  `?redirect=` survives the login↔registration cross-links. `nuxi typecheck`
+  and `vp lint` clean.

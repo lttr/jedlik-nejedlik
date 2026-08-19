@@ -93,6 +93,13 @@ describe("registration service token", () => {
     expect(await findUserId(`probe-auth-elevated-${stamp}@jedlik-nejedlik.cz`)).toBeUndefined()
   })
 
+  it("refuses a duplicate e-mail, and says so", async () => {
+    // The one auth error the app is allowed to be specific about.
+    const response = await registerStudent(email, PASSWORD)
+    expect(response.status).toBeGreaterThanOrEqual(400)
+    expect(errorCode(response)).toBe("RECORD_NOT_UNIQUE")
+  })
+
   it("cannot read existing users", async () => {
     const response = await probe("/users?limit=1", SERVICE)
     expect(response.status).toBeGreaterThanOrEqual(400)
