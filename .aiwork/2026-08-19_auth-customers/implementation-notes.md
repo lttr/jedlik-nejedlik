@@ -128,3 +128,23 @@ Chronological log. Newest entries at the bottom.
   classes return byte-identical responses; a token Directus never issued
   returns 400 with the Czech expired/used message. `nuxi typecheck` and
   `vp lint` clean.
+
+### Ticket 05 — change password
+
+- **Ticket 05 started** (status → in-progress).
+- Goal understanding: a logged-in Student changes their password from
+  `/muj-ucet` without the e-mail flow, through the session-bound client, and
+  stays logged in.
+- **No current-password field**, per spec. The route is protected by an
+  httpOnly `SameSite=Lax` session cookie, which browsers do not attach to a
+  cross-site POST, so CSRF is covered without one. Worth revisiting if the
+  cookie policy ever loosens.
+- **Session survives the change**: Directus does not revoke refresh tokens
+  on a password update, so nothing needs re-issuing.
+- **Its probes use their own throwaway pair.** Changing a password inside
+  the shared fixture would break every later test that logs in with it, so
+  the owner/bystander users are created in that describe's own `beforeAll`.
+- **Blocked on an instance permission** (Student policy, `update`
+  `directus_users.password`, own row) — recorded in `ops-checklist.md`. The
+  route is written and its unauthenticated path verified (401 "Nejste
+  přihlášeni."); the successful path cannot run until the permission exists.

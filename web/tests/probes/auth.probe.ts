@@ -201,3 +201,49 @@ describe("password policy", () => {
     expect(response.status).toBeGreaterThanOrEqual(400)
   })
 })
+
+describe("a student's own password", () => {
+  // Its own throwaway pair, so changing a password here cannot disturb the
+  // fixture the rest of the file logs in with.
+  const owner = `probe-auth-owner-${stamp}@jedlik-nejedlik.cz`
+  const bystander = `probe-auth-bystander-${stamp}@jedlik-nejedlik.cz`
+  const NEW_PASSWORD = "ProbeHeslo456"
+
+  beforeAll(async () => {
+    for (const address of [owner, bystander]) {
+      const response = await registerStudent(address, PASSWORD)
+      if (response.status !== 200 && response.status !== 204) {
+        throw new Error(`Probe setup failed: POST /users returned ${response.status}`)
+      }
+    }
+  })
+
+  it("can be changed by its owner", async () => {
+    const session = item(await loginAs(owner, PASSWORD))
+    const response = await probeSend(
+      "PATCH",
+      "/users/me",
+      { password: NEW_PASSWORD },
+      session.access_token as string,
+    )
+    expect([200, 204]).toContain(response.status)
+
+    expect((await loginAs(owner, NEW_PASSWORD)).status).toBe(200)
+  })
+
+  it("cannot be changed for anybody else", async () => {
+    const session = item(await loginAs(owner, NEW_PASSWORD))
+    const bystanderId = await findUserId(bystander)
+
+    const response = await probeSend(
+      "PATCH",
+      `/users/${bystanderId}`,
+      { password: NEW_PASSWORD },
+      session.access_token as string,
+    )
+    expect(response.status).toBeGreaterThanOrEqual(400)
+
+    // The bystander's own password still works — nothing was written.
+    expect((await loginAs(bystander, PASSWORD)).status).toBe(200)
+  })
+})

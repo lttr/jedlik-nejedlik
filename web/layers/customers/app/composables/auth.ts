@@ -12,6 +12,7 @@ export interface AuthActions {
   logOut: () => Promise<void>
   requestPasswordReset: (email: string) => Promise<string>
   resetPassword: (reset: { token: string; password: string }) => Promise<string>
+  changePassword: (password: string) => Promise<string>
 }
 
 export function useAuthActions(): AuthActions {
@@ -51,6 +52,14 @@ export function useAuthActions(): AuthActions {
       const { message } = await $fetch("/api/auth/password-reset", {
         method: "POST",
         body: reset,
+      })
+      return message
+    },
+
+    async changePassword(password) {
+      const { message } = await $fetch("/api/auth/change-password", {
+        method: "POST",
+        body: { password },
       })
       return message
     },
