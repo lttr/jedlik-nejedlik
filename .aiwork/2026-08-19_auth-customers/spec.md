@@ -1,0 +1,232 @@
+# Spec — Area 02: Auth / customers layer
+
+Decisions were settled in [grilling.md](grilling.md) (three rounds, all
+answered 2026-08-19). Architecture is recorded in ADR 0002
+(Nitro-mediated auth sessions). Parent scope:
+[implementation-areas.md](../2026-06-09_kurzy-platforma/implementation-areas.md)
+area 02 (FP-1, O-17, TO-2).
+
+## Problem Statement
+
+The Kurzy platform is account-first: a Student must register and log in
+before buying a Course, so that Orders and Entitlements bind to a known
+identity (e-mail). Today the site has no notion of a logged-in visitor at
+all — no registration, no login, no session, and the Directus instance has
+public registration disabled. Checkout (04a) and the course player (06)
+are both blocked on this.
+
+## Solution
+
+The `customers` Nuxt layer gains the full identity lifecycle: a visitor
+registers with e-mail + password and is logged in immediately; an existing
+Student logs in, stays logged in across visits for up to 30 days, and can
+log out; a Student who forgot their password requests a reset e-mail and
+sets a new password from the e-mailed link; a logged-in Student has a
+minimal account page ("Můj účet") showing their e-mail, with change
+password and logout. All credentials flow through Nitro routes — the
+browser never talks to Directus with credentials (ADR 0002).
+
+## User Stories
+
+1. As a visitor, I want to register with my e-mail and a password, so
+   that I can become a Student and later buy a Course.
+2. As a visitor registering, I want to be logged in immediately after
+   registration with no e-mail verification step, so that nothing stands
+   between me and the purchase I came for.
+3. As a visitor registering, I want to provide only my e-mail and a
+   password, so that registration takes seconds (name is collected later,
+   at checkout).
+4. As a visitor registering, I want a passive notice that registration
+   implies personal-data processing, linking to the privacy policy, so
+   that I know where I stand without an extra checkbox.
+5. As a visitor registering with an already-registered e-mail, I want a
+   clear Czech error message, so that I know to log in instead.
+6. As a visitor registering with a password shorter than the instance
+   policy (8 characters), I want a clear Czech error before submitting,
+   so that I don't bounce off a server error.
+7. As a Student, I want to log in with my e-mail and password, so that I
+   can reach my account and (later) my Courses.
+8. As a Student mistyping my credentials, I want a generic Czech error
+   that does not reveal whether the e-mail exists, so that my account is
+   not enumerable.
+9. As a Student, I want to stay logged in on my device for up to 30 days
+   of activity without re-entering my password, so that returning to a
+   Course over weeks is frictionless.
+10. As a Student, I want my session to survive page reloads and SSR
+    navigation identically, so that the site never flickers between
+    logged-in and logged-out states.
+11. As a Student, I want to log out, so that a shared device no longer
+    holds my session.
+12. As a Student who forgot my password, I want to request a reset e-mail
+    by entering my e-mail address, so that I can regain access.
+13. As a Student requesting a reset, I want the same confirmation message
+    whether or not the e-mail exists, so that accounts are not enumerable.
+14. As a Student, I want the reset e-mail to link to a page on the site
+    where I set a new password, so that the flow stays on
+    jedlik-nejedlik.cz.
+15. As a Student following an expired or already-used reset link, I want
+    a clear Czech explanation and a way to request a fresh link, so that
+    I'm not stuck.
+16. As a Student, I want a minimal account page showing the e-mail I'm
+    registered under, so that I can confirm which identity I'm using.
+17. As a logged-in Student, I want to change my password from the account
+    page, so that I don't need the e-mail reset flow for a routine change.
+18. As a Student, I want to be sent back to the page I came from after
+    logging in or registering (e.g. the sales page I was buying from), so
+    that the login detour costs nothing.
+19. As a Student landing on login/registration with no origin, I want to
+    end up on my account page, so that I always land somewhere sensible.
+20. As a visitor, I want the site header to reflect my state — login
+    entry point when logged out, account entry point when logged in — so
+    that I always know how to reach my account.
+21. As a logged-out visitor opening a protected page directly (deep
+    link), I want to be redirected to login and returned to that page
+    afterwards, so that bookmarks keep working.
+22. As an already-logged-in Student opening the login or registration
+    page, I want to be forwarded to my account (or the redirect target)
+    instead of seeing the form, so that the flow never dead-ends.
+23. As the operator, I want new registrations to receive exactly the
+    Student role, created by a service identity that can do nothing else,
+    so that a bug in the register route cannot mint privileged users.
+24. As the operator, I want Directus public registration to remain off,
+    so that the only registration path is the one the app controls.
+25. As the operator, I want the register route rate-limited per IP, so
+    that the unauthenticated endpoint cannot be used to spam users into
+    the CMS.
+26. As the operator, I want Directus tokens confined to httpOnly cookies
+    and server-side calls, so that XSS cannot exfiltrate a Student's
+    credentials.
+27. As the operator, I want login brute force bounded by Directus's
+    native attempt limiting, so that no extra lockout machinery is built.
+28. As a developer of areas 04a/06, I want a named auth route middleware
+    and a composable exposing the logged-in Student, so that protecting a
+    new page or reading identity is a one-liner.
+29. As a developer, I want a per-request server-side Directus client
+    bound to the Student's session, so that gated reads in any layer's
+    Nitro routes and SSR inherit Directus permission enforcement (R-5).
+30. As a developer, I want the anonymous Directus client and all existing
+    public content fetching to remain untouched, so that the marketing
+    site carries zero risk from this area.
+
+## Implementation Decisions
+
+- **Layer ownership.** All identity UI and routes live in the `customers`
+  layer (per the layers-scaffolding contract: a layer owns its whole
+  vertical, including its Nitro routes). The `directus` layer gains only
+  the generic per-request authenticated server client; no domain logic.
+- **Session architecture (ADR 0002).** Nitro mediates all auth: login,
+  logout, refresh, registration, password-reset request and completion,
+  and password change. Directus access + refresh tokens are stored in
+  httpOnly, secure, SameSite=Lax cookies on the site domain. When the
+  access token expires, the server transparently refreshes against
+  Directus using the refresh cookie and re-sets both cookies. The browser
+  never holds a Directus token and never calls Directus with credentials.
+- **Registration.** A Nitro route creates the Directus user with role
+  Student via a dedicated service token whose policy allows only creating
+  Student-role users. Directus `public_registration` stays off. No e-mail
+  verification, no name fields, no stored consent. After creation the
+  route logs the new Student in (same response shape as login). Simple
+  per-IP rate limiting guards the route; no captcha in v1.
+- **Login errors** are generic (invalid credentials), in Czech;
+  registration's duplicate-e-mail error is specific. Directus's
+  `auth_login_attempts` (7) is the brute-force bound; no additional
+  lockout logic.
+- **Password reset** uses the native Directus flow: request with a
+  `reset_url` pointing at the site's reset page; completion posts the
+  token + new password. Both legs proxied through Nitro. Directus
+  generates the token and sends the e-mail (Mailgun already configured);
+  the reset token is never available to our code, which is why the e-mail
+  itself stays Directus-native (ADR 0002). Default e-mail template in v1.
+- **Password change** for a logged-in Student updates the current user
+  through the session-bound server client (requires a Student policy
+  permission to update own password field — a small area-02 addition to
+  the committed Directus config).
+- **Routes (permanent, Czech):** `/registrace`, `/prihlaseni`,
+  `/obnova-hesla` (request form; with `?token=` it renders the
+  set-new-password form), `/muj-ucet`. Logout is an action, not a page.
+- **Redirects.** Login and registration honor a `redirect` query param
+  restricted to same-origin paths, falling back to `/muj-ucet`. Logged-in
+  visitors hitting `/prihlaseni` or `/registrace` are forwarded to the
+  same target. Guests hitting a protected page are sent to
+  `/prihlaseni?redirect=<path>`.
+- **Guard.** A named `auth` route middleware in the customers layer,
+  opted into per page via page meta. It is UX only; enforcement remains
+  Directus permissions plus session checks in Nitro routes (R-5).
+- **Client-side identity.** A `useStudent()` composable returns
+  `{ student, loggedIn }`, hydrated during SSR from the session (a
+  whoami-style endpoint or SSR state), shared app-wide. Glossary term is
+  Student — never "user" or "account" in identifiers.
+- **Server client shape.** The directus layer exposes a per-request
+  factory that builds an authenticated client from the event's session
+  cookie (handling transparent refresh). The existing anonymous singleton
+  client and all public-content consumers are untouched.
+- **Runtime config.** New private keys (service token; anything else the
+  routes need) declared in the customers layer's config and validated in
+  the existing runtime-config schema, per the scaffolding contract. The
+  public `directusUrl` key is reused.
+- **Instance changes (ops, outside the repo):**
+  `PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla`,
+  `REFRESH_TOKEN_TTL=30d`, plus the service user + create-Student-only
+  policy + static token. The policy/role additions belong in the
+  committed directus-sync dump like area 01's.
+- **Session lifetime.** Sliding: 30-day refresh TTL, default access-token
+  TTL. No remember-me UI.
+
+## Testing Decisions
+
+- **Seams.** Two, both existing or already decided:
+  1. The production Directus HTTP API — the existing probe suite seam. A
+     new `auth.probe.ts` exercises the auth contract directly: service
+     token can create exactly a Student-role user and nothing else;
+     login/refresh/logout round-trip; password policy; login with wrong
+     credentials; reset request returns uniformly. Uses a throwaway
+     Student, self-cleaning, following the conventions of the
+     existing probes (support helpers, env tokens, sequential runner,
+     excluded from `verify:all`).
+  2. The app's own HTTP surface (Nitro auth routes + rendered pages),
+     covered in v1 by one documented **manual round-trip** on production:
+     register → logout → login → reset request → e-mail link → new
+     password → login → change password on the account page. This is the
+     area's verify criterion and covers the e-mail leg that cannot be
+     automated without inbox access.
+- Good tests here assert externally observable HTTP behavior (status,
+  error codes, cookie presence/flags, row state in Directus as admin) —
+  never internal call shapes.
+- Prior art: the 61-test probe suite from area 01 (public-visibility,
+  student-scoping, author probes) and its support module.
+- No automated browser e2e in v1 (revisit if regressions bite).
+- Probe caveats carried over from area 01: run probes with the sandbox
+  disabled (Node fetch cannot reach the network inside the agent
+  sandbox); the instance intermittently resets connections under rapid
+  sequential requests — retry rather than concluding breakage.
+
+## Out of Scope
+
+- Magic link / passwordless login (deferred by TO-2).
+- E-mail verification at registration.
+- Name or any profile fields beyond e-mail + password (checkout, 04a).
+- Checkout consents and Order/Entitlement writes (04a/04b), order
+  history, "my courses" (06).
+- Newsletter opt-in, marketing consent.
+- Customizing Directus e-mail templates (follow-up if the default Czech
+  rendering is poor).
+- Moving Directus to a jedlik-nejedlik.cz subdomain (kept possible, not
+  done).
+- Captcha/Turnstile on registration.
+- Automated browser e2e tests.
+- Account deletion / GDPR erasure tooling (manual via admin for now).
+
+## Further Notes
+
+- ADR 0002 records the session architecture and the reset-e-mail
+  constraint; ADR 0001 fixes Directus as system of record and enforcement
+  boundary — nothing in this area may become a second store of identity.
+- The Student role and its own-row policies already exist and are proven
+  by area 01's probes; this area adds only the service user/policy and
+  the own-password-update permission to the Directus config dump.
+- Directus setting `default_language: cs-CZ` should localize the reset
+  e-mail; verify during the manual round-trip.
+- Header state (logged in/out) touches the base app's layout — keep the
+  change minimal and driven by `useStudent()`.
+- Ticket 06 of area 01 (author upload folder scoping, status: ready) is
+  unrelated to this area and remains open.
