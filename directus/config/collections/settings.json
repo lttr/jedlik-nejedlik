@@ -57,12 +57,12 @@
         "url": "https://jedlik-nejedlik.cz"
       }
     ],
-    "org_name": "Lukáš Trumm",
+    "org_name": "Jedlik Nejedlik",
     "product_updates": false,
     "project_color": "#ABC2FF",
     "project_descriptor": "Jídlo je radost",
     "project_name": "Jedlík-nejedlík",
-    "project_owner": null,
+    "project_owner": "lukas.trumm@gmail.com",
     "project_status": null,
     "project_usage": "commercial",
     "public_note": null,
