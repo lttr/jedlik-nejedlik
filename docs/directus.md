@@ -38,25 +38,23 @@ changes are pulled into the repo as reviewable diffs — the dump is never pushe
 back. Flow `operations` are excluded because they embed third-party API keys
 (see the note in `directus-sync.config.cjs`).
 
-The instance answers `503 no available server` now and then under rapid
-requests. Retry before concluding anything is broken.
+The instance intermittently answers `503 no available server` under rapid
+requests — retry before concluding anything is broken.
 
 ## Finding a permission rule
 
-Reading is fastest from the dump: `directus/config/collections/permissions.json`
-holds every rule as JSON, one object per policy × collection × action. That
-beats poking the live API, and it is the same data the admin app edits.
+Read rules from the dump: `directus/config/collections/permissions.json` holds
+every rule as JSON, one object per policy × collection × action — the same data
+the admin app edits, without poking the live API.
 
 **The dump does not carry live ids.** Records are keyed by `_syncId`, a
 directus-sync identity that is stable across instances but is _not_ the id the
-API uses. The Autor policy is `d15b2dbf-…` in the dump and
-`67bf15ab-fa2c-4d33-8961-ea4337cc4446` on the instance. Look ids up live before
-issuing a `PATCH`.
+API uses. Look ids up live (by name or other attributes) before issuing a
+`PATCH`.
 
 In the admin app the same rule lives at **Settings → Access Policies →**
-_policy_ **→ permissions matrix → click the action cell**. The editor splits
-into sections that are easy to miss, because only the first is shown by
-default:
+_policy_ **→ permissions matrix → click the action cell**. Only the first
+editor section is shown by default — the rest are easy to miss:
 
 | Section           | Field in the dump | What it does                                  |
 | ----------------- | ----------------- | --------------------------------------------- |
@@ -80,9 +78,8 @@ Two behaviours worth knowing before you rely on them:
 Policies: Administrator, Redaktor, **Autor** (course authoring), **Student**
 (paid content), and Public.
 
-The Autor policy is scoped to the **Materiály kurzů** folder
-(`6173b74f-9990-41a2-b931-ff591ee6a5ed`), so an author cannot reach marketing
-assets:
+The Autor policy is scoped to the **Materiály kurzů** folder, so an author
+cannot reach marketing assets:
 
 - read / update / delete match the folder **by name**, plus one level of
   subfolders
@@ -92,9 +89,7 @@ assets:
 
 The name-vs-UUID split is deliberate but inconsistent: renaming the folder
 breaks the first three rules and not the fourth, and an admin adding a subfolder
-would allow reads there while blocking uploads. Background in
-`.aiwork/2026-07-22_directus-data-model/implementation-notes.md` (tickets 05
-and 06).
+would allow reads there while blocking uploads.
 
 ## Permission probes
 
@@ -104,9 +99,11 @@ behaviour, never Directus internals. They are deliberately excluded from the
 default test run.
 
 ```bash
-set -a; . web/.env; set +a   # tokens live here, gitignored
-vp run directus:probe
+vp run directus:probe   # from the repo root
 ```
+
+Tokens live in `web/.env` (gitignored); `web/vitest.probes.config.ts` loads it
+via `process.loadEnvFile()`, and shell-set variables take precedence.
 
 The suite is self-cleaning: it deletes everything it creates. A failed run can
 leave rows behind, which the next run's admin sweep removes.
@@ -119,20 +116,18 @@ Four environment variables, values never committed:
 admin one is only for fixtures and cleanup — reuse the MCP credential).
 
 Directus masks static tokens on read, so a lost token cannot be recovered, only
-replaced. To rotate, `PATCH /users/<id>` with a fresh random `token` using the
-admin token, then persist the new values so the next session need not repeat it.
+rotated: `PATCH /users/<id>` with a fresh random `token` using the admin token,
+then update `web/.env`.
 
 ### Fixtures — do not delete
 
-Stable `[TEST]`-marked rows the probes depend on:
+Stable `[TEST]`-marked rows the probes depend on (current ids are pinned in
+`web/tests/probes/support.ts`):
 
-| Fixture                                   | Id                                     |
-| ----------------------------------------- | -------------------------------------- |
-| `probe-author@jedlik-nejedlik.cz` (Autor) | `67f8098f-2852-465d-bd9c-8738565dd740` |
-| `probe-student-entitled@…` (Student)      | `42ea0c6c-9e85-4ae1-a63d-336dc63a8b54` |
-| `probe-student-unentitled@…` (Student)    | `70975566-e359-4d67-9bf7-81d69d5b8a79` |
-| Published course                          | `1`                                    |
-| Entitlement: entitled student × course 1  | `1`                                    |
+- three probe users: `probe-author@jedlik-nejedlik.cz` (Autor),
+  `probe-student-entitled@…` and `probe-student-unentitled@…` (Student)
+- one published `[TEST]` course, plus the entitlement linking it to the
+  entitled student
 
 The unentitled student must stay **unentitled** — granting them a course breaks
 the student probes, which is exactly what happened after the FP-11 walkthrough.
