@@ -1276,10 +1276,21 @@
       "*"
     ],
     "permissions": {
-      "_and": [
+      "_or": [
         {
           "folder": {
-            "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+            "name": {
+              "_eq": "Materiály kurzů"
+            }
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "name": {
+                "_eq": "Materiály kurzů"
+              }
+            }
           }
         }
       ]
@@ -1295,7 +1306,26 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
+    "permissions": {
+      "_or": [
+        {
+          "folder": {
+            "name": {
+              "_eq": "Materiály kurzů"
+            }
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "name": {
+                "_eq": "Materiály kurzů"
+              }
+            }
+          }
+        }
+      ]
+    },
     "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
     "presets": null,
     "validation": null
@@ -1311,7 +1341,18 @@
       "_or": [
         {
           "folder": {
-            "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+            "name": {
+              "_eq": "Materiály kurzů"
+            }
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "name": {
+                "_eq": "Materiály kurzů"
+              }
+            }
           }
         },
         {
@@ -1332,7 +1373,22 @@
     "fields": [
       "*"
     ],
-    "permissions": {},
+    "permissions": {
+      "_or": [
+        {
+          "name": {
+            "_eq": "Materiály kurzů"
+          }
+        },
+        {
+          "parent": {
+            "name": {
+              "_eq": "Materiály kurzů"
+            }
+          }
+        }
+      ]
+    },
     "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
     "presets": null,
     "validation": null
