@@ -18,12 +18,11 @@ The create permission is entirely unconstrained — verified live on
 permission id 96 of policy `67bf15ab-…` (Autor):
 
 ```json
-{ "action": "create", "fields": ["*"], "presets": null,
-  "permissions": {}, "validation": null }
+{ "action": "create", "fields": ["*"], "presets": null, "permissions": {}, "validation": null }
 ```
 
 `storage_default_folder` is `null`, so nothing steers the upload either.
-Read and delete, meanwhile, *are* folder-scoped. That combination is a trap:
+Read and delete, meanwhile, _are_ folder-scoped. That combination is a trap:
 
 1. The author uploads without picking a folder → the file lands at root.
 2. The folder-scoped **read** rule means they cannot read the row back, so
@@ -58,7 +57,7 @@ uploads too.
    explicit case is a narrowing `permissions` filter. Verify empirically
    against the instance, do not assume.
 2. **Exact UUID vs. subfolders.** The read/update/delete rules already allow
-   the materials folder *plus one level of children*. Today that is moot —
+   the materials folder _plus one level of children_. Today that is moot —
    **Materiály kurzů** has no subfolders and the Autor policy has no
    `create` on `directus_folders`, so an author cannot make one. A bare
    `_eq` on the UUID therefore works now but silently blocks uploads the
@@ -79,8 +78,10 @@ uploads too.
 - [x] Full probe suite green (63/63 — one probe became two)
 - [x] FP-11 checklist step 4 in `../implementation-notes.md` updated — the
       author no longer needs to pick the folder by hand
-- [ ] directus-sync `pull` re-run, dump diff-clean, changes committed
-- [ ] Merged to master, Coolify deploy green
+- [x] directus-sync `pull` re-run, dump diff-clean, changes committed
+      (`10e45ff`)
+- [x] Merged to master, Coolify deploy green (2026-08-19, deploy
+      `cyyyka9sb0qv2nze7bfisvcr` at `71ad0f9`)
 
 ## Out of scope
 
