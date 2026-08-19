@@ -31,6 +31,8 @@
         <AuthFormError :message="errorMessage" />
       </form>
 
+      <p><NuxtLink to="/obnova-hesla">Zapomněli jste heslo?</NuxtLink></p>
+
       <p>
         Nemáte účet?
         <NuxtLink :to="{ path: '/registrace', query: route.query }">Zaregistrujte se</NuxtLink>

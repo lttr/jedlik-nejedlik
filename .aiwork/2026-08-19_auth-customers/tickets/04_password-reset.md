@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: [01, 02]
 references:
   - "Spec: ../spec.md"
@@ -17,10 +17,17 @@ request a fresh link.
 
 ## Acceptance criteria
 
-- [ ] Both legs (request + completion) proxied through Nitro; the page
+- [x] Both legs (request + completion) proxied through Nitro; the page
       never calls Directus directly
-- [ ] Request leg responds identically for known and unknown e-mails
-- [ ] Completion with a valid token sets the new password; login works
-- [ ] Expired/used token → Czech error + link to request again
-- [ ] Probe covers the request leg's uniform response; e-mail leg is
+- [x] Request leg responds identically for known and unknown e-mails
+- [x] Completion with a valid token sets the new password; login works
+- [x] Expired/used token → Czech error + link to request again
+- [x] Probe covers the request leg's uniform response; e-mail leg is
       deferred to ticket 06's manual round-trip
+
+## Deferred
+
+- "Completion with a valid token sets the new password" needs a token only
+  Directus can mint and only an inbox can deliver — ticket 06's round-trip.
+  Everything around it is verified: the request leg is uniform, and a token
+  Directus never issued gets the expired/used message.

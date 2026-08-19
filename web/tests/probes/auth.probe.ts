@@ -165,6 +165,36 @@ describe("wrong credentials", () => {
   })
 })
 
+describe("password reset", () => {
+  // Note: this sends one real e-mail per run, to a mailbox that does not
+  // exist on our own domain. That bounce is the price of asserting the leg
+  // that the manual round-trip cannot cover twice.
+  const RESET_URL = "https://www.jedlik-nejedlik.cz/obnova-hesla"
+
+  it("answers a known and an unknown e-mail identically", async () => {
+    const known = await probeSend("POST", "/auth/password/request", {
+      email,
+      reset_url: RESET_URL,
+    })
+    const unknown = await probeSend("POST", "/auth/password/request", {
+      email: `probe-auth-nobody-${stamp}@jedlik-nejedlik.cz`,
+      reset_url: RESET_URL,
+    })
+
+    expect(known.status).toBe(204)
+    expect(unknown.status).toBe(known.status)
+    expect(unknown.body).toEqual(known.body)
+  })
+
+  it("rejects a reset token it never issued", async () => {
+    const response = await probeSend("POST", "/auth/password/reset", {
+      token: "not-a-real-reset-token",
+      password: PASSWORD,
+    })
+    expect(response.status).toBeGreaterThanOrEqual(400)
+  })
+})
+
 describe("password policy", () => {
   it("refuses a password shorter than the instance policy", async () => {
     const response = await registerStudent(`probe-auth-short-${stamp}@jedlik-nejedlik.cz`, "Krat1")

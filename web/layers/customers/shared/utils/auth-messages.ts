@@ -9,7 +9,13 @@ export const authMessages = {
   emailTaken: "Tento e-mail už je zaregistrovaný. Přihlaste se prosím.",
   invalidCredentials: "Neplatný e-mail nebo heslo.",
   notLoggedIn: "Nejste přihlášeni.",
+  passwordChanged: "Heslo bylo změněno.",
   passwordTooShort: `Heslo musí mít alespoň ${PASSWORD_MIN_LENGTH} znaků.`,
+  resetLinkInvalid:
+    "Odkaz pro obnovu hesla vypršel nebo už byl použit. Nechte si prosím poslat nový.",
+  resetRequested:
+    "Pokud u nás účet s tímto e-mailem existuje, poslali jsme na něj odkaz pro nastavení nového hesla.",
   tooManyRegistrations: "Příliš mnoho pokusů o registraci. Zkuste to prosím za chvíli.",
+  tooManyRequests: "Příliš mnoho pokusů. Zkuste to prosím za chvíli.",
   unexpected: "Něco se nepovedlo. Zkuste to prosím později.",
 } as const

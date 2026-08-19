@@ -100,3 +100,31 @@ Chronological log. Newest entries at the bottom.
   adresu."; five real attempts pass, the sixth → 429 with the Czech message;
   `?redirect=` survives the login↔registration cross-links. `nuxi typecheck`
   and `vp lint` clean.
+
+### Ticket 04 — password reset
+
+- **Ticket 04 started** (status → in-progress).
+- Goal understanding: `/obnova-hesla` is one page in two states — a request
+  form, and with `?token=` a set-new-password form. Both legs go through
+  Nitro; the request leg answers identically whatever the e-mail; an
+  expired or spent token gets a Czech message and a way to ask again.
+- **Reset URL comes from the request origin**, not from config, so the link
+  always points back at the host the Student is actually on. Host-header
+  spoofing is not a hole here: Directus's `PASSWORD_RESET_URL_ALLOW_LIST` is
+  the thing that decides, and it holds exactly the production URL.
+  Confirmed live — a dev-server request produced _"URL
+  http://localhost:3211/obnova-hesla can't be used to reset passwords"_ from
+  the instance, which doubles as proof that ticket 01's env var is in place.
+  The practical cost is that the reset flow cannot be exercised from dev.
+- **Small addition beyond the spec: the request leg is rate-limited too.**
+  An unauthenticated endpoint that makes Directus send mail is a way to
+  bomb a stranger's inbox. The register-only limiter became
+  `enforceRateLimit(event, limit)` with a named bucket per flow, so the two
+  budgets stay separate.
+- **Uniformity is total, not just in wording**: a valid unknown e-mail, a
+  real one and a malformed one all return the same 200 body. Directus errors
+  are swallowed into that same answer (and logged server-side).
+- Verified against the dev server: both page states render; all three input
+  classes return byte-identical responses; a token Directus never issued
+  returns 400 with the Czech expired/used message. `nuxi typecheck` and
+  `vp lint` clean.
