@@ -463,3 +463,56 @@ nezanikne). Administrace: https://obsah-jedlika.lttr.cz/admin
 - Full checks: `vp check` green, eslint green, `nuxi typecheck` green,
   fallow green, `nuxi build` green, directus-sync `diff` clean after
   re-pull.
+
+## 2026-08-19 — FP-11 human walkthrough (ticket 04 closed)
+
+- The author built the dummy course through the admin app, no developer
+  involved. Verified against production via the Directus API:
+  **course id 6 „První manuální testovací"**.
+  - All four unlock rules exercised: `immediate` (Sekce 1), `test`
+    (Sekce 2), `manual` (Sekce 3), `time_since_purchase` (Sekce 4,
+    `unlock_delay_days: 14`) — `test` and `time_since_purchase` had never
+    been used by any fixture before, so this is their first real exercise.
+  - Both lesson types present (lessons 7 and 8).
+  - Material `testovaci-pdfko.pdf` (`faeb4612-…`) uploaded into the
+    **Materiály kurzů** folder — the folder the author policy is scoped to.
+  - Manual entitlement grant performed: entitlement id 6,
+    `[TEST] Student Bez opravneni` × course 6.
+
+### Deliberately left incomplete
+
+Accepted by the user; the ticket closes with these open rather than
+blocking the area:
+
+- Course 6 stays `draft`; `price_czk`, `test_pass_threshold` and `cover`
+  are unfilled. The FP-11 question was "can the author work unaided",
+  which these do not bear on.
+- Entitlement id 6 was not deleted again, so the manual *revocation* half
+  of the grant/revoke path is unverified. Entitlement id 1 (the probe
+  fixture) is untouched, so the probe suite is unaffected.
+- Lesson types read as swapped ("Lekce 1 testovací" is `text` but carries
+  the placeholder video UID; "Lekce 2 text" is `video` with none). Both
+  types are covered either way — and the mix-up is itself finding 3 below.
+- No real Cloudflare Stream UID exists yet (area 08), so the video lesson
+  carries a placeholder string.
+
+### Authoring findings → ticket 05
+
+Recorded as spec-level findings, not footnotes; all four are authoring
+ergonomics, none touch the data model or permissions:
+
+1. **Author's own report:** the description column in list views is not
+   useful — the first column should generally be the name. Affects Kurzy,
+   Sekce, Lekce. `presets.json` is empty, so no global layout is defined.
+2. `entitlement.granted_at` is required with no default — the author types
+   the timestamp by hand. (The FP-11 checklist above wrongly promised it
+   would be prefilled; that line is inaccurate.)
+3. `lesson.video_uid` is visible on text lessons — no `hidden` condition,
+   unlike `section.unlock_delay_days`. The author duly filled it on a text
+   lesson.
+4. Dragging sections into order set `sort` on only two of four rows
+   (sections 8, 9 got 1, 2; sections 6, 7 stayed `null`) — resulting list
+   order is undefined.
+
+- **Ticket 04 → done.** Ticket 05 (`05_authoring-ux-fixes.md`) opened for
+  the four findings, `blocked_by: [04]`.

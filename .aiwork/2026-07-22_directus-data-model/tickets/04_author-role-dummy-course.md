@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: done
 blocked_by: [03]
 references:
   - "Spec: ../spec.md"
@@ -19,20 +19,24 @@ Entitlement manually (the manual unlock/support path).
       `entitlement`; no instance administration
 - [x] Author probes green (content CRUD allowed, transactional writes beyond
       entitlement denied)
-- [ ] Dummy course built by the author through the admin app: sections
+- [x] Dummy course built by the author through the admin app: sections
       covering every unlock-rule value, video and text Lessons, at least one
       Material — without developer intervention
-- [ ] Authoring friction encountered is recorded as findings (spec-level,
+- [x] Authoring friction encountered is recorded as findings (spec-level,
       not a footnote)
-- [ ] Manual Entitlement grant to a test Student performed by the author in
+- [x] Manual Entitlement grant to a test Student performed by the author in
       the admin app
 - [x] directus-sync dump re-pulled and committed (role/policy changes)
 
-## Status note
+## Closing note
 
-Only the HUMAN-ONLY FP-11 steps remain (dummy course authored in the admin
-app, friction findings, manual entitlement grant) — they verify that the
-author works without developer help and must not be performed by a
-developer or an agent. Everything is prepared: the Autor role/policy is
-probe-verified, Czech labels and admin UX are in place, and a step-by-step
-checklist for the author is in `../implementation-notes.md`.
+Done 2026-08-19. The author built course id 6 through the admin app
+unaided; all four unlock rules, both lesson types, a material in the
+Materiály kurzů folder, and a manual entitlement grant are in place. Four
+authoring findings recorded in `../implementation-notes.md` and carried
+into ticket 05.
+
+Accepted as incomplete by the user (see the notes for the full list): the
+course stays `draft` with price/threshold/cover unfilled, and the manual
+*revocation* half of the grant path was not exercised. Probe fixtures
+(entitlement id 1, courses 1 and 2) are untouched.
