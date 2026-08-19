@@ -36,24 +36,38 @@ Critical: a watcher that only emits on error keywords goes silent on success —
     | rg --line-buffered -iN "error|failed|fatal|exception|cannot|unable to" \
     | rg --line-buffered -vN "error-(404|500)|errorhandler|error_page" ) &
 WATCHER=$!
+trap 'pkill -P $WATCHER 2>/dev/null; kill $WATCHER 2>/dev/null; wait 2>/dev/null' EXIT
 
-status=in_progress
-while [[ "$status" == "in_progress" || "$status" == "queued" || "$status" == "pending" || "$status" == "running" ]]; do
-  sleep 5
-  status=$(coolify app deployments list g8000og --format json | jq -r '.[0].status')
+fails=0
+while :; do
+  sleep 10
+  status=$(coolify deploy get <deployment-uuid> --format json 2>/dev/null | jq -r '.status // ""')
+  case "$status" in
+    in_progress|queued|pending|running) fails=0 ;;
+    "") fails=$((fails + 1))
+        [ "$fails" -ge 12 ] && { echo "DEPLOY_UNKNOWN: status API unreachable 12x"; exit 1; } ;;
+    *)  echo "DEPLOY_DONE:$status"; exit 0 ;;
+  esac
 done
-
-pkill -P $WATCHER 2>/dev/null
-kill $WATCHER 2>/dev/null
-wait 2>/dev/null
-echo "DEPLOY_DONE:$status"
 ```
 
 - Coolify pipes docker progress to stderr, so filter by content not stream.
 - Two `rg` stages: match error keywords, drop false positives (Nuxt error chunk filenames).
-- Status poll runs every 5s; terminal statuses (`finished`, `failed`, `cancelled`, etc.) break the loop.
-- `pkill -P $WATCHER` reaps the children of the backgrounded subshell (the coolify + rg pipeline); `kill $WATCHER` finishes the subshell itself.
-- `DEPLOY_DONE:<status>` is the guaranteed terminal notification — fetch full state in step 3.
+- **An empty status is an API hiccup, not a terminal status** — count
+  consecutive misses and emit `DEPLOY_UNKNOWN` after 12 (~2 min). A loop that
+  breaks on "not in_progress" reports a finished deploy when the API merely
+  blinked. The counter resets on every good poll, so it bounds the *outage*,
+  not the deploy — a `timeout` around the loop would abort healthy long builds.
+- Poll a specific deployment uuid, not `deployments list | .[0]` — a newer
+  deploy landing mid-watch would otherwise hijack the status.
+- `trap … EXIT` reaps the follower on every exit path, including a `Monitor`
+  timeout. `pkill -P $WATCHER` gets the children of the backgrounded subshell
+  (the coolify + rg pipeline); `kill $WATCHER` finishes the subshell itself.
+- The log follower is best-effort — it may die on an API blip, harmlessly,
+  since termination is driven entirely by the status poll.
+- `DEPLOY_DONE:<status>` and `DEPLOY_UNKNOWN:` are the terminal notifications —
+  on `DEPLOY_DONE` fetch full state in step 3; on `DEPLOY_UNKNOWN` re-check the
+  status by hand before reporting anything to the user.
 
 ### 3. On terminal event, fetch full final state
 
