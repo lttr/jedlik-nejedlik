@@ -70,6 +70,18 @@ export async function readStudent(event: H3Event): Promise<Student | null> {
   }
 }
 
+// The Student behind a session we have just established. Coming up empty
+// here is not "logged out" — it means Directus would not tell us who this
+// session belongs to, and answering 200 with a null Student would bounce the
+// browser straight back to the login form.
+export async function readAuthenticatedStudent(event: H3Event): Promise<Student> {
+  const student = await readStudent(event)
+  if (student === null) {
+    throw authError(502, "session_unreadable", authMessages.unexpected)
+  }
+  return student
+}
+
 // Registration may be specific about what is wrong: unlike login, it has
 // nothing to hide — the duplicate-e-mail case is the whole point.
 const RegistrationSchema = z.object({

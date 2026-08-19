@@ -42,10 +42,9 @@ useSeoMeta({ title: "Můj účet | Jedlík-nejedlík" })
 
 const { student } = useStudent()
 const { logOut, changePassword } = useAuthActions()
+const { pending, errorMessage, submit } = useAuthForm()
 
 const password = ref("")
-const pending = ref(false)
-const errorMessage = ref("")
 const confirmation = ref("")
 
 async function onChangePassword() {
@@ -54,30 +53,18 @@ async function onChangePassword() {
     return
   }
 
-  pending.value = true
-  errorMessage.value = ""
   confirmation.value = ""
-  try {
+  await submit(async () => {
     confirmation.value = await changePassword(password.value)
     password.value = ""
-  } catch (error) {
-    errorMessage.value = authErrorMessage(error)
-  } finally {
-    pending.value = false
-  }
+  })
 }
 
 async function onLogOut() {
-  pending.value = true
-  errorMessage.value = ""
-  try {
+  await submit(async () => {
     await logOut()
     await navigateTo("/")
-  } catch (error) {
-    errorMessage.value = authErrorMessage(error)
-  } finally {
-    pending.value = false
-  }
+  })
 }
 </script>
 

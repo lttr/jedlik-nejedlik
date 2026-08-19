@@ -54,11 +54,10 @@ useSeoMeta({ title: "Registrace | Jedlík-nejedlík" })
 
 const route = useRoute()
 const { register } = useAuthActions()
+const { pending, errorMessage, submit } = useAuthForm()
 
 const email = ref("")
 const password = ref("")
-const pending = ref(false)
-const errorMessage = ref("")
 
 async function onSubmit() {
   if (password.value.length < PASSWORD_MIN_LENGTH) {
@@ -66,16 +65,10 @@ async function onSubmit() {
     return
   }
 
-  pending.value = true
-  errorMessage.value = ""
-  try {
+  await submit(async () => {
     await register({ email: email.value, password: password.value })
     await navigateTo(safeRedirectPath(route.query.redirect))
-  } catch (error) {
-    errorMessage.value = authErrorMessage(error)
-  } finally {
-    pending.value = false
-  }
+  })
 }
 </script>
 

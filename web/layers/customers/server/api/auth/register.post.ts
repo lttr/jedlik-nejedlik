@@ -9,5 +9,5 @@ export default defineEventHandler(async (event) => {
   // Registration ends logged in — nothing stands between the new Student and
   // the purchase they came for.
   setDirectusSession(event, await loginToDirectus(event, credentials))
-  return { student: await readStudent(event) }
+  return { student: await readAuthenticatedStudent(event) }
 })

@@ -6,12 +6,14 @@ const RequestSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  enforceRateLimit(event, PASSWORD_REQUEST_RATE_LIMIT)
-
   const body: unknown = await readBody(event).catch(() => undefined)
   const parsed = RequestSchema.safeParse(body)
 
   if (parsed.success) {
+    // Only a request that would actually make Directus send mail costs
+    // anything, so only that one spends the budget.
+    enforceRateLimit(event, PASSWORD_REQUEST_RATE_LIMIT)
+
     // Directus owns the token and sends the e-mail (ADR 0002). The reset link
     // points back at this site; Directus's PASSWORD_RESET_URL_ALLOW_LIST is
     // what stops a spoofed Host header from redirecting it elsewhere.

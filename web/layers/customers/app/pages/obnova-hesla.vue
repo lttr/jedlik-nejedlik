@@ -63,6 +63,7 @@ useSeoMeta({ title: "Obnova hesla | Jedlík-nejedlík" })
 
 const route = useRoute()
 const { requestPasswordReset, resetPassword } = useAuthActions()
+const { pending, errorMessage, submit } = useAuthForm()
 
 // Directus appends `?token=` to the reset link it e-mails, which is what
 // turns this page from "ask for a link" into "set a new password".
@@ -70,20 +71,12 @@ const token = computed(() => (typeof route.query.token === "string" ? route.quer
 
 const email = ref("")
 const password = ref("")
-const pending = ref(false)
-const errorMessage = ref("")
 const confirmation = ref("")
 
 async function onRequest() {
-  pending.value = true
-  errorMessage.value = ""
-  try {
+  await submit(async () => {
     confirmation.value = await requestPasswordReset(email.value)
-  } catch (error) {
-    errorMessage.value = authErrorMessage(error)
-  } finally {
-    pending.value = false
-  }
+  })
 }
 
 async function onReset() {
@@ -92,15 +85,9 @@ async function onReset() {
     return
   }
 
-  pending.value = true
-  errorMessage.value = ""
-  try {
+  await submit(async () => {
     confirmation.value = await resetPassword({ token: token.value, password: password.value })
-  } catch (error) {
-    errorMessage.value = authErrorMessage(error)
-  } finally {
-    pending.value = false
-  }
+  })
 }
 </script>
 

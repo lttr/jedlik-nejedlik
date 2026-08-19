@@ -148,3 +148,22 @@ Chronological log. Newest entries at the bottom.
   `directus_users.password`, own row) — recorded in `ops-checklist.md`. The
   route is written and its unauthenticated path verified (401 "Nejste
   přihlášeni."); the successful path cannot run until the permission exists.
+
+### Wrap-up
+
+- **Ticket 06 not started.** Its whole content is the production round-trip
+  (needs a deploy plus an inbox) and two consecutive green probe runs (needs
+  the tokens in `ops-checklist.md`). It stays `status: ready`.
+- `vp run verify:all` green (check, eslint, typecheck, fallow, smoke,
+  build). The build needs `NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`
+  inside the agent sandbox — `@nuxt/fonts` fetches Google Fonts through the
+  proxy and otherwise dies on `SELF_SIGNED_CERT_IN_CHAIN`.
+- Simplify pass: fallow flagged 7 duplicated lines between the login and
+  registration submit handlers. Extracted `useAuthForm()` and rewrote all
+  four auth pages against it; duplication now zero.
+- Review: four findings, all fixed — see `review.md`. Accepted limitations
+  (X-Forwarded-For spoofing, per-process limiter, no current-password field,
+  one bounced probe e-mail) are recorded there too.
+- **Left open**: ticket 01's config-dump refresh, the two Student-policy
+  permissions, the service-token env var, the probe run, and ticket 06 — all
+  in `ops-checklist.md`.
