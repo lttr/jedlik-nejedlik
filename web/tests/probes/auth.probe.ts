@@ -13,9 +13,17 @@ import { STUDENT_ROLE_ID, errorCode, item, items, probe, probeSend, roleToken } 
 const SERVICE = roleToken("DIRECTUS_PROBE_SERVICE_TOKEN")
 const ADMIN = roleToken("DIRECTUS_PROBE_ADMIN_TOKEN")
 
-const PASSWORD = "ProbeHeslo123"
 const stamp = Date.now()
 const email = `probe-auth-${stamp}@jedlik-nejedlik.cz`
+
+// Throwaway passwords, generated per run: no password literal belongs in the
+// repository (secret scanners are right to flag one), and an independent run
+// cannot be affected by a leftover fixture from a previous one.
+function probePassword(label: string): string {
+  return `Probe-${label}-${stamp}-${Math.random().toString(36).slice(2)}`
+}
+
+const PASSWORD = probePassword("initial")
 
 // Users created during the run; deleted with the admin token in afterAll.
 const createdUsers: string[] = []
@@ -207,7 +215,7 @@ describe("a student's own password", () => {
   // fixture the rest of the file logs in with.
   const owner = `probe-auth-owner-${stamp}@jedlik-nejedlik.cz`
   const bystander = `probe-auth-bystander-${stamp}@jedlik-nejedlik.cz`
-  const NEW_PASSWORD = "ProbeHeslo456"
+  const NEW_PASSWORD = probePassword("rotated")
 
   beforeAll(async () => {
     for (const address of [owner, bystander]) {

@@ -167,3 +167,14 @@ Chronological log. Newest entries at the bottom.
 - **Left open**: ticket 01's config-dump refresh, the two Student-policy
   permissions, the service-token env var, the probe run, and ticket 06 — all
   in `ops-checklist.md`.
+
+- 2026-08-19: GitGuardian flagged two hardcoded throwaway passwords in
+  `auth.probe.ts` on the PR. Fair catch — a password literal has no business
+  in the repo even when it belongs to a user the probe deletes. Both are now
+  generated per run from the run stamp plus randomness, which also makes runs
+  independent of each other's leftovers.
+- 2026-08-19: the Coolify preview for PR #16 built and started, which means
+  `NUXT_DIRECTUS_SERVICE_TOKEN` is already present in that environment — the
+  boot-time schema would otherwise have refused. The preview URL itself
+  answers Cloudflare 526 (origin certificate not yet issued for
+  `test-16.jedlik-nejedlik.cz`), so nothing could be checked over HTTP yet.
