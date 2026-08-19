@@ -19,8 +19,9 @@ site. Partly repo work (config dump), partly ops on the instance.
       role/policy/permissions are in the committed directus-sync dump
 - [ ] Static token generated for the service user and stored where local
       dev and Coolify expect it (never committed)
-- [ ] Instance env: `REFRESH_TOKEN_TTL=30d`
-- [ ] Instance env: `PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla`
+- [x] Instance env: `REFRESH_TOKEN_TTL=30d`
+- [x] Instance env: `PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla`
+      (verified live: allowed URL → 204, other URL → 400)
 - [ ] `public_registration` remains off
 - [ ] Probe (or documented manual check) proves the service token cannot
       create a user with any role other than Student, nor read/update
