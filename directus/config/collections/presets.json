@@ -1,1 +1,108 @@
-[]
+[
+  {
+    "_syncId": "6f3db296-87e7-48c4-bc9e-6fc3a1582116",
+    "bookmark": null,
+    "collection": "lesson",
+    "color": null,
+    "filter": null,
+    "icon": "bookmark",
+    "layout": "tabular",
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "section": 220,
+          "title": 320,
+          "type": 140
+        }
+      }
+    },
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "title",
+          "section",
+          "type"
+        ],
+        "page": 1,
+        "sort": [
+          "sort"
+        ]
+      }
+    },
+    "refresh_interval": null,
+    "role": null,
+    "search": null
+  },
+  {
+    "_syncId": "bc223b0d-3a80-41b0-9002-50951c3c346c",
+    "bookmark": null,
+    "collection": "course",
+    "color": null,
+    "filter": null,
+    "icon": "bookmark",
+    "layout": "tabular",
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "price_czk": 140,
+          "slug": 220,
+          "status": 140,
+          "title": 320
+        }
+      }
+    },
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "title",
+          "slug",
+          "status",
+          "price_czk"
+        ],
+        "page": 1,
+        "sort": [
+          "sort"
+        ]
+      }
+    },
+    "refresh_interval": null,
+    "role": null,
+    "search": null
+  },
+  {
+    "_syncId": "c2e4ba8c-7340-4a9e-9eaa-b0ddf4a9487e",
+    "bookmark": null,
+    "collection": "section",
+    "color": null,
+    "filter": null,
+    "icon": "bookmark",
+    "layout": null,
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "course": 220,
+          "title": 320,
+          "unlock_delay_days": 160,
+          "unlock_rule": 180
+        }
+      }
+    },
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "title",
+          "course",
+          "unlock_rule",
+          "unlock_delay_days"
+        ],
+        "page": 1,
+        "sort": [
+          "sort"
+        ]
+      }
+    },
+    "refresh_interval": null,
+    "role": null,
+    "search": null
+  }
+]

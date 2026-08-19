@@ -1,9 +1,10 @@
 ---
-status: ready
+status: done
 blocked_by: [04]
 references:
   - "Spec: ../spec.md"
   - "Findings: ../implementation-notes.md (2026-08-19, FP-11 authoring findings)"
+  - "Outcome: ../implementation-notes.md (2026-08-19, Ticket 05)"
 ---
 
 # 05 — Authoring UX fixes from the FP-11 walkthrough
@@ -45,20 +46,53 @@ must stay green untouched.
 
 ## Acceptance criteria
 
-- [ ] Collection presets for `course`, `section`, `lesson` lead with the
-      title and drop the rich-text column; committed in `presets.json`
-- [ ] Manual entitlement grant prefills `Čas přidělení`; student-side
-      `granted_at` hardening from ticket 03 verified unchanged
-- [ ] `Video UID (Cloudflare Stream)` hidden on text lessons; existing
-      stray value on lesson 7 cleared
-- [ ] Section/lesson drag-ordering produces a complete `sort` sequence, or
-      the limitation is documented with a workaround for the author
-- [ ] Full probe suite still green (14 public + 29 student + 18 author)
-- [ ] directus-sync `pull` re-run, dump diff-clean, changes committed
+- [x] Collection presets for `course`, `section`, `lesson` lead with the
+      title and drop the rich-text column; committed in `presets.json`.
+      Also required deleting the author's *user-scoped* presets, which
+      shadow global ones — that, not an empty `presets.json`, was the cause
+- [x] Manual entitlement grant no longer needs a hand-typed timestamp:
+      `granted_at` gets `CURRENT_TIMESTAMP` as its DB default and is no
+      longer `required`; admin-omitted, author-omitted and explicit
+      (backdated) writes all verified. Student-side `granted_at` hardening
+      from ticket 03 is on `order_consent` and untouched — probe green
+- [x] No text lesson carries a stray `Video UID`. The `hidden` condition the
+      ticket asked for already existed since `cdf4163`; the residual problem
+      is that hiding a field does not clear it, so the fix is data-side
+      (lesson 7 → `video`, lesson 8 → `text` with `video_uid` nulled)
+- [x] Section drag-ordering documented: `sort_field` is correctly configured
+      on all three collections, so this is upstream Directus behaviour, not
+      a config gap. Course 6's sections backfilled to `1..4`; workaround for
+      the author recorded in the implementation notes
+- [x] Full probe suite green — 61/61, twice consecutively. One probe was
+      corrected (out-of-folder author upload answers 204, not 200) and
+      `probeUpload` now tolerates an empty body
+- [x] directus-sync `pull` re-run and committed. It also surfaced
+      **pre-existing drift** this ticket did not cause: four Autor policy
+      file/folder rules (instance stricter than the dump), committed
+      separately by the repo owner as `92cef00`, and two `settings.json`
+      fields, which ride along here
 - [ ] Merged to master, Coolify deploy green
+
+## Unplanned work folded in
+
+- **Entitlement id 6 revoked.** The FP-11 leftover entitled the probes'
+  "unentitled" student to course 6 and broke two student probes. Revoking it
+  via the author token also closed the manual-revocation step ticket 04 left
+  unverified.
+- Four orphaned `test-autor-probe-stray.txt` files deleted from the
+  instance — leaked by the probe bug above across earlier runs.
 
 ## Out of scope
 
 - The dummy course's unfilled fields (price, test threshold, cover) and its
   `draft` status — deliberately left as-is, see ticket 04's closing note.
 - Real Cloudflare Stream UIDs — area 08.
+
+## Deliberately not done
+
+- The repo owner's own user-scoped `course` preset (id 21) still leads with
+  `description`. It is personal account state, not shared config.
+- The Autor policy's folder rules match the folder by **name**
+  (`"Materiály kurzů"`) rather than by UUID, which is the more fragile of
+  the two. Flagged in the implementation notes; changing it is a
+  permissions change and this ticket is scoped to authoring ergonomics.

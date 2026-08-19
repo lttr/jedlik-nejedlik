@@ -57,7 +57,9 @@ export async function probeSend(
 }
 
 // Multipart file upload (POST /files). Field order matters to Directus:
-// scalar metadata first, the binary part last.
+// scalar metadata first, the binary part last. An upload the uploader may
+// not read back answers 204 with an empty body, so parse defensively — same
+// as probeSend.
 export async function probeUpload(
   token: string,
   file: { name: string; content: string; type: string },
@@ -73,7 +75,11 @@ export async function probeUpload(
     headers: { Authorization: `Bearer ${token}` },
     body: form,
   })
-  return { status: response.status, body: (await response.json()) as ProbeResponse["body"] }
+  const text = await response.text()
+  return {
+    status: response.status,
+    body: text === "" ? {} : (JSON.parse(text) as ProbeResponse["body"]),
+  }
 }
 
 // Raw GET (e.g. /assets file downloads) where only the status matters.

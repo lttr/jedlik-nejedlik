@@ -516,3 +516,156 @@ ergonomics, none touch the data model or permissions:
 
 - **Ticket 04 → done.** Ticket 05 (`05_authoring-ux-fixes.md`) opened for
   the four findings, `blocked_by: [04]`.
+
+## 2026-08-19 — Ticket 05 (authoring UX fixes)
+
+Three of the four findings turned out to rest on a stale or wrong premise —
+recorded here because the corrections matter more than the fixes.
+
+### Blocker found first: the FP-11 leftover broke the probe suite
+
+Ticket 04 closed leaving **entitlement id 6** in place, reasoning that the
+probe fixture (entitlement id 1) was untouched so the suite was unaffected.
+That reasoning was wrong: entitlement 6 granted course 6 to
+`[TEST] Student Bez opravneni` — the user the student probes rely on being
+**un**entitled. The baseline run failed on `nulls paid lesson fields for the
+non-entitled student` (a lesson `body` came back) and on the outline probe
+(`lesson.section` null). Revoked via the **author** token (`DELETE
+/items/entitlement/6` → 204), which also exercises the manual-revocation
+half of the grant/revoke path that ticket 04 left unverified. Entitlement 1
+and courses 1/2 untouched.
+
+### Finding 1 — list views (premise partly wrong)
+
+`presets.json` was **not** `[]` — it already held one global `section`
+preset from the baseline pull. The reason the author still saw the
+description column is different and more interesting: they had
+**user-scoped** presets (ids 22 `course`, 23 `section`, 26 `lesson`) which
+shadow global ones, and preset 22 literally ordered columns
+`description, slug, status, title`. Fix:
+
+- global presets (`user: null`, `role: null`) for all three collections,
+  title first, no rich-text column, sorted by the collection `sort` field —
+  `course` → `title, slug, status, price_czk` (new, id 31); `lesson` →
+  `title, section, type` (new, id 32); `section` → reordered to
+  `title, course, unlock_rule, unlock_delay_days` (existing id 24).
+- deleted the author's shadowing user presets 22/23/26. Personal presets
+  are re-created the moment a user rearranges columns again, so this only
+  resets them to the new default.
+- **Left alone:** the repo owner's own `course` preset (id 21) still leads
+  with `description`. It is personal state on their account — reset it in
+  the admin app, or say the word and it can be deleted like the author's.
+
+### Finding 2 — `granted_at` (fixed, mechanism verified)
+
+The Autor policy's entitlement `create` permission already carried
+`presets: {"granted_at": "$NOW"}`, so the *author* path was covered
+server-side; what forced manual typing was `meta.required: true` on the
+field, and the admin path had no default at all (admin create omitting the
+field stored `null` — verified before changing anything).
+
+Set `schema.default_value: "CURRENT_TIMESTAMP"` and `meta.required: false`
+(note reworded to say leaving it empty fills the current time). All three
+paths verified against production, each row deleted again:
+
+| path | payload | stored `granted_at` |
+| --- | --- | --- |
+| admin | omitted | `2026-08-19T10:24:58Z` (DB default) |
+| author | omitted | `2026-08-19T10:24:59Z` (`$NOW` preset) |
+| admin | `2026-01-15T10:00:00Z` | preserved |
+
+Backdating deliberately still works — area 07 derives the
+`time_since_purchase` clock from this timestamp, so a manually migrated
+purchase must be able to carry its real date. That ruled out the tidier
+`date-created` special, which would have made the field read-only.
+
+**No regression to ticket 03's hardening:** that hardening is on
+`order_consent.granted_at` (a different collection), and the student policy
+has no `create` on `entitlement` at all. The 403 probe stays green.
+
+### Finding 3 — `video_uid` on text lessons (premise wrong)
+
+The `hidden` condition the ticket asked for **already existed** and has
+since commit `cdf4163` — confirmed in the dump and live. The author still
+filled the field because `lesson.type` defaults to `video`, so the field is
+visible on a new lesson; switching the type to `text` afterwards hides the
+input but does **not** clear the stored value. No config change is
+available for that — Directus conditions only toggle visibility.
+
+Data fixed instead, resolving the swapped types ticket 04 noted: lesson 7
+is now the `video` lesson (keeps the placeholder UID), lesson 8 the `text`
+one (`video_uid` nulled). No text lesson carries a stray UID.
+
+### Finding 4 — drag-ordering (not a config gap)
+
+`sort_field: "sort"` is correctly set on `course`, `section` **and**
+`lesson`, so this is upstream Directus 11.13.1 behaviour, not misconfigured
+o2m: a drag renumbers only the rows the reorder moves, and rows created
+without a `sort` stay `null`. Sections 6 and 7 had never been assigned one.
+
+Backfilled course 6's sections to `1..4` in title order. **Workaround for
+the author:** ordering is only well-defined once every row in the list has
+a sort value; after adding new sections/lessons, drag the *whole* list into
+place once (or drag each new row) rather than assuming new rows land at the
+end.
+
+### Pre-existing drift surfaced by this pull
+
+`directus-sync diff` was already dirty before this ticket, in ways nothing
+here caused:
+
+- Four Autor-policy rules (`directus_files` read/update/delete ids 97/98/99,
+  `directus_folders` read id 106) had drifted between the committed dump and
+  the instance. **The instance is the stricter side** — the dump still had
+  `permissions: {}` (unrestricted) for files `update` and folders `read`,
+  i.e. it never captured ticket 03's review fix. Folder matching also moved
+  from the folder UUID to the folder *name* `"Materiály kurzů"` plus one
+  level of subfolders. Name matching is more fragile than the ID rule the
+  dump held (rename the folder and the rule silently stops matching) —
+  flagged, not changed, since the pull-only workflow treats the instance as
+  source of truth. **Committed separately by the repo owner as `92cef00`**
+  while this ticket was in flight, so it is not part of ticket 05's commit.
+- `settings.json`: `org_name` and `project_owner` filled in via the admin
+  app. This one does ride along in ticket 05's commit.
+
+### Probe suite
+
+Baseline was **not** green (the entitlement-6 breakage above, plus heavy
+network flakiness — see the sandbox note). After the fixes: **61/61 green,
+twice consecutively**, self-cleaning, fixtures intact.
+
+One probe needed a genuine correction rather than a data fix: *"deletes
+files inside the materials folder only"* expected `200` from the author's
+out-of-folder upload, but the author's folder-scoped read rule means they
+cannot read the row back, so Directus answers **204 with an empty body**.
+That is correct, desirable behaviour. Consequences fixed:
+
+- `probeUpload` parsed the body unconditionally and threw
+  `SyntaxError: Unexpected end of JSON input`; now tolerates an empty body
+  like `probeSend` already did.
+- because the id was never learned, `afterAll` could not clean up — four
+  orphaned `test-autor-probe-stray.txt` files had accumulated on the
+  instance and were deleted by hand. The test now recovers the id as admin,
+  asserts the author gets 403 on both read and delete, and cleans up.
+
+### Environment note (agent sessions)
+
+Node's `fetch` cannot reach the network from inside the agent sandbox
+(`ETIMEDOUT`/`ENETUNREACH`, while `curl` works). `vp run directus:probe`,
+`directus:pull` and `directus:diff` must be run with the sandbox disabled,
+otherwise the whole suite fails with connection errors that look like
+instance problems. The instance also intermittently reset connections under
+rapid sequential requests — retry rather than concluding breakage.
+
+Probe tokens were rotated again this ticket (the documented path); any
+locally saved env values need refreshing.
+
+### Follow-up opened: ticket 06
+
+The orphaned stray files exposed a gap the probe fix only works *around*:
+the Autor policy's `directus_files` **create** is unconstrained
+(`permissions: {}`, no preset, no validation) while read and delete are
+folder-scoped, so an author who uploads without choosing a folder creates a
+file they can neither see nor delete. Ticket 05 is scoped to authoring
+ergonomics and this is a permissions change, so it moved to
+`06_author-upload-folder-scoping.md` (`status: ready`).

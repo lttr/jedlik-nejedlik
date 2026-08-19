@@ -194,14 +194,24 @@ describe("author content management", () => {
     expect(inFolder.status).toBe(204)
     forget(leftovers.files, materialFileId)
 
+    // Uploading outside the materials folder is allowed, but the author's
+    // folder-scoped read rule means they cannot read the row back — Directus
+    // answers 204 with no body, so the id has to be recovered as admin.
+    const strayName = "test-autor-probe-stray.txt"
     const stray = await probeUpload(AUTHOR, {
-      name: "test-autor-probe-stray.txt",
+      name: strayName,
       content: "outside folder",
       type: "text/plain",
     })
-    expect(stray.status).toBe(200)
-    const strayId = item(stray).id as string
+    expect(stray.status).toBe(204)
+    const uploaded = await probe(
+      `/files?filter[filename_download][_eq]=${strayName}&fields=id&sort=-uploaded_on&limit=1`,
+      ADMIN,
+    )
+    const strayId = items(uploaded)[0]?.id as string
+    expect(strayId).toBeTypeOf("string")
     leftovers.files.push(strayId)
+    expect((await probe(`/files/${strayId}`, AUTHOR)).status).toBe(403)
     const denied = await probeSend("DELETE", `/files/${strayId}`, undefined, AUTHOR)
     expect(denied.status).toBe(403)
     expect((await probeSend("DELETE", `/files/${strayId}`, undefined, ADMIN)).status).toBe(204)
