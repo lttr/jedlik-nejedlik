@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: [05]
 references:
   - "Spec: ../spec.md"
@@ -69,15 +69,15 @@ uploads too.
 
 ## Acceptance criteria
 
-- [ ] Author upload with no folder chosen lands in **Materiály kurzů**
-- [ ] Author upload naming a foreign folder is refused, not silently
+- [x] Author upload with no folder chosen lands in **Materiály kurzů**
+- [x] Author upload naming a foreign folder is refused, not silently
       orphaned outside their reach
-- [ ] Admin and marketing uploads unaffected (no `storage_default_folder`
+- [x] Admin and marketing uploads unaffected (no `storage_default_folder`
       change)
-- [ ] New probes in `author.probe.ts` covering both paths above; existing
+- [x] New probes in `author.probe.ts` covering both paths above; existing
       out-of-folder probe updated or retired as the new rule dictates
-- [ ] Full probe suite green (currently 61/61)
-- [ ] FP-11 checklist step 4 in `../implementation-notes.md` updated — the
+- [x] Full probe suite green (63/63 — one probe became two)
+- [x] FP-11 checklist step 4 in `../implementation-notes.md` updated — the
       author no longer needs to pick the folder by hand
 - [ ] directus-sync `pull` re-run, dump diff-clean, changes committed
 - [ ] Merged to master, Coolify deploy green

@@ -17,6 +17,8 @@ export const PUBLISHED_SLUG = "test-kurz-publikovany"
 export const DRAFT_SLUG = "test-kurz-draft"
 export const MATERIAL_FILE_ID = "c1cee206-b8e2-41fb-975c-862b84f65a84"
 export const MATERIALS_FOLDER_ID = "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+// A folder the author has no business writing to — the public asset root.
+export const PUBLIC_FOLDER_ID = "532bfb77-87fb-46c5-94e7-addfb04e79a0"
 
 export interface ProbeResponse {
   status: number

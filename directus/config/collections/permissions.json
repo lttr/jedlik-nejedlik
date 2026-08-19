@@ -1265,8 +1265,14 @@
     ],
     "permissions": {},
     "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
-    "presets": null,
-    "validation": null
+    "presets": {
+      "folder": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+    },
+    "validation": {
+      "folder": {
+        "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+      }
+    }
   },
   {
     "_syncId": "5d970e73-541b-4237-913b-5f826ae375de",

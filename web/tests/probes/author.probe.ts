@@ -2,8 +2,10 @@ import { afterAll, describe, expect, it } from "vitest"
 import {
   ENTITLED_ID,
   MATERIALS_FOLDER_ID,
+  PUBLIC_FOLDER_ID,
   PUBLISHED_COURSE_ID,
   UNENTITLED_ID,
+  errorCode,
   forget,
   item,
   items,
@@ -189,33 +191,48 @@ describe("author content management", () => {
     forget(leftovers.files, assetId)
   })
 
-  it("deletes files inside the materials folder only", async () => {
+  it("deletes files inside the materials folder", async () => {
     const inFolder = await probeSend("DELETE", `/files/${materialFileId}`, undefined, AUTHOR)
     expect(inFolder.status).toBe(204)
     forget(leftovers.files, materialFileId)
+  })
 
-    // Uploading outside the materials folder is allowed, but the author's
-    // folder-scoped read rule means they cannot read the row back — Directus
-    // answers 204 with no body, so the id has to be recovered as admin.
-    const strayName = "test-autor-probe-stray.txt"
-    const stray = await probeUpload(AUTHOR, {
-      name: strayName,
-      content: "outside folder",
+  it("defaults an upload with no folder to the materials folder", async () => {
+    // The create permission's preset fills `folder`, so an author who never
+    // opens the folder picker still lands in Materiály kurzů — and can read
+    // the row back and delete it, which the folder-scoped read and delete
+    // rules would otherwise both deny.
+    const uploaded = await probeUpload(AUTHOR, {
+      name: "test-autor-probe-default-folder.txt",
+      content: "no folder chosen",
       type: "text/plain",
     })
-    expect(stray.status).toBe(204)
-    const uploaded = await probe(
-      `/files?filter[filename_download][_eq]=${strayName}&fields=id&sort=-uploaded_on&limit=1`,
+    expect(uploaded.status).toBe(200)
+    const fileId = item(uploaded).id as string
+    leftovers.files.push(fileId)
+    expect(item(uploaded).folder).toBe(MATERIALS_FOLDER_ID)
+    expect((await probeSend("DELETE", `/files/${fileId}`, undefined, AUTHOR)).status).toBe(204)
+    forget(leftovers.files, fileId)
+  })
+
+  it("refuses an upload naming a folder outside the materials folder", async () => {
+    // Explicitly picking a foreign folder fails the create permission's
+    // validation. Directus inserts the row before it writes to disk, so the
+    // rejection leaves neither a file nor an orphaned row behind — the trap
+    // this probe used to document (an invisible, undeletable upload).
+    const strayName = "test-autor-probe-stray.txt"
+    const stray = await probeUpload(
+      AUTHOR,
+      { name: strayName, content: "outside folder", type: "text/plain" },
+      { folder: PUBLIC_FOLDER_ID },
+    )
+    expect(stray.status).toBe(400)
+    expect(errorCode(stray)).toBe("FAILED_VALIDATION")
+    const orphans = await probe(
+      `/files?filter[filename_download][_eq]=${strayName}&fields=id&limit=1`,
       ADMIN,
     )
-    const strayId = items(uploaded)[0]?.id as string
-    expect(strayId).toBeTypeOf("string")
-    leftovers.files.push(strayId)
-    expect((await probe(`/files/${strayId}`, AUTHOR)).status).toBe(403)
-    const denied = await probeSend("DELETE", `/files/${strayId}`, undefined, AUTHOR)
-    expect(denied.status).toBe(403)
-    expect((await probeSend("DELETE", `/files/${strayId}`, undefined, ADMIN)).status).toBe(204)
-    forget(leftovers.files, strayId)
+    expect(items(orphans)).toHaveLength(0)
   })
 })
 
