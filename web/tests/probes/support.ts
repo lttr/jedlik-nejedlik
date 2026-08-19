@@ -18,6 +18,11 @@ export const DRAFT_SLUG = "test-kurz-draft"
 export const MATERIAL_FILE_ID = "c1cee206-b8e2-41fb-975c-862b84f65a84"
 export const MATERIALS_FOLDER_ID = "6173b74f-9990-41a2-b931-ff591ee6a5ed"
 
+// Directus role the app registers every new Student under; mirrors
+// STUDENT_ROLE_ID in the customers layer. See
+// directus/config/collections/roles.json.
+export const STUDENT_ROLE_ID = "186fdb62-3231-4322-8491-2c3dd8124842"
+
 export interface ProbeResponse {
   status: number
   body: {

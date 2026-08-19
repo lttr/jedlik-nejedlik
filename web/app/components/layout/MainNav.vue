@@ -21,10 +21,18 @@
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
+        <li>
+          <NuxtLink v-if="loggedIn" class="link" to="/muj-ucet">Můj účet</NuxtLink>
+          <NuxtLink v-else class="link" to="/prihlaseni">Přihlásit se</NuxtLink>
+        </li>
       </ul>
     </div>
   </nav>
 </template>
+
+<script lang="ts" setup>
+const { loggedIn } = useStudent()
+</script>
 
 <style scoped>
 .main-nav {

@@ -38,5 +38,5 @@ into ticket 05.
 
 Accepted as incomplete by the user (see the notes for the full list): the
 course stays `draft` with price/threshold/cover unfilled, and the manual
-*revocation* half of the grant path was not exercised. Probe fixtures
+_revocation_ half of the grant path was not exercised. Probe fixtures
 (entitlement id 1, courses 1 and 2) are untouched.

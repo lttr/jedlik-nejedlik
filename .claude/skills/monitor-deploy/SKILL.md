@@ -56,7 +56,7 @@ done
 - **An empty status is an API hiccup, not a terminal status** — count
   consecutive misses and emit `DEPLOY_UNKNOWN` after 12 (~2 min). A loop that
   breaks on "not in_progress" reports a finished deploy when the API merely
-  blinked. The counter resets on every good poll, so it bounds the *outage*,
+  blinked. The counter resets on every good poll, so it bounds the _outage_,
   not the deploy — a `timeout` around the loop would abort healthy long builds.
 - Poll a specific deployment uuid, not `deployments list | .[0]` — a newer
   deploy landing mid-watch would otherwise hijack the status.

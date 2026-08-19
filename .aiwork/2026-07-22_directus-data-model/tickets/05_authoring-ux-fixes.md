@@ -27,7 +27,7 @@ must stay green untouched.
 2. **`entitlement.granted_at` is required but has no default.** The author
    must type the timestamp by hand when granting access manually. Give it
    a `$NOW` default for the author/admin path. Careful: ticket 03's review
-   deliberately made the *student* create-permission preset `granted_at`
+   deliberately made the _student_ create-permission preset `granted_at`
    server-side and drop it from the writable field list — that hardening
    must not regress. The probe asserting the 403 on a student-supplied
    `granted_at` has to stay green.
@@ -48,7 +48,7 @@ must stay green untouched.
 
 - [x] Collection presets for `course`, `section`, `lesson` lead with the
       title and drop the rich-text column; committed in `presets.json`.
-      Also required deleting the author's *user-scoped* presets, which
+      Also required deleting the author's _user-scoped_ presets, which
       shadow global ones — that, not an empty `presets.json`, was the cause
 - [x] Manual entitlement grant no longer needs a hand-typed timestamp:
       `granted_at` gets `CURRENT_TIMESTAMP` as its DB default and is no

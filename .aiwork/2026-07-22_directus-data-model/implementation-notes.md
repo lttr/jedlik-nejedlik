@@ -487,7 +487,7 @@ blocking the area:
 - Course 6 stays `draft`; `price_czk`, `test_pass_threshold` and `cover`
   are unfilled. The FP-11 question was "can the author work unaided",
   which these do not bear on.
-- Entitlement id 6 was not deleted again, so the manual *revocation* half
+- Entitlement id 6 was not deleted again, so the manual _revocation_ half
   of the grant/revoke path is unverified. Entitlement id 1 (the probe
   fixture) is untouched, so the probe suite is unaffected.
 - Lesson types read as swapped ("Lekce 1 testovací" is `text` but carries
@@ -559,7 +559,7 @@ shadow global ones, and preset 22 literally ordered columns
 ### Finding 2 — `granted_at` (fixed, mechanism verified)
 
 The Autor policy's entitlement `create` permission already carried
-`presets: {"granted_at": "$NOW"}`, so the *author* path was covered
+`presets: {"granted_at": "$NOW"}`, so the _author_ path was covered
 server-side; what forced manual typing was `meta.required: true` on the
 field, and the admin path had no default at all (admin create omitting the
 field stored `null` — verified before changing anything).
@@ -568,11 +568,11 @@ Set `schema.default_value: "CURRENT_TIMESTAMP"` and `meta.required: false`
 (note reworded to say leaving it empty fills the current time). All three
 paths verified against production, each row deleted again:
 
-| path | payload | stored `granted_at` |
-| --- | --- | --- |
-| admin | omitted | `2026-08-19T10:24:58Z` (DB default) |
-| author | omitted | `2026-08-19T10:24:59Z` (`$NOW` preset) |
-| admin | `2026-01-15T10:00:00Z` | preserved |
+| path   | payload                | stored `granted_at`                    |
+| ------ | ---------------------- | -------------------------------------- |
+| admin  | omitted                | `2026-08-19T10:24:58Z` (DB default)    |
+| author | omitted                | `2026-08-19T10:24:59Z` (`$NOW` preset) |
+| admin  | `2026-01-15T10:00:00Z` | preserved                              |
 
 Backdating deliberately still works — area 07 derives the
 `time_since_purchase` clock from this timestamp, so a manually migrated
@@ -605,7 +605,7 @@ without a `sort` stay `null`. Sections 6 and 7 had never been assigned one.
 
 Backfilled course 6's sections to `1..4` in title order. **Workaround for
 the author:** ordering is only well-defined once every row in the list has
-a sort value; after adding new sections/lessons, drag the *whole* list into
+a sort value; after adding new sections/lessons, drag the _whole_ list into
 place once (or drag each new row) rather than assuming new rows land at the
 end.
 
@@ -619,7 +619,7 @@ here caused:
   the instance. **The instance is the stricter side** — the dump still had
   `permissions: {}` (unrestricted) for files `update` and folders `read`,
   i.e. it never captured ticket 03's review fix. Folder matching also moved
-  from the folder UUID to the folder *name* `"Materiály kurzů"` plus one
+  from the folder UUID to the folder _name_ `"Materiály kurzů"` plus one
   level of subfolders. Name matching is more fragile than the ID rule the
   dump held (rename the folder and the rule silently stops matching) —
   flagged, not changed, since the pull-only workflow treats the instance as
@@ -634,8 +634,8 @@ Baseline was **not** green (the entitlement-6 breakage above, plus heavy
 network flakiness — see the sandbox note). After the fixes: **61/61 green,
 twice consecutively**, self-cleaning, fixtures intact.
 
-One probe needed a genuine correction rather than a data fix: *"deletes
-files inside the materials folder only"* expected `200` from the author's
+One probe needed a genuine correction rather than a data fix: _"deletes
+files inside the materials folder only"_ expected `200` from the author's
 out-of-folder upload, but the author's folder-scoped read rule means they
 cannot read the row back, so Directus answers **204 with an empty body**.
 That is correct, desirable behaviour. Consequences fixed:
@@ -662,7 +662,7 @@ locally saved env values need refreshing.
 
 ### Follow-up opened: ticket 06
 
-The orphaned stray files exposed a gap the probe fix only works *around*:
+The orphaned stray files exposed a gap the probe fix only works _around_:
 the Autor policy's `directus_files` **create** is unconstrained
 (`permissions: {}`, no preset, no validation) while read and delete are
 folder-scoped, so an author who uploads without choosing a folder creates a
