@@ -20,3 +20,10 @@ references:
       registration
 - [ ] Probe proves a Student can update their own password and cannot
       update another user's
+
+## Rework notes
+
+- **Changing the password must invalidate other sessions**, or a
+  "log out everywhere" must exist — someone changing their password
+  because they suspect compromise must not leave the attacker signed in
+  for up to 30 days.

@@ -32,3 +32,34 @@ page is bounced to login and returned after.
 - [ ] `auth.probe.ts` covers login/refresh/logout round-trip and wrong
       credentials against production, self-cleaning, probe-suite
       conventions
+
+## Rework notes
+
+- Build the session on **nuxt-auth-utils** (per the revised spec):
+  sealed cookie carries the Student's e-mail (no `readMe` per render, no
+  `Accept`-header heuristic, no `readAuthenticatedStudent` guard);
+  Directus access + refresh tokens go in the session's server-only area
+  (verify its exact name in the module docs); transparent refresh lives
+  in `sessionHooks.fetch`. New env var `NUXT_SESSION_PASSWORD`; sealed
+  cookies cap at 4KB.
+- Wrap the module's `user`-shaped API behind Student-named identifiers
+  (GLOSSARY.md); don't leak `useUserSession()` into pages. Whether the
+  e-mail in the cookie violates ADR 0001 (second store of identity vs
+  cache) is the **user's call — ask, don't decide**.
+- Add a **per-IP rate limit on login** — Directus's per-user
+  `auth_login_attempts: 7` does nothing against credential stuffing
+  spread across many accounts, and registration and password-request are
+  already limited. Known limits of the current limiter: in-memory per
+  Nitro process (budgets reset on deploy, double with a second
+  instance), trusts client-controlled `X-Forwarded-For`.
+- If Directus is unreachable, surface an error rather than silently
+  rendering every visitor as logged out.
+- Page titles: auth pages set bare titles via `useHead({ title })`
+  (they are `robots: false`, so no `useSeoMeta` — no point emitting
+  `og:title` for unindexable pages), relying on a single
+  `titleTemplate`; the repo-wide titleTemplate fix is its own commit,
+  not folded into the auth work.
+- Keep from the existing branch (PR #16): `useAuthForm()`,
+  `authErrorMessage` (zod-parsed error body), `safeRedirectPath`
+  (resolves against a throwaway origin) — which needs a real test of
+  the shipped export (ticket 06).

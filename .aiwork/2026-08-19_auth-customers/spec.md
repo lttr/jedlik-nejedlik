@@ -1,8 +1,11 @@
-# Spec — Area 02: Auth / customers layer
+# Spec — Area 02: Auth layer
 
 Decisions were settled in [grilling.md](grilling.md) (three rounds, all
 answered 2026-08-19). Architecture is recorded in ADR 0002
-(Nitro-mediated auth sessions). Parent scope:
+(Nitro-mediated auth sessions). Revised 2026-08-20 after reviewing the
+first implementation (PR #16): session storage now builds on
+nuxt-auth-utils, and the `customers` layer is renamed `auth`. Parent
+scope:
 [implementation-areas.md](../2026-06-09_kurzy-platforma/implementation-areas.md)
 area 02 (FP-1, O-17, TO-2).
 
@@ -17,7 +20,7 @@ are both blocked on this.
 
 ## Solution
 
-The `customers` Nuxt layer gains the full identity lifecycle: a visitor
+The `auth` Nuxt layer gains the full identity lifecycle: a visitor
 registers with e-mail + password and is logged in immediately; an existing
 Student logs in, stays logged in across visits for up to 30 days, and can
 log out; a Student who forgot their password requests a reset e-mail and
@@ -110,17 +113,30 @@ browser never talks to Directus with credentials (ADR 0002).
 
 ## Implementation Decisions
 
-- **Layer ownership.** All identity UI and routes live in the `customers`
-  layer (per the layers-scaffolding contract: a layer owns its whole
-  vertical, including its Nitro routes). The `directus` layer gains only
-  the generic per-request authenticated server client; no domain logic.
+- **Layer ownership.** All identity UI and routes live in the `auth`
+  layer — renamed from `customers` on 2026-08-20: the layer's contents
+  are the identity lifecycle, not a persona, and the glossary avoids
+  "customer" anyway (per the layers-scaffolding contract: a layer owns
+  its whole vertical, including its Nitro routes). The `directus` layer
+  gains only the generic per-request authenticated server client; no
+  domain logic. `/muj-ucet` stays an account **shell** (e-mail, password
+  change, logout): anything about what a Student owns or does — orders,
+  entitlements, courses — comes from the owning layer (`shop`, `lms`),
+  even when surfaced on the account page.
 - **Session architecture (ADR 0002).** Nitro mediates all auth: login,
   logout, refresh, registration, password-reset request and completion,
-  and password change. Directus access + refresh tokens are stored in
-  httpOnly, secure, SameSite=Lax cookies on the site domain. When the
-  access token expires, the server transparently refreshes against
-  Directus using the refresh cookie and re-sets both cookies. The browser
-  never holds a Directus token and never calls Directus with credentials.
+  and password change. The browser never holds a Directus token and never
+  calls Directus with credentials.
+- **Session storage: nuxt-auth-utils** (revision, 2026-08-20 — was
+  hand-rolled cookies). One sealed httpOnly, secure, SameSite=Lax session
+  cookie carries the Student's e-mail in the payload and the Directus
+  access + refresh tokens in the session's server-only area — never in
+  the part serialised to the client. Because identity rides in the
+  cookie, resolving the Student needs no Directus round-trip per render;
+  transparent refresh lives in the module's session fetch hook.
+  Constraints accepted: one new env var (`NUXT_SESSION_PASSWORD`), one
+  new dependency, the 4KB sealed-cookie cap. The module's `user`-shaped
+  API is wrapped behind Student-named identifiers per the glossary.
 - **Registration.** A Nitro route creates the Directus user with role
   Student via a dedicated service token whose policy allows only creating
   Student-role users. Directus `public_registration` stays off. No e-mail
@@ -149,21 +165,23 @@ browser never talks to Directus with credentials (ADR 0002).
   visitors hitting `/prihlaseni` or `/registrace` are forwarded to the
   same target. Guests hitting a protected page are sent to
   `/prihlaseni?redirect=<path>`.
-- **Guard.** A named `auth` route middleware in the customers layer,
+- **Guard.** A named `auth` route middleware in the auth layer,
   opted into per page via page meta. It is UX only; enforcement remains
   Directus permissions plus session checks in Nitro routes (R-5).
 - **Client-side identity.** A `useStudent()` composable returns
-  `{ student, loggedIn }`, hydrated during SSR from the session (a
-  whoami-style endpoint or SSR state), shared app-wide. Glossary term is
-  Student — never "user" or "account" in identifiers.
+  `{ student, loggedIn }`, identical on SSR and client — it wraps
+  nuxt-auth-utils' `useUserSession()`, reading the session payload; no
+  whoami round-trip (revision, 2026-08-20). Glossary term is Student —
+  never "user" or "account" in identifiers.
 - **Server client shape.** The directus layer exposes a per-request
   factory that builds an authenticated client from the event's session
   cookie (handling transparent refresh). The existing anonymous singleton
   client and all public-content consumers are untouched.
-- **Runtime config.** New private keys (service token; anything else the
-  routes need) declared in the customers layer's config and validated in
-  the existing runtime-config schema, per the scaffolding contract. The
-  public `directusUrl` key is reused.
+- **Runtime config.** New private keys (service token,
+  `NUXT_SESSION_PASSWORD`; anything else the routes need) declared in the
+  auth layer's config and validated in the existing runtime-config
+  schema, per the scaffolding contract. The public `directusUrl` key is
+  reused.
 - **Instance changes (ops, outside the repo):**
   `PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla`,
   `REFRESH_TOKEN_TTL=30d`, plus the service user + create-Student-only
@@ -215,12 +233,22 @@ browser never talks to Directus with credentials (ADR 0002).
 - Captcha/Turnstile on registration.
 - Automated browser e2e tests.
 - Account deletion / GDPR erasure tooling (manual via admin for now).
+- Role-differentiated frontend (e.g. admin pages). The architecture
+  already permits it — login and sessions are role-agnostic, and the
+  session-bound client inherits the logged-in user's Directus
+  permissions — but the session payload carries no role and the `auth`
+  guard is binary. A future area adds the role (or a capability claim)
+  to the session payload and a role-aware guard; registration stays
+  Student-only regardless (other roles are provisioned via the Data
+  Studio).
 
 ## Further Notes
 
 - ADR 0002 records the session architecture and the reset-e-mail
   constraint; ADR 0001 fixes Directus as system of record and enforcement
   boundary — nothing in this area may become a second store of identity.
+  **Open (user decision):** whether the e-mail in the sealed session
+  cookie counts as a cache (fine) or a second store (violates ADR 0001).
 - The Student role and its own-row policies already exist and are proven
   by area 01's probes; this area adds only the service user/policy and
   the own-password-update permission to the Directus config dump.

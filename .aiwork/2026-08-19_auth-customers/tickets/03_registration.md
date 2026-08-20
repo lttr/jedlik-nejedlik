@@ -24,3 +24,26 @@ the privacy policy. Redirect rules match login.
 - [ ] Logged-in Student opening `/registrace` is forwarded onward
 - [ ] Probes: register via the route's contract creates exactly a
       Student; rate limit kicks in; cleanup removes throwaway users
+
+## Rework notes
+
+- **No hardcoded `STUDENT_ROLE_ID`** — the first implementation baked
+  the UUID into source twice (route + probe), which silently does the
+  wrong thing against a rebuilt or staging instance. Preferred: omit
+  `role` from the payload and let a preset on the service policy's
+  create permission assign it (verify a preset applies and omitting
+  `role` doesn't 400); fallbacks are a uuid-validated runtime-config
+  key or deriving from the committed roles dump
+  (`directus/config/collections/roles.json`). Never look the role up by
+  name at runtime — magic string, extra request, and the service token
+  is deliberately denied read access.
+- **Lowercase the e-mail** as well as trimming it — check whether
+  Directus normalises case itself; if not, `Foo@x.cz` and `foo@x.cz`
+  become two accounts and the duplicate-e-mail error never fires.
+- Accessibility: tie the password hint to its input with
+  `aria-describedby`; add `autofocus`. (Applies to all four auth pages.)
+- Dedups from the first implementation: the password-length pre-check
+  belongs in the form composable or a `validatePassword` helper, not
+  copy-pasted per page; `readCredentials`/`readRegistration` are one
+  function with two schemas; the four `console.error` + `authError`
+  pairs want one helper.

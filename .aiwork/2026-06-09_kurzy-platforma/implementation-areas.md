@@ -10,7 +10,7 @@ its turn comes; this file only fixes scope, boundaries, and order.
 graph TD
     A0[00 layers-scaffolding]
     A1[01 data-model]
-    A2[02 auth-customers]
+    A2[02 auth]
     A3[03 catalog]
     A4a[04a checkout-consent-redirect]
     A4b[04b gopay-notification-entitlement]
@@ -38,7 +38,8 @@ Waves: **1** = 00+01 · **2** = 02, 03, 09 (parallel) · **3** = 04a→04b, 06,
 
 ## 00 — Nuxt layers scaffolding (TR-1b)
 
-Restructure `web/` to host Nuxt layers `customers`, `lms`, `shop` over the
+Restructure `web/` to host Nuxt layers `auth` (scaffolded as
+`customers`, renamed 2026-08-20), `lms`, `shop` over the
 existing marketing site. Shared Directus client, styles, runtime config.
 Deployment stays one Nitro SSR app on Coolify — no second deployable.
 
@@ -71,9 +72,9 @@ and this avoids designing schema two waves before its consumer exists.
   Directus; author builds the dummy course entirely through the Directus
   admin app (FP-11 — doubles as the seed-data step).
 
-## 02 — Auth / customers layer (FP-1, O-17, TO-2)
+## 02 — Auth layer (FP-1, O-17, TO-2)
 
-Account-first native Directus email+password auth surfaced in the `customers`
+Account-first native Directus email+password auth surfaced in the `auth`
 layer: register, login, logout, password reset (Directus → Mailgun, already
 configured). Session handling for Nuxt SSR; identity = email. No magic link
 in v1.
@@ -188,7 +189,7 @@ starting point.
 
 - Collection + field naming (Czech vs. English identifiers) — decide before
   01, everything downstream reads it.
-- Layer ownership: `customers` = identity, `shop` = catalog→order→invoice,
+- Layer ownership: `auth` = identity, `shop` = catalog→order→invoice,
   `lms` = entitlement-consumption side. Entitlement is written by `shop`,
   read by `lms`.
 - Nitro server routes live inside `web/` (TR-1b): GoPay webhook (04b),

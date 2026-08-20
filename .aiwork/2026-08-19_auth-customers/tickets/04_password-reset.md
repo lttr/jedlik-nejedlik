@@ -24,3 +24,10 @@ request a fresh link.
 - [ ] Expired/used token → Czech error + link to request again
 - [ ] Probe covers the request leg's uniform response; e-mail leg is
       deferred to ticket 06's manual round-trip
+
+## Rework notes
+
+- **Clear the token from the URL** after a successful reset with
+  `replaceState` — otherwise it stays in history and referrer.
+- Accessibility: `aria-describedby` on the password hint, `autofocus`,
+  same as the other auth pages.
