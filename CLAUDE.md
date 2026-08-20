@@ -13,3 +13,4 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 - To drive the dev server with a browser use `pnpm dev:agent`: sets `NUXT_NO_WS=1` to drop the HMR socket (vite-plus 0.2.5 double-upgrades it and crashes on connect). Page still SSRs; human `pnpm dev` keeps HMR. See the `run-jedlik-nejedlik` skill.
 - oxlint does not type-check `.vue` files yet — only eslint and `nuxi typecheck` cover SFCs.
 - Never grep barrel `.d.ts` files in `node_modules`; read the specific declaration.
+- Answer Directus permission questions from the committed dump (`directus/config/collections/permissions.json`), not the live API — same data, and the API route is often blocked. Its records are keyed by `_syncId`, which is NOT the live id; look ids up on the instance before any `PATCH`. See `docs/directus.md`.

@@ -15,33 +15,33 @@ site. Partly repo work (config dump), partly ops on the instance.
 
 ## Acceptance criteria
 
-- [x] Service user with a "create Student-role users only" policy exists;
+- [ ] Service user with a "create Student-role users only" policy exists;
       role/policy/permissions are in the committed directus-sync dump
-- [x] Static token generated for the service user and stored where local
+- [ ] Static token generated for the service user and stored where local
       dev and Coolify expect it (never committed)
 - [x] Instance env: `REFRESH_TOKEN_TTL=30d`
 - [x] Instance env: `PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla`
-- [x] `public_registration` remains off
+      (verified live: allowed URL → 204, other URL → 400)
+- [ ] `public_registration` remains off
 - [ ] Probe (or documented manual check) proves the service token cannot
       create a user with any role other than Student, nor read/update
       existing users
 
 ## Outstanding
 
-The instance work was applied by the user on 2026-08-19; the implementing
-session had no Directus admin credentials, so two criteria above are only
-half met and stay unchecked:
+The instance work was applied by the user on 2026-08-19. The implementing
+session had no Directus admin credentials, so the criteria that depend on
+repo artefacts or on running the probes stay unchecked:
 
-- The role/policy/permissions are **not yet in the committed directus-sync
-  dump** — needs `vp run directus:pull` with an admin token.
-- The "service token cannot create a non-Student user" check exists as
-  `web/tests/probes/auth.probe.ts` but **has not been run** — needs the probe
-  tokens.
-
-Two independent confirmations that the instance side is live: the Coolify
-preview for PR #16 boots (the runtime-config schema would refuse without
-`NUXT_DIRECTUS_SERVICE_TOKEN`), and the production instance rejected a
-`http://localhost:...` reset URL, which only happens with
-`PASSWORD_RESET_URL_ALLOW_LIST` set.
+- The service role/policy/permissions are live on the instance but **not yet
+  in the committed directus-sync dump** — needs `vp run directus:pull` with
+  an admin token.
+- The service token is set in the Coolify environment (the preview for
+  PR #16 boots, which the runtime-config schema would refuse without
+  `NUXT_DIRECTUS_SERVICE_TOKEN`); `web/.env` for local dev is unverified
+  from here.
+- `web/tests/probes/auth.probe.ts` covers the "service token cannot create a
+  non-Student, nor read or update existing users" check but **has not been
+  run** — needs the probe tokens.
 
 See `../ops-checklist.md` for the full list.

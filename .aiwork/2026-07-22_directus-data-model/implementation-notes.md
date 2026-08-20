@@ -408,7 +408,8 @@ nezanikne). Administrace: https://obsah-jedlika.lttr.cz/admin
 3. **Lekce**: alespoň jedna video lekce (Cloudflare Stream UID do pole
    Video UID + poznámky do těla) a jedna textová lekce (tělo). Seřadit.
 4. **Doplňkový materiál**: k jedné lekci nahrát alespoň jeden soubor
-   (PDF); při nahrání zvolit složku **Materiály kurzů**.
+   (PDF). Složku není potřeba vybírat — nahrané soubory autora padnou samy
+   do **Materiálů kurzů** (ticket 06); jiná složka se odmítne.
 5. **Ruční přidělení oprávnění**: Oprávnění ke kurzům → + → vybrat
    studenta „[TEST] Student Bez opravneni" a nový zkušební kurz, uložit
    (Čas přidělení se předvyplní). Ověřit, že záznam vznikl, a potom ho
@@ -669,3 +670,95 @@ folder-scoped, so an author who uploads without choosing a folder creates a
 file they can neither see nor delete. Ticket 05 is scoped to authoring
 ergonomics and this is a permissions change, so it moved to
 `06_author-upload-folder-scoping.md` (`status: ready`).
+
+## 2026-08-19 — Ticket 06 (author upload folder scoping)
+
+The trap ticket 05 documented is closed. The Autor policy's `directus_files`
+**create** rule (permission id 96, policy `67bf15ab-…`) now carries both
+halves of the ticket's design:
+
+```json
+{
+  "presets": { "folder": "6173b74f-9990-41a2-b931-ff591ee6a5ed" },
+  "validation": { "folder": { "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed" } }
+}
+```
+
+`permissions` stays `{}` and `storage_default_folder` stays `null`, so admin
+and marketing uploads are untouched.
+
+### Both open questions answered — source first, then live
+
+Read from the `v11.13.1` tag rather than `main`, then confirmed by probe:
+
+1. **Presets and validation do apply to multipart `POST /files`.** The path is
+   `multipartHandler` → `FilesService.uploadOne` → `this.createOne(payload)` →
+   `ItemsService.createOne` → `processPayload`, which is the ordinary
+   accountability-aware create. The fallback the ticket hedged for (a
+   narrowing `permissions` filter) is not needed.
+2. **The preset can only fill an absent key.** `processPayload` does
+   `assign({}, ...presets, payload)` — payload wins. `multipartHandler` only
+   sets keys the client actually sent, so an upload with no folder chosen
+   arrives without a `folder` key and the preset lands. The post-upload
+   `sudoFilesItemsService.updateOne` writes `{...payload, ...metadata}`, which
+   likewise has no `folder` key, so it cannot clobber the preset afterwards.
+3. **Validation cannot traverse relations on create.** It runs through
+   `validatePayload`, a static check against the payload object, not a
+   database query. `folder.parent.name` is inert there — on create the payload
+   holds a raw UUID. That decided the `_eq` question by elimination, not by
+   preference.
+4. **A refused upload leaves nothing behind.** `createOne` runs _before_
+   `disk.write`, so a validation failure produces neither a row nor a file.
+   The rejected case is a clean `400 FAILED_VALIDATION`.
+
+### The `_eq` limitation, accepted and recorded
+
+The read/update/delete rules match the folder **by name** plus one level of
+children; this create rule matches **one exact UUID**. The divergence is
+deliberate — point 3 above leaves no other option — but it has two edges:
+
+- An admin adding a subfolder under **Materiály kurzů** silently blocks
+  author uploads into it, while read/update/delete would allow them. Today
+  this is moot: the folder has no subfolders and the Autor policy has no
+  `create` on `directus_folders`.
+- Conversely the UUID survives a folder rename, which the name-matching rules
+  do not. The name-vs-UUID inconsistency across the four rules remains the
+  open item ticket 05 recorded as out of scope.
+
+### Probes
+
+The old _"deletes files inside the materials folder only"_ probe documented
+the trap — an out-of-folder upload answering 204, the id recoverable only as
+admin. That behaviour no longer exists, so the probe was split and rewritten:
+
+- `defaults an upload with no folder to the materials folder` — uploads with
+  no `folder` field, asserts 200, asserts `folder` came back as the materials
+  folder, then deletes it **as the author** (the proof that the file is no
+  longer stranded).
+- `refuses an upload naming a folder outside the materials folder` — uploads
+  naming the public folder (`PUBLIC_FOLDER_ID`, new in `support.ts`), asserts
+  `400 FAILED_VALIDATION`, then asserts as admin that no orphaned row exists.
+
+**63/63 green** (14 public + 28 student + 21 author), self-cleaning, fixtures
+intact. The count rose from 61 because one probe became two.
+
+### Environment note — what an agent session cannot do here
+
+The admin credential still comes from `claude mcp get directus` as ticket 01
+documented, and that path works: it read the permission rows, applied the
+`PATCH /permissions/96`, and ran `directus:pull` / `directus:diff`. Three
+things are refused by Claude Code's auto-mode classifier regardless of the
+token, and refused _before_ any approval prompt reaches the user, so
+"approve it" is not a workaround:
+
+- listing users (`GET /users?filter[email][_starts_with]=probe-`)
+- minting static tokens (`PATCH /users/<id>` with a `token` value)
+- any `curl` run with the sandbox disabled
+
+Probe tokens therefore have to be rotated by the repo owner. The script for it
+is `rotate-and-probe.sh` (written to the session scratchpad, not committed):
+it extracts the admin token, rotates the three `[TEST]` users, and appends the
+four `DIRECTUS_PROBE_*` vars to the web app's local env file — which is where
+they now live, so a future session can source it instead of rotating again.
+That file is unreadable to the agent (a damage-control hook blocks the path),
+so the owner runs the suite.
