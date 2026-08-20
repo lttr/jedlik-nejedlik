@@ -178,3 +178,25 @@ Chronological log. Newest entries at the bottom.
   boot-time schema would otherwise have refused. The preview URL itself
   answers Cloudflare 526 (origin certificate not yet issued for
   `test-16.jedlik-nejedlik.cz`), so nothing could be checked over HTTP yet.
+
+- 2026-08-20: GitGuardian stays red on PR #16 even after the fix — it scans
+  every commit in the pull request, and the two literals are still in the
+  history of 79f5e48 and c880ab1. Decision (user): dismiss incidents
+  36365004 / 36365005 in the GitGuardian dashboard rather than rewrite and
+  force-push the branch. Nothing to revoke — the passwords belonged to
+  throwaway Students the probe deletes, and the current code generates them
+  per run.
+- 2026-08-20: merged `origin/master` into the branch (master had moved on and
+  now carries the previously-unmerged area-01 commits). One conflict, in
+  ticket 01: the user's checkbox judgment on master is the accurate one — the
+  service-user and static-token criteria stay unchecked because the dump
+  refresh and the local-dev side are not done — so master's block was kept
+  verbatim and the "Outstanding" section reworded to agree with it. The
+  earlier commit that ticked five boxes over-claimed. `vp run verify:all`
+  green on the merged tree.
+- 2026-08-20: the committed permissions dump still has no `directus_users`
+  entries for the Student policy, so ops item 2 is still open (or applied on
+  the instance and not yet pulled).
+- 2026-08-20: `https://test-16.jedlik-nejedlik.cz` has answered Cloudflare
+  526 (origin certificate not issued) since the preview first went up, so
+  none of the deployed pages have been checked over HTTP.
