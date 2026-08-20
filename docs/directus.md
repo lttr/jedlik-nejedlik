@@ -113,11 +113,21 @@ leave rows behind, which the next run's admin sweep removes.
 Four environment variables, values never committed:
 `DIRECTUS_PROBE_AUTHOR_TOKEN`, `DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN`,
 `DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN`, `DIRECTUS_PROBE_ADMIN_TOKEN` (the
-admin one is only for fixtures and cleanup — reuse the MCP credential).
+admin one is only for fixtures and cleanup — reuse the MCP credential,
+`claude mcp get directus` prints it).
 
-Directus masks static tokens on read, so a lost token cannot be recovered, only
-rotated: `PATCH /users/<id>` with a fresh random `token` using the admin token,
-then update `web/.env`.
+The three role tokens are the static access tokens of the fixture probe users
+below — each variable maps to the user with the matching email. To obtain one:
+
+- **Admin app**: **User Directory →** _probe user_ **→ Token** — click the
+  generate icon, save the user, and copy the value into `web/.env`.
+- **API**: `PATCH /users/<id>` with a fresh random `token` (e.g. from
+  `openssl rand -hex 32`), authorized with the admin token. Look the user id up
+  live by email first, or take it from `web/tests/probes/support.ts`.
+
+Directus masks static tokens on read, so a lost token cannot be recovered —
+repeat either step above to rotate it, then update `web/.env`. Rotating
+replaces the old token immediately; there is no overlap window.
 
 ### Fixtures — do not delete
 
