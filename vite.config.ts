@@ -4,6 +4,10 @@ const ignorePatterns = [
   // Machine-generated directus-sync dump — formatting it would fight
   // every `vp run directus:pull`.
   "directus/config/**",
+  // Agent tooling, not app code: helper scripts under .claude/ live outside
+  // any tsconfig, so type-aware rules resolve their Node imports to `error`
+  // and report phantom violations when linted file-by-file.
+  ".claude/**",
   "**/.nuxt/**",
   "**/.output/**",
   "**/cache/**",

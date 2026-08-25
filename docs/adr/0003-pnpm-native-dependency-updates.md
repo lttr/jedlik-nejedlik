@@ -41,8 +41,8 @@ onto a Renovate branch makes Renovate stop managing it.
 
 The cost accepted: no merge confidence grades, no automatic rebasing of a
 stale PR, and no dependency dashboard. The mitigation is procedural — only
-one dependency PR may be open at a time, and the next run rebases and
-re-verifies it rather than opening a second.
+one dependency PR may be open at a time, and a run that finds one open skips
+that week rather than opening a second or rebasing someone else's branch.
 
 Reversing this is not free but not dramatic either: Renovate could be added
 later in dashboard-only mode as the version oracle, with the skill reading
