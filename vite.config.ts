@@ -13,19 +13,24 @@ const ignorePatterns = [
   "pnpm-lock.yaml",
 ]
 
-// Generated artifacts excluded from cache-input tracking.
+// Generated artifacts excluded from cache-input tracking. Also excludes
+// .aiwork/** and markdown: the implement workflow appends to notes
+// continuously, which would invalidate every verify task on each run.
 const srcInput = [
   { auto: true },
+  "!**/.aiwork/**",
+  "!**/*.md",
   "!**/.nuxt/**",
   "!**/.output/**",
   "!**/node_modules/.cache/**",
   "!**/node_modules/.vite/**",
+  "!**/node_modules/.vite-temp/**",
   "!**/*.tsbuildinfo",
 ]
 
 export default defineConfig({
   staged: {
-    "*": [() => "vp run nuxt:prepare", "vp check --fix"],
+    "*": [() => "vp run nuxt:prepare", "vp check --fix", () => "scripts/check-probe-stamp.sh"],
   },
   run: {
     cache: {
@@ -57,7 +62,11 @@ export default defineConfig({
         dependsOn: ["nuxt:prepare"],
       },
       "verify:fallow": { command: "fallow", input: srcInput },
-      "verify:smoke": { command: "scripts/smoke-dev.sh" },
+      "verify:test": {
+        command: "node node_modules/vitest-probe/vitest.mjs run --config vitest.unit.config.ts",
+        cwd: "web",
+        input: srcInput,
+      },
       // Network-facing Directus config-as-code commands — never cache, a
       // replayed result would mask drift on the live instance.
       "directus:pull": { command: "directus-sync pull", cache: false },
@@ -68,11 +77,10 @@ export default defineConfig({
       // `vitest` bin for `vp test` and its bundled rolldown is version-skewed
       // against the vite-plus 0.2.5 native binding. DELETE the alias and
       // switch to `vp test` once vite-plus-test catches up with the CLI.
-      "directus:probe": {
-        command: "node node_modules/vitest-probe/vitest.mjs run --config vitest.probes.config.ts",
-        cwd: "web",
-        cache: false,
-      },
+      // Stamps .directus-probe-stamp on success — the pre-commit probe gate
+      // (scripts/check-probe-stamp.sh) requires a stamp newer than staged
+      // permission-touching files.
+      "directus:probe": { command: "scripts/directus-probe.sh", cache: false },
       "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
       "verify:all": {
         command: "echo verify done",
@@ -81,7 +89,7 @@ export default defineConfig({
           "verify:lint",
           "verify:typecheck",
           "verify:fallow",
-          "verify:smoke",
+          "verify:test",
           "verify:build",
         ],
       },

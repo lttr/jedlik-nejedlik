@@ -4,7 +4,6 @@ references:
   - .claude/skills/implement-spec-to-pr/SKILL.md
   - .claude/hooks/stop-smart.sh
   - .claude/settings.json
-  - scripts/smoke-dev.sh
 ---
 
 # Verify feedback loops — recommendations
@@ -42,13 +41,9 @@ const srcInput = [
 ]
 ```
 
-Two companions:
-
-- **`verify:smoke` has no `input` at all**, so it boots a dev server on every
-  `verify:all` even when nothing changed. Give it `input: srcInput` so it
-  caches like the rest.
-- **`smoke-dev.sh` must clean up dev locks in its trap.** A stale lock from a
-  smoke run blocked the next dev server for the rest of the session.
+The smoke test (`verify:smoke` / `smoke-dev.sh`) was removed entirely: by the
+time the pre-commit gate runs, the change has already been verified in the
+agent-browser step (§6), so a dev-server boot check is redundant.
 
 ## 2. Make `verify:all` the only verification entry point
 
@@ -75,11 +70,9 @@ again. By commit time a lint failure should be rare; the existing CLAUDE.md
 - **Never pipe a check through `head` / `tail` / `grep`.** Run it bare — the
   harness reports the exit code. Piping swallowed two exit codes and forced
   two full suite re-runs to recover one integer each.
-- **Never `git add -A`; stage explicit paths.** The unrelated-files commit
-  required both a repo-wide `vp check --fix` and `-A` to happen. Optionally
-  hard-enforce with permission denies in `.claude/settings.json`
-  (`Bash(git add -A*)`, `Bash(git add .*)`), same pattern as the existing
-  `--no-verify` denies.
+- ~~Never `git add -A`~~ — dropped on review: the unrelated-files commit was
+  caused by running a repo-wide autofix at commit time; the fix is to run
+  autofixes beforehand, not to ban blanket adds.
 - **Kill dev servers by port, not by pattern.** `pkill -f "nuxi dev"` matched
   the agent's own shell command line and killed it. Use the stored PID or
   `fuser -k <port>/tcp`.
@@ -150,15 +143,15 @@ Instead of three scattered checks, the spec template gains a mandatory
 | Probe run   | timestamp, or "n/a: no permission change" |
 | Screenshots | paths, or "n/a: no UI change"             |
 
-A single hook script greps for empty cells and exits 2 (Stop hook → the
-agent self-heals in-session). "n/a" claims stay visible for human review in
-the PR. This is the soft-force layer that matches the §4 decision: it forces
+A single script (`scripts/check-evidence-table.sh`) greps for empty cells
+and fails. On-demand only — no hook enforces it (a Stop hook would fire on
+every session, a pre-commit gate on every commit); the implement skill runs
+it before shipping. "n/a" claims stay visible for human review in the PR. This is the soft-force layer that matches the §4 decision: it forces
 an explicit answer, not a particular one.
 
 ## Priority order
 
-1. §1 cache fix (two-line config change, biggest payoff) + smoke `input` and
-   lock cleanup.
+1. §1 cache fix (two-line config change, biggest payoff).
 2. §4 `verify:test` scaffold, wired into `verify:all`.
 3. §6 Step 5 rewrite + `.gitignore` entry.
 4. §7 evidence table in the spec template, then the hook that checks it.

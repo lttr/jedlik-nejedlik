@@ -52,7 +52,7 @@ Linting is intentionally strict — a large pedantic Oxlint rule set (see the
 2. `verify:lint` — full ESLint
 3. `verify:typecheck` — `nuxi typecheck`
 4. `verify:fallow` — dead-code / unused-export detection
-5. `verify:smoke` — dev-server smoke test (`scripts/smoke-dev.sh`)
+5. `verify:test` — unit tests (`web/tests/unit/`)
 6. `verify:build` — `nuxi build`
 
 A **pre-commit hook** (`vp staged`) auto-formats and `--fix`es staged files, so

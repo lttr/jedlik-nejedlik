@@ -16,5 +16,9 @@ design/images/generated*
 # Claude
 .claude/worktrees
 
+# Session working evidence, not repository content
+.aiwork/**/screenshots/
+.directus-probe-stamp
+
 # fallow
 .fallow
