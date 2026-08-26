@@ -1,6 +1,6 @@
 ---
 name: dependency-update
-description: Weekly dependency update run — read what pnpm says is outdated, upgrade what is safe, apply the code changes the new versions need, verify, and open one reviewable PR. Use when the user says "dependency update", "/dependency-update", "update deps", or when the weekly cloud routine fires.
+description: Weekly dependency update run — read what pnpm says is outdated, upgrade what is safe, apply the code changes the new versions need, verify, and open one reviewable PR. Supports a read-only dry run that reports what it would do. Use when the user says "dependency update", "/dependency-update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch
 ---
 
@@ -16,6 +16,27 @@ Merging this PR deploys to production. Nothing here is automerged, so the value
 of the run is a PR a tired human can review honestly in a few minutes — not the
 largest batch that passes CI.
 
+## Modes
+
+Default is the **full run**: it branches, bumps, verifies and opens a PR.
+
+**Dry run** — triggered by `/dependency-update dry-run`, or any phrasing like
+"dry run", "just report", "what would you update", "no changes". It runs §0–§3
+only and then prints the report in §3a. It is strictly read-only:
+
+- Allowed: `git fetch`, `gh pr list`, the scan script, `gh api` release notes,
+  WebFetch, and read-only searches of our source (the evidence work in §3).
+- Forbidden: `git switch -c`, any `pnpm update`/`pnpm dedupe`/install that could
+  rewrite `package.json` or `pnpm-lock.yaml`, any source edit, any commit, any
+  push, `gh pr create`, and the weekly note in §7. A dry run leaves the working
+  tree exactly as it found it — say so at the end of the report.
+- `vp run verify:all` is **not** run: nothing changed, so it proves nothing. The
+  report says the batch is unverified rather than implying it is green.
+
+Everything else — the scope rules, the tag-to-package guard, the impact-not-digit
+rule, the Nuxt-group rule — applies unchanged. A dry run that skips reading
+release notes is worthless; the whole point is the reasoning, not the list.
+
 ## 0. Preflight — stop conditions
 
 Run these first. If any stop condition holds, do the stated thing and end the
@@ -29,9 +50,12 @@ gh pr list --state open --json number,title,headRefName \
 
 - **A dependency PR is already open** → do not rebase, supersede or close it.
   Write the weekly note (§7) saying which PR is open, say so in the final
-  message, stop. What happens to that PR is the maintainer's call.
+  message, stop. What happens to that PR is the maintainer's call. In a dry run
+  this is not a stop: name the open PR at the top of the report, note that a
+  real run would stop here, and carry on scanning — the report costs nothing.
 - **Working tree dirty, or HEAD is not an ancestor of `origin/master`** → stop
-  and say so. This run only ever starts from a clean, current `master`.
+  and say so. This run only ever starts from a clean, current `master`. A dry
+  run continues, flagging that the scan reflects the dirty tree.
 - **`node_modules` missing** → the `session-bootstrap.sh` SessionStart hook
   installs. Do not hand-run an install that would rewrite the lockfile before
   the scan.
@@ -61,7 +85,9 @@ The blob holds one row per outdated direct dependency per workspace, with
   what you learned reading release notes and report it as satisfied or not.
   **Never remove a workaround**, even when its condition is satisfied.
 - `counts.inScope == 0` → nothing to do. Write the weekly note (§7), say so,
-  stop. Silence is never the answer; the note is the trace.
+  stop. Silence is never the answer; the note is the trace. A dry run writes no
+  note: it prints the §3a report with empty "Would bump" / "Would defer"
+  sections and the out-of-scope rows still listed.
 
 ## 2. Read release notes — only where they earn it
 
@@ -107,6 +133,60 @@ Two rules:
 
 Prefer the batch PR when both are possible: a migration PR costs a week of the
 one-PR-at-a-time budget.
+
+## 3a. Dry-run report — and then stop
+
+A dry run ends here. Print the report to the user as chat output (no file, no
+commit); if it is long, that is fine — nothing else will carry this information.
+
+```markdown
+# Dependency update — dry run ({week}, {today})
+
+Read-only: no branch, no install, no lockfile change, no commit, no PR.
+Working tree untouched. Nothing was verified — `vp run verify:all` was not run.
+
+## Available updates ({counts.total})
+
+| package | workspace | declared | current | latest | bump | in scope |
+
+## Would bump ({n})
+
+<one row per package: name, current → latest, bump, and the one-line reason it
+is safe. For each major in the batch: the breaking-change items, the search run
+for each, and the result — the same evidence a real run would put in the PR.>
+
+## Would not bump
+
+<one row per package, each with its reason, grouped:
+ - out of scope (`outOfScopeReason` verbatim: exact pin, catalog alias, npm
+   alias, override workaround)
+ - major needing code changes — queued, or picked as this run's migration
+ - held for another reason (Nuxt group incomplete, release notes unread because
+   the source was unreachable, known-bad release, etc.)>
+
+## Would do
+
+<the concrete plan, in order:
+ - the exact `pnpm update --latest ...` commands, verbatim, as §4 would run them
+ - shape of the run: batch PR, or migration PR for <package> with the batch
+   queued behind it
+ - the code changes expected in commit 2, per API — or "none expected"
+ - the codemod/migration CLI to run, if the notes name one
+ - branch name and PR title>
+
+## DELETE-WHEN status
+
+<each condition from pnpm-workspace.yaml: satisfied / not satisfied, and why.
+Report only — a dry run removes nothing, and neither would a real run.>
+
+## Would not be verified
+
+<what even a real run could not check: runtime behaviour against the live CMS,
+visual rendering, anything only production exercises.>
+```
+
+Close with the one thing worth the user's attention and offer the real run.
+Do not proceed to §4 unless the user asks for it in a new message.
 
 ## 4. Branch and apply
 

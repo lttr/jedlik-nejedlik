@@ -42,8 +42,29 @@ Built: `.claude/skills/dependency-update/SKILL.md` (all judgement) and
 `DELETE-WHEN` conditions in `pnpm-workspace.yaml` are picked up with their
 `ISSUE:` lines.
 
+## Added beyond the spec: a dry-run mode
+
+The spec's validation plan is "run it and read the PR", which on the first
+invocation means finding out what the skill decides by letting it act. A
+read-only mode makes that first look cheap: `/dependency-update dry-run` runs
+§0–§3 — scan, release notes, impact assessment — and prints the §3a report
+instead of branching. It states the exact `pnpm update` commands it would run,
+the evidence behind every major it would batch, and what it would defer.
+
+Three rules keep it honest rather than merely quiet:
+
+- Read-only is enumerated, not implied. The mode section lists what is allowed
+  (fetch, `gh pr list`, the scan, release notes) and what is forbidden (branch,
+  install, edit, commit, push, `gh pr create`, even the weekly note).
+- `verify:all` is deliberately **not** run: nothing changed, so a green tick
+  would prove nothing. The report says the batch is unverified.
+- The preflight stop conditions soften rather than vanish — an open dependency
+  PR or a dirty tree is reported at the top of the report and the scan
+  continues, because a report costs nothing.
+
 ## Not done
 
 Validation-by-practice from the spec's Testing Decisions: nobody has run
 `/dependency-update` end to end yet, so the first real invocation is still the
-test. `vp run verify:all` is green on this change itself.
+test. The dry run is the intended first step. `vp run verify:all` is green on
+this change itself.
