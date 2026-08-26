@@ -1,46 +1,40 @@
 ---
 name: dependency-update
-description: Weekly dependency update run — read what pnpm says is outdated, upgrade what is safe, apply the code changes the new versions need, verify, and open one reviewable PR. Supports a read-only dry run that reports what it would do. Use when the user says "dependency update", "/dependency-update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
+description: Weekly dependency update run. Reads what pnpm says is outdated, upgrades what is safe, applies the code changes the new versions need, verifies, and opens one reviewable PR. Supports a read-only dry run that reports what it would do. Use when the user says "dependency update", "/dependency-update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
+disable-model-invocation: true
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch
 ---
 
 # Dependency update
 
-One run produces at most one pull request. Everything here is judgement; the
-only deterministic part lives in `scripts/dep-scan.mjs`.
+One run produces at most one pull request. Apart from the scan script
+(`scripts/dep-scan.mjs`), every step here is a judgement call, not a mechanical
+procedure.
 
-Background: `docs/adr/0003-pnpm-native-dependency-updates.md` (why no Renovate),
-`.aiwork/2026-08-25_dep-update-process/spec.md` (why each rule exists).
-
-Merging this PR deploys to production. Nothing here is automerged, so the value
-of the run is a PR a tired human can review honestly in a few minutes — not the
+Merging the PR deploys to production, and nothing is automerged. The goal is
+therefore a PR a tired human can review honestly in a few minutes, not the
 largest batch that passes CI.
 
 ## Modes
 
 Default is the **full run**: it branches, bumps, verifies and opens a PR.
 
-**Dry run** — triggered by `/dependency-update dry-run`, or any phrasing like
-"dry run", "just report", "what would you update", "no changes". It runs §0–§3
-only and then prints the report in §3a. It is strictly read-only:
+A **dry run** (triggered by `/dependency-update dry-run`, or any phrasing like
+"dry run", "just report", "what would you update") goes through §0–§3, prints
+the report in §3a, and stops. It is strictly read-only: no branch, no install
+or update that could rewrite `package.json` or `pnpm-lock.yaml`, no source
+edit, no commit, no push, no PR, and no weekly note. The stop conditions in §0
+do not stop a dry run; mention them in the report instead. Skip
+`vp run verify:all` (nothing changed, so it proves nothing) and state in the
+report that the updates are unverified. All other rules below apply unchanged.
+In particular, still read the release notes: the value of a dry run is the
+reasoning about each update, not the list of versions.
 
-- Allowed: `git fetch`, `gh pr list`, the scan script, `gh api` release notes,
-  WebFetch, and read-only searches of our source (the evidence work in §3).
-- Forbidden: `git switch -c`, any `pnpm update`/`pnpm dedupe`/install that could
-  rewrite `package.json` or `pnpm-lock.yaml`, any source edit, any commit, any
-  push, `gh pr create`, and the weekly note in §7. A dry run leaves the working
-  tree exactly as it found it — say so at the end of the report.
-- `vp run verify:all` is **not** run: nothing changed, so it proves nothing. The
-  report says the batch is unverified rather than implying it is green.
-
-Everything else — the scope rules, the tag-to-package guard, the impact-not-digit
-rule, the Nuxt-group rule — applies unchanged. A dry run that skips reading
-release notes is worthless; the whole point is the reasoning, not the list.
-
-## 0. Preflight — stop conditions
+## 0. Preflight: stop conditions
 
 Run these first. If any stop condition holds, do the stated thing and end the
-run; do not "work around" it.
+run; do not "work around" it. In a dry run, name the condition at the top of the
+report and carry on scanning.
 
 ```bash
 git fetch origin --quiet
@@ -50,12 +44,9 @@ gh pr list --state open --json number,title,headRefName \
 
 - **A dependency PR is already open** → do not rebase, supersede or close it.
   Write the weekly note (§7) saying which PR is open, say so in the final
-  message, stop. What happens to that PR is the maintainer's call. In a dry run
-  this is not a stop: name the open PR at the top of the report, note that a
-  real run would stop here, and carry on scanning — the report costs nothing.
+  message, stop. What happens to that PR is the maintainer's call.
 - **Working tree dirty, or HEAD is not an ancestor of `origin/master`** → stop
-  and say so. This run only ever starts from a clean, current `master`. A dry
-  run continues, flagging that the scan reflects the dirty tree.
+  and say so. This run only ever starts from a clean, current `master`.
 - **`node_modules` missing** → the `session-bootstrap.sh` SessionStart hook
   installs. Do not hand-run an install that would rewrite the lockfile before
   the scan.
@@ -74,7 +65,7 @@ node .claude/skills/dependency-update/scripts/dep-scan.mjs > /tmp/dep-scan.json
 jq '.counts, .deleteWhen' /tmp/dep-scan.json
 ```
 
-The blob holds one row per outdated direct dependency per workspace, with
+The JSON output holds one row per outdated direct dependency per workspace, with
 `declared` (the range in `package.json`), `bump` (`patch`/`minor`/`major`,
 0.x-aware), `inScope`, `outOfScopeReason` and `repo`.
 
@@ -85,13 +76,12 @@ The blob holds one row per outdated direct dependency per workspace, with
   what you learned reading release notes and report it as satisfied or not.
   **Never remove a workaround**, even when its condition is satisfied.
 - `counts.inScope == 0` → nothing to do. Write the weekly note (§7), say so,
-  stop. Silence is never the answer; the note is the trace. A dry run writes no
-  note: it prints the §3a report with empty "Would bump" / "Would defer"
-  sections and the out-of-scope rows still listed.
+  stop. Even a no-op run leaves the note as its trace. A dry run still prints
+  the §3a report, with the out-of-scope rows listed.
 
-## 2. Read release notes — only where they earn it
+## 2. Read release notes, but only where it pays off
 
-Fetch per package, lazily. Read notes for: **every major**, every package in the
+Fetch notes per package, only when needed. Read notes for: **every major**, every package in the
 Nuxt group, and minors of consequential packages (anything that touches build,
 lint, types, runtime rendering or the Directus SDK). Patch bumps and icon data
 (`@iconify-json/*`) need no reading.
@@ -112,17 +102,17 @@ Two rules:
 - **Thin-changelog rule.** When notes are missing or thin for a significant
   jump, fetch the actual changelog (`CHANGELOG.md` on the default branch, or the
   project's migration guide) with WebFetch rather than reasoning from the
-  version number. Rows with `repo: null` have no GitHub source — use
+  version number. Rows with `repo: null` have no GitHub source: use
   `https://www.npmjs.com/package/<name>?activeTab=versions`.
 
 ## 3. Decide the shape of the run
 
-**Impact decides, not the semver digit.**
+**What matters is the impact on this codebase, not the semver digit.**
 
-- A **major whose breaking changes provably do not touch this codebase** rides
-  in the batch. "Provably" means: you read the breaking-change list, and for
+- A **major whose breaking changes provably do not touch this codebase** goes
+  into the batch. "Provably" means: you read the breaking-change list, and for
   each item you searched our source and found nothing. Record the evidence
-  (the item, the search, the result) — it goes in the PR body.
+  (the item, the search, the result); it goes in the PR body.
 - A **major that demands real code changes** gets its own PR, at most one per
   run. Further such majors are listed as queued in the batch PR and left alone.
 - The **Nuxt group is indivisible**: `nuxt`, `@nuxt/*`, `@nuxtjs/*`, `vue`,
@@ -131,59 +121,31 @@ Two rules:
 - When a package ships a **codemod or migration CLI**, find it in the release
   notes and run it instead of re-deriving the changes by hand.
 
-Prefer the batch PR when both are possible: a migration PR costs a week of the
-one-PR-at-a-time budget.
+When an update could go either way, prefer the batch PR: only one PR ships per
+week, and a migration PR uses up that slot.
 
-## 3a. Dry-run report — and then stop
+## 3a. Dry-run report, and then stop
 
 A dry run ends here. Print the report to the user as chat output (no file, no
-commit); if it is long, that is fine — nothing else will carry this information.
+commit). A long report is fine: nothing else records this information. It
+covers:
 
-```markdown
-# Dependency update — dry run ({week}, {today})
-
-Read-only: no branch, no install, no lockfile change, no commit, no PR.
-Working tree untouched. Nothing was verified — `vp run verify:all` was not run.
-
-## Available updates ({counts.total})
-
-| package | workspace | declared | current | latest | bump | in scope |
-
-## Would bump ({n})
-
-<one row per package: name, current → latest, bump, and the one-line reason it
-is safe. For each major in the batch: the breaking-change items, the search run
-for each, and the result — the same evidence a real run would put in the PR.>
-
-## Would not bump
-
-<one row per package, each with its reason, grouped:
- - out of scope (`outOfScopeReason` verbatim: exact pin, catalog alias, npm
-   alias, override workaround)
- - major needing code changes — queued, or picked as this run's migration
- - held for another reason (Nuxt group incomplete, release notes unread because
-   the source was unreachable, known-bad release, etc.)>
-
-## Would do
-
-<the concrete plan, in order:
- - the exact `pnpm update --latest ...` commands, verbatim, as §4 would run them
- - shape of the run: batch PR, or migration PR for <package> with the batch
-   queued behind it
- - the code changes expected in commit 2, per API — or "none expected"
- - the codemod/migration CLI to run, if the notes name one
- - branch name and PR title>
-
-## DELETE-WHEN status
-
-<each condition from pnpm-workspace.yaml: satisfied / not satisfied, and why.
-Report only — a dry run removes nothing, and neither would a real run.>
-
-## Would not be verified
-
-<what even a real run could not check: runtime behaviour against the live CMS,
-visual rendering, anything only production exercises.>
-```
+- A header stating the run was read-only and nothing was verified.
+- The scan table: every available update with workspace, declared range,
+  current, latest, bump and scope.
+- **Would bump**: each package with the one-line reason it is safe. For each
+  major in the batch, the same breaking-change evidence a real run would put in
+  the PR (the item, the search, the result).
+- **Would not bump**: each package with its reason, one of: out of scope
+  (`outOfScopeReason` verbatim), a major queued or picked as this run's
+  migration, or held for another reason.
+- **The plan**: the exact `pnpm update` commands §4 would run, the shape of the
+  run (batch or migration), expected code changes per API or "none expected",
+  any codemod to run, branch name and PR title.
+- **DELETE-WHEN status**: each condition satisfied or not, and why. Report
+  only.
+- **Would not be verified**: what even a real run could not check (runtime
+  behaviour against the live CMS, visual rendering).
 
 Close with the one thing worth the user's attention and offer the real run.
 Do not proceed to §4 unless the user asks for it in a new message.
@@ -197,11 +159,11 @@ pnpm --filter web update --latest <pkg> ... # web workspace packages
 pnpm dedupe                                  # when the lockfile gained duplicates
 ```
 
-Always name the packages explicitly — a bare `pnpm update --latest` would walk
-into the out-of-scope rows. Record the exact commands you ran; commit 1's body
+Always name the packages explicitly: a bare `pnpm update --latest` would also
+bump the out-of-scope rows. Record the exact commands you ran; commit 1's body
 must quote them verbatim.
 
-Then **commit 1 — bumps only**:
+Then **commit 1 (bumps only)**:
 
 ```
 deps: batch update $WEEK
@@ -220,7 +182,7 @@ is denied in `.claude/settings.json` and stays denied.
 ## 5. Repair the code
 
 Only now touch source. Codemod output and hand repairs both land here, and they
-become **commit 2** — the only commit the maintainer has to read:
+become **commit 2**, the only commit the maintainer has to read:
 
 ```
 deps: adapt code to <package> <version>
@@ -231,9 +193,10 @@ deps: adapt code to <package> <version>
 Skip commit 2 entirely when no code changes were needed.
 
 **Nuxt auto-imports have no import statement.** "Find all usages" means
-`rg '\bmyComposable\b' web/app web/server` or LSP references — never an import
-graph, never "no import found, so it is unused". This is a confident-wrong
-failure mode; assume the symbol is used until ripgrep says otherwise.
+`rg '\bmyComposable\b' web/app web/server` or LSP references. Never an import
+graph, and never the conclusion "no import found, so it is unused". That
+conclusion feels certain and is wrong; assume the symbol is used until ripgrep
+says otherwise.
 
 ## 6. Verify, and the repair loop
 
@@ -248,8 +211,8 @@ On failure in a **batch** run:
 
 1. Identify the offending package (the failure text usually names it; otherwise
    bisect by dropping the most suspicious bump).
-2. Drop it — revert its `package.json` entry and re-run the install so the
-   lockfile matches — and re-verify.
+2. Drop it (revert its `package.json` entry and re-run the install so the
+   lockfile matches) and re-verify.
 3. Bounds: **at most 2 drops and 3 verify cycles per problem.** Hitting either
    bound means stop and hand over: open the PR with the failure quoted at the
    top of the body. Do not keep trying.
@@ -257,12 +220,12 @@ On failure in a **batch** run:
 A **migration** run has nothing to bisect: on failure, hand over directly with
 the failure at the top.
 
-Every dropped package is reported as deferred in the PR body — a problem package
+Report every dropped package as deferred in the PR body: a problem package
 must be visible, never silently skipped.
 
-If commit 1 already exists when a drop happens, amend nothing: add the revert to
-commit 1 by rewriting it only if it has not been pushed, otherwise let the drop
-be its own commit and say so in the body.
+If commit 1 already exists when a drop happens, rewrite it to include the
+revert only while it is unpushed. Once pushed, let the drop be its own commit
+and say so in the body.
 
 **Forbidden, without exception:**
 
@@ -280,8 +243,8 @@ be its own commit and say so in the body.
 `.aiwork/{TODAY}_dep-update/notes.md`, committed as part of commit 1 (or on its
 own when the run stops early). Keep it short: what the scan found, what was
 bumped, what was deferred and why, DELETE-WHEN status, and the outcome. A run
-that did nothing still writes this file — it is the trace that makes silence
-readable.
+that did nothing still writes this file, so that next week it is clear the run
+happened and found nothing, rather than not happening at all.
 
 ## 8. Open the PR
 
@@ -328,20 +291,20 @@ against the live CMS, visual rendering, anything only production exercises>
 
 The **Not verified** list is mandatory and must be honest. A PR that claims
 everything is fine is a failure of this skill, not a good week. If the list is
-hard to write, that is the signal the batch was too large.
+hard to write, the batch was probably too large.
 
 Finish by telling the user the PR URL and the one thing worth their attention.
 
 ## 9. Running as the weekly cloud routine
 
-The judgement above is the whole process; the trigger is interchangeable. The
-Claude Code cloud routine runs weekly on Monday with a one-line prompt
+The process above is the same however it is triggered. The Claude Code cloud
+routine runs it weekly on Monday with a one-line prompt
 ("Run the `/dependency-update` skill.") in a dedicated environment:
 
 - Environment variables: `NUXT_PUBLIC_DIRECTUS_URL` only. Cloud environments
   have no secrets store and their values are readable by anyone using the
   environment, so no tokens go in. `verify:build` must therefore succeed without
-  `SENTRY_AUTH_TOKEN` (sourcemap upload skipped) — if it does not, that is a bug
+  `SENTRY_AUTH_TOKEN` (sourcemap upload skipped). If it does not, that is a bug
   in the build, never a reason to add the credential.
 - Network access: Custom = default allowlist plus `obsah-jedlika.lttr.cz`. The
   scan also needs `registry.npmjs.org` and `api.github.com`; add them to the
@@ -351,5 +314,5 @@ Claude Code cloud routine runs weekly on Monday with a one-line prompt
 - Setup script installs Node 24.15.0, pins pnpm 11.2.2 via corepack and runs
   `pnpm fetch`. The install itself is left to `session-bootstrap.sh` so the
   lockfile this run is about to change stays authoritative.
-- Pausing the process means disabling the routine's schedule — nothing in the
+- Pausing the process means disabling the routine's schedule: nothing in the
   repo needs changing, and the skill stays invocable by hand.
