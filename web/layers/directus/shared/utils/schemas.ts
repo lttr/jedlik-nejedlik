@@ -38,14 +38,12 @@ export const BiographyExpertSchema = z
     url: z.string().nullable(),
     photo: ImageSchema.nullable(),
   })
-  .transform(
-    (o): BiographyExpert => ({
-      name: o.name,
-      description: o.description ?? undefined,
-      url: o.url ?? undefined,
-      photo: o.photo ?? undefined,
-    }),
-  )
+  .transform((o): BiographyExpert => ({
+    name: o.name,
+    description: o.description ?? undefined,
+    url: o.url ?? undefined,
+    photo: o.photo ?? undefined,
+  }))
 
 // --- Kurzy (course → section → lesson) ------------------------------------
 
@@ -70,17 +68,15 @@ export const CourseSchema = z
     price_czk: z.number().nullable(),
     sort: z.number().nullable(),
   })
-  .transform(
-    (o): Course => ({
-      id: o.id,
-      title: o.title,
-      slug: o.slug,
-      description: o.description ?? undefined,
-      cover: o.cover ?? undefined,
-      price_czk: o.price_czk ?? undefined,
-      sort: o.sort ?? undefined,
-    }),
-  )
+  .transform((o): Course => ({
+    id: o.id,
+    title: o.title,
+    slug: o.slug,
+    description: o.description ?? undefined,
+    cover: o.cover ?? undefined,
+    price_czk: o.price_czk ?? undefined,
+    sort: o.sort ?? undefined,
+  }))
 
 // Consumer contract: Section outline. `course` is the parent's id.
 export interface Section {
@@ -97,14 +93,12 @@ export const SectionSchema = z
     title: z.string(),
     sort: z.number().nullable(),
   })
-  .transform(
-    (o): Section => ({
-      id: o.id,
-      course: o.course,
-      title: o.title,
-      sort: o.sort ?? undefined,
-    }),
-  )
+  .transform((o): Section => ({
+    id: o.id,
+    course: o.course,
+    title: o.title,
+    sort: o.sort ?? undefined,
+  }))
 
 // Consumer contract: Lesson outline. `section` is the parent's id. Paid
 // fields (body, video_uid, materials) are not part of the outline — the
@@ -125,15 +119,13 @@ export const LessonSchema = z
     type: z.enum(["video", "text"]),
     sort: z.number().nullable(),
   })
-  .transform(
-    (o): Lesson => ({
-      id: o.id,
-      section: o.section,
-      title: o.title,
-      type: o.type,
-      sort: o.sort ?? undefined,
-    }),
-  )
+  .transform((o): Lesson => ({
+    id: o.id,
+    section: o.section,
+    title: o.title,
+    type: o.type,
+    sort: o.sort ?? undefined,
+  }))
 
 // --- Kurzy transactional collections (order, consents, entitlement) --------
 
@@ -159,17 +151,15 @@ export const OrderSchema = z
     gopay_payment_id: z.string().nullable(),
     fakturoid_invoice_id: z.string().nullable(),
   })
-  .transform(
-    (o): Order => ({
-      id: o.id,
-      student: o.student,
-      course: o.course,
-      status: o.status,
-      price_czk: o.price_czk,
-      gopay_payment_id: o.gopay_payment_id ?? undefined,
-      fakturoid_invoice_id: o.fakturoid_invoice_id ?? undefined,
-    }),
-  )
+  .transform((o): Order => ({
+    id: o.id,
+    student: o.student,
+    course: o.course,
+    status: o.status,
+    price_czk: o.price_czk,
+    gopay_payment_id: o.gopay_payment_id ?? undefined,
+    fakturoid_invoice_id: o.fakturoid_invoice_id ?? undefined,
+  }))
 
 // Consumer contract: one consent record of an Order. `order` is the parent's
 // id; `granted_at` is an ISO timestamp.
@@ -209,12 +199,10 @@ export const EntitlementSchema = z
     order: z.number().nullable(),
     granted_at: z.string().nullable(),
   })
-  .transform(
-    (o): Entitlement => ({
-      id: o.id,
-      student: o.student,
-      course: o.course,
-      order: o.order ?? undefined,
-      granted_at: o.granted_at ?? undefined,
-    }),
-  )
+  .transform((o): Entitlement => ({
+    id: o.id,
+    student: o.student,
+    course: o.course,
+    order: o.order ?? undefined,
+    granted_at: o.granted_at ?? undefined,
+  }))
