@@ -72,3 +72,29 @@ Forcing one core collapses the two copies. Nothing here executes
 vite-plus-test, so pinning its core forward costs nothing. DELETE WHEN
 vite-plus-test catches up with the CLI — the same trigger as the
 `vitest-upstream` alias.
+
+## Ticket 03 — what the new toolchain actually needed
+
+Nothing, beyond one formatting file.
+
+- oxfmt 0.64 reformatted exactly one file; oxlint 1.79 reported **no** warnings,
+  lint errors or type errors across 98 files, and **no unknown-rule warnings** —
+  so none of the ~70 explicit rules in `vite.config.ts` was renamed upstream.
+- `vp run verify:all` green first try, `verify:build` included.
+- unhead v3's stricter `useHead` typing broke none of the eight
+  `useHead` / `useSeoMeta` call sites.
+- The rendered `<head>` is correct and per-request isolated: four routes each
+  render their own canonical, `og:url` and title.
+
+### Dev server binds IPv6 only
+
+`pnpm dev:agent` listens on `[::1]:3000`. `curl 127.0.0.1:3000` fails with
+exit 7; use `localhost:3000`. Worth knowing before assuming the server is dead.
+
+### unhead v3 deprecation warnings are @nuxtjs/seo's, not ours
+
+Dev console shows `[unhead] twitter:image / twitter:image:type /
+twitter:image:width / twitter:image:height / twitter:card is deprecated. Use
+Open Graph metadata instead.` and `[unhead] promise ignored: tags:resolve`.
+These come from `@nuxtjs/seo`'s site-config defaults. Console-only, no rendering
+effect. Do not go looking for them in our call sites.

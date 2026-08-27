@@ -104,3 +104,69 @@ bump).
 With that in place `nuxi typecheck` is clean — including the eight `useHead` /
 `useSeoMeta` call sites the spec expected unhead v3 to break (gotcha 9). No
 source change was needed for them.
+
+## Ticket 03 — get the new toolchain green
+
+Done, and cheaper than the spec budgeted for.
+
+### The code-repair commit does not exist
+
+The spec planned two commits here: a mechanical `vp check --fix` pass, then a
+code-repair commit for unhead v3's stricter `useHead` typing and whatever
+`verify:build` turned up. Only the first was needed.
+
+- `vp check --fix` touched exactly one file, `web/layers/directus/shared/utils/schemas.ts`
+  — oxfmt 0.64 now hugs a call whose only argument is an arrow function.
+  Committed on its own as planned.
+- `vp check` then reported _"Found no warnings, lint errors, or type errors in
+  98 files"_. No unknown-rule warnings, so none of our ~70 explicit rules was
+  renamed upstream. Nothing to update in the lint config.
+- `vp run verify:all` was green on the first attempt, `verify:build` included.
+  The Vite 8 mismatch the spec flagged as a build-time failure (gotcha 10) never
+  materialised: `@nuxt/vite-builder` 4.5.2 gets vite-plus-core 0.3.0 = Vite 8.2.2.
+- The eight `useHead` / `useSeoMeta` call sites needed no change. `nuxi typecheck`
+  is clean — once TypeScript was pinned to 5.9 in ticket 02, which was the only
+  typing casualty of the whole upgrade.
+
+So there is no third commit. Writing an empty one to match the spec's shape
+would be worse than saying why it is missing.
+
+### Browser pass
+
+`pnpm dev:agent`, driven with agent-browser. Note the dev server binds `[::1]`
+only — `curl 127.0.0.1:3000` fails, `localhost:3000` works.
+
+- `/webinar-deti-pitny-rezim` — `useSeoMeta`, a Directus image and the webinar
+  signup form on one page. SSRs 200, hydrates, no console errors.
+- Form is live: typing works, and submitting with an invalid e-mail is blocked
+  by the required/`type=email` validation. Deliberately not submitted for real —
+  that would create an actual newsletter record against the live service.
+- `/podcast` and `/o-nas` — Directus assets from `obsah-jedlika.lttr.cz` decode
+  at full size (300×300, 800×450, 800×451), including lazy ones after scroll.
+  Screenshot confirms fonts, nav, auto-imported SVGs and layout intact.
+
+### Rendered `<head>` — the actual unhead risk
+
+Inspected on `/webinar-deti-pitny-rezim`, and cross-checked across four routes.
+Correct and, crucially, **not leaking between requests**: `/`, `/podcast`,
+`/o-nas` and `/webinar-generace-alfa` each render their own canonical, `og:url`
+and title. That is the failure mode the unhead-2-and-3-side-by-side hazard would
+have produced, and it is absent.
+
+Present and correct: `<title>`, `description`, `canonical`, `og:type`,
+`og:title`, `og:description`, `og:url`, `og:site_name`, `twitter:card`, the
+icon set, and the dev-time `robots: noindex, nofollow` carrying
+`data-production-content="index, follow, …"`.
+
+### Two observations, neither a regression
+
+- unhead v3 logs dev-only deprecation warnings for `twitter:image*` and
+  `twitter:card` ("use Open Graph metadata instead"), plus one
+  `[unhead] promise ignored: tags:resolve`. These come from `@nuxtjs/seo`'s own
+  site-config defaults, not from our call sites, and are console warnings only.
+  Left alone: chasing them means patching a dependency's output.
+- `/webinar-generace-alfa` renders a doubled suffix,
+  "Webinář: Generace alfa u stolu | Jedlík-nejedlík | Jedlík-nejedlík". Its
+  `useSeoMeta` hardcodes the suffix that the site template already appends.
+  Pre-existing page authoring (unchanged since commit 6bcb4fd), not caused by
+  this upgrade, and out of scope here.
