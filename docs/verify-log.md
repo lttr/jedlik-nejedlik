@@ -22,6 +22,13 @@ run, how much of it was cache hits, and which runs were redundant.
 The Bash hook pairs `PreToolUse` (start stamp, keyed by `tool_use_id`) with
 `PostToolUse` (log the record), so durations are real wall time.
 
+The post-edit hook logs only writes it actually linted: a file outside
+`CLAUDE_PROJECT_DIR` is skipped (wrong repo, wrong lint config, wrong log),
+and so is one `vp lint` does not handle at all — `.md`, `.json`, `.yaml`,
+`.sh`, which it reports as `No files found to lint` with exit 1. Both used to
+land in the log as failures; a `post-edit-hook` failure now means lint
+actually rejected the file.
+
 A Bash command that **exits non-zero fires `PreToolUse` but no `PostToolUse`**
 (verified 2026-08-27), so failures would otherwise be the one thing missing
 from the log. The Stop hook therefore runs `verify-log-bash.sh sweep` at end
