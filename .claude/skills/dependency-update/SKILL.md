@@ -42,9 +42,6 @@ gh pr list --state open --json number,title,headRefName \
   message, stop. What happens to that PR is the maintainer's call.
 - **Working tree dirty, or HEAD is not an ancestor of `origin/master`** → stop
   and say so. This run only ever starts from a clean, current `master`.
-- **`node_modules` missing** → the `session-bootstrap.sh` SessionStart hook
-  installs. Do not hand-run an install that would rewrite the lockfile before
-  the scan.
 
 Set the week identifier once and reuse it:
 
