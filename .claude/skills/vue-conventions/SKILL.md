@@ -29,6 +29,11 @@ Apply these whenever creating or modifying `.vue` files or Nuxt composables/plug
 
 - ALWAYS use `v-for="item of items"`, never `v-for="item in items"`.
 
+## Repo specifics
+
+- SVGs in `web/app/assets/svgs/` auto-import as Vue components (via `nuxt-svgo`) — don't wrap them in an icon component.
+- oxlint does not type-check `.vue` files yet — only eslint and `nuxi typecheck` cover SFCs.
+
 ## Composables
 
 - PREFER `toValue()` to accept refs, getters, or plain values as input in shared composables.

@@ -4,22 +4,17 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 
 ## Verification
 
-- Never run `verify:check` / `verify:slowlint` / `verify:typecheck` / `verify:test` / `verify:build` (or their underlying tools) standalone. `vp run verify:all` is the only verification command — caching makes repeats free.
-- Never pipe a check through `head` / `tail` / `grep`. Run it bare — piping swallows the exit code the harness would report, forcing a full re-run just to recover it.
-- Kill dev servers by port (stored PID or `fuser -k <port>/tcp`), never by pattern — `pkill -f "nuxi dev"` matches your own shell command line.
-- If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes — otherwise the finding lives only in the transcript and is lost to future sessions.
-- Every verification command is logged to `$TMPDIR/verify-log-jedlik-nejedlik.jsonl` (outside the repo) by the Bash/post-edit/Stop hooks; read it with `scripts/verify-log-report.sh` (`summary`/`timeline`/`tasks`/`redundant`) and add milestones with `scripts/verify-log.sh event`. See `docs/verify-log.md`.
+- `vp run verify:all` is the gate: only a green run of it counts as verified, and nothing ships on a subset (it covers `check`, `slowlint`, `typecheck`, `fallow`, `test`, `build` — caching makes repeats free). Running an underlying tool directly is fine for debugging or `--fix`; it just never counts as verification.
+- Never pipe a check through `head` / `tail` / `grep`. Run it bare — piping swallows the exit code the harness would report.
+- If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes.
+- Verification commands are auto-logged by hooks to a scratch JSONL outside the repo; read it with `scripts/verify-log-report.sh`. See `docs/verify-log.md`.
 - Changes touching `directus/config/**` or `web/server/**` need a fresh `vp run directus:probe` before commit (pre-commit gate checks the stamp).
 
 ## Non-obvious
 
-- SVGs in `web/app/assets/svgs/` auto-import as Vue components (via `nuxt-svgo`) — don't wrap in icon component.
-- Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`; custom host `plausible.lttr.cz`.
-- Toolchain is Vite+ (`vp`). `vp build` does NOT work — runs raw Vite which has no `index.html` entry. Use `vp run build` (= `pnpm -r run build` → `nuxi build`).
-- `rolldown` is an explicit `web/` devDependency because `nuxt` peers `rolldown: ~1.2.1` and does NOT mark it optional (`@nuxt/vite-builder` peers `^1.0.0` too). It is required with or without the vite-plus alias, so it does not come out when that override does. The pin is exact and tracks whatever the catalog's `vite-plus` release bundles (0.3.0 → 1.2.5) — never widen it to a range; rolldown ships a native binary and a skew against vite-plus's own copy breaks `vp` outright.
-- Pre-commit hook (`vp staged`) auto-formats and `--fix`es staged files, enforcing oxlint (stricter than eslint). Don't pre-run a linter by name to "verify" — commit and fix what the hook reports. After `git commit`, re-Read any file you still hold in context — on-disk contents may have changed.
-- `session-bootstrap.sh` SessionStart hook runs `pnpm install` when `node_modules` is missing. Env vars are always supplied by the environment (web env config; local `web/.env`), never by the hook or by a generated file. `NUXT_PUBLIC_DIRECTUS_URL` missing → dev 500s; ask the user for the value, don't invent or scaffold one.
-- To drive the dev server with a browser use `pnpm dev:agent` (plain `nuxi dev`, no `vp run` wrapper). The old `NUXT_NO_WS=1` HMR-socket workaround is gone: vite-plus 0.2.5 double-upgraded the socket and crashed on browser connect, but 0.3.0 does not — verified 2026-08-27 by connecting a browser to `pnpm dev` and confirming a live HMR update applied without the server dying. See the `run-jedlik-nejedlik` skill.
-- oxlint does not type-check `.vue` files yet — only eslint and `nuxi typecheck` cover SFCs.
+- Toolchain is Vite+ (`vp`). Build with `vp run build`, never `vp build` (raw Vite, no `index.html` entry). Running/driving the dev server: see the `run-jedlik-nejedlik` skill.
+- The `rolldown` pin in `web/` is exact and load-bearing — never widen or remove it (skew against vite-plus's bundled copy breaks `vp`). Details in the `dependency-update` skill.
+- Pre-commit hook (`vp staged`) auto-formats and `--fix`es staged files, enforcing oxlint (stricter than eslint). Don't pre-run a linter by name to "verify" — commit and fix what the hook reports. After `git commit`, re-Read any file you still hold in context.
+- Env vars always come from the environment (web env config; local `web/.env`), never from a hook or generated file. `NUXT_PUBLIC_DIRECTUS_URL` missing → dev 500s; ask the user for the value, don't invent one.
 - Never grep barrel `.d.ts` files in `node_modules`; read the specific declaration.
-- Answer Directus permission questions from the committed dump (`directus/config/collections/permissions.json`), not the live API — same data, and the API route is often blocked. Its records are keyed by `_syncId`, which is NOT the live id; look ids up on the instance before any `PATCH`. See `docs/directus.md`.
+- Answer Directus permission questions from the committed dump (`directus/config/collections/permissions.json`), not the live API; its records are keyed by `_syncId`, not the live id. See `docs/directus.md`.

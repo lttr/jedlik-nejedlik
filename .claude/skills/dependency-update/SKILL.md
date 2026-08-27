@@ -64,6 +64,13 @@ The JSON output holds one row per outdated direct dependency per workspace, with
 - `inScope: false` rows are **report only**: exact pins, `catalog:` aliases,
   `npm:` aliases and packages covered by a `pnpm-workspace.yaml` override. Never
   bump them. They go in the PR body's "Reported, not touched" section.
+  - The `rolldown` pin in `web/` is the canonical example: `nuxt` peers
+    `rolldown: ~1.2.1` without marking it optional (`@nuxt/vite-builder` peers
+    `^1.0.0` too), so it stays with or without the vite-plus alias. The pin is
+    exact and tracks whatever the catalog's `vite-plus` release bundles
+    (0.3.0 → 1.2.5) — never widen it to a range; rolldown ships a native binary
+    and a skew against vite-plus's own copy breaks `vp` outright. Move it only
+    in lock-step with a `vite-plus` bump.
 - `deleteWhen` lists the documented workarounds. Evaluate each condition against
   what you learned reading release notes and report it as satisfied or not.
   **Never remove a workaround**, even when its condition is satisfied.

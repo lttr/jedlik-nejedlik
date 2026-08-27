@@ -29,6 +29,11 @@ agent-browser screenshot /tmp/jedlik-home.png   # absolute paths
 
 Stop: TaskStop the monitor, then
 `kill "$(ss -ltnp | grep ':3000' | grep -oP 'pid=\K[0-9]+' | head -1)"`.
+Always kill by port (stored PID or `fuser -k <port>/tcp`), never by pattern —
+`pkill -f "nuxi dev"` matches your own shell command line.
+
+Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`
+(custom host `plausible.lttr.cz`) — don't expect events while testing locally.
 
 Plain `pnpm dev` is the human path (same HMR, wrapped in `vp run`).
 `xdg-open` only when the user wants to look.
