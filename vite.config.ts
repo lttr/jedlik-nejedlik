@@ -26,6 +26,8 @@ const generatedInput = [
   "!**/.nuxt/**",
   "!**/.output",
   "!**/.output/**",
+  // A timestamp for the pre-commit gate; nothing builds or checks from it.
+  "!**/.directus-probe-stamp",
   "!**/node_modules/.cache/**",
   "!**/node_modules/.vite/**",
   "!**/node_modules/.vite-temp/**",
@@ -36,10 +38,12 @@ const generatedInput = [
 // notes continuously, and none of these tools read a markdown file.
 const srcInput = [{ auto: true }, "!**/.aiwork/**", "!**/*.md", ...generatedInput]
 
-// `vp check` is the one task that does read markdown — it formats it. Tracking
-// md keeps its cache sound (an unformatted note can no longer hide behind a
-// stale hit) and costs a ~2.5s re-run, not a full rebuild.
-const checkInput = [{ auto: true }, ...generatedInput]
+// `vp check` is the one task that reads markdown — it formats it — so unlike
+// `srcInput` it tracks md. Agent notes under `.aiwork/**` are the exception:
+// still formatted, but by the pre-commit `vp check --fix` on staged files,
+// not by this task. Tracking them here only meant a note append cold-ran the
+// whole check (and failed it, on a note nothing was about to commit).
+const checkInput = [{ auto: true }, "!**/.aiwork/**", ...generatedInput]
 
 export default defineConfig({
   staged: {
