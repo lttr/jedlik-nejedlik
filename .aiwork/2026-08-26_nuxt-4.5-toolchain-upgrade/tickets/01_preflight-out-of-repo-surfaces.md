@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: []
 references:
   - "Spec: ../spec.md (gotchas 3 and 5)"
@@ -13,7 +13,7 @@ A hit here changes the shape of the upgrade ticket, so it runs first and costs a
 
 ## Acceptance criteria
 
-- [ ] Coolify environment for `jedlik-nejedlik-production` checked for `VITE_LOG`, `VITE_GLOBAL_CLI_JS_SCRIPTS_DIR` and `VITE_UPDATE_TASK_TYPES`; any hit renamed to its `VP_` form
-- [ ] Local shell profile checked for the same three names
-- [ ] Confirmed the Nixpacks build installs vite-plus through pnpm and never reads a hard-coded `~/.vite-plus` path, so the XDG relocation cannot reach the deploy
-- [ ] Findings recorded in `../notes.md`, including the negative results — a future session should not have to repeat this
+- [x] Coolify environment for `jedlik-nejedlik-production` checked for `VITE_LOG`, `VITE_GLOBAL_CLI_JS_SCRIPTS_DIR` and `VITE_UPDATE_TASK_TYPES`; any hit renamed to its `VP_` form
+- [x] Local shell profile checked for the same three names
+- [x] Confirmed the Nixpacks build installs vite-plus through pnpm and never reads a hard-coded `~/.vite-plus` path, so the XDG relocation cannot reach the deploy
+- [x] Findings recorded in `../notes.md`, including the negative results — a future session should not have to repeat this
