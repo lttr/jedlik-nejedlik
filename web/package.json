@@ -7,6 +7,7 @@
     "dev": "nuxi dev",
     "lint:slow": "eslint .",
     "start": "node .output/server/index.mjs",
+    "test": "vp test run --config vitest.unit.config.ts",
     "postinstall": "nuxi prepare",
     "preview": "nuxi preview",
     "typecheck": "nuxi typecheck"

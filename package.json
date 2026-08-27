@@ -9,6 +9,7 @@
     "check": "vp check",
     "lint:slow": "vp run -r lint:slow",
     "typecheck": "vp run -r typecheck",
+    "test": "vp run -r test",
     "verify": "vp run verify:all",
     "fallow": "fallow",
     "start": "node web/.output/server/index.mjs",
