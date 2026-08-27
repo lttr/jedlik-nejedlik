@@ -47,8 +47,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop-smart.sh\"",
-            "timeout": 30
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/verify-log-bash.sh\" sweep",
+            "timeout": 15
           }
         ]
       }

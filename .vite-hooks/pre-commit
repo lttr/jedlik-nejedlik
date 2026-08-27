@@ -1,4 +1,3 @@
-# vp staged: vp check --fix on staged files (oxlint + oxfmt)
 vp staged
 vp run lint:slow
 vp run typecheck

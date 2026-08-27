@@ -1,8 +1,8 @@
 # Verification log
 
 Every verification step in a Claude Code session — each `vp lint --fix` after a
-write, each Stop-hook lint pass, each `vp run verify:all`, each `git commit`
-with its pre-commit gate — is appended as one JSON line to a scratch log
+write, each `vp run verify:all`, each `git commit` with its pre-commit gate —
+is appended as one JSON line to a scratch log
 outside the repo: `${TMPDIR:-/tmp}/verify-log-jedlik-nejedlik.jsonl`.
 `scripts/verify-log.sh path` prints it; `$VERIFY_LOG_FILE` overrides it. It is
 session working data, not repository content, and does not survive a reboot —
@@ -17,7 +17,6 @@ run, how much of it was cache hits, and which runs were redundant.
 | ---------------- | ---------------------------------- | -------------------------------------------- |
 | `agent-bash`     | `.claude/hooks/verify-log-bash.sh` | verification commands the agent runs itself  |
 | `post-edit-hook` | `.claude/hooks/post-edit-fix.sh`   | the silent `vp lint --fix` after every write |
-| `stop-hook`      | `.claude/hooks/stop-smart.sh`      | end-of-turn oxlint / eslint                  |
 | `agent`          | `scripts/verify-log.sh event`      | milestones (task start, code review, fixes)  |
 
 The Bash hook pairs `PreToolUse` (start stamp, keyed by `tool_use_id`) with
@@ -25,7 +24,8 @@ The Bash hook pairs `PreToolUse` (start stamp, keyed by `tool_use_id`) with
 
 A Bash command that **exits non-zero fires `PreToolUse` but no `PostToolUse`**
 (verified 2026-08-27), so failures would otherwise be the one thing missing
-from the log. The Stop hook therefore sweeps at end of turn: a start stamp
+from the log. The Stop hook therefore runs `verify-log-bash.sh sweep` at end
+of turn: a start stamp
 still unclaimed after two minutes belonged to a command that never reported
 back, and it is logged `"unresolved"` with `exit` and `duration_ms` null,
 back-dated to when it started so the timeline still orders correctly. Neither
