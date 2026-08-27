@@ -13,16 +13,20 @@ allowBuilds:
   vue-demi: false
 
 # Adopt vite-plus: alias `vite`/`vitest` to VoidZero's drop-in builds.
-# The `vite-plus` CLI row is pinned rather than floating on `latest`, because
-# `web/package.json` pins `rolldown` to the exact version this release bundles
-# (0.3.0 -> rolldown 1.2.5). That pin is not arbitrary and must never become a
-# range: rolldown ships a native binary and a skew against vite-plus's own copy
-# is the documented reason `vitest-upstream` exists (see web/vite.config.ts).
-# Move the two together, or not at all.
+# The `vite-plus` CLI row is an EXACT pin, not `latest` and not a range,
+# because two neighbouring rows are hand-tied to the release it names:
+# `web/package.json` pins `rolldown` to the version this release bundles
+# (0.3.0 -> rolldown 1.2.5), and `overrides` below pins
+# `@voidzero-dev/vite-plus-core` to the same 0.3.0. rolldown and the core ship
+# native binaries, and a skew against the CLI's own copy is what the
+# `vitest-upstream` alias exists to route around (see vite.config.ts, repo
+# root). A caret here would let `pnpm update` float the CLI to 0.3.x while the
+# override held the core at 0.3.0 — exactly the two-version skew that broke
+# `pnpm install` on the 0.2.5 -> 0.3.0 move. Move all three together, or none.
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: ^0.3.0
+  vite-plus: 0.3.0
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
 # enable enableGlobalVirtualStore — breaks resolution the same way.
@@ -36,13 +40,14 @@ shamefullyHoist: true
 
 overrides:
   # ISSUE: Nuxt/@nuxt/vite-builder pull their own upstream vite/vitest instead
-  #   of the aliased builds. `catalog:` forces ALL transitive deps onto ours.
-  # DELETE WHEN: Nuxt ships vite-plus compat (also drops rolldown devDep in web/).
+  #   of the aliased builds — @nuxt/vite-builder 4.5.2 declares `vite: ^8.2.0`
+  #   as a direct DEPENDENCY, not a peer. `catalog:` forces ALL transitive deps
+  #   onto ours.
+  # DELETE WHEN: Nuxt ships vite-plus compat. NOTE: this does NOT drop the
+  #   `rolldown` devDep in web/ — nuxt 4.5.2 peers `rolldown: ~1.2.1` and does
+  #   not mark it optional, so it stays required with or without the alias.
   vite: "catalog:"
   vitest: "catalog:"
-  # ISSUE: Vite+ resolved a @vercel/nft version Nitro's build couldn't use.
-  # DELETE WHEN: Nitro + Vite+ resolve a compatible version on their own.
-  "@vercel/nft": ^0.27.4
   # ISSUE: the `vitest` override above also rewrites vite-plus's OWN internal
   #   `vitest` dependency to vite-plus-test, which still pins
   #   @voidzero-dev/vite-plus-core 0.1.24. `shamefullyHoist` then elevates that
@@ -51,11 +56,17 @@ overrides:
   #   `vp` invocation (including the root `prepare`) dies with "Cannot find
   #   native binding". Forcing a single core collapses the two copies.
   # DELETE WHEN: vite-plus-test catches up with the CLI (same trigger as the
-  #   `vitest-upstream` alias in vite.config.ts).
+  #   `vitest-upstream` alias in vite.config.ts). NOTE: this pin must track the
+  #   catalog `vite-plus` row exactly — see the comment above `catalog:`.
   "@voidzero-dev/vite-plus-core": 0.3.0
 
-# ISSUE: vite-plus-core's version string fails Nuxt's vite@^7 peer constraint,
-#   so the install errors. These tell pnpm to accept the override anyway.
+# ISSUE: vite-plus-core's version string (0.3.0) satisfies no upstream `vite`
+#   range, and vite-plus-test's satisfies no `vitest` range, so every package
+#   peering on them reports an unmet peer. Under pnpm 11.2.2 these are WARNINGS,
+#   not install errors — verified 2026-08-27 by removing the rules and
+#   re-resolving: `pnpm install` still exits 0. The rules are noise
+#   suppression, and they earn their keep by keeping a genuine peer problem
+#   visible.
 # DELETE WHEN: Nuxt ships vite-plus compat (same trigger as the override above).
 peerDependencyRules:
   allowAny:

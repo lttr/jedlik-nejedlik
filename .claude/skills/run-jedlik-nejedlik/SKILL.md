@@ -9,9 +9,11 @@ environment (web env config; local `web/.env`) — missing it → 500.
 
 ## Run + verify in a browser
 
-Start with `pnpm dev:agent` (not `dev`) — runs nuxi with `NUXT_NO_WS=1` to drop
-the HMR socket, which vite-plus 0.2.5 double-upgrades and crashes on connect.
-No HMR, but the page SSRs and survives reloads. Run in a persistent Monitor:
+Start with `pnpm dev:agent` — plain `nuxi dev`, skipping the `vp run` wrapper so
+the server owns the terminal. HMR is on and works; the `NUXT_NO_WS=1` workaround
+that used to be here is gone (vite-plus 0.2.5 double-upgraded the HMR socket and
+crashed on browser connect, 0.3.0 does not — verified 2026-08-27). Run in a
+persistent Monitor:
 
 ```bash
 # Monitor tool, persistent: true
@@ -28,5 +30,5 @@ agent-browser screenshot /tmp/jedlik-home.png   # absolute paths
 Stop: TaskStop the monitor, then
 `kill "$(ss -ltnp | grep ':3000' | grep -oP 'pid=\K[0-9]+' | head -1)"`.
 
-Plain `pnpm dev` (HMR on) is the human path — don't drive it with agent-browser.
+Plain `pnpm dev` is the human path (same HMR, wrapped in `vp run`).
 `xdg-open` only when the user wants to look.

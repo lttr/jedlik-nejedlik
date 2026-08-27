@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: [03]
 references:
   - "Spec: ../spec.md (gotcha 11, DELETE-WHEN conditions to re-evaluate afterwards)"
@@ -13,8 +13,8 @@ Each one ends as a recorded answer in `../notes.md`, including "still needed" an
 
 ## Acceptance criteria
 
-- [ ] `ogImage` `$development` block in `web/nuxt.config.ts`: `pnpm dev` retested with it removed against nuxt-og-image 6.7.8. Dropped along with its comment if the consola renderer prompt is gone; left alone with the tested version noted if it still crashes `nuxi dev`
-- [ ] `overrides["@vercel/nft"]: ^0.27.4` dropped and the build tried; reverted if it breaks, and either way the outcome recorded
-- [ ] `overrides.vite` / `overrides.vitest`, `peerDependencyRules.allowAny` and the `rolldown` devDependency each re-read against the new tree and confirmed still load-bearing
-- [ ] Two-Vite-majors skew re-checked: whether `@voidzero-dev/vite-plus-test` has moved past 0.1.24, and whether the `vitest-probe` DELETE-WHEN note is any closer to satisfied
-- [ ] All answers in `../notes.md`
+- [x] `ogImage` `$development` block in `web/nuxt.config.ts`: `pnpm dev` retested with it removed against nuxt-og-image 6.7.8. Dropped along with its comment if the consola renderer prompt is gone; left alone with the tested version noted if it still crashes `nuxi dev`
+- [x] `overrides["@vercel/nft"]: ^0.27.4` dropped and the build tried; reverted if it breaks, and either way the outcome recorded
+- [x] `overrides.vite` / `overrides.vitest`, `peerDependencyRules.allowAny` and the `rolldown` devDependency each re-read against the new tree and confirmed still load-bearing
+- [x] Two-Vite-majors skew re-checked: whether `@voidzero-dev/vite-plus-test` has moved past 0.1.24, and whether the `vitest-probe` DELETE-WHEN note is any closer to satisfied
+- [x] All answers in `../notes.md`

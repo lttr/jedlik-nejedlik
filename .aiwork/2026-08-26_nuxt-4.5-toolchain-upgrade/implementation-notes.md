@@ -25,11 +25,15 @@ The spec's table reads "catalog `vite-plus` 0.2.5 → 0.3.0 in
 `vite-plus: latest`, with the lockfile carrying the actual 0.2.5 pin.
 
 `pnpm update vite-plus vite vitest` re-resolved it and rewrote the specifier to
-`^0.3.0` on its own. Rather than fight pnpm back to `latest` and leave the
-lockfile and the manifest disagreeing (which `--frozen-lockfile` rejects, and
-therefore the Coolify deploy too), the catalog row is now `^0.3.0`. That also
-makes the coupling the spec insists on visible in the file a reader opens: the
-exact `rolldown` pin next door tracks _this_ number.
+`^0.3.0` on its own. Leaving it on `latest` would desync the lockfile from the
+manifest (which `--frozen-lockfile` rejects, and therefore the Coolify deploy
+too), so the row now carries a version. It is the **exact** `0.3.0`, not the
+caret pnpm wrote: `overrides["@voidzero-dev/vite-plus-core"]` pins the core to
+exactly 0.3.0 and `web/package.json` pins `rolldown` to exactly 1.2.5, so a
+caret would let `pnpm update` float the CLI to 0.3.x while those two stayed
+put — reproducing the CLI/core skew that broke `pnpm install` on this very
+upgrade. That also makes the coupling the spec insists on visible in the file a
+reader opens: the exact `rolldown` pin next door tracks _this_ number.
 
 The `vite` / `vitest` alias rows are untouched and still resolve `@latest`; they
 are out of scope per the spec.
@@ -170,3 +174,34 @@ icon set, and the dev-time `robots: noindex, nofollow` carrying
   `useSeoMeta` hardcodes the suffix that the site template already appends.
   Pre-existing page authoring (unchanged since commit 6bcb4fd), not caused by
   this upgrade, and out of scope here.
+
+## Ticket 04 — re-evaluate what the upgrade made removable
+
+Done. Full answers in `notes.md`; summary:
+
+- **Removed** the `ogImage` `$development` block — nuxt-og-image 6.7.8 warns
+  instead of prompting, and `nuxi dev` starts clean.
+- **Removed** `overrides["@vercel/nft"]` — nitropack 2.13.4 resolves nft 1.11.0
+  on its own and the traced output runs standalone outside the repo.
+- **Kept** `overrides.vite`/`vitest`, `peerDependencyRules.allowAny` and the
+  `rolldown` devDependency, each re-checked against the installed tree.
+- Two-Vite-majors skew: unchanged and slightly worse; `vitest-upstream`'s
+  DELETE-WHEN is not closer.
+
+### Correction to the spec
+
+The spec asserts that without `peerDependencyRules.allowAny` "the install fails
+outright on the `vite@^8` peer". Removed and re-resolved to check: under pnpm
+11.2.2 it does not — `pnpm install` exits 0 and the missing rules only turn two
+suppressed reports into warnings. Kept anyway (warning noise would bury a real
+peer problem), but the recorded reason is now accurate.
+
+### Note on pnpm's up-to-date check
+
+After removing an override from `pnpm-workspace.yaml`, plain `pnpm install` —
+and even `pnpm install --force` — reported "Already up to date" and left the
+lockfile's `overrides:` block stale, while `node_modules` had already moved to
+the new resolution. `pnpm dedupe` is what actually re-resolved it. Worth knowing:
+a stale lockfile here means a failed Coolify deploy, since Nixpacks installs
+`--frozen-lockfile`. Verified afterwards with a clean
+`trash-put node_modules && pnpm i --frozen-lockfile`.

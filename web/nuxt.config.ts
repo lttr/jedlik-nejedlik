@@ -4,10 +4,6 @@ const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 
 const isProduction = process.env.NODE_ENV === "production"
 
-// `pnpm dev:agent` sets NUXT_NO_WS to disable Vite's HMR websocket, which
-// vite-plus 0.2.5 double-upgrades — crashing the dev server on browser connect.
-const ws = process.env.NUXT_NO_WS === undefined ? undefined : false
-
 const plausibleModules = isProduction ? ["@nuxtjs/plausible"] : []
 const plausibleConfig = isProduction
   ? {
@@ -33,15 +29,6 @@ export default defineNuxtConfig({
     "@dxup/nuxt",
     "@sentry/nuxt/module",
   ],
-
-  // nuxt-og-image 6.4.9 (via @nuxtjs/seo) prompts to pick a renderer on dev
-  // startup when no renderer dep is installed, and that consola prompt crashes
-  // (`uv_tty_init EINVAL`), killing `nuxi dev`. Build is unaffected (falls back
-  // to takumi + zeroRuntime). Disable the module in dev only — OG images are
-  // generated at build, so we lose nothing locally.
-  $development: {
-    ogImage: { enabled: false },
-  },
 
   components: [
     {
@@ -83,7 +70,6 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-12-01",
 
   vite: {
-    server: { ws },
     optimizeDeps: {
       include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
     },
