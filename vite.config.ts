@@ -28,6 +28,8 @@ const generatedInput = [
   "!**/.output/**",
   // A timestamp for the pre-commit gate; nothing builds or checks from it.
   "!**/.directus-probe-stamp",
+  // fallow's own incremental cache: read and rewritten on every run.
+  "!**/.fallow/**",
   "!**/node_modules/.cache/**",
   "!**/node_modules/.vite/**",
   "!**/node_modules/.vite-temp/**",
