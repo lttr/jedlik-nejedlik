@@ -5,7 +5,6 @@
     <!-- <ParentsSection /> -->
     <!-- <LecturesSection class="p-full-end" /> -->
     <!-- <ExpertsSection /> -->
-    <!-- <BlogSection /> -->
     <!-- <IndividualSection /> -->
     <!-- <TestimonialsSection /> -->
     <!-- <AboutUsSection /> -->

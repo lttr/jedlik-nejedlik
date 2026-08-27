@@ -94,10 +94,6 @@
       </div>
     </section>
     <section class="p-flow">
-      <h2>Karta - článek</h2>
-      <ArticleCard v-bind="exampleCard" heading-level="h3" />
-    </section>
-    <section class="p-flow">
       <h2>Karta - přednáška</h2>
       <LectureCard v-bind="exampleCard" heading-level="h3" />
     </section>
