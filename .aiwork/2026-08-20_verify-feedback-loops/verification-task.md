@@ -42,16 +42,16 @@ remaining verification ran clean on 2026-08-26.
 
 1. [x] `vp run verify:all` — passes end to end.
 2. [x] Immediate second run: 6/8 cache hit (75%). The two misses are
-   `verify:fallow` (modifies its own input — its report file) and
-   `verify:all` itself (cache disabled by design). Every real check
-   (check/lint/typecheck/test/build) is a hit. §1 accepted.
+       `verify:fallow` (modifies its own input — its report file) and
+       `verify:all` itself (cache disabled by design). Every real check
+       (check/lint/typecheck/test/build) is a hit. §1 accepted.
 3. [x] Touched `.aiwork/**/recommendations.md`, re-ran: identical 6/8 —
-   `.aiwork/` no longer busts the cache.
+       `.aiwork/` no longer busts the cache.
 4. [ ] Optional `vp run directus:probe` against the real instance — not run;
-   no `.directus-probe-stamp` on disk yet. The stamp/gate logic was proven in
-   a scratch repo, so this only leaves the live-instance path unexercised.
-   It will be exercised by the next commit touching `directus/config/**` or
-   `web/server/**`.
+       no `.directus-probe-stamp` on disk yet. The stamp/gate logic was proven in
+       a scratch repo, so this only leaves the live-instance path unexercised.
+       It will be exercised by the next commit touching `directus/config/**` or
+       `web/server/**`.
 5. [x] Everything committed with explicit paths.
 
 Known trade-off: md files are excluded from verify cache inputs but
