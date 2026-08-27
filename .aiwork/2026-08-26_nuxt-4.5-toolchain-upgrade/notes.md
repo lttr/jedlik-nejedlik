@@ -269,3 +269,63 @@ along with the stale `NUXT_NO_WS` / vite-plus 0.2.5 note in both `CLAUDE.md` and
   give. And the standalone-`.output` proof for the `@vercel/nft` removal was
   never promoted to a test, which CLAUDE.md requires of any curl-based proof —
   it needs a build-output smoke check that does not exist yet.
+
+## Follow-up — the aliased `vitest` is gone (three workarounds with it)
+
+The review's strongest finding, done immediately rather than deferred to its own
+spec: it turned out to be a **swap**, not a removal, and the swap is small.
+
+Why not a plain removal: five files (`web/tests/unit/forms.test.ts`, three
+`.probe.ts` files, `tests/probes/support.ts`) plus both vitest configs import
+bare `"vitest"`. Deleting the package would break those imports at typecheck,
+lint and runtime. So `vitest` now points at **real vitest 4.1.10** — the thing
+that was already running every test under the `vitest-upstream` alias — and the
+alias retires.
+
+What came out in one move:
+
+| Removed                                                    | Why it existed                                    |
+| ---------------------------------------------------------- | ------------------------------------------------- |
+| `overrides.vitest` -> vite-plus-test                       | "adopt vite-plus" intent; never executed anything |
+| `overrides["@voidzero-dev/vite-plus-core"]: 0.3.0`         | collapsed the two cores the above created         |
+| `vitest` in `peerDependencyRules` allowAny/allowedVersions | silenced peers the alias caused                   |
+| catalog `vitest` row                                       | fed the override                                  |
+| `vitest-upstream` devDependency                            | existed only to route _around_ the alias          |
+| two `.fallowrc.jsonc` allowlist entries                    | both packages were untraceable-by-name            |
+
+`vite-plus-test@0.1.24` is still in the tree — the `vite-plus` CLI depends on it
+for `vp test` — but **its core now resolves to 0.3.0**, so the two-core
+condition that broke this upgrade's install is gone at the source rather than
+patched over. Verified: a single `@voidzero-dev/vite-plus-core@0.3.0`, `vp`
+runs, and no core override anywhere.
+
+Both runners now use the plain path `node node_modules/vitest/vitest.mjs`
+(`verify:test` in `vite.config.ts`, and `scripts/directus-probe.sh`).
+
+Verified: clean `pnpm i --frozen-lockfile`, cold `vp run verify:all` green, unit
+tests 3/3 through the new path.
+
+The DELETE-WHEN inverts: `pnpm-workspace.yaml` now carries a **RESTORE WHEN**
+note — re-alias `vitest` and switch to `vp test` once vite-plus-test tracks the
+CLI release line.
+
+## Correction — vite-plus-test is gone upstream; `vp test` adopted
+
+The previous entry's premise was wrong, verified 2026-08-27 against the tree,
+npm, and the vite-plus README:
+
+- vite-plus-test is NOT "still present as a dependency of the vite-plus CLI".
+  The 0.3.0 CLI dropped it entirely and depends on plain `vitest@4.1.11`
+  (`vp toolchain` shows it; zero `vite-plus-test` hits in pnpm-lock.yaml).
+- So the RESTORE-WHEN never fires: the upstream README now says to install
+  plain `vitest` pinned to the toolchain's version — never to alias it.
+
+Follow-through, done now:
+
+- `web/package.json` pins `vitest: 4.1.11` exactly (was `^4.1.10` → 4.1.10,
+  skewed against `vp test`'s bundled 4.1.11 — the skew the README's pin rule
+  exists to prevent). The pin moves together with the `vite-plus` catalog row.
+- Both runners switched from `node node_modules/vitest/vitest.mjs` to
+  `vp test run --config …` (`verify:test` in vite.config.ts,
+  scripts/directus-probe.sh).
+- pnpm-workspace.yaml NOTE rewritten; stale vite.config.ts comment removed.

@@ -76,7 +76,7 @@ export default defineConfig({
       },
       "verify:fallow": { command: "fallow", input: srcInput },
       "verify:test": {
-        command: "node node_modules/vitest-upstream/vitest.mjs run --config vitest.unit.config.ts",
+        command: "vp test run --config vitest.unit.config.ts",
         cwd: "web",
         input: srcInput,
       },
@@ -85,13 +85,7 @@ export default defineConfig({
       "directus:pull": { command: "directus-sync pull", cache: false },
       "directus:diff": { command: "directus-sync diff", cache: false },
       // On-demand permission probes against the production instance; not in
-      // verify:all on purpose. Runs upstream vitest via the `vitest-upstream`
-      // alias: the aliased vitest→vite-plus-test drop-in (0.1.24) ships no
-      // `vitest` bin for `vp test`, and it is skewed against the vite-plus CLI
-      // (0.3.0) — it pins vite-plus-core 0.1.24 and pulls upstream vite 7.x,
-      // which is why pnpm-workspace.yaml has to force a single
-      // @voidzero-dev/vite-plus-core. DELETE the alias and switch to `vp test`
-      // once vite-plus-test catches up with the CLI.
+      // verify:all on purpose.
       // Stamps .directus-probe-stamp on success — the pre-commit probe gate
       // (scripts/check-probe-stamp.sh) requires a stamp newer than staged
       // permission-touching files.

@@ -52,16 +52,23 @@ the workaround is gone.
 Worth remembering: _a verification path that routes around the thing being
 verified proves nothing about it._
 
+### Fixed after the review
+
+- **Drop the aliased `vitest` entirely** (#4). The strongest finding
+  structurally, and deferred at review time as a change deserving its own spec.
+  It got one: it landed on this branch as its own commit rather than a wrap-up
+  edit. Nothing in the repo executed vite-plus-test — everything ran through
+  `vitest-upstream` — and the review's premise turned out to understate the
+  case. vite-plus 0.3.0 does not merely outdate vite-plus-test; the CLI dropped
+  it and depends on plain vitest, which upstream says to install pinned to the
+  toolchain version rather than aliased. So the alias had no DELETE-WHEN to
+  restore. Removing it took the two-core condition, the
+  `@voidzero-dev/vite-plus-core` override, one `peerDependencyRules` entry, the
+  catalog row, `vitest-upstream` and two `.fallowrc` entries with it, and both
+  test tasks now run `vp test`.
+
 ### Deliberately not fixed
 
-- **Drop the aliased `vitest` entirely.** The strongest finding structurally
-  (#4). Nothing in the repo executes vite-plus-test — everything runs through
-  `vitest-upstream`. Removing the `vitest` devDep, override and catalog row
-  would eliminate the two-core condition, the new
-  `@voidzero-dev/vite-plus-core` override _and_ one `peerDependencyRules` entry
-  at once. As shipped, three workarounds now share one DELETE-WHEN trigger and
-  the block grows with each vite-plus bump. This is correct but is a structural
-  dependency change deserving its own spec, not a wrap-up edit.
 - **`@dxup/nuxt`, `@dxup/unimport`, `@nuxt/devtools` redundancy** (#10, #11).
   `nuxt@4.5.2` depends on them and auto-registers them. Keeping them explicit is
   defensible; a maintainer call.

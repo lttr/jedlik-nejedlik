@@ -12,20 +12,16 @@ allowBuilds:
   unrs-resolver: true
   vue-demi: false
 
-# Adopt vite-plus: alias `vite`/`vitest` to VoidZero's drop-in builds.
-# The `vite-plus` CLI row is an EXACT pin, not `latest` and not a range,
-# because two neighbouring rows are hand-tied to the release it names:
+# Adopt vite-plus: alias `vite` to VoidZero's drop-in build. `vitest` is NOT
+# aliased — see the note under `overrides` below.
+# The `vite-plus` CLI row is an EXACT pin, not `latest` and not a range, because
 # `web/package.json` pins `rolldown` to the version this release bundles
-# (0.3.0 -> rolldown 1.2.5), and `overrides` below pins
-# `@voidzero-dev/vite-plus-core` to the same 0.3.0. rolldown and the core ship
-# native binaries, and a skew against the CLI's own copy is what the
-# `vitest-upstream` alias exists to route around (see vite.config.ts, repo
-# root). A caret here would let `pnpm update` float the CLI to 0.3.x while the
-# override held the core at 0.3.0 — exactly the two-version skew that broke
-# `pnpm install` on the 0.2.5 -> 0.3.0 move. Move all three together, or none.
+# (0.3.0 -> rolldown 1.2.5). rolldown ships a native binary and a skew against
+# the CLI's own copy breaks `vp` outright, so a caret here would let
+# `pnpm update` float the CLI away from the rolldown pin. Move the two together,
+# or neither.
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
   vite-plus: 0.3.0
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
@@ -39,30 +35,26 @@ shamefullyHoist: true
 # =============================================================================
 
 overrides:
-  # ISSUE: Nuxt/@nuxt/vite-builder pull their own upstream vite/vitest instead
-  #   of the aliased builds — @nuxt/vite-builder 4.5.2 declares `vite: ^8.2.0`
-  #   as a direct DEPENDENCY, not a peer. `catalog:` forces ALL transitive deps
-  #   onto ours.
+  # ISSUE: Nuxt/@nuxt/vite-builder pull their own upstream vite instead of the
+  #   aliased build — @nuxt/vite-builder 4.5.2 declares `vite: ^8.2.0` as a
+  #   direct DEPENDENCY, not a peer. `catalog:` forces ALL transitive deps onto
+  #   ours.
   # DELETE WHEN: Nuxt ships vite-plus compat. NOTE: this does NOT drop the
   #   `rolldown` devDep in web/ — nuxt 4.5.2 peers `rolldown: ~1.2.1` and does
   #   not mark it optional, so it stays required with or without the alias.
   vite: "catalog:"
-  vitest: "catalog:"
-  # ISSUE: the `vitest` override above also rewrites vite-plus's OWN internal
-  #   `vitest` dependency to vite-plus-test, which still pins
-  #   @voidzero-dev/vite-plus-core 0.1.24. `shamefullyHoist` then elevates that
-  #   stale copy over the 0.3.0 one, and `vp` loads it — 0.1.24's native-binding
-  #   shim falls back to `vite-plus/binding`, an export 0.3.0 dropped, so every
-  #   `vp` invocation (including the root `prepare`) dies with "Cannot find
-  #   native binding". Forcing a single core collapses the two copies.
-  # DELETE WHEN: vite-plus-test catches up with the CLI (same trigger as the
-  #   `vitest-upstream` alias in vite.config.ts). NOTE: this pin must track the
-  #   catalog `vite-plus` row exactly — see the comment above `catalog:`.
-  "@voidzero-dev/vite-plus-core": 0.3.0
+
+# NOTE: `vitest` is deliberately NOT aliased. The old
+#   @voidzero-dev/vite-plus-test alias is dead upstream: the vite-plus CLI
+#   dropped that package at 0.3.0 and depends on plain vitest directly, and its
+#   README now says to install plain `vitest` pinned to the version `vp
+#   toolchain` reports (so the project and `vp test` share one Vitest copy).
+#   That is what `web/package.json` does — an EXACT pin that must move together
+#   with the `vite-plus` row above (0.3.0 -> vitest 4.1.11).
 
 # ISSUE: vite-plus-core's version string (0.3.0) satisfies no upstream `vite`
-#   range, and vite-plus-test's satisfies no `vitest` range, so every package
-#   peering on them reports an unmet peer. Under pnpm 11.2.2 these are WARNINGS,
+#   range, so every package peering on `vite` reports an unmet peer. Under
+#   pnpm 11.2.2 these are WARNINGS,
 #   not install errors — verified 2026-08-27 by removing the rules and
 #   re-resolving: `pnpm install` still exits 0. The rules are noise
 #   suppression, and they earn their keep by keeping a genuine peer problem
@@ -71,10 +63,8 @@ overrides:
 peerDependencyRules:
   allowAny:
     - vite
-    - vitest
   allowedVersions:
     vite: "*"
-    vitest: "*"
 
 minimumReleaseAgeExclude:
   - "@lttr/nuxt-validated-runtime-config@0.1.2"
