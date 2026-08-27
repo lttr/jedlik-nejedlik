@@ -9,6 +9,13 @@ set -uo pipefail
 
 cd "${CLAUDE_PROJECT_DIR:-$(pwd)}" || exit 0
 
+session=$(cat | jq -r '.session_id // empty' 2>/dev/null)
+
+# End of turn: log the Bash commands that never reported a PostToolUse (a
+# non-zero exit fires PreToolUse only), so failures are not missing from the
+# verification log.
+bash "$(pwd)/.claude/hooks/verify-log-bash.sh" sweep >/dev/null 2>&1
+
 mapfile -t changed < <(
   { git diff --name-only HEAD 2>/dev/null
     git ls-files --others --exclude-standard 2>/dev/null
@@ -36,8 +43,17 @@ done
 
 run_step() {
   local name="$1"; shift
-  local out
-  if ! out=$("$@" 2>&1); then
+  local out start code
+  start=$(date +%s%3N)
+  out=$("$@" 2>&1)
+  code=$?
+
+  CLAUDE_SESSION_ID="$session" \
+    bash "$(pwd)/scripts/verify-log.sh" record \
+    --source stop-hook --label "$name" --command "$*" --exit "$code" \
+    --duration-ms "$(( $(date +%s%3N) - start ))" --files "${code_files[*]}" >/dev/null 2>&1
+
+  if [ $code -ne 0 ]; then
     {
       echo "=== Stop hook: $name failed ==="
       echo "$out" | tail -50

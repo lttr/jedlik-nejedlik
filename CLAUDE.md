@@ -8,6 +8,7 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 - Never pipe a check through `head` / `tail` / `grep`. Run it bare — piping swallows the exit code the harness would report, forcing a full re-run just to recover it.
 - Kill dev servers by port (stored PID or `fuser -k <port>/tcp`), never by pattern — `pkill -f "nuxi dev"` matches your own shell command line.
 - If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes — otherwise the finding lives only in the transcript and is lost to future sessions.
+- Every verification command is logged to `$TMPDIR/verify-log-jedlik-nejedlik.jsonl` (outside the repo) by the Bash/post-edit/Stop hooks; read it with `scripts/verify-log-report.sh` (`summary`/`timeline`/`tasks`/`redundant`) and add milestones with `scripts/verify-log.sh event`. See `docs/verify-log.md`.
 - Changes touching `directus/config/**` or `web/server/**` need a fresh `vp run directus:probe` before commit (pre-commit gate checks the stamp).
 
 ## Non-obvious
