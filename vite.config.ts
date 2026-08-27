@@ -17,20 +17,29 @@ const ignorePatterns = [
   "pnpm-lock.yaml",
 ]
 
-// Generated artifacts excluded from cache-input tracking. Also excludes
-// .aiwork/** and markdown: the implement workflow appends to notes
-// continuously, which would invalidate every verify task on each run.
-const srcInput = [
-  { auto: true },
-  "!**/.aiwork/**",
-  "!**/*.md",
+// Generated artifacts excluded from cache-input tracking. The bare `.nuxt` /
+// `.output` entries are needed next to their `/**` forms: the glob matches the
+// contents, not the directory itself, so the first run after a build otherwise
+// counts as "'.output' added in 'web'" and cold-runs every task.
+const generatedInput = [
+  "!**/.nuxt",
   "!**/.nuxt/**",
+  "!**/.output",
   "!**/.output/**",
   "!**/node_modules/.cache/**",
   "!**/node_modules/.vite/**",
   "!**/node_modules/.vite-temp/**",
   "!**/*.tsbuildinfo",
 ]
+
+// Also excludes .aiwork/** and markdown: the implement workflow appends to
+// notes continuously, and none of these tools read a markdown file.
+const srcInput = [{ auto: true }, "!**/.aiwork/**", "!**/*.md", ...generatedInput]
+
+// `vp check` is the one task that does read markdown — it formats it. Tracking
+// md keeps its cache sound (an unformatted note can no longer hide behind a
+// stale hit) and costs a ~2.5s re-run, not a full rebuild.
+const checkInput = [{ auto: true }, ...generatedInput]
 
 export default defineConfig({
   staged: {
@@ -52,8 +61,8 @@ export default defineConfig({
       },
       // Tools run directly (not via nested `vp run -r`) so the cached unit is
       // the leaf command and `srcInput` applies to it.
-      "verify:check": { command: "vp check", input: srcInput, dependsOn: ["nuxt:prepare"] },
-      "verify:lint": {
+      "verify:check": { command: "vp check", input: checkInput, dependsOn: ["nuxt:prepare"] },
+      "verify:slowlint": {
         command: "eslint .",
         cwd: "web",
         input: srcInput,
@@ -90,7 +99,7 @@ export default defineConfig({
         command: "echo verify done",
         dependsOn: [
           "verify:check",
-          "verify:lint",
+          "verify:slowlint",
           "verify:typecheck",
           "verify:fallow",
           "verify:test",

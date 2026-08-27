@@ -4,7 +4,7 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 
 ## Verification
 
-- Never run `verify:check` / `verify:lint` / `verify:typecheck` / `verify:test` / `verify:build` (or their underlying tools) standalone. `vp run verify:all` is the only verification command — caching makes repeats free.
+- Never run `verify:check` / `verify:slowlint` / `verify:typecheck` / `verify:test` / `verify:build` (or their underlying tools) standalone. `vp run verify:all` is the only verification command — caching makes repeats free.
 - Never pipe a check through `head` / `tail` / `grep`. Run it bare — piping swallows the exit code the harness would report, forcing a full re-run just to recover it.
 - Kill dev servers by port (stored PID or `fuser -k <port>/tcp`), never by pattern — `pkill -f "nuxi dev"` matches your own shell command line.
 - If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes — otherwise the finding lives only in the transcript and is lost to future sessions.

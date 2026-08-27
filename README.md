@@ -48,8 +48,8 @@ Linting is intentionally strict — a large pedantic Oxlint rule set (see the
 
 `vp run verify` runs the full gate, each step independently cached by Vite+:
 
-1. `verify:check` — format + lint (`vp check`)
-2. `verify:lint` — full ESLint
+1. `verify:check` — oxfmt + oxlint (`vp check`)
+2. `verify:slowlint` — full ESLint
 3. `verify:typecheck` — `nuxi typecheck`
 4. `verify:fallow` — dead-code / unused-export detection
 5. `verify:test` — unit tests (`web/tests/unit/`)
