@@ -6,5 +6,5 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT/web"
-node node_modules/vitest-probe/vitest.mjs run --config vitest.probes.config.ts
+node node_modules/vitest-upstream/vitest.mjs run --config vitest.probes.config.ts
 touch "$ROOT/.directus-probe-stamp"

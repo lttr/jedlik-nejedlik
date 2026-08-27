@@ -76,7 +76,7 @@ export default defineConfig({
       },
       "verify:fallow": { command: "fallow", input: srcInput },
       "verify:test": {
-        command: "node node_modules/vitest-probe/vitest.mjs run --config vitest.unit.config.ts",
+        command: "node node_modules/vitest-upstream/vitest.mjs run --config vitest.unit.config.ts",
         cwd: "web",
         input: srcInput,
       },
@@ -85,7 +85,7 @@ export default defineConfig({
       "directus:pull": { command: "directus-sync pull", cache: false },
       "directus:diff": { command: "directus-sync diff", cache: false },
       // On-demand permission probes against the production instance; not in
-      // verify:all on purpose. Runs upstream vitest via the `vitest-probe`
+      // verify:all on purpose. Runs upstream vitest via the `vitest-upstream`
       // alias: the aliased vitest→vite-plus-test drop-in (0.1.24) ships no
       // `vitest` bin for `vp test` and its bundled rolldown is version-skewed
       // against the vite-plus 0.2.5 native binding. DELETE the alias and

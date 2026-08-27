@@ -45,9 +45,10 @@
     "@nuxtjs/plausible",
     // CLI-only, invoked by the directus:pull/diff tasks, never imported.
     "directus-sync",
-    // vitest 4 alias for the probe runner (see vite.config.ts directus:probe);
-    // invoked via its vitest.mjs bin, never imported by name.
-    "vitest-probe",
+    // Upstream vitest 4, aliased past the workspace vitest override (see
+    // vite.config.ts directus:probe). Runs both verify:test and the probes;
+    // invoked via its vitest.mjs file, never imported by name.
+    "vitest-upstream",
     // What bare `vitest` imports resolve to under the pnpm workspace override;
     // provided by the vite-plus toolchain, intentionally unlisted.
     "@voidzero-dev/vite-plus-test",
