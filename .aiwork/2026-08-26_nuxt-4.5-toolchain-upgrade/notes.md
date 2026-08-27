@@ -40,3 +40,35 @@ cannot reach the deploy:
 
 This developer machine already has `~/.vite-plus`; 0.3.0 leaves existing
 installs where they are, so local layout is unaffected too.
+
+## Ticket 02 — what the new tree actually resolves
+
+Verified on disk after a clean `pnpm i --frozen-lockfile`, not from release
+notes:
+
+| Thing                             | Resolves to                                          |
+| --------------------------------- | ---------------------------------------------------- |
+| catalog `vite-plus`               | 0.3.0 (specifier now `^0.3.0`, was `latest`)         |
+| `@voidzero-dev/vite-plus-core`    | 0.3.0 — declares vite 8.2.2, rolldown 1.2.5          |
+| `@nuxt/vite-builder@4.5.2`'s vite | vite-plus-core 0.3.0 → satisfies `vite ^8.2.0`       |
+| `rolldown`                        | 1.2.5, single copy (npm latest is 1.2.6 — not taken) |
+| `unhead`                          | **3.4.0, single copy** — the v2 blocker is gone      |
+| `vitest` (alias)                  | `@voidzero-dev/vite-plus-test` 0.1.24, still         |
+| `vitest-upstream`                 | vitest 4.1.10 — what actually runs the tests         |
+| oxlint / oxfmt / tsgolint         | 1.79.0 / 0.64.0 / 7.0.2001                           |
+
+### New workaround added: a single vite-plus-core
+
+`overrides["@voidzero-dev/vite-plus-core"]: 0.3.0` in `pnpm-workspace.yaml`.
+
+vite-plus **0.3.0 removed the `./binding` subpath export** that 0.2.5 had. The
+`vitest` override drags vite-plus-test 0.1.24 — and with it core 0.1.24 — into
+the tree; `shamefullyHoist` elevated that stale core over the 0.3.0 one, and its
+binding shim falls back to `require("vite-plus/binding")`. Every `vp` call died
+with "Cannot find native binding", including the root `prepare` script, so
+`pnpm install` itself failed.
+
+Forcing one core collapses the two copies. Nothing here executes
+vite-plus-test, so pinning its core forward costs nothing. DELETE WHEN
+vite-plus-test catches up with the CLI — the same trigger as the
+`vitest-upstream` alias.

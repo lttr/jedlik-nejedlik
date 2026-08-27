@@ -13,10 +13,16 @@ allowBuilds:
   vue-demi: false
 
 # Adopt vite-plus: alias `vite`/`vitest` to VoidZero's drop-in builds.
+# The `vite-plus` CLI row is pinned rather than floating on `latest`, because
+# `web/package.json` pins `rolldown` to the exact version this release bundles
+# (0.3.0 -> rolldown 1.2.5). That pin is not arbitrary and must never become a
+# range: rolldown ships a native binary and a skew against vite-plus's own copy
+# is the documented reason `vitest-upstream` exists (see web/vite.config.ts).
+# Move the two together, or not at all.
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: latest
+  vite-plus: ^0.3.0
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
 # enable enableGlobalVirtualStore — breaks resolution the same way.
@@ -37,6 +43,16 @@ overrides:
   # ISSUE: Vite+ resolved a @vercel/nft version Nitro's build couldn't use.
   # DELETE WHEN: Nitro + Vite+ resolve a compatible version on their own.
   "@vercel/nft": ^0.27.4
+  # ISSUE: the `vitest` override above also rewrites vite-plus's OWN internal
+  #   `vitest` dependency to vite-plus-test, which still pins
+  #   @voidzero-dev/vite-plus-core 0.1.24. `shamefullyHoist` then elevates that
+  #   stale copy over the 0.3.0 one, and `vp` loads it — 0.1.24's native-binding
+  #   shim falls back to `vite-plus/binding`, an export 0.3.0 dropped, so every
+  #   `vp` invocation (including the root `prepare`) dies with "Cannot find
+  #   native binding". Forcing a single core collapses the two copies.
+  # DELETE WHEN: vite-plus-test catches up with the CLI (same trigger as the
+  #   `vitest-upstream` alias in vite.config.ts).
+  "@voidzero-dev/vite-plus-core": 0.3.0
 
 # ISSUE: vite-plus-core's version string fails Nuxt's vite@^7 peer constraint,
 #   so the install errors. These tell pnpm to accept the override anyway.
