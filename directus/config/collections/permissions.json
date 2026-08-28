@@ -971,6 +971,26 @@
     "validation": null
   },
   {
+    "_syncId": "4d7c9c6f-4401-4ca4-b203-d580969b6634",
+    "action": "update",
+    "collection": "directus_users",
+    "fields": [
+      "password"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "id": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
     "_syncId": "1902978b-d31b-46c5-96c5-3551e7ba5e31",
     "action": "read",
     "collection": "entitlement",

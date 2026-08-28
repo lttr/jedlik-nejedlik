@@ -286,16 +286,15 @@ browser never talks to Directus with credentials (ADR 0002).
 - ADR 0002 records the session architecture and the reset-e-mail
   constraint; ADR 0001 fixes Directus as system of record and enforcement
   boundary — nothing in this area may become a second store of identity.
-  **Open (user decision):** whether the e-mail in the sealed session
-  cookie counts as a cache (fine) or a second store (violates ADR 0001).
-  Recommendation on the table since 2026-08-28: **cache**. ADR 0001's
+  **Resolved 2026-08-28 (user):** the e-mail in the sealed session cookie
+  is a **cache**, not a second store, and ADR 0002's Consequences now
+  records it. ADR 0001's
   clause is about the Nitro layer owning data ("reads/writes Directus
   with a service account and never becomes a second store of _record_"),
   and its enumerated stores are students, orders, entitlements, progress,
   attempts. A sealed cookie held by the client, never queried, never
   written back, re-derived on every login, is a cache by any reading —
-  the `directus_users` row stays authoritative. Confirm before ticket 02
-  closes; if confirmed, record it in ADR 0002's Consequences.
+  the `directus_users` row stays authoritative.
 - The Student role and its own-row policies already exist and are proven
   by area 01's probes; this area adds only the own-password-update
   permission (and, if ticket 05's approach holds, a `directus_sessions`

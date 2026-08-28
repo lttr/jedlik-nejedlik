@@ -47,10 +47,9 @@ page is bounced to login and returned after.
   in `sessionHooks.fetch`. New env var `NUXT_SESSION_PASSWORD`; sealed
   cookies cap at 4KB.
 - Wrap the module's `user`-shaped API behind Student-named identifiers
-  (GLOSSARY.md); don't leak `useUserSession()` into pages. Whether the
-  e-mail in the cookie violates ADR 0001 (second store of identity vs
-  cache) is the **user's call — ask, don't decide**; the spec's Further
-  Notes now carries a recommendation ("cache") awaiting confirmation.
+  (GLOSSARY.md); don't leak `useUserSession()` into pages. The e-mail in
+  the cookie is settled: a **cache**, not a second store — decided by the
+  user 2026-08-28 and recorded in ADR 0002's Consequences.
 - Add a **per-IP rate limit on login** — Directus's per-user
   `auth_login_attempts: 7` does nothing against credential stuffing
   spread across many accounts, and registration and password-request are

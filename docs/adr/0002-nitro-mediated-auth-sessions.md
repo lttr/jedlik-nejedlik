@@ -37,3 +37,31 @@ generates the signed single-use token and sends the e-mail itself.
 Rebuilding that token lifecycle just to customize an e-mail body is not
 worth the security surface; the Liquid template on the instance can be
 overridden instead.
+
+## Consequences
+
+The session cookie is sealed by `nuxt-auth-utils` and carries the
+Student's e-mail in its client-readable payload; the Directus access and
+refresh tokens live in the cookie's server-only `secure` area. **The
+e-mail in that payload is a cache, not a second store of identity, and so
+does not conflict with ADR 0001** (decided 2026-08-28). ADR 0001's clause
+concerns the Nitro layer owning data — its enumerated stores are
+students, orders, entitlements, progress and test attempts — whereas this
+value is derived, never queried, never written back, and re-created from
+Directus at every login. The `directus_users` row stays the only
+authority.
+
+It earns its place: without it, resolving the logged-in Student during
+SSR would mean a `readMe` round-trip to Directus on every server render,
+plus a `read` permission on `directus_users` for the Student policy that
+the platform otherwise has no reason to grant. The accepted cost is
+staleness — an e-mail changed in the Data Studio is not reflected until
+the Student logs in again. Nothing in the app can change an e-mail today,
+so the window is theoretical; if self-service e-mail change ever ships,
+it must re-issue the session.
+
+Registration is the one flow that is _not_ Nitro-mediated in the sense of
+holding a credential: it proxies Directus's native public-registration
+endpoint (2026-08-28), so the app holds no service token at all. The
+verification e-mail stays Directus-native for the same reason the reset
+e-mail does — Directus never exposes the token.
