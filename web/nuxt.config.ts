@@ -51,6 +51,9 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    session: {
+      password: "",
+    },
     public: {
       directusUrl: "",
     },
