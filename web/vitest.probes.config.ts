@@ -12,6 +12,7 @@ export default defineConfig({
   test: {
     include: ["tests/probes/**/*.probe.ts"],
     testTimeout: 30_000,
+    hookTimeout: 60_000,
     // Network tests: run files sequentially to go easy on the instance.
     fileParallelism: false,
   },
