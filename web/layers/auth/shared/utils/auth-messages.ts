@@ -47,4 +47,14 @@ export const authMessages = {
 
   // Both flows end with "we sent you an e-mail", and both have to say this.
   checkSpam: "Pokud zpráva do pár minut nedorazí, mrkněte se prosím i do spamu.",
+
+  // Changing the password from the account page. The current password is
+  // asked for and named specifically: the Student is already logged in, so
+  // there is no account to enumerate here — only a typo to explain.
+  currentPasswordWrong: "Současné heslo není správné.",
+  passwordChangedHere: "Heslo bylo změněno. Na ostatních zařízeních jsme vás odhlásili.",
+  passwordChangeUnavailable: "Změna hesla je teď nedostupná. Zkuste to prosím za chvíli.",
+  passwordChangedLogInAgain:
+    "Heslo bylo změněno, ale přihlášení se nepodařilo obnovit. Přihlaste se prosím znovu novým heslem.",
+  tooManyPasswordChanges: "Příliš mnoho pokusů o změnu hesla. Zkuste to prosím za chvíli.",
 } as const

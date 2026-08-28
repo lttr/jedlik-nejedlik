@@ -5,23 +5,30 @@ export interface AuthForm {
   // …), for a form that has to react to which failure it was rather than only
   // show it. Empty whenever `errorMessage` is.
   errorCode: Ref<string>
+  // True once an action has run to completion, false again from the moment
+  // the next attempt starts — so a success banner can never sit next to a
+  // fresh error, and no page has to remember to reset it.
+  succeeded: Ref<boolean>
   // `validate` returns a Czech complaint, or null when the form may be sent.
   submit: (action: () => Promise<void>, validate?: () => string | null) => Promise<void>
 }
 
 // The shape every auth form shares: check what can be checked here, disable
-// while in flight, clear the last error, run the action, show whatever Czech
+// while in flight, clear the last outcome, run the action, show whatever Czech
 // message came back. The optional pre-check is what keeps the password rule
 // from being retyped on every form that sets one.
 export function useAuthForm(): AuthForm {
   const pending = ref(false)
   const errorMessage = ref("")
   const errorCode = ref("")
+  const succeeded = ref(false)
 
   async function submit(
     action: () => Promise<void>,
     validate?: () => string | null,
   ): Promise<void> {
+    succeeded.value = false
+
     const complaint = validate?.() ?? null
     if (complaint !== null) {
       errorMessage.value = complaint
@@ -35,6 +42,7 @@ export function useAuthForm(): AuthForm {
     errorCode.value = ""
     try {
       await action()
+      succeeded.value = true
     } catch (error) {
       const failure = authFailure(error)
       errorMessage.value = failure.message
@@ -44,5 +52,5 @@ export function useAuthForm(): AuthForm {
     }
   }
 
-  return { pending, errorMessage, errorCode, submit }
+  return { pending, errorMessage, errorCode, succeeded, submit }
 }

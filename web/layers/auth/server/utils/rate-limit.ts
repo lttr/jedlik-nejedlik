@@ -99,3 +99,13 @@ export const PASSWORD_RESET_RATE_LIMIT: RateLimit = {
   max: 20,
   message: authMessages.tooManyResets,
 }
+
+// Changing a password re-checks the current one through Directus's login
+// endpoint, which counts against `auth_login_attempts` and suspends the
+// account once it runs out. A tight budget keeps a hijacked session (or a
+// script) from spending someone else's attempts for them.
+export const CHANGE_PASSWORD_RATE_LIMIT: RateLimit = {
+  bucket: "change-password",
+  max: 10,
+  message: authMessages.tooManyPasswordChanges,
+}

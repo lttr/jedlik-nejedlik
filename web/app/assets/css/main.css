@@ -107,6 +107,9 @@ textarea {
   border-radius: var(--radius-3);
 }
 
+/* The note under a password field spelling out the instance's policy. Global
+   because every form that sets a password wears it — registration, the
+   account page, and the reset-completion form after them. */
 /* View Transitions */
 ::view-transition-old(root),
 ::view-transition-new(root) {

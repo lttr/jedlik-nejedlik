@@ -42,38 +42,61 @@ function toStudentSecrets(data: AuthenticationData): StudentSecrets {
   return { accessToken, refreshToken, accessTokenExpiresAt: Date.now() + expires }
 }
 
-export async function logInStudent(event: H3Event, credentials: Credentials): Promise<void> {
-  let data: AuthenticationData
+// The one place the app sends a password to Directus. Null means Directus
+// rejected the credentials — what that means is the caller's to say, because
+// the same rejection reads as "wrong e-mail or password" at the login form
+// and "wrong current password" at the change-password form. A Directus that
+// did not answer at all throws instead, so an outage is never reported as a
+// bad password.
+//
+// This request's session is deliberately untouched: verifying a password and
+// adopting the identity behind it are two different things.
+export async function authenticateStudent(
+  event: H3Event,
+  credentials: Credentials,
+  unavailable: string = authMessages.unavailable,
+): Promise<StudentSecrets | null> {
   try {
-    data = await getDirectusAnonymousServerClient(event).request(
+    const data = await getDirectusAnonymousServerClient(event).request(
       login({ email: credentials.email, password: credentials.password }, { mode: "json" }),
     )
+    return toStudentSecrets(data)
   } catch (error) {
     // Wrong password, unknown e-mail, an account still Unverified and a user
     // suspended by Directus's login-attempt limiting are one and the same
     // answer here — Directus itself does not tell them apart (probe).
     if (isCredentialRejection(error)) {
-      throw authError(401, "invalid_credentials", authMessages.invalidCredentials)
+      return null
     }
-    throw unexpectedAuthError("Directus rejected a login request", error)
+    throw unexpectedAuthError("Directus rejected a login request", error, unavailable)
   }
+}
 
-  await writeStudentSession(event, { email: credentials.email }, toStudentSecrets(data))
+export async function logInStudent(event: H3Event, credentials: Credentials): Promise<void> {
+  const secrets = await authenticateStudent(event, credentials)
+  if (secrets === null) {
+    throw authError(401, "invalid_credentials", authMessages.invalidCredentials)
+  }
+  await writeStudentSession(event, { email: credentials.email }, secrets)
+}
+
+// Ends one Directus session, identified by its refresh token. Best effort by
+// design: every caller has already decided that session must die, and a token
+// Directus has forgotten already (expired, rotated, revoked) is not an error
+// anyone can act on.
+export async function revokeRefreshToken(event: H3Event, refreshToken: string): Promise<void> {
+  await getDirectusAnonymousServerClient(event)
+    .request(logout({ mode: "json", refresh_token: refreshToken }))
+    .catch((error: unknown) => {
+      console.warn("[auth] Directus logout failed", error)
+    })
 }
 
 export async function logOutStudent(event: H3Event): Promise<void> {
   const { secrets } = await readStudentSession(event)
-  // Best effort, and not on the Student's critical path: the local session
-  // goes either way, and a refresh token Directus has already forgotten is
-  // not an error worth surfacing.
+  // Not on the Student's critical path: the local session goes either way.
   const revoked =
-    secrets === undefined
-      ? Promise.resolve()
-      : getDirectusAnonymousServerClient(event)
-          .request(logout({ mode: "json", refresh_token: secrets.refreshToken }))
-          .catch((error: unknown) => {
-            console.warn("[auth] Directus logout failed; clearing the session anyway", error)
-          })
+    secrets === undefined ? Promise.resolve() : revokeRefreshToken(event, secrets.refreshToken)
 
   await Promise.all([revoked, dropStudentSession(event)])
 }
@@ -156,4 +179,18 @@ export async function getStudentDirectusClient(event: H3Event): Promise<Directus
     return null
   }
   return createDirectusTokenClient(useRuntimeConfig(event).public.directusUrl, token)
+}
+
+// What every gated Nitro route needs: who is logged in, a Directus client
+// speaking for them, and one 401 when there is no live session — so that the
+// next such route (a course, an order) does not invent its own.
+export async function requireStudentDirectusClient(
+  event: H3Event,
+): Promise<{ student: Student; client: DirectusRestClient }> {
+  const { student } = await readStudentSession(event)
+  const client = await getStudentDirectusClient(event)
+  if (student === undefined || client === null) {
+    throw authError(401, "not_logged_in", authMessages.notLoggedIn)
+  }
+  return { student, client }
 }

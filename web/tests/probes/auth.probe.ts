@@ -329,6 +329,116 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   })
 })
 
+describe("password change from the account page", () => {
+  // Everything ticket 05's route is built on. The write is the Student's own,
+  // through their own session — the app has no other Directus credential.
+  it("lets a Student change their own password and locks the old one out", async () => {
+    const student = await createStudent("active")
+    const session = tokens(await login(student.email, student.password))
+    const newPassword = generatePassword()
+
+    // The endpoint the app uses, and the reason it does: see the next test.
+    const changed = await probeSend(
+      "PATCH",
+      `/users/${student.id}`,
+      { password: newPassword },
+      session.access_token,
+    )
+    expect(changed.status).toBe(204)
+
+    expect((await login(student.email, student.password)).status).toBe(401)
+    expect((await login(student.email, newPassword)).status).toBe(200)
+  })
+
+  it("answers PATCH /users/me with 403 even though it wrote the password", async () => {
+    // The trap the change-password route steers around. Directus reads the
+    // updated row back before replying; `PATCH /users/:pk` tolerates a refused
+    // read, `PATCH /users/me` does not — and the Student policy has no `read`
+    // on `directus_users` at all. So /users/me reports failure for a change
+    // that happened, which no caller can tell from a real refusal.
+    const student = await createStudent("active")
+    const session = tokens(await login(student.email, student.password))
+    const newPassword = generatePassword()
+
+    const changed = await probeSend(
+      "PATCH",
+      "/users/me",
+      { password: newPassword },
+      session.access_token,
+    )
+    expect(changed.status).toBe(403)
+    // Written anyway — this is the half that makes the 403 a lie.
+    expect((await login(student.email, newPassword)).status).toBe(200)
+  })
+
+  it("signs the Student out of every session, the changing one included", async () => {
+    // Directus 11 deletes the user's session rows on a password change and
+    // spares only the session named in the access token's `session` claim —
+    // a claim only cookie-mode logins carry. The app logs in with
+    // `mode: "json"`, so nothing is spared and the change-password route has
+    // to log the Student back in to keep the browser signed in. If this test
+    // ever goes red, Directus has changed that behaviour and the route's
+    // re-login may have become unnecessary.
+    const student = await createStudent("active")
+    const here = tokens(await login(student.email, student.password))
+    const elsewhere = tokens(await login(student.email, student.password))
+
+    const changed = await probeSend(
+      "PATCH",
+      `/users/${student.id}`,
+      { password: generatePassword() },
+      here.access_token,
+    )
+    expect(changed.status).toBe(204)
+
+    for (const session of [elsewhere, here]) {
+      const refreshed = await probeSend("POST", "/auth/refresh", {
+        refresh_token: session.refresh_token,
+        mode: "json",
+      })
+      expect(refreshed.status).toBe(401)
+    }
+  })
+
+  it("cannot change another Student's password", async () => {
+    const student = await createStudent("active")
+    const victim = await createStudent("active")
+    const session = tokens(await login(student.email, student.password))
+    const stolen = generatePassword()
+
+    const forbidden = await probeSend(
+      "PATCH",
+      `/users/${victim.id}`,
+      { password: stolen },
+      session.access_token,
+    )
+    expect(forbidden.status).toBe(403)
+    // Not merely refused — the victim's password is untouched.
+    expect((await login(victim.email, stolen)).status).toBe(401)
+    expect((await login(victim.email, victim.password)).status).toBe(200)
+  })
+
+  it.each([
+    ["status", { status: "active" }],
+    ["role", { role: null }],
+    ["email", { email: "someone-else@jedlik-nejedlik.cz" }],
+  ])("cannot change its own %s along with the password", async (_field, payload) => {
+    // The Student policy's `update` is narrowed to the `password` field. Row
+    // scope alone would let a Student edit their own role or status and
+    // self-promote, so the field list is as load-bearing as the filter.
+    const student = await createStudent("active")
+    const session = tokens(await login(student.email, student.password))
+
+    const response = await probeSend(
+      "PATCH",
+      `/users/${student.id}`,
+      { password: generatePassword(), ...payload },
+      session.access_token,
+    )
+    expect(response.status).toBe(403)
+  })
+})
+
 describe("e-mail verification", () => {
   it.each([
     ["a forged token", "?token=not-a-real-token"],
