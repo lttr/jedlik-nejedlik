@@ -8,14 +8,15 @@ references:
 # 06 — Full round-trip verification
 
 **What to build:** the area's verify criterion, proven on production:
-register → logout → login → reset e-mail → new password → login → change
-password. Documents the outcome and closes the area.
+register → verification e-mail → activate → login → logout → login →
+reset e-mail → new password → login → change password. Documents the
+outcome and closes the area.
 
 ## Acceptance criteria
 
-- [ ] Documented manual round-trip completed, including the e-mail leg;
-      Czech rendering of the reset e-mail checked (template override
-      opened as follow-up only if poor)
+- [ ] Documented manual round-trip completed, including **both** e-mail
+      legs (verification and reset); Czech rendering of each checked
+      (template override opened as follow-up only if poor)
 - [ ] Full probe suite (area 01's + auth probes) green twice
       consecutively, self-cleaning
 - [ ] Implementation notes written per the aiwork protocol (deviations,
@@ -35,8 +36,8 @@ Verification the previous run skipped — all reachable, do them:
       hit a page: refresh-failure path, session clearing, real
       `Set-Cookie` flags
 - [ ] Prove the rate-limit window **releases**, not just that it closes
-- [ ] `vp run directus:probe` with `DIRECTUS_PROBE_SERVICE_TOKEN` +
-      `DIRECTUS_PROBE_ADMIN_TOKEN`, sandbox disabled, twice
+- [ ] `vp run directus:probe` with `DIRECTUS_PROBE_ADMIN_TOKEN`
+      (no service token exists any more), sandbox disabled, twice
       consecutively
 
 Process gotchas for the session doing this work:
@@ -51,6 +52,7 @@ Process gotchas for the session doing this work:
   generate per run (GitGuardian scans PR history).
 - Sandbox builds need `NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`,
   or `@nuxt/fonts` dies on `SELF_SIGNED_CERT_IN_CHAIN`.
-- `vp build` does not work; use `vp run build`. `vp run verify:all` is
-  the full gate. Nitro refuses to boot without
-  `NUXT_DIRECTUS_SERVICE_TOKEN` — export a dummy for local checks.
+- `vp build` does not work; use `vp run build`. `vp run check:all` is
+  the full gate (the `verify:*` tasks were renamed to `check:*`). Nitro
+  no longer needs any service token; it does need `NUXT_SESSION_PASSWORD`,
+  which nuxt-auth-utils auto-generates in dev.

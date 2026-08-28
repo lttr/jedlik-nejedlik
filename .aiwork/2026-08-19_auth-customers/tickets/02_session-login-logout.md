@@ -29,6 +29,10 @@ page is bounced to login and returned after.
       and client (no hydration flicker)
 - [ ] Named `auth` route middleware, opt-in per page, guards `/muj-ucet`
 - [ ] Wrong credentials show a generic Czech error (no enumeration)
+- [ ] An **Unverified** account (registered, link not yet clicked) gets a
+      Czech "confirm your e-mail first" message if Directus distinguishes
+      that case from bad credentials — otherwise the generic error, with
+      the finding recorded
 - [ ] `auth.probe.ts` covers login/refresh/logout round-trip and wrong
       credentials against production, self-cleaning, probe-suite
       conventions
@@ -45,7 +49,8 @@ page is bounced to login and returned after.
 - Wrap the module's `user`-shaped API behind Student-named identifiers
   (GLOSSARY.md); don't leak `useUserSession()` into pages. Whether the
   e-mail in the cookie violates ADR 0001 (second store of identity vs
-  cache) is the **user's call — ask, don't decide**.
+  cache) is the **user's call — ask, don't decide**; the spec's Further
+  Notes now carries a recommendation ("cache") awaiting confirmation.
 - Add a **per-IP rate limit on login** — Directus's per-user
   `auth_login_attempts: 7` does nothing against credential stuffing
   spread across many accounts, and registration and password-request are
