@@ -30,4 +30,21 @@ export const authMessages = {
   verificationUnavailable: "Ověření e-mailu je teď nedostupné. Zkuste to prosím za chvíli.",
   tooManyVerifications: "Příliš mnoho pokusů o ověření. Zkuste to prosím za chvíli.",
   emailVerified: "E-mail je ověřený. Teď se můžete přihlásit.",
+
+  // Password reset. The request leg says the same thing whether or not the
+  // address has an account — Directus deliberately answers 204 either way, so
+  // there is nothing else it could honestly say.
+  resetLinkSent:
+    "Pokud u nás účet s touto adresou existuje, poslali jsme na ni odkaz pro nastavení nového hesla.",
+  tooManyResetRequests: "Příliš mnoho žádostí o obnovu hesla. Zkuste to prosím za chvíli.",
+  tooManyResets: "Příliš mnoho pokusů o nastavení nového hesla. Zkuste to prosím za chvíli.",
+  resetRequestUnavailable: "Obnova hesla je teď nedostupná. Zkuste to prosím za chvíli.",
+  // Expired, already used and forged all come back the same way, so this
+  // covers all three; the page adds the way to ask for a fresh link.
+  resetFailed: "Odkaz pro obnovu hesla je neplatný, už byl použit, nebo mu vypršela platnost.",
+  resetUnavailable: "Nastavení nového hesla je teď nedostupné. Zkuste to prosím za chvíli.",
+  passwordChanged: "Heslo je změněné. Teď se můžete přihlásit.",
+
+  // Both flows end with "we sent you an e-mail", and both have to say this.
+  checkSpam: "Pokud zpráva do pár minut nedorazí, mrkněte se prosím i do spamu.",
 } as const

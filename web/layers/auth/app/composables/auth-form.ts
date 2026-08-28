@@ -1,6 +1,10 @@
 export interface AuthForm {
   pending: Ref<boolean>
   errorMessage: Ref<string>
+  // The route's own name for the last failure (`invalid_token`, `rate_limited`,
+  // …), for a form that has to react to which failure it was rather than only
+  // show it. Empty whenever `errorMessage` is.
+  errorCode: Ref<string>
   // `validate` returns a Czech complaint, or null when the form may be sent.
   submit: (action: () => Promise<void>, validate?: () => string | null) => Promise<void>
 }
@@ -12,6 +16,7 @@ export interface AuthForm {
 export function useAuthForm(): AuthForm {
   const pending = ref(false)
   const errorMessage = ref("")
+  const errorCode = ref("")
 
   async function submit(
     action: () => Promise<void>,
@@ -20,19 +25,24 @@ export function useAuthForm(): AuthForm {
     const complaint = validate?.() ?? null
     if (complaint !== null) {
       errorMessage.value = complaint
+      // The browser caught this one, so there is no route code to report.
+      errorCode.value = ""
       return
     }
 
     pending.value = true
     errorMessage.value = ""
+    errorCode.value = ""
     try {
       await action()
     } catch (error) {
-      errorMessage.value = authErrorMessage(error)
+      const failure = authFailure(error)
+      errorMessage.value = failure.message
+      errorCode.value = failure.code
     } finally {
       pending.value = false
     }
   }
 
-  return { pending, errorMessage, submit }
+  return { pending, errorMessage, errorCode, submit }
 }

@@ -76,16 +76,31 @@ function tokens(response: { body: { data?: unknown } }): {
 // (layers/auth/server/utils/registration.ts, built from the site URL).
 const VERIFICATION_URL = "https://www.jedlik-nejedlik.cz/overeni-emailu"
 
-// Directus rate-limits `/users/register` per IP itself, on top of the app's own
-// limiter: a burst of seven answers 429 and the budget takes about 30 seconds
-// to come back (measured 2026-08-28). A suite that registers a handful of
-// throwaways in a row is exactly such a burst, so back off and retry — that
-// budget has nothing to do with the behaviour under test, and asserting on it
-// would only make the suite flaky. Each registration test gets
-// REGISTRATION_TIMEOUT_MS to absorb the wait.
-const REGISTER_RETRY_MS = 5000
-const REGISTER_ATTEMPTS = 8
-const REGISTRATION_TIMEOUT_MS = 120_000
+// The absolute URL the app asks Directus to put in the password-reset e-mail
+// (layers/auth/server/utils/password-reset.ts, built the same way).
+const RESET_URL = "https://www.jedlik-nejedlik.cz/obnova-hesla"
+
+// Directus rate-limits the unauthenticated e-mail-sending endpoints per IP
+// itself, on top of the app's own limiter: a burst of seven answers 429 and
+// the budget takes about 30 seconds to come back (measured 2026-08-28). A
+// suite that registers or asks for a reset a handful of times in a row is
+// exactly such a burst, so back off and retry — that budget has nothing to do
+// with the behaviour under test, and asserting on it would only make the suite
+// flaky. Those tests get EMAIL_ENDPOINT_TIMEOUT_MS to absorb the wait.
+const BACKOFF_MS = 5000
+const BACKOFF_ATTEMPTS = 8
+const EMAIL_ENDPOINT_TIMEOUT_MS = 120_000
+
+async function postWithBackoff(path: string, payload: unknown): Promise<ProbeResponse> {
+  let response = await probeSend("POST", path, payload)
+  for (let attempt = 1; attempt < BACKOFF_ATTEMPTS && response.status === 429; attempt++) {
+    await new Promise((resolve) => {
+      setTimeout(resolve, BACKOFF_MS)
+    })
+    response = await probeSend("POST", path, payload)
+  }
+  return response
+}
 
 // Registration is anonymous: no token, exactly as the Nitro route calls it.
 // The `verification_url` is omitted except where the test is about it, so that
@@ -96,19 +111,20 @@ async function register(
   password: string,
   verificationUrl?: string,
 ): Promise<ProbeResponse> {
-  const payload = {
+  return postWithBackoff("/users/register", {
     email,
     password,
     ...(verificationUrl === undefined ? {} : { verification_url: verificationUrl }),
-  }
-  let response = await probeSend("POST", "/users/register", payload)
-  for (let attempt = 1; attempt < REGISTER_ATTEMPTS && response.status === 429; attempt++) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, REGISTER_RETRY_MS)
-    })
-    response = await probeSend("POST", "/users/register", payload)
-  }
-  return response
+  })
+}
+
+// Same treatment for the reset request, and the same reason to keep the
+// `reset_url` optional: PASSWORD_RESET_URL_ALLOW_LIST gets its own test.
+async function requestReset(email: string, resetUrl?: string): Promise<ProbeResponse> {
+  return postWithBackoff("/auth/password/request", {
+    email,
+    ...(resetUrl === undefined ? {} : { reset_url: resetUrl }),
+  })
 }
 
 // Registered users have no id in the 204 response; find them as admin so the
@@ -244,7 +260,7 @@ describe("login failures stay indistinguishable", () => {
   })
 })
 
-describe("public registration", { timeout: REGISTRATION_TIMEOUT_MS }, () => {
+describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   // Directus rate-limits `/users/register` per IP itself (429), on top of our
   // own limiter, so this suite spends registrations sparingly: each test makes
   // the fewest calls that still prove its point.
@@ -323,5 +339,66 @@ describe("e-mail verification", () => {
     const response = await probe(`/users/register/verify-email${query}`)
     expect(response.status).toBe(403)
     expect(errorCode(response)).toBe("INVALID_TOKEN")
+  })
+})
+
+describe("password reset request", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
+  it("answers an unknown address exactly like a registered one", async () => {
+    // The uniform confirmation the page shows is only honest because Directus
+    // swallows the "no such user" case itself: it answers 204 either way, so
+    // nothing downstream can tell them apart (story 13).
+    const known = await requestReset(active.email)
+    const unknown = await requestReset(throwawayEmail("nobody"))
+    expect(known.status).toBe(204)
+    expect(unknown.status).toBe(known.status)
+    expect(unknown.body).toEqual(known.body)
+  })
+
+  it("answers an Unverified account like any other", async () => {
+    // A Student who never followed the verification link is not a special
+    // case here either — no reset mail, no different answer.
+    expect((await requestReset(unverified.email)).status).toBe(204)
+  })
+
+  // The ops gate for this flow, and the reason it is a test rather than a
+  // ticked box: Directus only mails a `reset_url` it recognises, and it
+  // rejects an unrecognised one with 400 — for a *registered* address only,
+  // since an unknown one never gets that far. So a wrong allow list does not
+  // merely break the flow, it makes accounts enumerable through the status
+  // code. Fix by setting, on the Directus instance,
+  // PASSWORD_RESET_URL_ALLOW_LIST to exactly RESET_URL.
+  it("accepts the reset URL the app sends (PASSWORD_RESET_URL_ALLOW_LIST)", async () => {
+    const response = await requestReset(active.email, RESET_URL)
+    expect(response.status).toBe(204)
+  })
+})
+
+describe("password reset completion", () => {
+  it.each([
+    ["a forged token", "not-a-real-token"],
+    ["an empty token", ""],
+  ])("rejects %s", async (_label, token) => {
+    // Expired, already used and forged all land here, so the page shows one
+    // message and offers a fresh link (story 15). The app treats any Directus
+    // rejection other than FAILED_VALIDATION as a dead link, so the exact code
+    // does not have to be pinned — only that it is a rejection, and that the
+    // instance never accepts a token it did not mint.
+    const response = await probeSend("POST", "/auth/password/reset", {
+      token,
+      password: generatePassword(),
+    })
+    expect(response.status).toBeGreaterThanOrEqual(400)
+    expect(errorCode(response)).not.toBe("FAILED_VALIDATION")
+  })
+
+  it("enforces the password policy before it accepts the token", async () => {
+    // Why the route pre-checks the policy: a too-short password is answered
+    // with FAILED_VALIDATION, which must not be reported to the Student as a
+    // dead link.
+    const response = await probeSend("POST", "/auth/password/reset", {
+      token: "not-a-real-token",
+      password: "x".repeat(PASSWORD_MIN_LENGTH - 1),
+    })
+    expect(errorCode(response)).toBe("FAILED_VALIDATION")
   })
 })

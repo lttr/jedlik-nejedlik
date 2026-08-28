@@ -81,3 +81,21 @@ export const VERIFY_EMAIL_RATE_LIMIT: RateLimit = {
   max: 20,
   message: authMessages.tooManyVerifications,
 }
+
+// Asking for a reset e-mail sends mail to an address the requester names, so
+// this is the one unauthenticated route that can be turned into a mailing
+// machine. Kept tighter than registration accordingly.
+export const PASSWORD_REQUEST_RATE_LIMIT: RateLimit = {
+  bucket: "password-request",
+  max: 10,
+  message: authMessages.tooManyResetRequests,
+}
+
+// Completing a reset sends nothing and needs a token nobody can guess, so this
+// budget only has to absorb a Student mistyping a too-short password — which
+// is also why it says something different from the request leg.
+export const PASSWORD_RESET_RATE_LIMIT: RateLimit = {
+  bucket: "password-reset",
+  max: 20,
+  message: authMessages.tooManyResets,
+}
