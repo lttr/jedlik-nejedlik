@@ -67,21 +67,21 @@ export default defineConfig({
       },
       // Tools run directly (not via nested `vp run -r`) so the cached unit is
       // the leaf command and `srcInput` applies to it.
-      "verify:check": { command: "vp check", input: checkInput, dependsOn: ["nuxt:prepare"] },
-      "verify:slowlint": {
+      "check:lint": { command: "vp check", input: checkInput, dependsOn: ["nuxt:prepare"] },
+      "check:slowlint": {
         command: "eslint .",
         cwd: "web",
         input: srcInput,
         dependsOn: ["nuxt:prepare"],
       },
-      "verify:typecheck": {
+      "check:typecheck": {
         command: "nuxi typecheck",
         cwd: "web",
         input: srcInput,
         dependsOn: ["nuxt:prepare"],
       },
-      "verify:fallow": { command: "fallow", input: srcInput },
-      "verify:test": {
+      "check:fallow": { command: "fallow", input: srcInput },
+      "check:test": {
         command: "vp test run --config vitest.unit.config.ts",
         cwd: "web",
         input: srcInput,
@@ -91,21 +91,21 @@ export default defineConfig({
       "directus:pull": { command: "directus-sync pull", cache: false },
       "directus:diff": { command: "directus-sync diff", cache: false },
       // On-demand permission probes against the production instance; not in
-      // verify:all on purpose.
+      // check:all on purpose.
       // Stamps .directus-probe-stamp on success — the pre-commit probe gate
       // (scripts/check-probe-stamp.sh) requires a stamp newer than staged
       // permission-touching files.
       "directus:probe": { command: "scripts/directus-probe.sh", cache: false },
-      "verify:build": { command: "nuxi build", cwd: "web", input: srcInput },
-      "verify:all": {
-        command: "echo verify done",
+      "check:build": { command: "nuxi build", cwd: "web", input: srcInput },
+      "check:all": {
+        command: "echo checks done",
         dependsOn: [
-          "verify:check",
-          "verify:slowlint",
-          "verify:typecheck",
-          "verify:fallow",
-          "verify:test",
-          "verify:build",
+          "check:lint",
+          "check:slowlint",
+          "check:typecheck",
+          "check:fallow",
+          "check:test",
+          "check:build",
         ],
       },
     },

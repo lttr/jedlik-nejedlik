@@ -46,14 +46,14 @@ Linting is intentionally strict — a large pedantic Oxlint rule set (see the
 `lint` block in `vite.config.ts`), plus a separate type-aware ESLint pass
 (`web/eslint.config.js`). Rules are either **error** or **off**; never `warn`.
 
-`vp run verify` runs the full gate, each step independently cached by Vite+:
+`vp run check:all` runs the full gate, each step independently cached by Vite+:
 
-1. `verify:check` — oxfmt + oxlint (`vp check`)
-2. `verify:slowlint` — full ESLint
-3. `verify:typecheck` — `nuxi typecheck`
-4. `verify:fallow` — dead-code / unused-export detection
-5. `verify:test` — unit tests (`web/tests/unit/`)
-6. `verify:build` — `nuxi build`
+1. `check:lint` — oxfmt + oxlint (`vp check`)
+2. `check:slowlint` — full ESLint
+3. `check:typecheck` — `nuxi typecheck`
+4. `check:fallow` — dead-code / unused-export detection
+5. `check:test` — unit tests (`web/tests/unit/`)
+6. `check:build` — `nuxi build`
 
 A **pre-commit hook** (`vp staged`) auto-formats and `--fix`es staged files, so
 on-disk contents may change after `git commit`.

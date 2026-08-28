@@ -66,7 +66,7 @@ Improve all rendered text with `/czech-typography` skill.
 
 ## Step 5 - Verify
 
-1. Run `vp run verify:all` — the only verification command (lint, typecheck, unit tests, build; caching makes repeats free). Never run the sub-tasks standalone.
+1. Run `vp run check:all` — the only static-correctness gate (lint, typecheck, unit tests, build; caching makes repeats free). Never run the sub-tasks standalone.
 2. If the branch touches `directus/config/**` or `web/server/**`, run `vp run directus:probe` — the pre-commit gate blocks the commit without a fresh probe stamp.
 3. Browser check, executable procedure: use the `run-jedlik-nejedlik` skill with `agent-browser`, screenshot every changed route into `.aiwork/{task}/screenshots/` (gitignored — working evidence, not repository content), and list the screenshot paths in implementation-notes and the final report.
 4. Fill the "Verification evidence" table in the spec (tests path, probe timestamp, screenshot paths — or explicit "n/a: why"), then run `scripts/check-evidence-table.sh` to confirm no cell is empty.

@@ -1,7 +1,7 @@
 # Verification log
 
 Every verification step in a Claude Code session — each `vp lint --fix` after a
-write, each `vp run verify:all`, each `git commit` with its pre-commit gate —
+write, each `vp run check:all`, each `git commit` with its pre-commit gate —
 is appended as one JSON line to a scratch log
 outside the repo: `${TMPDIR:-/tmp}/verify-log-jedlik-nejedlik.jsonl`.
 `scripts/verify-log.sh path` prints it; `$VERIFY_LOG_FILE` overrides it. It is
@@ -62,7 +62,7 @@ failures — belong in the log.
   "kind": "run",
   "ts": "2026-08-27T10:36:50+02:00",
   "source": "agent-bash",
-  "command": "vp run verify:all",
+  "command": "vp run check:all",
   "exit": 0,
   "duration_ms": 247,
   "branch": "master",

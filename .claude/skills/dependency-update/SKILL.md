@@ -154,7 +154,7 @@ says otherwise.
 ## 6. Verify, and the repair loop
 
 ```bash
-vp run verify:all
+vp run check:all
 ```
 
 This is the gate (run it bare, per CLAUDE.md).

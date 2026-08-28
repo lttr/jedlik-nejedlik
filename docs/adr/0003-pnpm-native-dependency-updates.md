@@ -21,7 +21,7 @@ No Renovate. `pnpm outdated` is the work list and pnpm's own
 `minimumReleaseAge` — left at its 24-hour default — is the release-age gate.
 A weekly Claude Code cloud routine reads that list, applies the bumps,
 repairs the code, runs
-`vp run verify:all` and opens the PR from a `claude/deps-*` branch. All
+`vp run check:all` and opens the PR from a `claude/deps-*` branch. All
 judgement lives in a committed skill (`.claude/skills/dependency-update/`),
 so the trigger stays swappable.
 
