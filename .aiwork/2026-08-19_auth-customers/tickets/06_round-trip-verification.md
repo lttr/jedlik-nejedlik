@@ -37,10 +37,11 @@ Verification the previous run skipped — all reachable, do them:
 - [x] Test `safeRedirectPath` **as shipped** (import the real export):
       `//host`, `/\host`, `/\/host`, absolute URLs, `javascript:`,
       control characters, non-string inputs
-- [ ] Forge a refresh cookie (or the session cookie's equivalent) and
+- [x] Forge a refresh cookie (or the session cookie's equivalent) and
       hit a page: refresh-failure path, session clearing, real
-      `Set-Cookie` flags
-- [ ] Prove the rate-limit window **releases**, not just that it closes
+      `Set-Cookie` flags — all three observed, see the session log
+- [x] Prove the rate-limit window **releases**, not just that it closes —
+      `web/tests/unit/rate-limit.test.ts`
 - [x] `vp run directus:probe` with `DIRECTUS_PROBE_ADMIN_TOKEN`
       (no service token exists any more), sandbox disabled, twice
       consecutively
@@ -84,8 +85,21 @@ with a local `pnpm dev:agent` and `agent-browser`:
 - **Dead reset link** — `/obnova-hesla?token=bogus` renders the form,
   and submitting it swaps in the Czech dead-link panel with "Poslat nový
   odkaz".
-- **Cleanup** — both throwaway users deleted; only the three permanent
-  `probe-student-*` / `probe-author` fixtures remain.
+- **Forged session cookie** — `GET /muj-ucet` carrying a syntactically
+  plausible but unsealed `nuxt-session` answers
+  `302 → /prihlaseni?redirect=/muj-ucet`, and the real `Set-Cookie` is
+  `Path=/; HttpOnly; Secure; SameSite=Lax` with a 30-day expiry. h3 mints
+  a fresh _empty_ sealed session on a failed seal rather than clearing
+  the cookie — harmless, but it means garbage always gets a cookie back.
+- **Refresh failure clears the session.** A Student logged in through
+  `POST /api/auth/login`; their Directus sessions were then deleted
+  server-side (an admin password write). `/muj-ucet` still rendered 200
+  while the 15-minute access token lasted, and once it expired the next
+  request answered `302 → /prihlaseni?redirect=/muj-ucet` with the
+  session cookie emptied in the jar. So the refresh-failure path clears
+  the session rather than leaving a zombie one.
+- **Cleanup** — all three throwaway users deleted; only the three
+  permanent `probe-student-*` / `probe-author` fixtures remain.
 
 Still open, needing a real inbox: opening the verification e-mail and the
 reset e-mail, checking their Czech rendering, and completing each from
