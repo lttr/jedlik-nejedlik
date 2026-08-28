@@ -14,6 +14,8 @@ export default defineNuxtConfig({
     // `robots: false` sets X-Robots-Tag + meta noindex and drops the route
     // from the sitemap.
     "/muj-ucet": { robots: false },
+    "/overeni-emailu": { robots: false },
     "/prihlaseni": { robots: false },
+    "/registrace": { robots: false },
   },
 })

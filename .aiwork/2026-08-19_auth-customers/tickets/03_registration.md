@@ -1,5 +1,5 @@
 ---
-status: ready
+status: done
 blocked_by: [01, 02]
 references:
   - "Spec: ../spec.md"
@@ -30,30 +30,43 @@ honoured by login (ticket 02), not here.
 
 ## Acceptance criteria
 
-- [ ] Nitro register route proxies `POST /users/register`; the page never
+- [x] Nitro register route proxies `POST /users/register`; the page never
       calls Directus directly. No role in the payload — the instance
-      assigns it from `public_registration_role`
-- [ ] No user-creating credential anywhere in the app; grep proves no
-      Student role UUID in `web/` source
-- [ ] Uniform confirmation for fresh and already-registered e-mails
-      (Directus answers 204 to both); the confirmation text tells an
-      existing Student to log in instead
-- [ ] Password shorter than 8 chars → clear Czech error, client-side
-      before submit, via a shared `validatePassword` helper (not
-      copy-pasted per page)
-- [ ] `/overeni-emailu` activates a valid token and forwards to
-      `/prihlaseni`; expired or already-used token → Czech explanation
-      plus a route onward (story 31)
-- [ ] Token cleared from the URL with `replaceState` after activation,
-      as on the reset page
-- [ ] Per-IP rate limit on the register route (reuse ticket 02's
-      limiter); no captcha
-- [ ] Logged-in Student opening `/registrace` is forwarded onward
-- [ ] Accessibility: password hint tied to its input with
-      `aria-describedby`, `autofocus` on the first field (all auth pages)
+      assigns it from `public_registration_role` (probe: the created row
+      is Student-role; dev-server log shows the app's own request)
+- [x] No user-creating credential anywhere in the app; grep proves no
+      Student role UUID in `web/` source (`ea81589e` / `186fdb62` /
+      `STUDENT_ROLE` / `SERVICE_TOKEN`: no hits)
+- [x] Uniform confirmation for fresh and already-registered e-mails
+      (probe: both 204; browser: both showed the same confirmation, which
+      tells an existing Student to log in instead)
+- [x] Password shorter than 8 chars → clear Czech error, client-side
+      before submit, via the shared `validatePassword` helper
+      (`shared/utils/password.ts`, 7 unit tests; observed in the browser)
+- [x] `/overeni-emailu` activates a valid token and forwards to
+      `/prihlaseni` with a Czech success notice; expired/used/missing
+      token → Czech explanation plus routes onward (story 31). The
+      activation leg was exercised with a temporary local stub — a real
+      token needs inbox access and stays with ticket 06's manual
+      round-trip
+- [x] Token cleared from the URL after activation — observed: the address
+      bar was `/overeni-emailu` with no query on both branches
+- [x] Per-IP rate limit on the register route (ticket 02's limiter,
+      10 / 15 min); measured closing at the 11th call with the Czech
+      message. No captcha
+- [x] Logged-in Student opening `/registrace` is forwarded onward
+      (observed: to `/muj-ucet`, and to `?redirect=` when given)
+- [x] Accessibility: password hint tied to its input with
+      `aria-describedby` (resolves in the DOM), `autofocus` on the first
+      field
 - [ ] Probes: register creates exactly a Student-role **Unverified**
       user; a duplicate e-mail also returns 204; an Unverified user
-      cannot log in; verify-email activates; cleanup removes throwaways
+      cannot log in; verify-email rejects a dead token; cleanup removes
+      throwaways — **all green (77/78)**. The one red test is the ops
+      gate: `USER_REGISTER_URL_ALLOW_LIST` is not set on the instance, so
+      Directus refuses the app's `verification_url` and no verification
+      e-mail is ever sent. Set it to
+      `https://www.jedlik-nejedlik.cz/overeni-emailu` and this goes green
 
 ## Notes
 

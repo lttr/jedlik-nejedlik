@@ -12,36 +12,26 @@ import type { Credentials, Student, StudentSecrets } from "../../shared/types/st
 // starts valid cannot finish expired.
 const REFRESH_SKEW_MS = 30_000
 
+// The e-mail is normalised on the way in (see StudentEmail); the session
+// caches the lowercased form, which is all we can do — the Student policy has
+// no `read` on `directus_users`, so the stored value can never be read back.
 const CredentialsSchema = z.object({
-  // Directus matches e-mails case-insensitively at login but stores them
-  // verbatim (measured in tests/probes/auth.probe.ts), and we cannot read the
-  // stored value back — the Student policy has no `read` on `directus_users`.
-  // Lowercasing makes the cached e-mail deterministic across logins.
-  email: z.string().trim().toLowerCase().pipe(z.email()),
+  email: StudentEmail,
   password: z.string().min(1),
 })
 
 // A malformed login payload answers exactly like a wrong password: telling
 // the two apart is the first step of enumerating accounts.
 export async function readCredentials(event: H3Event): Promise<Credentials> {
-  const body: unknown = await readBody(event).catch(() => undefined)
-  const parsed = CredentialsSchema.safeParse(body)
-  if (!parsed.success) {
-    throw authError(401, "invalid_credentials", authMessages.invalidCredentials)
-  }
-  return parsed.data
+  return readAuthBody(
+    event,
+    CredentialsSchema,
+    authError(401, "invalid_credentials", authMessages.invalidCredentials),
+  )
 }
 
-// Shape of a rejected @directus/sdk request: the parsed Directus error body.
-// A transport failure (instance down, DNS, TLS) has no `errors` at all, which
-// is exactly the distinction the refresh path needs.
-const DirectusErrors = z.object({
-  errors: z.array(z.object({ extensions: z.object({ code: z.string() }) })).min(1),
-})
-
 function isCredentialRejection(error: unknown): boolean {
-  const parsed = DirectusErrors.safeParse(error)
-  return parsed.success && parsed.data.errors[0]?.extensions.code === "INVALID_CREDENTIALS"
+  return directusErrorCode(error) === "INVALID_CREDENTIALS"
 }
 
 function toStudentSecrets(data: AuthenticationData): StudentSecrets {
