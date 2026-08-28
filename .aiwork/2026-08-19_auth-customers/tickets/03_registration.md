@@ -59,14 +59,14 @@ honoured by login (ticket 02), not here.
 - [x] Accessibility: password hint tied to its input with
       `aria-describedby` (resolves in the DOM), `autofocus` on the first
       field
-- [ ] Probes: register creates exactly a Student-role **Unverified**
+- [x] Probes: register creates exactly a Student-role **Unverified**
       user; a duplicate e-mail also returns 204; an Unverified user
       cannot log in; verify-email rejects a dead token; cleanup removes
-      throwaways — **all green (77/78)**. The one red test is the ops
-      gate: `USER_REGISTER_URL_ALLOW_LIST` is not set on the instance, so
-      Directus refuses the app's `verification_url` and no verification
-      e-mail is ever sent. Set it to
-      `https://www.jedlik-nejedlik.cz/overeni-emailu` and this goes green
+      throwaways — **all green**. The ops gate
+      (`USER_REGISTER_URL_ALLOW_LIST`) went green on 2026-08-28 once the
+      Directus service came back: 90/90 probes pass twice consecutively,
+      and a browser registration against the live instance returns the
+      Czech "ověřovací e-mail" confirmation instead of the old 502
 
 ## Notes
 

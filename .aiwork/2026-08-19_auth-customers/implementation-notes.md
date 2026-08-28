@@ -756,3 +756,78 @@ Five conflicts, all foreseen in ticket 05's notes. Resolutions:
   the now-unused global rule.
 
 `vp run check:all` is green on the merged tree.
+
+## 2026-08-28 (evening) — verification session, after the Directus outage
+
+The `503 no available server` that blocked tickets 03–05 was an outage,
+not a misconfiguration. With the service healthy again, everything the
+previous sessions had to leave undecided decided itself.
+
+### The two ops gates are green — no instance change was needed
+
+`vp run directus:probe` (sandbox disabled, `DIRECTUS_PROBE_ADMIN_TOKEN`):
+**90/90, twice consecutively**, self-cleaning. That includes both gates
+the earlier sessions could not run:
+
+- `"accepts the verification URL the app sends (USER_REGISTER_URL_ALLOW_LIST)"`
+- `"accepts the reset URL the app sends (PASSWORD_RESET_URL_ALLOW_LIST)"`
+
+So ticket 04's compose theory — that Coolify never substitutes
+`USER_REGISTER_URL_ALLOW_LIST` because the one-click compose does not
+reference it — is **wrong, or at least no longer true**. The key reaches
+the container. Nothing was changed on the instance this session; the
+gates simply had a healthy backend to answer them. Worth remembering: a
+503 makes every red test look like a config bug.
+
+`vp run check:all` is green on the branch.
+
+### Browser pass against the live instance
+
+Local `pnpm dev:agent` + `agent-browser`, driving production Directus.
+Registration, login, `/muj-ucet` change-password, logout, re-login with
+the new password, the reset request leg and the dead-link panel all
+behave as their tickets describe (full list in ticket 06's session log).
+The registration leg is the notable one: it used to answer 502, and now
+returns the Czech "Poslali jsme vám ověřovací e-mail…" confirmation.
+
+Ticket 05's design held up in the browser: after a password change the
+tab stays logged in, which is the route's own re-login working.
+
+Two throwaway users were created and deleted afterwards; only the three
+permanent `probe-student-*` / `probe-author` fixtures remain.
+
+### Two of ticket 06's rework items closed
+
+- **The rate-limit window releases.** New `web/tests/unit/rate-limit.test.ts`
+  drives the real shipped `enforceRateLimit` under fake timers: `max`
+  attempts pass, the next throws, one millisecond short of `WINDOW_MS`
+  still throws, and at `WINDOW_MS` it opens again. A third test proves
+  that hammering a closed bucket does not push the release out — the
+  "do not extend the window on a rejected attempt" comment is now
+  pinned by a test. The module's auto-imports (`getRequestIP`,
+  `authError`, `authMessages`) are free identifiers at runtime, so
+  `vi.stubGlobal` is enough to exercise the module itself rather than a
+  copy of its algorithm.
+- **A forged session cookie is not honoured.** `GET /muj-ucet` with a
+  syntactically plausible but unsealed `nuxt-session` value answers
+  `302 → /prihlaseni?redirect=/muj-ucet`, and the real `Set-Cookie`
+  carries `Path=/; HttpOnly; Secure; SameSite=Lax` with a 30-day expiry.
+  Note the response also mints a _fresh empty_ sealed session rather
+  than clearing the cookie — h3's behaviour when a seal fails to verify.
+  Harmless (the session is empty and the page is not served) but it does
+  mean a client sending garbage always gets a cookie back.
+
+### Still open
+
+- **The two e-mail legs.** Opening the verification e-mail and the reset
+  e-mail, checking their Czech rendering, and completing each from its
+  genuine link. Needs a real inbox; it is the user's to do and the only
+  thing keeping ticket 06 from `done`.
+- **`REFRESH_TOKEN_TTL` stays unverified.** Directus exposes no field for
+  it, so no probe can assert it. `ACCESS_TOKEN_TTL` _is_ pinned
+  (`data.expires === 15 * 60 * 1000`).
+- **No server-route test harness.** The forged-cookie proof above is a
+  one-off curl, not a test, for the same reason ticket 05 left its 502
+  re-login branch untested: nothing in the repo can construct an
+  `H3Event`. If a third route-level proof comes up, build the harness
+  rather than curl again.
