@@ -14,14 +14,23 @@ allowBuilds:
 
 # Adopt vite-plus: alias `vite` to VoidZero's drop-in build. `vitest` is NOT
 # aliased — see the note under `overrides` below.
-# The `vite-plus` CLI row is an EXACT pin, not `latest` and not a range, because
-# `web/package.json` pins `rolldown` to the version this release bundles
-# (0.3.0 -> rolldown 1.2.5). rolldown ships a native binary and a skew against
-# the CLI's own copy breaks `vp` outright, so a caret here would let
-# `pnpm update` float the CLI away from the rolldown pin. Move the two together,
-# or neither.
+#
+# FOUR ROWS MOVE AS ONE. Both rows here are EXACT pins — not `latest`, not a
+# range — and so are `rolldown` and `vitest` in `web/package.json`. vite-plus
+# 0.3.0 bundles core 0.3.0, rolldown 1.2.5 and vitest 4.1.11; those are the
+# numbers the other three rows carry.
+#
+# Why exact: rolldown ships a native binary, and a skew between it and the copy
+# the CLI bundles breaks `vp` outright. The core alias is the same hazard from
+# the other side — vite-plus 0.3.0 dropped core's `./binding` subpath export, so
+# a CLI and a core from different releases fail to resolve the native binding at
+# all. That is not hypothetical: it broke `pnpm install` during the 0.2.5 -> 0.3.0
+# upgrade (.aiwork/2026-08-26_nuxt-4.5-toolchain-upgrade/notes.md, ticket 02).
+#
+# So `latest` or a caret on either row would let `pnpm update` float one member
+# of the set while the pinned three stayed put. Bump all four together, or none.
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
   vite-plus: 0.3.0
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
