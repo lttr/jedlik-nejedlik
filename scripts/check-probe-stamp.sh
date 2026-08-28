@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
-# Pre-commit probe gate: when permission-touching paths are staged
-# (directus/config/** or web/server/**), require a Directus probe run
+# Pre-commit probe gate: when the Directus config dump is staged
+# (directus/config/**), require a Directus probe run
 # (`vp run directus:probe`) fresher than the newest staged file in those
 # paths. The probe stamps .directus-probe-stamp via directus-probe.sh.
 set -uo pipefail
 
 cd "$(git rev-parse --show-toplevel)" || exit 0
 
-mapfile -t gated < <(git diff --cached --name-only -- "directus/config" "web/server")
+# Only the dump: the probes exercise Directus roles over HTTP and never load
+# Nitro code, so no web/server change can alter their outcome.
+mapfile -t gated < <(git diff --cached --name-only -- "directus/config")
 [ ${#gated[@]} -eq 0 ] && exit 0
 
 STAMP=".directus-probe-stamp"
 fail() {
   {
-    echo "probe gate: staged permission-touching files require a fresh probe run."
+    echo "probe gate: staged Directus config changes require a fresh probe run."
     printf '  %s\n' "${gated[@]}"
     echo "Run \`vp run directus:probe\` and commit again."
   } >&2

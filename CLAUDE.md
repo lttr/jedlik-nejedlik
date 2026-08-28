@@ -12,7 +12,6 @@ Three separate buckets — none replaces the others:
 - Never pipe a check through `head` / `tail` / `grep`. Run it bare — piping swallows the exit code the harness would report.
 - If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes.
 - Verification commands are auto-logged by hooks to a scratch JSONL outside the repo; read it with `scripts/verify-log-report.sh`. See `docs/verify-log.md`.
-- Changes touching `directus/config/**` or `web/server/**` need a fresh `vp run directus:probe` before commit (pre-commit gate checks the stamp).
 
 ## Non-obvious
 
