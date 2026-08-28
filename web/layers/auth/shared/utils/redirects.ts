@@ -1,6 +1,16 @@
 // Where a Student ends up after logging in without an origin.
 export const DEFAULT_AUTH_REDIRECT = "/muj-ucet"
 
+// The page the link in Directus's verification e-mail lands on. Named here
+// rather than in the registration route because the server has to build the
+// absolute form of it and the page has to strip its token — two sides of one
+// contract.
+export const VERIFY_EMAIL_PATH = "/overeni-emailu"
+
+// How /overeni-emailu tells the login form that the account was just
+// activated. A bare literal on both sides would agree only by luck.
+export const EMAIL_VERIFIED_QUERY = "overeno"
+
 // Resolving against a throwaway origin is what makes this safe: every way of
 // escaping to another host — an absolute URL, `//evil.tld`, its backslash and
 // control-character variants — changes the origin, and the URL parser knows

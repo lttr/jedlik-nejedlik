@@ -11,4 +11,23 @@ export const authMessages = {
   tooManyLogins: "Příliš mnoho pokusů o přihlášení. Zkuste to prosím za chvíli.",
   unavailable: "Přihlášení je teď nedostupné. Zkuste to prosím za chvíli.",
   unexpected: "Něco se nepovedlo. Zkuste to prosím později.",
+
+  // Registration. The e-mail is the only thing worth complaining about
+  // specifically — a duplicate address cannot be reported at all, because
+  // Directus answers 204 either way to keep accounts unenumerable.
+  invalidEmail: "Zadejte prosím platný e-mail.",
+  // The number must stay in step with PASSWORD_MIN_LENGTH in password.ts;
+  // tests/unit/password.test.ts asserts the two agree.
+  passwordTooShort: "Heslo musí mít alespoň 8 znaků.",
+  tooManyRegistrations: "Příliš mnoho pokusů o registraci. Zkuste to prosím za chvíli.",
+  registrationUnavailable: "Registrace je teď nedostupná. Zkuste to prosím za chvíli.",
+
+  // E-mail verification. A dead link is the one place a Student can be
+  // stranded, so the message says what to do next (story 31); the page adds
+  // the links.
+  verificationFailed:
+    "Odkaz pro ověření e-mailu je neplatný, už byl použit, nebo mu vypršela platnost.",
+  verificationUnavailable: "Ověření e-mailu je teď nedostupné. Zkuste to prosím za chvíli.",
+  tooManyVerifications: "Příliš mnoho pokusů o ověření. Zkuste to prosím za chvíli.",
+  emailVerified: "E-mail je ověřený. Teď se můžete přihlásit.",
 } as const

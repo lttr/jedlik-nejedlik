@@ -67,3 +67,17 @@ export const LOGIN_RATE_LIMIT: RateLimit = {
   max: 20,
   message: authMessages.tooManyLogins,
 }
+
+export const REGISTER_RATE_LIMIT: RateLimit = {
+  bucket: "register",
+  max: 10,
+  message: authMessages.tooManyRegistrations,
+}
+
+// Following the link from the e-mail is a one-shot action; the budget only has
+// to survive a Student reloading the page a few times.
+export const VERIFY_EMAIL_RATE_LIMIT: RateLimit = {
+  bucket: "verify-email",
+  max: 20,
+  message: authMessages.tooManyVerifications,
+}

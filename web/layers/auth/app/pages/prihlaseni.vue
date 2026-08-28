@@ -1,6 +1,10 @@
 <template>
   <PageWrapper>
     <AuthPanel title="Přihlášení">
+      <p v-if="justVerified" class="success-message" role="status">
+        {{ authMessages.emailVerified }}
+      </p>
+
       <form class="p-stack" @submit.prevent="onSubmit">
         <div class="p-form-group">
           <label for="login-email">E-mail</label>
@@ -30,6 +34,8 @@
         <button type="submit" class="p-button-brand" :disabled="pending">Přihlásit se</button>
 
         <AuthFormError :message="errorMessage" />
+
+        <p>Nemáte ještě účet? <NuxtLink to="/registrace">Zaregistrujte se</NuxtLink>.</p>
       </form>
     </AuthPanel>
   </PageWrapper>
@@ -45,6 +51,10 @@ useHead({ title: "Přihlášení" })
 const route = useRoute()
 const { logIn } = useAuthActions()
 const { pending, errorMessage, submit } = useAuthForm()
+
+// Set by /overeni-emailu after it activated the account, so the Student is
+// told the verification worked at the very moment they need to know.
+const justVerified = computed(() => route.query[EMAIL_VERIFIED_QUERY] !== undefined)
 
 const email = ref("")
 const password = ref("")
