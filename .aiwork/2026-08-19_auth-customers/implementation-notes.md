@@ -817,6 +817,15 @@ permanent `probe-student-*` / `probe-author` fixtures remain.
   Harmless (the session is empty and the page is not served) but it does
   mean a client sending garbage always gets a cookie back.
 
+- **The refresh-failure path clears the session.** Logged a Student in
+  through `POST /api/auth/login`, deleted their Directus sessions
+  server-side, then waited out the 15-minute access token. `/muj-ucet`
+  served 200 for as long as the access token was valid — expected, since
+  the token is a stateless JWT — and the first request after it expired
+  answered `302 → /prihlaseni?redirect=/muj-ucet` with the session cookie
+  emptied. No zombie session survives a refresh Directus refuses. This is
+  the third of ticket 06's rework items; all three are now closed.
+
 ### Still open
 
 - **The two e-mail legs.** Opening the verification e-mail and the reset
