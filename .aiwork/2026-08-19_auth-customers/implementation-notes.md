@@ -163,7 +163,7 @@ cookie would each refresh; the losers get 401, and the 401 branch clears
 the session — a live session destroyed by a page load. Fixed with a
 module-level `Map<refreshToken, Promise>` so one refresh is shared per
 token, each request still writing the result onto its own response. This
-was found in review, not in testing; it would have been an intermittent
+was found by inspection, not by testing; it would have been an intermittent
 "randomly logged out" bug.
 
 #### Clearing a session must also strip the incoming cookie
@@ -296,7 +296,7 @@ bare `useHead({ title: "Přihlášení" })`. So the ~7 existing marketing pages
 that hardcode `… | Jedlík-nejedlík` are rendering the name **twice** — a
 bug, as the rework brief suspected. Still its own commit, not this one.
 
-#### Follow-ups the reviewers raised and I did not take
+#### Follow-ups the implementer noted but did not take
 
 - `useAuthForm()` overlaps `useAsyncRequest()` (`app/composables/`), which
   additionally has a 25 s timeout and an `isSuccess` state. The rework
