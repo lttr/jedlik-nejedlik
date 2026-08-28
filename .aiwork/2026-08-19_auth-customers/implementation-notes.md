@@ -464,3 +464,295 @@ page- or route-shaped. **Use these; do not retype them.**
   the constant; a template literal would be an import cycle. A unit test
   asserts the message contains the number, so the two cannot drift
   silently.
+
+### Ticket 04 — Password reset
+
+Implemented and committed (`5474839`, `fe6c7b8`, `25d276e`), `check:all`
+green bare four times, browser-verified — but **left `status: blocked`,
+no ACs ticked**: the Directus instance answered `503 no available server`
+from Traefik for the whole session, so the probe suite never ran.
+
+#### BLOCKER, outside the repo: the probe suite never ran
+
+Coolify's `resource list` reported the service `running:healthy` the
+entire time, so its status is not evidence — the proxy is.
+**`PASSWORD_RESET_URL_ALLOW_LIST` is therefore undecided, not green.**
+The gate is committed and named:
+
+    web/tests/probes/auth.probe.ts
+    "accepts the reset URL the app sends (PASSWORD_RESET_URL_ALLOW_LIST)"
+
+Run `vp run directus:probe` with the sandbox disabled once the instance is
+back. If it is red, the operator sets, on the Directus service:
+
+    PASSWORD_RESET_URL_ALLOW_LIST=https://www.jedlik-nejedlik.cz/obnova-hesla
+
+That value is not inferred from the spec — it was **captured from the
+running app**: with the dev server pointed at a local stand-in Directus,
+the route sent
+`{"email":"…","reset_url":"https://www.jedlik-nejedlik.cz/obnova-hesla"}`.
+`authPageUrl()` builds it from `site.url`, so it is the same string in dev
+and production.
+
+#### Ops finding: why ticket 03's register gate is probably red
+
+The Coolify `directus` service's compose lists
+`PASSWORD_RESET_URL_ALLOW_LIST: $PASSWORD_RESET_URL_ALLOW_LIST` in its
+`environment:` block and **never mentions `USER_REGISTER_URL_ALLOW_LIST`**
+— even though a Coolify env entry with that key exists (both keys are
+present in `service env list`). For Coolify one-click services, env
+entries are substituted into the compose; a key the compose does not
+reference never reaches the container. That is a concrete, checkable
+explanation for ticket 03's "set but rejected" mystery, and it is a
+**different fix from "set the variable": the compose needs the line.**
+The reset variable _is_ wired through, which is why its gate has a real
+chance of being green. (The env _values_ were not read — the tooling
+blocks reading secrets and the implementer did not work around it.)
+
+#### Reviewer follow-up taken: `useEmailedToken()`
+
+Extracted as ticket 03's notes asked, and `/overeni-emailu` refactored
+onto it. Two deviations from the sketched shape: it takes **no path
+argument** (it scrubs `useRoute().path`, so a page cannot disagree with
+itself about its own path), and it **skips the scrub entirely when there
+is no `?token=`** — `/obnova-hesla` is reached by hand far more often than
+from an e-mail, and a router navigation is not free. It returns
+`{ token, scrubbed }`; `/overeni-emailu` awaits `scrubbed` before posting,
+`/obnova-hesla` only needs `token`.
+
+#### The dead-link branch stopped comparing Czech prose
+
+The reset page has to tell "your link is dead" apart from every other
+failure, and the obvious way — comparing `errorMessage` to
+`authMessages.resetFailed` — means a Czech copy edit silently disables the
+"Poslat nový odkaz" button. Fixed one level down instead: Nitro already
+ships `authError`'s code as `statusMessage`, so `app/utils/auth-errors.ts`
+now parses it (`authErrorMessage` → `authFailure`, returning
+`{ message, code }`) and **`useAuthForm()` exposes `errorCode` alongside
+`errorMessage`**. The page branches on `"invalid_token"`.
+`tests/unit/auth-errors.test.ts` (8 tests) locks the contract.
+
+#### `AuthPasswordField`
+
+The password input + policy hint + `aria-describedby` +
+`autocomplete="new-password"` was about to become three copies
+(registration, reset, change). Extracted to
+`app/components/auth/PasswordField.vue`; `/registrace` moved onto it, and
+`/muj-ucet` was moved onto it during the merge (below).
+`<AuthPasswordField id="…" v-model="password" label="…" autofocus />`.
+
+#### Decisions where the spec was quiet
+
+- **Routes are `/api/auth/password-request` and `/api/auth/password-reset`**,
+  mirroring Directus's own two endpoints and leaving
+  `/api/auth/change-password` free for ticket 05.
+- **Two rate-limit buckets, not one.** The request leg (10 / 15 min) sends
+  mail to an address the caller names — the only unauthenticated route
+  that can be turned into a mailing machine. The completion leg
+  (20 / 15 min) sends nothing and needs an unguessable token. They also
+  say different things: the completion bucket got its own `tooManyResets`
+  message, because "too many reset e-mails requested" is wrong for the leg
+  that requests none.
+- **`/obnova-hesla` has no `guest` middleware**, same reasoning as
+  `/overeni-emailu`: following a link from an e-mail must work whoever is
+  logged in on the device.
+- **The token is stripped before the request, not after** — inherited from
+  ticket 03's recipe, now shared.
+- **A dead link replaces the form rather than annotating it.** There is
+  nothing to fix on a password field when the link is the problem, so the
+  page shows the Czech message plus a button back to the request leg.
+- **`prihlaseni.vue` grew a `notice` computed** covering both
+  `EMAIL_VERIFIED_QUERY` and the new `PASSWORD_CHANGED_QUERY =
+"heslo-zmeneno"` (named in `shared/utils/redirects.ts`). Also added the
+  "Zapomněli jste heslo?" link — without it `/obnova-hesla` had no entry
+  point anywhere on the site.
+- **`checkSpam` moved into `authMessages`** — both e-mail flows say it,
+  and it was the one sentence in the flow with two owners.
+
+#### Deliberately not done
+
+- **The `FAILED_VALIDATION` branch in `resetStudentPassword` is
+  unproven.** A probe asserting that Directus validates the password
+  before it verifies the token could not be measured (that needs a valid
+  token, which needs an inbox), so it was removed rather than committed as
+  a red that is not an ops gate. The branch stays as belt-and-braces
+  behind the route's own `assertPasswordPolicy`, and says so in a comment.
+- **`registration.ts` and `password-reset.ts` have visibly converged** —
+  four structurally identical function pairs, one duplicated comment
+  paragraph. A `callDirectusAuth(event, request, { context, unavailable,
+codes })` would close it, but it refactors ticket 03's files and one
+  asymmetry must survive it: verify falls through to 502 on an unknown
+  code, reset treats any answered code as a dead link. Follow-up.
+- **A generalised notice registry** (`AUTH_NOTICE_QUERY` + a message map).
+  Worth it at three flows; change-password stays on `/muj-ucet` and
+  probably never becomes the third.
+- **`LOGIN_PATH` in `redirects.ts`.** `"/prihlaseni"` is now a literal in
+  six places across the layer; hoisting it means touching tickets 02's and
+  03's files.
+
+#### Verified in the browser
+
+Against the really-down instance: the request form gave "Obnova hesla je
+teď nedostupná. Zkuste to prosím za chvíli." and logged
+`[auth] Directus rejected a password-reset request` — an outage is never
+reported as anything else. Against a **local stand-in Directus** (faking
+only Directus; the Nitro route, the SDK call and the error mapping under
+test were real, and the stub lives in scratch, not the repo): the request
+leg normalised `"  ZNAMY@Jedlik-Nejedlik.CZ  "` and sent the production
+`reset_url`; `?token=DEAD` scrubbed the URL before sending and produced
+the Czech dead-link message plus "Poslat nový odkaz"; `?token=GOOD`
+redirected to `/prihlaseni?heslo-zmeneno=1`; `aria-describedby`,
+`autofocus` and the client-side short-password refusal all check out.
+
+### Ticket 05 — Change password on the account page
+
+Implemented and committed (`0712fd0`, `3fc9bb1`), `check:all` green bare
+three times — but **left `status: in-progress`, no ACs ticked**: the
+evidence for three of the four is a green probe run, and the same Directus
+outage prevented one. Nobody has changed a real password; the committed
+probes have never executed. Everything below marked "reasoned" rather than
+"measured" is exactly that.
+
+#### Verdict on `directus_sessions`: the permission is not needed at all
+
+The open question is closed, and the intended mechanism turns out to be
+unnecessary. Directus 11.13.1 **already deletes every session row of a
+user whose password changed** — `UsersService.updateMany` ends with
+
+    } else if (data['password'] !== undefined || data['email'] !== undefined) {
+        await this.clearUserSessions(keys, this.accountability?.session);
+    }
+
+and `clearUserSessions` deletes `directus_sessions` rows for those users,
+sparing only the one whose `token` equals `accountability.session`. That
+value comes from the access JWT's `session` claim, and
+`AuthenticationService.login` sets `tokenPayload.session` **only when
+`options.session` is true — i.e. cookie mode**. This app logs in with
+`mode: "json"` (ADR 0002), so its tokens carry no `session` claim and
+**nothing is spared: a password change signs the Student out of every
+device, the one making the change included.**
+
+Consequences:
+
+- **No `delete` on `directus_sessions`, no Student-policy change, no ops
+  gate, no dump change.** The "verify it works before committing to it"
+  instruction paid for itself — the fallback ("odhlásit všude") would also
+  have been unnecessary.
+- The change-password route therefore ends by **logging the Student back
+  in with the new password** and re-sealing the cookie. That re-login is
+  not a nicety; without it the Student is logged out of the very tab they
+  used.
+- If the re-login fails, the route drops the local session and answers 502
+  saying the password _was_ changed and to log in again — no zombie
+  session left holding a refresh token Directus already deleted.
+- The probe "signs the Student out of every session, the changing one
+  included" pins this. **If it ever goes red, Directus has changed the
+  behaviour.** The read is from source, not yet from the instance.
+
+#### The `PATCH /users/me` trap
+
+**Do not use `PATCH /users/me` to change a Student's password.** Directus's
+users controller reads the row back before replying, and the two handlers
+differ: `router.patch('/:pk')` wraps `readOne` in `try/catch` and, on
+`ForbiddenError`, replies with no payload; `router.patch('/me')` does
+**not**. The Student policy has no `read` on `directus_users` at all
+(ticket 02 measured `GET /users/me` returning `{ id }` only, which works
+because the _GET_ `/me` handler has the catch). So `PATCH /users/me`
+writes the password and then answers **403** — and a caller cannot tell
+that 403 from a genuine refusal, since both are `FORBIDDEN`. The route
+therefore resolves its own id with `readMe({ fields: ["id"] })` and writes
+through `updateUser(id, { password })`. Two probes cover it: the happy
+path on `/users/<id>` (expect 204) and one pinning `/users/me`'s
+403-after-write so nobody "simplifies" the route back onto it. **Reasoned
+from the v11.13.1 source; unverified against the instance.**
+
+This is also why the ticket's AC2 needs nothing new: the Student policy's
+`update` on `directus_users`, fields `["password"]`, filter
+`{id: {_eq: "$CURRENT_USER"}}` is already in the committed dump (landed in
+`c317129`).
+
+#### Decisions where the spec was quiet
+
+- **The current password is required.** The spec, the stories and the ACs
+  never mention it. Without it a stolen session cookie is a permanent
+  account takeover — precisely the threat the rework note is about, and
+  invalidating other sessions is worthless if the attacker is the one
+  changing the password. Directus has no "verify password" endpoint, so
+  the check is a real `POST /auth/login` whose session is revoked
+  immediately afterwards. **Accepted cost:** wrong current passwords count
+  against Directus's `auth_login_attempts` (7), which suspends the
+  account — a fumble-prone flow can lock a Student out.
+  `CHANGE_PASSWORD_RATE_LIMIT` (10 / 15 min per IP) bounds the abuse case.
+  If the suspension risk is judged worse than the takeover risk, removing
+  the check is a five-line revert.
+- **No "confirm new password" field.** A typo means the reset flow.
+- **No `autofocus` on `/muj-ucet`** — a deliberate deviation from what the
+  orchestrator asked to check. `/prihlaseni` and `/registrace` autofocus
+  because the form _is_ the page; `/muj-ucet` leads with "you are logged
+  in as X" and a logout button, and autofocusing a password field there
+  scrolls mobile users past the heading and steals focus from the page's
+  subject.
+- **Two independent `useAuthForm()` instances** on the page, so a failed
+  password change cannot disable the logout button or show its error under
+  it.
+- **The route answers 204**, like login/logout; no client re-read of the
+  session is needed — the identity in the payload does not change.
+- **A malformed body answers exactly like a wrong current password**,
+  following ticket 03's `readAuthBody` convention.
+
+#### Generalised rather than left page-shaped
+
+- **`authenticateStudent(event, credentials, unavailable?)`** in
+  `student-session.ts` — the one place the app sends a password to
+  Directus, returning `null` on a credential rejection so the caller
+  decides what it means, and throwing on a transport failure.
+  `logInStudent` is now four lines on top of it.
+- **`requireStudentDirectusClient(event)`** — this was the layer's _first_
+  gated Nitro route, and it had hand-rolled the guard. Now one helper
+  returns `{ student, client }` and throws the single 401. **Ticket 06 and
+  areas 04a/06 should use this rather than re-deriving it.**
+- **`useAuthForm()` gained `succeeded`**, cleared at the start of every
+  submit, so the page no longer hand-rolls a flag it must remember to
+  reset.
+
+#### Deliberately not done
+
+- **"Reuse the re-auth login's access token for the write instead of
+  `getStudentDirectusClient`."** It saves a round trip, but AC1 says the
+  change goes through the session-bound client, and that is the more
+  honest shape — the credential doing the write is the browser's own
+  session, which is the thing being changed. The flow costs 5–6 Directus
+  calls for an action taken once in a blue moon.
+- **A unit test for the current-password gate and the 502 re-login
+  branch.** Both need an `H3Event`; there is no server-route test harness
+  in this repo and building one is out of ticket scope. The 502 branch is
+  the one path nobody has seen run.
+
+### Merge of tickets 04 and 05 (`2d098cd`)
+
+Both worktree branches were merged into `feat/area-02-auth` despite
+neither ticket being `done`: the work is committed, reviewed and
+`check:all`-green, and leaving it stranded in worktrees would have been
+worse than merging it with the tickets left open. **The tickets stay
+open** — only their verification is missing.
+
+Five conflicts, all foreseen in ticket 05's notes. Resolutions:
+
+- `app/composables/auth-form.ts` and `app/composables/auth.ts` — purely
+  additive on both sides (04's `errorCode`, 05's `succeeded`; 04's two
+  reset actions, 05's `changePassword`). Both taken.
+- `server/utils/rate-limit.ts` — additive, both buckets taken.
+- `shared/utils/auth-messages.ts` — **a real collision**: both tickets
+  defined `passwordChanged` with different text for different places (04's
+  "Heslo je změněné. Teď se můžete přihlásit." on the login page after a
+  reset; 05's "Heslo bylo změněno. Na ostatních zařízeních jsme vás
+  odhlásili." on the account page). 05's was renamed
+  **`passwordChangedHere`** and `/muj-ucet` updated; 04's keeps the
+  original key.
+- `app/pages/registrace.vue` + `app/assets/css/main.css` — 04's
+  `AuthPasswordField` supersedes 05's promotion of `.password-hint` to
+  global CSS, as ticket 05 itself predicted. Took 04's side, moved
+  `/muj-ucet`'s new-password field onto `<AuthPasswordField>`, and deleted
+  the now-unused global rule.
+
+`vp run check:all` is green on the merged tree.
