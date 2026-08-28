@@ -26,3 +26,11 @@ export interface Credentials {
   email: string
   password: string
 }
+
+// What the account page's change-password form sends. The current password is
+// asked for so that a stolen session cookie alone cannot take the account
+// over — Directus has no notion of it, this is the app's own gate.
+export interface PasswordChange {
+  currentPassword: string
+  newPassword: string
+}
