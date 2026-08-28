@@ -254,6 +254,24 @@ export default defineConfig({
         },
       },
       {
+        // nuxt-auth-utils' own type declarations import from `#auth-utils`, a
+        // tsconfig path oxlint's type-aware resolver cannot follow (vue-tsc
+        // can, so `check:typecheck` still covers these files fully). Without
+        // it every call into the module reads as `error`-typed. Scoped to the
+        // two files that touch the module's API at all — everything above
+        // them speaks our own Student types and stays fully checked.
+        files: [
+          "web/layers/auth/server/utils/session-store.ts",
+          "web/layers/auth/app/composables/student.ts",
+        ],
+        rules: {
+          "typescript/no-unsafe-assignment": "off",
+          "typescript/no-unsafe-call": "off",
+          "typescript/no-unsafe-member-access": "off",
+          "typescript/no-unsafe-return": "off",
+        },
+      },
+      {
         // Ambient .d.ts declarations frequently use side-effect imports
         // (e.g. @total-typescript/ts-reset).
         files: ["**/*.d.ts"],

@@ -4,6 +4,8 @@
 // internals. Run via `vp run directus:probe`; they are intentionally not
 // part of the default test run.
 
+import { randomUUID } from "node:crypto"
+
 import { expect } from "vitest"
 
 export const DIRECTUS_URL = "https://obsah-jedlika.lttr.cz"
@@ -131,4 +133,25 @@ export function forget<T>(list: T[], value: T): void {
   if (index !== -1) {
     list.splice(index, 1)
   }
+}
+
+// Role ids are looked up live, never hardcoded and never read from the
+// committed directus-sync dump: `_syncId` there is directus-sync's own
+// identifier and does NOT match the live role id (verified 2026-08-28).
+export async function roleIdByName(name: string, token: string): Promise<string> {
+  const response = await probe(
+    `/roles?fields=id&filter[name][_eq]=${encodeURIComponent(name)}`,
+    token,
+  )
+  const role = items(response).at(0)
+  if (role === undefined) {
+    throw new Error(`No role named ${name} on the instance`)
+  }
+  return role.id as string
+}
+
+// Probe passwords are generated per run — never a literal in a committed
+// file, even for a throwaway user the probe deletes again.
+export function generatePassword(): string {
+  return `Pw-${randomUUID()}`
 }
