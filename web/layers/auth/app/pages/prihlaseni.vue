@@ -1,9 +1,7 @@
 <template>
   <PageWrapper>
     <AuthPanel title="Přihlášení">
-      <p v-if="justVerified" class="success-message" role="status">
-        {{ authMessages.emailVerified }}
-      </p>
+      <p v-if="notice" class="success-message" role="status">{{ notice }}</p>
 
       <form class="p-stack" @submit.prevent="onSubmit">
         <div class="p-form-group">
@@ -35,6 +33,10 @@
 
         <AuthFormError :message="errorMessage" />
 
+        <p>
+          <NuxtLink :to="RESET_PASSWORD_PATH">Zapomněli jste heslo?</NuxtLink>
+        </p>
+
         <p>Nemáte ještě účet? <NuxtLink to="/registrace">Zaregistrujte se</NuxtLink>.</p>
       </form>
     </AuthPanel>
@@ -52,9 +54,18 @@ const route = useRoute()
 const { logIn } = useAuthActions()
 const { pending, errorMessage, submit } = useAuthForm()
 
-// Set by /overeni-emailu after it activated the account, so the Student is
-// told the verification worked at the very moment they need to know.
-const justVerified = computed(() => route.query[EMAIL_VERIFIED_QUERY] !== undefined)
+// What just happened elsewhere, said at the moment the Student needs to know
+// it: `/overeni-emailu` activated the account, or `/obnova-hesla` set a new
+// password. Both send them here, so both announce themselves the same way.
+const notice = computed(() => {
+  if (route.query[EMAIL_VERIFIED_QUERY] !== undefined) {
+    return authMessages.emailVerified
+  }
+  if (route.query[PASSWORD_CHANGED_QUERY] !== undefined) {
+    return authMessages.passwordChanged
+  }
+  return ""
+})
 
 const email = ref("")
 const password = ref("")

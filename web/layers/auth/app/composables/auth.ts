@@ -5,6 +5,8 @@ export interface AuthActions {
   logOut: () => Promise<void>
   register: (registration: Credentials) => Promise<void>
   verifyEmail: (token: string) => Promise<void>
+  requestPasswordReset: (email: string) => Promise<void>
+  resetPassword: (token: string, password: string) => Promise<void>
 }
 
 // The only way the app talks to the auth routes. Credentials go out, a sealed
@@ -31,6 +33,16 @@ export function useAuthActions(): AuthActions {
 
     async verifyEmail(token) {
       await $fetch("/api/auth/verify-email", { method: "POST", body: { token } })
+    },
+
+    // Neither reset leg logs anyone in either: the Student sets a new password
+    // and then uses it at the login form.
+    async requestPasswordReset(email) {
+      await $fetch("/api/auth/password-request", { method: "POST", body: { email } })
+    },
+
+    async resetPassword(token, password) {
+      await $fetch("/api/auth/password-reset", { method: "POST", body: { token, password } })
     },
   }
 }

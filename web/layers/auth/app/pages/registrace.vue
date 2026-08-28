@@ -8,8 +8,7 @@
         </p>
         <p>
           <strong>Účet zatím není aktivní.</strong> Otevřete e-mail a klikněte na odkaz v něm —
-          teprve tím se registrace dokončí a budete se moci přihlásit. Pokud zpráva do pár minut
-          nedorazí, mrkněte se prosím i do spamu.
+          teprve tím se registrace dokončí a budete se moci přihlásit. {{ authMessages.checkSpam }}
         </p>
         <p>
           Máte už u nás účet? Pak žádný e-mail nechodí a stačí se
@@ -31,21 +30,7 @@
           />
         </div>
 
-        <div class="p-form-group">
-          <label for="register-password">Heslo</label>
-          <input
-            id="register-password"
-            v-model="password"
-            type="password"
-            name="password"
-            required
-            autocomplete="new-password"
-            aria-describedby="register-password-hint"
-          />
-          <p id="register-password-hint" class="password-hint">
-            Alespoň {{ PASSWORD_MIN_LENGTH }} znaků.
-          </p>
-        </div>
+        <AuthPasswordField id="register-password" v-model="password" />
 
         <p class="consent-note">
           Registrací berete na vědomí, že zpracováváme vaše osobní údaje.
@@ -96,7 +81,6 @@ async function onSubmit() {
 </script>
 
 <style scoped>
-.password-hint,
 .consent-note {
   font-size: var(--font-size--1);
   line-height: var(--font-lineheight-3);

@@ -21,18 +21,14 @@
 <script lang="ts" setup>
 useHead({ title: "Ověření e-mailu" })
 
-const route = useRoute()
 const { verifyEmail } = useAuthActions()
 const { errorMessage, submit } = useAuthForm()
 
-// Captured before the token is stripped from the URL below.
-const token = String(route.query.token ?? "")
+const { token, scrubbed } = useEmailedToken()
 
 onMounted(async () => {
-  // Get the token out of the address bar before anything else: it must not
-  // survive in the history entry, in a referrer, or in a bookmark. Router
-  // replacement is `history.replaceState` with the router kept in step.
-  await navigateTo({ path: VERIFY_EMAIL_PATH, query: {} }, { replace: true })
+  // Only once the token is out of the address bar.
+  await scrubbed
 
   await submit(async () => {
     // A missing token is posted like any other: the route is the single judge
