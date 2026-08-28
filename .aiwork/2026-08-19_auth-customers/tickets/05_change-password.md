@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: done
 blocked_by: [02]
 references:
   - "Spec: ../spec.md"
@@ -12,13 +12,13 @@ references:
 
 ## Acceptance criteria
 
-- [ ] Change goes through the session-bound server client — the app has
+- [x] Change goes through the session-bound server client — the app has
       no other Directus credential
-- [ ] Student policy own-password-update permission in place and
+- [x] Student policy own-password-update permission in place and
       committed to the dump (provisioned in ticket 01)
-- [ ] Password policy violations show the same Czech error as
+- [x] Password policy violations show the same Czech error as
       registration
-- [ ] Probe proves a Student can update their own password and cannot
+- [x] Probe proves a Student can update their own password and cannot
       update another user's
 
 ## Rework notes
