@@ -390,15 +390,4 @@ describe("password reset completion", () => {
     expect(response.status).toBeGreaterThanOrEqual(400)
     expect(errorCode(response)).not.toBe("FAILED_VALIDATION")
   })
-
-  it("enforces the password policy before it accepts the token", async () => {
-    // Why the route pre-checks the policy: a too-short password is answered
-    // with FAILED_VALIDATION, which must not be reported to the Student as a
-    // dead link.
-    const response = await probeSend("POST", "/auth/password/reset", {
-      token: "not-a-real-token",
-      password: "x".repeat(PASSWORD_MIN_LENGTH - 1),
-    })
-    expect(errorCode(response)).toBe("FAILED_VALIDATION")
-  })
 })

@@ -64,8 +64,13 @@ export async function resetStudentPassword(
     const code = directusErrorCode(error)
     // Expired, used and forged tokens need not answer with the same Directus
     // code, and the Student is told the same thing about all of them anyway —
-    // so the branch is on what is *not* about the link, which the probe pins
-    // down instead. `undefined` means Directus never answered at all.
+    // so the branch is on what is *not* about the link. `undefined` means
+    // Directus never answered at all.
+    //
+    // The password branch is belt-and-braces: `readPasswordReset` already
+    // rejected a short password, so reaching it means Directus disagreed with
+    // us about the policy. It cannot be probed either — that needs a valid
+    // token, and a valid token needs an inbox (ticket 06).
     if (code === "FAILED_VALIDATION") {
       throw authError(400, "invalid_password", authMessages.passwordTooShort)
     }
