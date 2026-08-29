@@ -80,7 +80,10 @@ export default defineConfig({
         input: srcInput,
         dependsOn: ["nuxt:prepare"],
       },
-      "check:fallow": { command: "fallow", input: srcInput },
+      // `audit`, not a bare report: scoped to changed files, so it is silent
+      // unless it rejects something. Never cached — it scopes itself off the
+      // merge-base, which `srcInput` does not hash.
+      "check:fallow": { command: "fallow audit --quiet", cache: false },
       "check:test": {
         command: "vp test run --config vitest.unit.config.ts",
         cwd: "web",
@@ -96,7 +99,9 @@ export default defineConfig({
       // (scripts/check-probe-stamp.sh) requires a stamp newer than staged
       // permission-touching files.
       "directus:probe": { command: "scripts/directus-probe.sh", cache: false },
-      "check:build": { command: "nuxi build", cwd: "web", input: srcInput },
+      // `--logLevel silent` drops the per-chunk asset listing; failures still
+      // print in full.
+      "check:build": { command: "nuxi build --logLevel silent", cwd: "web", input: srcInput },
       "check:all": {
         command: "echo checks done",
         dependsOn: [
