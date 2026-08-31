@@ -18,9 +18,22 @@ Sentry.init({
   // Enable logs to be sent to Sentry
   enableLogs: true,
 
-  // Enable sending of user PII (Personally Identifiable Information)
-  // https://docs.sentry.io/platforms/javascript/guides/nuxt/configuration/options/#sendDefaultPii
-  sendDefaultPii: true,
+  // Enable sending of user PII (Personally Identifiable Information).
+  // Replaces the deprecated `sendDefaultPii: true` flag with its equivalent
+  // granular config (see @sentry/core's `defaultPiiToCollectionOptions`).
+  // https://docs.sentry.io/platforms/javascript/guides/nuxt/configuration/options/#dataCollection
+  dataCollection: {
+    userInfo: true,
+    cookies: true,
+    httpHeaders: { request: true, response: true },
+    httpBodies: ["incomingRequest", "outgoingRequest", "incomingResponse", "outgoingResponse"],
+    urlQueryParams: true,
+    graphQL: { document: true, variables: true },
+    genAI: { inputs: true, outputs: true },
+    databaseQueryData: true,
+    stackFrameVariables: true,
+    frameContextLines: 7,
+  },
 
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
