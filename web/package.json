@@ -10,17 +10,17 @@
     "preview": "nuxi preview"
   },
   "dependencies": {
-    "@directus/sdk": "^21.3.0",
+    "@directus/sdk": "^25.0.1",
     "@lttr/puleo": "^0.8.1",
-    "@sentry/nuxt": "^10.51.0",
-    "zod": "^4.4.3"
+    "@sentry/nuxt": "^10.72.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@dxup/nuxt": "^0.5.10",
     "@dxup/unimport": "^0.1.2",
-    "@eslint/css": "^1.2.0",
-    "@iconify-json/bi": "^1.2.6",
-    "@iconify-json/logos": "^1.2.10",
+    "@eslint/css": "^1.4.0",
+    "@iconify-json/bi": "^1.2.7",
+    "@iconify-json/logos": "^1.2.13",
     "@iconify-json/uil": "^1.2.3",
     "@lttr/nuxt-config-eslint": "^0.4.2",
     "@lttr/nuxt-config-postcss": "^0.0.8",
@@ -33,20 +33,20 @@
     "@nuxtjs/plausible": "^4.0.0",
     "@nuxtjs/seo": "^5.3.14",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^24.10.1",
+    "@types/node": "^26.4.0",
     "@vueuse/core": "^14.4.0",
     "@vueuse/nuxt": "^14.4.0",
-    "eslint": "^10.2.1",
+    "eslint": "^10.9.1",
     "eslint-merge-processors": "^2.0.0",
-    "eslint-plugin-baseline-js": "^0.6.2",
+    "eslint-plugin-baseline-js": "^0.7.1",
     "eslint-processor-vue-blocks": "^2.0.0",
     "nuxt": "^4.5.2",
     "nuxt-svgo": "^5.3.0",
     "rolldown": "1.2.5",
     "typescript": "^5.9.3",
     "vitest": "4.1.11",
-    "vue": "^3.5.41",
-    "vue-router": "^5.2.0",
-    "vue-tsc": "^3.2.7"
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.0",
+    "vue-tsc": "^3.3.11"
   }
 }
