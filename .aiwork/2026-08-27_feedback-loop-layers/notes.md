@@ -1,4 +1,5 @@
 ---
+status: done
 references:
   - "claude-marketplace: plugins/aiwork/skills/implement-spec/SKILL.md"
   - "Prior work: ../2026-08-20_verify-feedback-loops/recommendations.md"
@@ -43,12 +44,13 @@ at boundary N should have been impossible at boundary N-1.
 
 ## Decisions
 
-- **Remove the Stop-hook lint pass** (`stop-smart.sh`, still active, not yet
-  applied). By the time an agent stops, the pre-commit gate has enforced lint
-  on anything committed, and `CLAUDE.md` designates that gate as the fix loop.
-  When applying: keep the Stop hook itself, pointed at `verify-log-bash.sh
-sweep` only. The sweep is what logs failed Bash commands, and
-  `docs/verify-log.md` depends on it.
+- **Remove the Stop-hook lint pass** (`stop-smart.sh`) — APPLIED. By the time
+  an agent stops, the pre-commit gate has enforced lint on anything committed,
+  and `CLAUDE.md` designates that gate as the fix loop. The Stop hook itself
+  was kept, pointed at `verify-log-bash.sh sweep` only: the sweep is what logs
+  failed Bash commands, and `docs/verify-log.md` depends on it.
+  `.claude/settings.json` now wires only `post-edit-fix.sh`,
+  `session-bootstrap.sh` and `verify-log-bash.sh`.
 - **Rejected as too slow for their value:** a `SubagentStop` lint hook
   (redundant, subagents stop after their commit), a `pre-push` gate running
   `verify:all`, and post-merge static checks in the orchestrator. Latency was

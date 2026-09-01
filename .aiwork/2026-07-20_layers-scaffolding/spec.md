@@ -1,6 +1,6 @@
 ---
 references:
-  - "Parent: ../2026-06-09_kurzy-platforma/implementation-areas.md (area 00, TR-1b)"
+  - "Parent: ../2026-06-09_kurzy-platforma/areas.md (area 00, TR-1b)"
   - "PRD: ../2026-06-09_kurzy-platforma/spec.md"
 ---
 

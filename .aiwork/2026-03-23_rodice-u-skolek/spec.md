@@ -1,5 +1,5 @@
 ---
-status: active
+status: done
 ---
 
 # Rodiče u školek - vzdělávací programy pro rodiče

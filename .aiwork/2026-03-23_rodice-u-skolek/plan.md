@@ -1,7 +1,7 @@
 ---
 created: 2026-03-23
 type: plan
-status: active
+status: done
 ---
 
 # Fix /implement skill - root cause analysis

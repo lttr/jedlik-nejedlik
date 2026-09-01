@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Spec — Responsive section headings with images (2026-online-kurz-deti)
 
 ## Original request

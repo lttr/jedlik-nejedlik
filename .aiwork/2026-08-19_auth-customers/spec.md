@@ -9,7 +9,7 @@ again 2026-08-28: registration switches to Directus's native public
 registration with e-mail verification, reversing grilling Q7 — the
 service identity is gone. Parent
 scope:
-[implementation-areas.md](../2026-06-09_kurzy-platforma/implementation-areas.md)
+[areas.md](../2026-06-09_kurzy-platforma/areas.md)
 area 02 (FP-1, O-17, TO-2).
 
 ## Problem Statement

@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Plan — wire agent feedback loops
 
 Goal: turn Vite+ migration speed wins into deterministic hooks. Agent self-heals fast, no context bloat.

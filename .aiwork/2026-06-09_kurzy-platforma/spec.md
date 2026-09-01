@@ -1,3 +1,7 @@
+---
+status: in-progress
+---
+
 # Specifikace: Eshop s digitálními kurzy Jedlík-nejedlík
 
 Obsah:

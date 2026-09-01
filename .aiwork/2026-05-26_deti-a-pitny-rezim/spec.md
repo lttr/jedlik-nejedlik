@@ -1,4 +1,5 @@
 ---
+status: done
 source: https://docs.google.com/document/d/1iAZ6t1Gu0tsfadi5setBKfXu7H8mAth8wqkt5mwXC3s/edit
 imported: 2026-05-26
 ---

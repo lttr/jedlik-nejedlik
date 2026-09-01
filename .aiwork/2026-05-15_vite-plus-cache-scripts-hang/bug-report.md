@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # `run.cache.scripts: true` blocks on detached/unref'd grandchildren
 
 vite-plus 0.1.20 / 0.1.21, Linux x64 (glibc), Node 24.15.0

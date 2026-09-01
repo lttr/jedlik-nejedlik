@@ -1,4 +1,5 @@
 ---
+status: done
 references:
   - "ADR: docs/adr/0003-pnpm-native-dependency-updates.md"
   - "Research: ~/code/research/research/agentic-dependency-updates/README.md"

@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Dependency Update Plan — 2026-05-01
 
 Source notes: `./release-notes.md`
