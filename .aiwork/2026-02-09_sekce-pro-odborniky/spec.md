@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 Sekce pro odborníky
 
 Wireframe: [wireframe.html](wireframe.html)

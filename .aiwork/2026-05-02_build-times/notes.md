@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Build times — 2026-05-02
 
 Baseline timing run after dep update (commit `5cc816b`). Branch `master`.

@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Task: verify the feedback-loop changes
 
 Status: done. Implementation shipped (commits `5689d14`, `0157497`) and the
@@ -47,11 +51,11 @@ remaining verification ran clean on 2026-08-26.
        (check/lint/typecheck/test/build) is a hit. §1 accepted.
 3. [x] Touched `.aiwork/**/recommendations.md`, re-ran: identical 6/8 —
        `.aiwork/` no longer busts the cache.
-4. [ ] Optional `vp run directus:probe` against the real instance — not run;
-       no `.directus-probe-stamp` on disk yet. The stamp/gate logic was proven in
-       a scratch repo, so this only leaves the live-instance path unexercised.
-       It will be exercised by the next commit touching `directus/config/**` or
-       `web/server/**`.
+4. [~] Optional `vp run directus:probe` against the real instance — not run;
+   no `.directus-probe-stamp` on disk yet. The stamp/gate logic was proven in
+   a scratch repo, so this only leaves the live-instance path unexercised.
+   It will be exercised by the next commit touching `directus/config/**` or
+   `web/server/**`.
 5. [x] Everything committed with explicit paths.
 
 Known trade-off: md files are excluded from verify cache inputs but

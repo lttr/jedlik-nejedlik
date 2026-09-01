@@ -1,6 +1,6 @@
-# Implementation areas — kurzy platforma
+# Areas — kurzy platforma (epic index)
 
-Decomposition of [prd.md](prd.md) into areas sized for one spec + one agentic
+Decomposition of [spec.md](spec.md) into areas sized for one spec + one agentic
 implementation each. Each area gets its own `.aiwork/<date>_<slug>/` spec when
 its turn comes; this file only fixes scope, boundaries, and order.
 
@@ -38,6 +38,7 @@ Waves: **1** = 00+01 · **2** = 02, 03, 09 (parallel) · **3** = 04a→04b, 06,
 
 ## 00 — Nuxt layers scaffolding (TR-1b)
 
+**Status:** done → `../2026-07-20_layers-scaffolding/`
 Restructure `web/` to host Nuxt layers `auth` (scaffolded as
 `customers`, renamed 2026-08-20), `lms`, `shop` over the
 existing marketing site. Shared Directus client, styles, runtime config.
@@ -50,6 +51,7 @@ Deployment stays one Nitro SSR app on Coolify — no second deployable.
 
 ## 01 — Directus data model + permissions (TO-7, TR-1, TR-4, FP-11)
 
+**Status:** done → `../2026-07-22_directus-data-model/`
 Naming contract, roles and access policies, and the collections wave 2
 consumes. Directus is system of record **and** enforcement boundary; get
 the permissions right here, not in app code. Later-wave collections are
@@ -74,6 +76,7 @@ and this avoids designing schema two waves before its consumer exists.
 
 ## 02 — Auth layer (FP-1, O-17, TO-2)
 
+**Status:** in-progress → `../2026-08-19_auth-customers/`
 Account-first native Directus email+password auth surfaced in the `auth`
 layer: register, login, logout, password reset (Directus → Mailgun, already
 configured). Session handling for Nuxt SSR; identity = email. No magic link
@@ -84,6 +87,7 @@ in v1.
 
 ## 03 — Catalog + sales pages (FP-2, BP-2)
 
+**Status:** not-started
 Course listing + course detail/sales page in the `shop` layer, content from
 Directus. Public, CZK prices, no search (out of scope).
 
@@ -92,6 +96,7 @@ Directus. Public, CZK prices, no search (out of scope).
 
 ## 04a — Checkout: order + consent + GoPay redirect (FP-3, TO-5)
 
+**Status:** not-started
 Order creation for a logged-in student, consent checkboxes (§1837 + terms;
 wording placeholder until area 10), redirect to GoPay. Return URL is UX
 only — no granting happens here.
@@ -102,6 +107,7 @@ only — no granting happens here.
 
 ## 04b — GoPay notification + entitlement grant (BP-6, TO-5)
 
+**Status:** not-started
 **Server notification endpoint in Nitro** as the sole trigger for granting
 the entitlement (idempotent per GoPay payment ID). Abandoned payment =
 unpaid order, no entitlement, no invoice.
@@ -112,6 +118,7 @@ unpaid order, no entitlement, no invoice.
 
 ## 05 — Fakturoid invoicing (FP-4, FP-10, TR-6, TO-4)
 
+**Status:** not-started
 Called from the paid-notification flow of 04b: OAuth 2 (client credentials +
 refresh-token upkeep), contact → invoice → send to customer (this email is
 also the purchase confirmation). Idempotency: invoice ID stored on order;
@@ -123,6 +130,7 @@ present ⇒ skip. Tarif Na lehko.
 
 ## 06 — Course player + progress (FP-5, FP-6, FP-9, BP-11, BP-12)
 
+**Status:** not-started
 The `lms` layer shell: entitlement-gated course view, section/lesson
 navigation reflecting unlock state, text-lesson rendering, downloadable
 attachments, per-lesson completion → progress records. Owns the `progress`
@@ -136,6 +144,7 @@ Directus permissions from 01, never by hiding UI (R-5).
 
 ## 07 — Unlock engine + quiz module (BP-13, BP-14, FP-8, R-6)
 
+**Status:** not-started
 Per-section unlock rules: (a) test — optionally blocking, (b) manual by
 admin, (c) time since purchase (per-student clock from entitlement grant).
 Quiz UI: multiple-choice questions, deterministic server-side evaluation
@@ -149,6 +158,7 @@ collection schema + policies (added to 01's snapshot).
 
 ## 08 — Secure video delivery (FP-7, TO-1, TR-2)
 
+**Status:** not-started
 Nitro endpoint: check entitlement via Directus → issue short-lived signed
 Cloudflare Stream playback token. Stream player embedded in the lesson view.
 Lesson stores only the Stream UID.
@@ -158,6 +168,7 @@ Lesson stores only the Stream UID.
 
 ## 09 — Asset ingestion (FP-12, TR-7, TR-7b, TO-10)
 
+**Status:** not-started
 One Nitro service holding the Cloudflare token, authorizing Directus
 author/admin users, routing by MIME: static → Directus files, video →
 Stream Direct Creator Upload (tus) + "ready" webhook storing UID/duration/
@@ -172,6 +183,7 @@ token) usable from Claude Code. Endpoints MCP-ready, no MCP built.
 
 ## 10 — Legal documents (BP-16, section 7, O-14)
 
+**Status:** not-started
 Content + wiring: obchodní podmínky for digital content, §1837 consent
 (likely separate un-prechecked checkbox — lawyer to confirm), pre-contract
 info, refund rules, GDPR update. Document **versioning** so consent records

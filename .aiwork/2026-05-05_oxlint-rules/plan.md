@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # Oxlint rules tightening
 
 Goal: extend `vite.config.ts` lint config beyond default `correctness/suspicious/perf` with curated rules from `pedantic`, `restriction`, `style`, `nursery`. Already type-aware.

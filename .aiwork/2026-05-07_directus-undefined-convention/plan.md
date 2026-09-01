@@ -1,4 +1,5 @@
 ---
+status: done
 references:
   - .aiwork/2026-05-07_async-data-error-surfacing/notes.md
   - web/app/composables/images.ts

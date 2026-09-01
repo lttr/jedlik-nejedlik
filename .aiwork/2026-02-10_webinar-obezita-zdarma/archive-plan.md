@@ -1,7 +1,7 @@
 ---
 created: 2026-03-25
 type: plan
-status: completed
+status: done
 completed: 2026-03-25
 commit: d5147e7
 ---

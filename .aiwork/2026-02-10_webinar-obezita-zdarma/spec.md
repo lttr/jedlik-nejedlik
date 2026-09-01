@@ -1,5 +1,5 @@
 ---
-status: active
+status: done
 ---
 
 # Webinar zdarma - promo na stránce nadváhy
