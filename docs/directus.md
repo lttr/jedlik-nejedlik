@@ -141,3 +141,100 @@ Stable `[TEST]`-marked rows the probes depend on (current ids are pinned in
 
 The unentitled student must stay **unentitled** — granting them a course breaks
 the student probes, which is exactly what happened after the FP-11 walkthrough.
+
+## Transactional e-mails
+
+Directus sends the registration and password-reset mails, not the site. Its
+system templates are English and Directus-branded; `directus/templates/` holds
+our Czech, on-brand overrides — one per system template that can reach a site
+visitor: `user-registration.liquid`, `password-reset.liquid` and
+`user-invitation.liquid`.
+
+The instance already mounts a volume at `/directus/templates`, which is
+Directus's default `EMAIL_TEMPLATES_PATH` — a file dropped in there wins over
+the system template of the same name (`MailService.renderTemplate`), no env
+change needed. Templates are [LiquidJS](https://liquidjs.com); the engine root
+also covers the built-in directory, so `{% layout 'base' %}` still resolves —
+our override deliberately does not use it, because that layout carries an
+English footer and signature.
+
+Available variables: `url` (must appear — it is the action link) and `email`
+in all three; `first_name` and `last_name` only in `user-registration`. On top
+of those, `projectName`, `projectColor`, `projectLogo` and `projectUrl` come
+from Directus settings.
+
+### Deploying templates and extensions
+
+Both are version-controlled here and pushed to the instance — the one place this
+repo writes to Directus, unlike the pull-only config dump:
+
+```bash
+vp run directus:push   # needs an authenticated `coolify` CLI, no SSH
+```
+
+`scripts/directus-push.sh` mirrors every `directus/templates/*.liquid` and every
+file under `directus/extensions/` (minus `node_modules/`) into a Coolify **file
+storage** on the `directus` service — resolved by name through the CLI, so no
+uuids live in the repo (`COOLIFY_DIRECTUS_SERVICE` and `COOLIFY_DIRECTUS_APP`
+override the names) — mounted at the matching path under `/directus/templates/`
+or `/directus/extensions/`, creating it on the first run and overwriting its
+content afterwards. Both directories are persistent volumes on the service, so a
+file mounted underneath one simply appears inside it. Re-running is safe: the
+repo wins, and a file whose stored content already matches is left alone.
+
+**A new file storage is not a mount.** For a _service_, Coolify renders the
+container from `docker_compose_raw` — a storage the compose does not name is
+stored in Coolify and never bind-mounted, and neither `service restart` nor
+`deploy` changes that. The three template mounts are in that compose because
+someone put them there. So the first push of a new file needs a compose edit:
+
+```yaml
+services:
+  directus:
+    volumes:
+      # …existing volumes…
+      - "./directus/extensions/email-subjects/index.js:/directus/extensions/email-subjects/index.js"
+```
+
+The host side is the mount path with a leading `.` — Coolify writes the
+storage's content to `/data/coolify/services/<uuid><mount path>`. Edit it in the
+UI (the service → **Compose file**) or `PATCH /api/v1/services/<uuid>` with a
+base64 `docker_compose_raw`, then `coolify deploy uuid <uuid>`. The script
+prints the exact lines to paste.
+
+After that first mount, what a content change needs:
+
+| Change                   | Redeploy                                          |
+| ------------------------ | ------------------------------------------------- |
+| Extension content change | Yes — extensions are registered at boot           |
+| Template content change  | No — Directus re-reads the template on every send |
+
+The script says which applies and prints the command; it can only tell a real
+change from a no-op because the storage listing carries the stored content.
+
+If a pushed file shows up inside the container as a _directory_ rather than a
+file, that is a known Coolify file-mount bug ([#10398](https://github.com/coollabsio/coolify/issues/10398)):
+delete the storage, push again, redeploy. Never edit a file storage's mount path
+in the Coolify UI — doing so has wiped contents ([#4755](https://github.com/coollabsio/coolify/issues/4755)).
+
+### Subject lines: the `email-subjects` extension
+
+**Subject lines cannot be templated.** `Verify your email address`, `Password
+Reset Request` and `You've been invited` are English defaults in
+`api/src/services/users.ts` (the registration one marked TODO upstream). The
+service methods take a `subject` argument, but neither REST route forwards one
+— `POST /auth/password/request` and `POST /users/invite` read only the e-mail,
+role and url from the body — so over the API the defaults always win.
+
+`directus/extensions/email-subjects/` is the answer: a hook extension whose
+`email.send` filter substitutes a Czech subject keyed on the template name.
+`email.send` is a filter event, so what the handler returns is what gets sent;
+mail that is not one of ours passes through untouched. It is plain ESM with no
+build step — the two files are pushed as-is by `vp run directus:push`.
+
+After a push and a deploy, `GET /extensions` (or **Settings → Extensions** in
+the admin app) must list `email-subjects`; then trigger a password reset and
+confirm the subject reads `Obnovení hesla`. If the extension is missing, the
+compose is not mounting it — see the compose-edit note above. As of 2026-09-02
+the files are pushed as storages but that compose line is **still missing**, so
+the subjects on the instance are the English defaults.
