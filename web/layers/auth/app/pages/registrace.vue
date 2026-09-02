@@ -16,7 +16,7 @@
         </p>
       </template>
 
-      <form v-else class="p-stack" @submit.prevent="onSubmit">
+      <form v-else @submit.prevent="onSubmit">
         <div class="p-form-group">
           <label for="register-email">E-mail</label>
           <input
@@ -39,12 +39,12 @@
           >
         </p>
 
-        <button type="submit" class="p-button-brand" :disabled="pending">Zaregistrovat se</button>
+        <AuthSubmit :pending>Zaregistrovat se</AuthSubmit>
 
         <AuthFormError :message="errorMessage" />
-
-        <p>Máte už účet? <NuxtLink to="/prihlaseni">Přihlaste se</NuxtLink>.</p>
       </form>
+
+      <p>Máte už účet? <NuxtLink to="/prihlaseni">Přihlaste se</NuxtLink>.</p>
     </AuthPanel>
   </PageWrapper>
 </template>

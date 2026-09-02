@@ -1,5 +1,5 @@
 <template>
-  <section class="auth-panel p-stack">
+  <section class="auth-panel">
     <h1 class="p-heading-3">{{ title }}</h1>
     <slot />
   </section>
@@ -13,6 +13,9 @@ const { title } = defineProps<{
 
 <style scoped>
 .auth-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
   max-width: var(--size-content-2);
   margin-inline: auto;
   margin-block: var(--space-6);

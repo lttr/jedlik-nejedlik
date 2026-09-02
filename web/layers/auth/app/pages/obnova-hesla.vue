@@ -11,14 +11,12 @@
         </button>
       </template>
 
-      <form v-else-if="mode === 'reset'" class="p-stack" @submit.prevent="onReset">
+      <form v-else-if="mode === 'reset'" @submit.prevent="onReset">
         <p>Zadejte prosím nové heslo ke svému účtu.</p>
 
         <AuthPasswordField id="reset-password" v-model="password" label="Nové heslo" autofocus />
 
-        <button type="submit" class="p-button-brand" :disabled="pending">
-          Nastavit nové heslo
-        </button>
+        <AuthSubmit :pending>Nastavit nové heslo</AuthSubmit>
 
         <AuthFormError :message="errorMessage" />
       </form>
@@ -33,7 +31,7 @@
         </p>
       </template>
 
-      <form v-else class="p-stack" @submit.prevent="onRequest">
+      <form v-else @submit.prevent="onRequest">
         <p>
           Zadejte e-mail, kterým se přihlašujete. Pošleme na něj odkaz pro nastavení nového hesla.
         </p>
@@ -51,7 +49,7 @@
           />
         </div>
 
-        <button type="submit" class="p-button-brand" :disabled="pending">Poslat odkaz</button>
+        <AuthSubmit :pending>Poslat odkaz</AuthSubmit>
 
         <AuthFormError :message="errorMessage" />
       </form>
