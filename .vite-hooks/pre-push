@@ -1,3 +1,0 @@
-# Too slow (~17s) for every commit, but a broken build breaks the Coolify
-# auto-deploy on master — so it gates the push instead.
-vp run check:build

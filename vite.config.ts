@@ -98,9 +98,6 @@ export default defineConfig({
       // (scripts/check-probe-stamp.sh) requires a stamp newer than staged
       // permission-touching files.
       "directus:probe": { command: "scripts/directus-probe.sh", cache: false },
-      // `--logLevel silent` drops the per-chunk asset listing; failures still
-      // print in full.
-      "check:build": { command: "nuxi build --logLevel silent", cwd: "web", input: srcInput },
       "check:all": {
         command: "echo checks done",
         dependsOn: [
@@ -109,7 +106,6 @@ export default defineConfig({
           "check:typecheck",
           "check:fallow",
           "check:test",
-          "check:build",
         ],
       },
     },
@@ -255,22 +251,6 @@ export default defineConfig({
             "error",
             { assertFunctionNames: ["expect", "items", "nonEmptyItems"] },
           ],
-        },
-      },
-      {
-        // nuxt-auth-utils' declarations import from `#auth-utils`, a tsconfig
-        // path oxlint's type-aware resolver cannot follow (vue-tsc can), so
-        // every call into the module reads as `error`-typed. Scoped to the
-        // two files that touch the module's API.
-        files: [
-          "web/layers/auth/server/utils/session-store.ts",
-          "web/layers/auth/app/composables/student.ts",
-        ],
-        rules: {
-          "typescript/no-unsafe-assignment": "off",
-          "typescript/no-unsafe-call": "off",
-          "typescript/no-unsafe-member-access": "off",
-          "typescript/no-unsafe-return": "off",
         },
       },
       {

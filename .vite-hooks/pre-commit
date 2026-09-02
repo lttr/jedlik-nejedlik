@@ -1,18 +1,10 @@
-# Every check:all task except check:build, which runs on pre-push instead.
 # Run under `sh -e`: the first failure aborts the commit.
 
 # Writes: formats and --fixes staged files, then re-stages them. Scoped to
 # the index on purpose — it must not rewrite files you did not stage.
 vp staged
 
-# Judges: the same oxlint, read-only over the whole repo. Not redundant with
-# the pass above — lint is type-aware, so editing a staged file can break an
+# Judges: the whole gate, read-only over the repo. Not redundant with the
+# pass above — lint is type-aware, so editing a staged file can break an
 # unstaged caller that a scoped pass never looks at.
-vp run check:lint
-
-vp run lint:slow
-vp run typecheck
-vp run check:test
-
-# Diff-scoped by nature (audit works off the merge-base) and uncached.
-vp run check:fallow
+vp run check:all
