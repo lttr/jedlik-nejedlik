@@ -6,7 +6,7 @@ Claude Code cloud routine invokes it weekly on Monday with a one-line prompt
 
 - Environment variables: `NUXT_PUBLIC_DIRECTUS_URL` only. Cloud environments
   have no secrets store and their values are readable by anyone using the
-  environment, so no tokens go in. `check:build` must therefore succeed without
+  environment, so no tokens go in. `vp run build` must therefore succeed without
   `SENTRY_AUTH_TOKEN` (sourcemap upload skipped). If it does not, that is a bug
   in the build, never a reason to add the credential.
 - Network access: Custom = default allowlist plus `obsah-jedlika.lttr.cz`. The

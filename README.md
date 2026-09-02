@@ -53,10 +53,12 @@ Linting is intentionally strict — a large pedantic Oxlint rule set (see the
 3. `check:typecheck` — `nuxi typecheck`
 4. `check:fallow` — dead-code / unused-export detection
 5. `check:test` — unit tests (`web/tests/unit/`)
-6. `check:build` — `nuxi build`
 
-A **pre-commit hook** (`vp staged`) auto-formats and `--fix`es staged files, so
-on-disk contents may change after `git commit`.
+The build is not part of the gate — `vp run build` locally, and the Coolify
+deploy build is the signal on `master`.
+
+A **pre-commit hook** runs `vp staged` (auto-formats and `--fix`es staged
+files, so on-disk contents may change after `git commit`) and then `check:all`.
 
 ## Content & CMS
 
