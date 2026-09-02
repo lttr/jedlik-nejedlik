@@ -12,22 +12,6 @@ argument-hint: <path-to-spec | inline text>
 - Branch: !`git branch --show-current`
 - Status: !`git status --short`
 
-## Step 0 - Verification log
-
-Every verification command is logged automatically (Bash-tool hook, post-edit
-hook, Stop hook) to a scratch log outside the repo
-(`scripts/verify-log.sh path` prints it). Your job is only the
-milestones that no hook can see - one line each, at the moment they happen:
-
-```bash
-scripts/verify-log.sh event --event task-start   --message "Task 3: hero image"
-scripts/verify-log.sh event --event task-done    --message "Task 3"
-scripts/verify-log.sh event --event review-start --message "my-code-review"
-scripts/verify-log.sh event --event review-fixed --message "2 findings"
-```
-
-Never gate work on the logger - it is fire-and-forget bookkeeping.
-
 ## Step 1 - Spec
 
 Read `$ARGUMENTS` (file path or inline text). Generate a kebab-case slug from it.
@@ -81,13 +65,3 @@ Ask whether to create a PR.
 If yes: Create PR with `gh pr create` (summary, changes, acceptance criteria). Push.
 
 Output report: branch, PR URL, files changed, verification status, open questions.
-
-Close with the verification log, so the run is auditable after the fact:
-
-```bash
-scripts/verify-log-report.sh summary
-scripts/verify-log-report.sh redundant
-```
-
-Include the summary in the report and call out anything the `redundant` view
-flags (same command re-run against an unchanged tree).
