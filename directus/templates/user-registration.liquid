@@ -1,0 +1,93 @@
+{% comment %}
+  Overrides the Directus system template of the same name (English, Directus
+  design). Lives on the instance in EMAIL_TEMPLATES_PATH (/directus/templates);
+  this copy is the source of truth — see docs/directus.md.
+
+  Data: url, email, first_name, last_name + projectName, projectColor,
+  projectUrl. The subject line is hardcoded English in Directus
+  (api/src/services/users.ts) and cannot be set from here.
+
+  The logo is a hardcoded absolute URL, not `projectLogo`: the instance has no
+  project_logo and no PUBLIC_URL, so that variable renders as a relative path
+  (broken in e-mail) pointing at the white Directus logo.
+
+  Deliberately standalone: the system `base` layout carries an English footer
+  and signature.
+{% endcomment %}
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta name="robots" content="noindex,follow" />
+    <title>Ověření e-mailu — {{ projectName }}</title>
+  </head>
+  <body style="margin: 0; padding: 0; width: 100% !important; background-color: #ffe8d6">
+    <div style="display: none; max-height: 0; max-width: 0; opacity: 0; overflow: hidden">
+      Registraci dokončíte ověřením e-mailu.
+    </div>
+
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; background-color: #ffe8d6">
+      <tr>
+        <td align="center" valign="top" style="padding: 32px 16px">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; max-width: 560px">
+            <tr>
+              <td align="center" style="padding-bottom: 24px">
+                <img src="https://www.jedlik-nejedlik.cz/512.icon.png" alt="{{ projectName }}" width="64" height="64" style="display: block; width: 64px; height: 64px; border: 0; border-radius: 50%; object-fit: contain" />
+              </td>
+            </tr>
+
+            <tr>
+              <td style="background-color: #ffffff; border-radius: 16px; padding: 40px 32px; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 26px; color: #22284f">
+                <h1 style="margin: 0 0 16px 0; font-size: 26px; line-height: 32px; font-weight: 700; color: #0a1a57">
+                  Ověřte svůj e-mail
+                </h1>
+
+                <p style="margin: 0 0 16px 0">
+                  Vítejte na Jedlíkovi-nejedlíkovi! Registraci dokončíte kliknutím na tlačítko níž.
+                </p>
+
+                <p style="margin: 0 0 28px 0">
+                  <strong>Účet zatím není aktivní.</strong> Aktivuje se hned po ověření e-mailu.
+                </p>
+
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="center" bgcolor="#0a1a57" style="border-radius: 999px">
+                      <a href="{{ url }}" rel="noopener" target="_blank" style="display: inline-block; padding: 14px 32px; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 20px; color: #ffffff; text-decoration: none; border-radius: 999px">
+                        Ověřit e-mail
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin: 28px 0 8px 0; font-size: 14px; line-height: 22px; color: #4a5178">
+                  Tlačítko nefunguje? Zkopírujte si tento odkaz do prohlížeče:
+                </p>
+                <p style="margin: 0; font-size: 14px; line-height: 22px; word-break: break-all">
+                  <a href="{{ url }}" rel="noopener" target="_blank" style="color: #0a1a57">{{ url }}</a>
+                </p>
+
+                <hr style="margin: 32px 0 20px 0; border: 0; border-top: 1px solid #e2e6f2" />
+
+                <p style="margin: 0; font-size: 13px; line-height: 20px; color: #6b7194">
+                  Tuto zprávu jsme poslali, protože se někdo zaregistroval s adresou
+                  <strong style="color: #4a5178">{{ email }}</strong>. Pokud jste to nebyli vy,
+                  nemusíte dělat nic — e-mail stačí smazat.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center" style="padding: 24px 8px 0 8px; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #4a5178">
+                <a href="https://www.jedlik-nejedlik.cz" target="_blank" style="color: #0a1a57; text-decoration: none; font-weight: 600">Jedlík-nejedlík</a>
+                — Výživa a výchova v propojení
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

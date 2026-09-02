@@ -27,6 +27,9 @@
     // certificate CSS is <link>-ed from generated HTML, never JS-imported —
     // fallow's CSS analysis can't see the reference.
     "certificate/**/*.css",
+    // Directus hook extensions: loaded by the Directus API on the instance
+    // (see docs/directus.md), never imported by anything in this repo.
+    "directus/extensions/**",
   ],
 
   "ignoreDependencies": [

@@ -92,6 +92,10 @@ export default defineConfig({
       // replayed result would mask drift on the live instance.
       "directus:pull": { command: "directus-sync pull", cache: false },
       "directus:diff": { command: "directus-sync diff", cache: false },
+      // Pushes directus/templates/ and directus/extensions/ to the instance as
+      // Coolify file storages. The one place the repo writes to Directus — both
+      // are authored here, unlike the pull-only config dump.
+      "directus:push": { command: "scripts/directus-push.sh", cache: false },
       // On-demand permission probes against the production instance; not in
       // check:all on purpose.
       // Stamps .directus-probe-stamp on success — the pre-commit probe gate
