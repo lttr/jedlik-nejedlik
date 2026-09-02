@@ -66,3 +66,17 @@ at boundary N should have been impossible at boundary N-1.
 - `implement-spec` ticket loop still has no static analysis of its own; it
   relies on each project's pre-commit gate. In a project without one, lint and
   typecheck wait until wrap-up. Accepted for now.
+
+## Retired 2026-09-02
+
+The verification log (`scripts/verify-log*.sh`, `verify-log-bash.sh`,
+`docs/verify-log.md`, the Bash Pre/PostToolUse and Stop hooks) was removed.
+It lived in `/tmp`, so the sessions it was built to audit — the August auth
+implementation — were gone by the time anyone read it; the six days that
+survived showed only a documentation branch. `post-edit-fix.sh` keeps the
+silent lint, minus the record.
+
+To rebuild: the implementation lives in cb7d0e7..ba32eed (logger, report
+script, hooks, wiring) and its design record is
+`git show 3eff6ef:docs/verify-log.md` (record shape, sweep semantics, the
+PostToolUse-skips-on-failure finding, caveats).
