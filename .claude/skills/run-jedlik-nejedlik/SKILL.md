@@ -64,22 +64,6 @@ Rules:
 Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`, so
 no events fire locally.
 
-## Verify a change
-
-Driving a flow proves it works. It does not prove the page looks right: the
-DOM can be correct while the layout is wrong, and no mechanical check will say
-so. For every route the change touches:
-
-1. Drive it to the state the change affects.
-2. Screenshot it at the default viewport and again at 375px wide
-   (`agent-browser set viewport 375 800`).
-3. Read the image back and say in a sentence what it looks like. Judge it as a
-   page, not as a DOM: spacing, alignment, overflow, anything that looks off
-   next to the pages around it. A screenshot nobody looked at is not evidence.
-
-Static correctness is the other bucket: `vp run check:all` (types, tests,
-lint, build) never sees a rendered page, and this step never replaces it.
-
 ## Stop
 
 TaskStop the Monitor, then free the port by port — never by process pattern
