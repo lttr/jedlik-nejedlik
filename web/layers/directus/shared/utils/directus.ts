@@ -9,8 +9,7 @@ export function createDirectusClient(url: string): DirectusRestClient {
   return createDirectus<Schema>(url).with(rest())
 }
 
-// The same client bound to one bearer token. Generic on purpose: whose token
-// it is, and where it came from, is not this layer's business.
+// Whose token it is, and where it came from, is not this layer's business.
 export function createDirectusTokenClient(url: string, token: string): DirectusRestClient {
   return createDirectus<Schema>(url).with(staticToken(token)).with(rest())
 }

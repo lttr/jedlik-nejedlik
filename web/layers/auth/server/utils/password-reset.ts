@@ -1,7 +1,6 @@
-// The two legs of "I forgot my password", both proxied to Directus's native
-// endpoints (ADR 0002). Directus mints the reset token and sends the e-mail;
-// our code never sees the token until the Student brings it back from their
-// inbox, which is exactly why the mail itself stays Directus-native.
+// Both legs of "forgot password", proxied to Directus's native endpoints.
+// Directus mints the token and sends the e-mail; our code only sees the token
+// when the Student brings it back.
 import { passwordRequest, passwordReset } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
@@ -22,7 +21,7 @@ export async function readResetRequest(event: H3Event): Promise<string> {
 }
 
 export async function readPasswordReset(event: H3Event): Promise<PasswordReset> {
-  // A missing token is a dead link like any other, and says the same thing.
+  // A missing token is a dead link like any other.
   const reset = await readAuthBody(
     event,
     ResetSchema,
@@ -32,14 +31,12 @@ export async function readPasswordReset(event: H3Event): Promise<PasswordReset> 
   return reset
 }
 
-// Directus answers 204 whether or not the address has an account — it swallows
-// the "no such user" case on purpose, so accounts stay unenumerable. Nothing
-// here can tell the two apart, and the page's confirmation is written for both.
+// Directus answers 204 whether or not the address has an account, so accounts
+// stay unenumerable; the page's confirmation is written for both.
 export async function requestPasswordReset(event: H3Event, email: string): Promise<void> {
   try {
     await getDirectusAnonymousServerClient(event).request(
-      // The instance only accepts a `reset_url` named in its own
-      // PASSWORD_RESET_URL_ALLOW_LIST; anything else is 400 INVALID_PAYLOAD.
+      // Must be on the instance's PASSWORD_RESET_URL_ALLOW_LIST, else 400.
       passwordRequest(email, authPageUrl(event, RESET_PASSWORD_PATH)),
     )
   } catch (error) {
@@ -51,9 +48,6 @@ export async function requestPasswordReset(event: H3Event, email: string): Promi
   }
 }
 
-// Consumes the token from the reset e-mail and sets the new password. Expired,
-// already used and forged tokens all come back as one Directus rejection,
-// which is one message to a Student — the page offers a fresh link.
 export async function resetStudentPassword(
   event: H3Event,
   { token, password }: PasswordReset,
@@ -62,15 +56,10 @@ export async function resetStudentPassword(
     await getDirectusAnonymousServerClient(event).request(passwordReset(token, password))
   } catch (error) {
     const code = directusErrorCode(error)
-    // Expired, used and forged tokens need not answer with the same Directus
-    // code, and the Student is told the same thing about all of them anyway —
-    // so the branch is on what is *not* about the link. `undefined` means
-    // Directus never answered at all.
-    //
-    // The password branch is belt-and-braces: `readPasswordReset` already
-    // rejected a short password, so reaching it means Directus disagreed with
-    // us about the policy. It cannot be probed either — that needs a valid
-    // token, and a valid token needs an inbox (ticket 06).
+    // Expired, used and forged tokens need not share a Directus code, and the
+    // Student is told one thing about all of them, so branch on what is *not*
+    // about the link. FAILED_VALIDATION can only mean Directus disagrees with
+    // PASSWORD_MIN_LENGTH: `readPasswordReset` already checked the length.
     if (code === "FAILED_VALIDATION") {
       throw authError(400, "invalid_password", authMessages.passwordTooShort)
     }

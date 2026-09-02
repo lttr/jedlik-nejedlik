@@ -1,14 +1,12 @@
-// Reading an auth route's JSON body: one function, one schema per route.
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-// The one shape an address may reach Directus in (see normaliseEmail). The
-// browser normalises too, so that the confirmation names the address that was
-// actually registered — but this is the boundary that has to hold.
+// The boundary that has to hold: every address reaches Directus in this one
+// shape (see normaliseEmail), whatever the browser sent.
 export const StudentEmail = z.string().transform(normaliseEmail).pipe(z.email())
 
-// Every auth route answers a malformed body with an error of its own choosing,
-// so that the reply says no more than that route's genuine failure would.
+// Each route picks its own error for a malformed body, so the reply reveals no
+// more than that route's genuine failure would.
 export async function readAuthBody<T>(
   event: H3Event,
   schema: z.ZodType<T>,
@@ -22,9 +20,6 @@ export async function readAuthBody<T>(
   return parsed.data
 }
 
-// The instance's password policy, as a route-level rejection. Shared by every
-// route that sets a password — registration, reset completion and change —
-// so the rule, the status and the Czech wording stay one thing.
 export function assertPasswordPolicy(password: string): void {
   const complaint = validatePassword(password)
   if (complaint !== null) {

@@ -7,11 +7,9 @@ export interface StudentSession {
   refresh: () => Promise<void>
 }
 
-// The single seam onto nuxt-auth-utils' client API, and the one way the app
-// asks who is logged in. Identical on SSR and client: the answer comes from
-// the sealed cookie's payload, not from a round-trip, so there is nothing to
-// flicker between. Pages and components speak Student (GLOSSARY.md) — they
-// never see `useUserSession()`.
+// The single seam onto nuxt-auth-utils' client API. Identical on SSR and
+// client because the answer comes from the sealed cookie's payload, not a
+// round-trip. Pages speak Student (GLOSSARY.md), never `useUserSession()`.
 export function useStudent(): StudentSession {
   const { user, loggedIn, fetch } = useUserSession()
   return { student: user, loggedIn, refresh: fetch }
