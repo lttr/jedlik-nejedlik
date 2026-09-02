@@ -1,9 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-// `enforceRateLimit` is a Nitro server util: it calls `getRequestIP` and
-// `authError` as Nuxt auto-imports, which are plain free identifiers at
-// runtime and therefore resolve against `globalThis`. Stubbing them is enough
-// to exercise the real shipped module rather than a retyped copy of it.
+// `enforceRateLimit` calls `getRequestIP` and `authError` as Nuxt
+// auto-imports, plain free identifiers that resolve against `globalThis`, so
+// stubbing them is enough to run the real module.
 const IP = "203.0.113.7"
 
 interface RateLimitModule {

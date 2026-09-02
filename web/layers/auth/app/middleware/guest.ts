@@ -1,5 +1,4 @@
-// The mirror of `auth`: a Student who is already logged in has no business on
-// the login form, so send them where they were heading.
+// A logged-in Student has no business on the login form; send them on.
 export default defineNuxtRouteMiddleware(async (to) => {
   const { loggedIn } = useStudent()
   if (!loggedIn.value) {

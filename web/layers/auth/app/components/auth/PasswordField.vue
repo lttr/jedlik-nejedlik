@@ -16,11 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-// Every form that *sets* a password — registration, reset completion, and the
-// change-password form to come — is this field: the same autocomplete hint to
-// the browser, the same policy hint to the Student, and the same
-// `aria-describedby` tying the two together. Wording and wiring live here so
-// they cannot drift from one form to the next.
+// Every form that sets a password uses this field, so the autocomplete hint,
+// the policy hint and the `aria-describedby` wiring cannot drift between them.
 const {
   id,
   label = "Heslo",

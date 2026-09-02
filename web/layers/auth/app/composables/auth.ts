@@ -11,7 +11,7 @@ export interface AuthActions {
 }
 
 // The only way the app talks to the auth routes. Credentials go out, a sealed
-// cookie comes back — no Directus token ever touches the browser (ADR 0002).
+// cookie comes back; no Directus token ever touches the browser (ADR 0002).
 export function useAuthActions(): AuthActions {
   const { refresh } = useStudent()
 
@@ -26,8 +26,8 @@ export function useAuthActions(): AuthActions {
       await refresh()
     },
 
-    // Neither of these ends logged in: the new account is Unverified until the
-    // e-mailed link is followed, and the Student logs in afterwards.
+    // Neither ends logged in: the account is Unverified until the e-mailed
+    // link is followed, and the Student logs in afterwards.
     async register(registration) {
       await $fetch("/api/auth/register", { method: "POST", body: registration })
     },
@@ -36,8 +36,7 @@ export function useAuthActions(): AuthActions {
       await $fetch("/api/auth/verify-email", { method: "POST", body: { token } })
     },
 
-    // Neither reset leg logs anyone in either: the Student sets a new password
-    // and then uses it at the login form.
+    // Neither reset leg logs anyone in either.
     async requestPasswordReset(email) {
       await $fetch("/api/auth/password-request", { method: "POST", body: { email } })
     },
@@ -46,9 +45,8 @@ export function useAuthActions(): AuthActions {
       await $fetch("/api/auth/password-reset", { method: "POST", body: { token, password } })
     },
 
-    // Ends every other session and re-seals this one, so the Student stays
-    // logged in here — the identity in the payload does not change, so there
-    // is nothing for the client to re-read.
+    // Re-seals this session and ends every other; the payload's identity is
+    // unchanged, so there is nothing to re-read.
     async changePassword(change) {
       await $fetch("/api/auth/change-password", { method: "POST", body: change })
     },

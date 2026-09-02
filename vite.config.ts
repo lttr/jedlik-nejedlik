@@ -80,9 +80,8 @@ export default defineConfig({
         input: srcInput,
         dependsOn: ["nuxt:prepare"],
       },
-      // `audit`, not a bare report: scoped to changed files, so it is silent
-      // unless it rejects something. Never cached — it scopes itself off the
-      // merge-base, which `srcInput` does not hash.
+      // `audit`: scoped to changed files, silent unless it rejects. Uncached
+      // because it scopes off the merge-base, which `srcInput` does not hash.
       "check:fallow": { command: "fallow audit --quiet", cache: false },
       "check:test": {
         command: "vp test run --config vitest.unit.config.ts",
@@ -259,12 +258,10 @@ export default defineConfig({
         },
       },
       {
-        // nuxt-auth-utils' own type declarations import from `#auth-utils`, a
-        // tsconfig path oxlint's type-aware resolver cannot follow (vue-tsc
-        // can, so `check:typecheck` still covers these files fully). Without
-        // it every call into the module reads as `error`-typed. Scoped to the
-        // two files that touch the module's API at all — everything above
-        // them speaks our own Student types and stays fully checked.
+        // nuxt-auth-utils' declarations import from `#auth-utils`, a tsconfig
+        // path oxlint's type-aware resolver cannot follow (vue-tsc can), so
+        // every call into the module reads as `error`-typed. Scoped to the
+        // two files that touch the module's API.
         files: [
           "web/layers/auth/server/utils/session-store.ts",
           "web/layers/auth/app/composables/student.ts",

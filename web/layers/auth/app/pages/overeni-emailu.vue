@@ -1,8 +1,7 @@
 <template>
   <PageWrapper>
     <AuthPanel title="Ověření e-mailu">
-      <!-- Nothing has failed yet: either the request is still running, or the
-           page has already forwarded to the login form. -->
+      <!-- Request still running, or already forwarded to the login form. -->
       <p v-if="errorMessage === ''">Ověřujeme váš e-mail…</p>
 
       <template v-else>
@@ -27,12 +26,10 @@ const { errorMessage, submit } = useAuthForm()
 const { token, scrubbed } = useEmailedToken()
 
 onMounted(async () => {
-  // Only once the token is out of the address bar.
   await scrubbed
 
   await submit(async () => {
-    // A missing token is posted like any other: the route is the single judge
-    // of whether a token activates an account, and answers both the same way.
+    // A missing token is posted like any other; the route is the single judge.
     await verifyEmail(token)
     await navigateTo(
       { path: "/prihlaseni", query: { [EMAIL_VERIFIED_QUERY]: "1" } },

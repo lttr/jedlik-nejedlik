@@ -48,9 +48,8 @@ useHead({ title: "Můj účet" })
 const { student } = useStudent()
 const { logOut, changePassword } = useAuthActions()
 
-// Two independent forms on one page, so two independent pending/error pairs:
-// a failed password change must not blank out the logout button, and neither
-// error may show up under the other's control.
+// Two forms, two pending/error pairs: a failed password change must not blank
+// the logout button or show under it.
 const { pending: logOutPending, errorMessage: logOutError, submit: submitLogOut } = useAuthForm()
 const {
   pending: changePending,
@@ -79,8 +78,7 @@ async function onChangePassword() {
       currentPassword.value = ""
       newPassword.value = ""
     },
-    // The instance's own rule, checked here only to save a round-trip; the
-    // change-password route enforces it again.
+    // Saves a round-trip; the route enforces it again.
     () => validatePassword(newPassword.value),
   )
 }

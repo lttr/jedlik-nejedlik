@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest"
 
-// The real shipped export, not a retyped copy of the algorithm: this is the
-// open-redirect guard on the login form, so the thing under test has to be
-// the thing that runs.
 import { DEFAULT_AUTH_REDIRECT, safeRedirectPath } from "../../layers/auth/shared/utils/redirects"
 
 describe("safeRedirectPath", () => {
@@ -29,9 +26,8 @@ describe("safeRedirectPath", () => {
     expect(safeRedirectPath(raw)).toBe(DEFAULT_AUTH_REDIRECT)
   })
 
-  // Characters the URL parser strips or percent-encodes rather than treating
-  // as a separator: the result is still an unambiguous same-origin path, so
-  // the guard lets it through instead of throwing away a legitimate return.
+  // The URL parser strips or percent-encodes these; the result is still an
+  // unambiguous same-origin path, so a legitimate return is not thrown away.
   it.each([
     ["a stripped newline", "/muj-ucet\n//evil.tld", "/muj-ucet//evil.tld"],
     ["an encoded null byte", "/muj-ucet\u0000x", "/muj-ucet%00x"],

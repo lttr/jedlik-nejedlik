@@ -52,18 +52,15 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     session: {
-      // The whole session config lives here next to `password`, which the
-      // runtime-config schema validates: nuxt-auth-utils' `SessionConfig`
-      // type requires `password`, so a layer cannot contribute a partial one.
+      // All session config lives here: nuxt-auth-utils' `SessionConfig`
+      // requires `password`, so a layer cannot contribute a partial one.
       password: "",
-      // 30 sliding days (spec). h3 derives the sealed cookie's expiry from
-      // the session's creation time, so the window slides only because every
-      // Directus token refresh *replaces* the session — see the auth layer's
-      // server/utils/session-store.ts.
+      // 30 sliding days (spec); the window slides because every token refresh
+      // replaces the session (auth layer, session-store.ts).
       maxAge: 30 * 24 * 60 * 60,
       cookie: {
-        // h3 and the module already default to exactly this; spelled out
-        // because it is the ADR 0002 guarantee, not a happy accident.
+        // Already the defaults; spelled out because it is the ADR 0002
+        // guarantee, not a happy accident.
         httpOnly: true,
         secure: true,
         sameSite: "lax",
@@ -126,9 +123,8 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    // Nothing on the site calls `defineOgImage`; the og:image tag comes from the
-    // static `public/og-image.png` that nuxt-seo-utils picks up on its own. With
-    // the module off, its dev-time renderer-detection warnings go away too.
+    // Nothing calls `defineOgImage`; the og:image tag comes from the static
+    // `public/og-image.png` via nuxt-seo-utils (absolutised in app.vue).
     enabled: false,
   },
 

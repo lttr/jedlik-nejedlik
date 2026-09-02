@@ -52,8 +52,7 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "guest" })
 
-// Bare title: `/registrace` is `robots: false`, so there is no point emitting
-// og:* for a page that must never be indexed or shared.
+// Bare title: the page is `robots: false`, so no og:* tags.
 useHead({ title: "Registrace" })
 
 const { register } = useAuthActions()
@@ -61,20 +60,17 @@ const { pending, errorMessage, submit } = useAuthForm()
 
 const email = ref("")
 const password = ref("")
-// Set once the route answered; also the address the confirmation names back.
 const submittedEmail = ref("")
 
 async function onSubmit() {
   await submit(
     async () => {
-      // Normalised here as well as on the way in, so the confirmation names
-      // the address Directus was actually given.
+      // Normalised here too, so the confirmation names what Directus was given.
       const address = normaliseEmail(email.value)
       await register({ email: address, password: password.value })
       submittedEmail.value = address
     },
-    // The instance's own rule, checked here only to save a round-trip; the
-    // register route enforces it again.
+    // Saves a round-trip; the route enforces it again.
     () => validatePassword(password.value),
   )
 }

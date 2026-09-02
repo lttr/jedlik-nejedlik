@@ -135,9 +135,8 @@ export function forget<T>(list: T[], value: T): void {
   }
 }
 
-// Role ids are looked up live, never hardcoded and never read from the
-// committed directus-sync dump: `_syncId` there is directus-sync's own
-// identifier and does NOT match the live role id (verified 2026-08-28).
+// Looked up live: the committed directus-sync dump's `_syncId` is not the
+// live role id.
 export async function roleIdByName(name: string, token: string): Promise<string> {
   const response = await probe(
     `/roles?fields=id&filter[name][_eq]=${encodeURIComponent(name)}`,
@@ -150,8 +149,7 @@ export async function roleIdByName(name: string, token: string): Promise<string>
   return role.id as string
 }
 
-// Probe passwords are generated per run — never a literal in a committed
-// file, even for a throwaway user the probe deletes again.
+// Never a literal in a committed file, even for a throwaway user.
 export function generatePassword(): string {
   return `Pw-${randomUUID()}`
 }

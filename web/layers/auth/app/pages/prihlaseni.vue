@@ -50,17 +50,14 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "guest" })
 
-// Bare title: `/prihlaseni` is `robots: false`, so there is no point emitting
-// og:* for a page that must never be indexed or shared.
+// Bare title: the page is `robots: false`, so no og:* tags.
 useHead({ title: "Přihlášení" })
 
 const route = useRoute()
 const { logIn } = useAuthActions()
 const { pending, errorMessage, submit } = useAuthForm()
 
-// What just happened elsewhere, said at the moment the Student needs to know
-// it: `/overeni-emailu` activated the account, or `/obnova-hesla` set a new
-// password. Both send them here, so both announce themselves the same way.
+// Both /overeni-emailu and /obnova-hesla send the Student here and say why.
 const notice = computed(() => {
   if (route.query[EMAIL_VERIFIED_QUERY] !== undefined) {
     return authMessages.emailVerified

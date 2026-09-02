@@ -1,12 +1,10 @@
 import { describe, expect, it } from "vitest"
 
-// The real shipped export: this is the client-side half of the instance's
-// password policy, so the thing under test has to be the thing that runs.
 import { PASSWORD_MIN_LENGTH, validatePassword } from "../../layers/auth/shared/utils/password"
 
 describe("validatePassword", () => {
-  // The instance policy is `/^.{8,}$/`: a length and nothing else, so nothing
-  // about the character mix may make a long enough password fail.
+  // The instance policy is a length and nothing else: the character mix must
+  // never make a long enough password fail.
   it.each([
     ["exactly the minimum length", "a".repeat(PASSWORD_MIN_LENGTH)],
     ["a longer password", "dost-dlouhé-heslo"],
@@ -24,8 +22,7 @@ describe("validatePassword", () => {
     expect(validatePassword("")).not.toBeNull()
   })
 
-  // The message quotes the number, so it has to come from the same constant
-  // the check uses — otherwise the two drift apart silently.
+  // The message quotes the number; it must not drift from the constant.
   it("names the minimum length in its Czech message", () => {
     expect(validatePassword("x")).toContain(String(PASSWORD_MIN_LENGTH))
   })

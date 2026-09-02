@@ -1,23 +1,18 @@
 import { z } from "zod"
 
-// Imported rather than auto-imported so this stays a plain module the unit
-// suite can load (tests/unit/auth-errors.test.ts).
+// Explicit import so the unit suite can load this as a plain module.
 import { authMessages } from "../../shared/utils/auth-messages"
 
-// Nitro sends the Czech text of a `createError` as the body's `message` and its
-// `code` — the second argument to `authError` — as `statusMessage`; anything
-// else that reaches here (network failure, unexpected 500) is not something a
-// Student can act on.
+// Nitro sends `createError`'s Czech `message` and, as `statusMessage`, the
+// code passed to `authError`. Anything else (network failure, unexpected 500)
+// is not something a Student can act on.
 const FetchErrorBody = z.object({
   data: z.object({ message: z.string().min(1), statusMessage: z.string().optional() }),
 })
 
 export interface AuthFailure {
-  // Shown to the Student.
   message: string
-  // The route's own name for what went wrong, for the rare form that has to
-  // react to *which* failure rather than just report it. Empty when the
-  // failure did not come from one of our routes.
+  // The route's own code, empty when the failure did not come from our routes.
   code: string
 }
 
