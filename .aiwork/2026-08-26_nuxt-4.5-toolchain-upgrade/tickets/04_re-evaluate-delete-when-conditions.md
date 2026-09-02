@@ -1,6 +1,7 @@
 ---
 status: done
 blocked_by: [03]
+verified: [checks, behaviour, review]
 references:
   - "Spec: ../spec.md (gotcha 11, DELETE-WHEN conditions to re-evaluate afterwards)"
 ---
