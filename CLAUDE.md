@@ -6,11 +6,11 @@ Educational website "Jedlík-nejedlík" (nutrition/parenting). Nuxt 4 frontend i
 
 Three separate buckets — none replaces the others:
 
-- **Static correctness** — `vp run check:all` is the mechanical gate: only a green run of it counts as checks passing, and nothing ships on a subset (it covers `lint`, `slowlint`, `typecheck`, `fallow`, `test`, `build` — caching makes repeats free, and every task is quiet on success, so run it bare). Running an underlying tool directly is fine for debugging or `--fix`; it just never counts.
-- **Behaviour** — exercise the real app (build it, run it, drive it) via the `run-jedlik-nejedlik` skill; catches what only shows at runtime. A green `check:all` does not verify behaviour.
+- **Static correctness** — `vp run check:all` is the only run that counts as checks passing; nothing ships on a subset. It covers `lint`, `slowlint`, `typecheck`, `fallow`, `test`, `build`; caching makes repeats free and every task is quiet on success, so run it bare. Running an underlying tool directly is fine for debugging or `--fix`, it just never counts.
+- **Behaviour** — the `verify` skill: run the real app, drive the changed flow, screenshot it and look at the image. Catches what only shows at runtime (hydration mismatch, null data, layout broken at 375px). A green `check:all` does not verify behaviour.
 - **Code quality** — `/code-review`, `/simplify`; judgement calls, not checks.
-- If you curl an endpoint twice to prove behaviour, promote the proof to a probe or unit test (`web/tests/unit/`) before the ticket closes.
-- Verification commands are auto-logged by hooks to a scratch JSONL outside the repo; read it with `scripts/verify-log-report.sh`. See `docs/verify-log.md`.
+
+Verification commands are auto-logged by hooks to a scratch JSONL outside the repo; read it with `scripts/verify-log-report.sh`. See `docs/verify-log.md`.
 
 ## Non-obvious
 
