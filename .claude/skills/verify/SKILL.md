@@ -16,9 +16,11 @@ Out of scope: `vp run check:all` (static) and `vp run directus:probe`
 - `agent-browser` available (bundled with Vite+).
 - A diff with a runtime surface: a page, a component a page renders, or a
   server route. Docs, tests, config only → SKIP and name the files.
-- The acceptance criteria: `$ARGUMENTS` as a ticket or spec path. If absent,
-  use the `status: in-progress` ticket under `.aiwork/`; if none, the diff
-  itself is the claim and say so in the report.
+- The claim to verify: `$ARGUMENTS` as a path to a ticket, spec, or any file
+  with acceptance criteria, or the user's description of the change. With
+  neither, the diff itself is the claim; say so in the report. (When the
+  `aiwork-protocol` is in use, the `status: in-progress` ticket is the
+  default argument.)
 
 ## Pass 1 — Behaviour: is the spec implemented?
 
@@ -52,6 +54,7 @@ say so and name the routes.
 ## Report
 
 Two verdicts (PASS / FAIL / BLOCKED / SKIP), the per-criterion table, the
-screenshot sentences with paths, and findings. Screenshots live in
-`.aiwork/<task>/screenshots/` (gitignored).
+screenshot sentences with paths, and findings. Screenshots are working
+evidence, not repository content: put them in the task folder's
+`screenshots/` when there is one (gitignored), else in the session scratchpad.
 When in doubt, FAIL.
