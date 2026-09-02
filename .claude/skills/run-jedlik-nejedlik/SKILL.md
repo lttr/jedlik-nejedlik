@@ -1,6 +1,6 @@
 ---
 name: run-jedlik-nejedlik
-description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own Chrome via agent-browser (headed by default so the user can watch); never a pre-existing browser, never xdg-open.
+description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own Chrome via agent-browser: headed plus page-bridge when the user is watching, headless when unattended; never a pre-existing browser, never xdg-open.
 ---
 
 Nuxt 4 site in `web/`, repo root as cwd. Build with `vp run build` — never
@@ -25,14 +25,27 @@ If the log says `Using alternative port`, use that port instead.
 
 ## Drive
 
-`agent-browser` (bundled with Vite+) launches its own Chrome for Testing.
-Default to `--headed` so the user can watch and point at things in the same
-window; drop the flag when nobody is looking (CI, screenshots-only).
+`agent-browser` (bundled with Vite+) launches its own Chrome for Testing. Pick
+the mode by whether a human is at the keyboard:
+
+- **Interactive** (the user is watching, pointing, asking for fixes): open
+  **headed**, and call the Skill tool with `page-bridge` if it is listed. It
+  puts a floating toolbar on the page so the user can pick an element, comment
+  on one, or send a note, and each arrives as a live notification with the
+  selector and computed styles. Its `open` replaces the one below; it documents
+  its own sink, hiding the toolbar before screenshots, and stopping. If the
+  skill is not listed, the plain headed session is enough.
+- **Unattended** (a subagent, CI, or a task the user handed off to run on its
+  own): open headless, no page-bridge — nobody is there to click.
+
+When in doubt, a live chat session is interactive. A window opening
+unnecessarily costs nothing; a headless run the user could not see costs a
+round trip.
 
 ```bash
-agent-browser open --headed http://localhost:3000/
-agent-browser snapshot                       # interactive elements with refs
-agent-browser screenshot "$PWD/shot.png"     # absolute path
+agent-browser open --headed http://localhost:3000/   # interactive; drop --headed when unattended
+agent-browser snapshot                               # interactive elements with refs
+agent-browser screenshot "$PWD/shot.png"             # absolute path
 ```
 
 Rules:
@@ -50,10 +63,6 @@ Rules:
 
 Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`, so
 no events fire locally.
-
-If the optional `page-bridge` skill is installed, it can replace the `open`
-above with a toolbar that lets the user pick elements and send notes; hide the
-toolbar before screenshotting. Not required.
 
 ## Verify a change
 
