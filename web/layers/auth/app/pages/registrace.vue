@@ -7,11 +7,11 @@
           >.
         </p>
         <p>
-          <strong>Účet zatím není aktivní.</strong> Otevřete e-mail a klikněte na odkaz v něm —
-          teprve tím se registrace dokončí a budete se moci přihlásit. {{ authMessages.checkSpam }}
+          <strong>Účet zatím není aktivní.</strong> Registraci dokončíte kliknutím na odkaz v
+          e-mailu. Teprve pak se budete moci přihlásit. {{ authMessages.checkSpam }}
         </p>
         <p>
-          Máte už u nás účet? Pak žádný e-mail nechodí a stačí se
+          Pokud u nás účet už máte, žádný e-mail nepřijde a stačí se
           <NuxtLink to="/prihlaseni">přihlásit</NuxtLink>.
         </p>
       </template>
