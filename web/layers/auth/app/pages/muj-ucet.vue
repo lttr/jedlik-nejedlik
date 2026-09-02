@@ -17,7 +17,7 @@
         {{ authMessages.passwordChangedHere }}
       </p>
 
-      <form class="p-stack" @submit.prevent="onChangePassword">
+      <form @submit.prevent="onChangePassword">
         <div class="p-form-group">
           <label for="current-password">Současné heslo</label>
           <input
@@ -32,7 +32,7 @@
 
         <AuthPasswordField id="new-password" v-model="newPassword" label="Nové heslo" />
 
-        <button type="submit" class="p-button-brand" :disabled="changePending">Změnit heslo</button>
+        <AuthSubmit :pending="changePending">Změnit heslo</AuthSubmit>
 
         <AuthFormError :message="changeError" />
       </form>

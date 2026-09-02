@@ -3,7 +3,7 @@
     <AuthPanel title="Přihlášení">
       <p v-if="notice" class="success-message" role="status">{{ notice }}</p>
 
-      <form class="p-stack" @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
         <div class="p-form-group">
           <label for="login-email">E-mail</label>
           <input
@@ -29,16 +29,20 @@
           />
         </div>
 
-        <button type="submit" class="p-button-brand" :disabled="pending">Přihlásit se</button>
+        <AuthSubmit :pending>Přihlásit se</AuthSubmit>
 
         <AuthFormError :message="errorMessage" />
+      </form>
 
-        <p>
+      <div class="p-flow">
+        <p class="p-secondary-text-regular">
           <NuxtLink :to="RESET_PASSWORD_PATH">Zapomněli jste heslo?</NuxtLink>
         </p>
 
-        <p>Nemáte ještě účet? <NuxtLink to="/registrace">Zaregistrujte se</NuxtLink>.</p>
-      </form>
+        <p class="p-secondary-text-regular">
+          Nemáte ještě účet? <NuxtLink to="/registrace">Zaregistrujte se</NuxtLink>.
+        </p>
+      </div>
     </AuthPanel>
   </PageWrapper>
 </template>
