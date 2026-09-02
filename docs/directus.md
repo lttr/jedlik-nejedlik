@@ -235,6 +235,7 @@ build step — the two files are pushed as-is by `vp run directus:push`.
 After a push and a deploy, `GET /extensions` (or **Settings → Extensions** in
 the admin app) must list `email-subjects`; then trigger a password reset and
 confirm the subject reads `Obnovení hesla`. If the extension is missing, the
-compose is not mounting it — see the compose-edit note above. As of 2026-09-02
-the files are pushed as storages but that compose line is **still missing**, so
-the subjects on the instance are the English defaults.
+compose is not mounting it — see the compose-edit note above.
+
+It is live on the instance since 2026-09-02: `source: local`, `enabled: true`,
+loaded from `/directus/extensions/email-subjects`.
