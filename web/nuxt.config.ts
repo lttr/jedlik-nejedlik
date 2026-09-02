@@ -126,7 +126,10 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true,
+    // Nothing on the site calls `defineOgImage`; the og:image tag comes from the
+    // static `public/og-image.png` that nuxt-seo-utils picks up on its own. With
+    // the module off, its dev-time renderer-detection warnings go away too.
+    enabled: false,
   },
 
   ...plausibleConfig,
