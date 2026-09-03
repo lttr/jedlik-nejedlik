@@ -76,7 +76,7 @@ and this avoids designing schema two waves before its consumer exists.
 
 ## 02 — Auth layer (FP-1, O-17, TO-2)
 
-**Status:** in-progress → `../2026-08-19_auth-customers/`
+**Status:** done → `../2026-08-19_auth-customers/`
 Account-first native Directus email+password auth surfaced in the `auth`
 layer: register, login, logout, password reset (Directus → Mailgun, already
 configured). Session handling for Nuxt SSR; identity = email. No magic link

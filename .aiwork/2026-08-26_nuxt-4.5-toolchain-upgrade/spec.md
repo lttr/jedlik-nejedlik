@@ -1,4 +1,5 @@
 ---
+status: done
 references:
   - "Dry run that surfaced this: .claude/skills/dependency-update/SKILL.md (week 2026-W35)"
   - "Why no Renovate: docs/adr/0003-pnpm-native-dependency-updates.md"

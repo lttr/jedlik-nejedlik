@@ -828,13 +828,19 @@ permanent `probe-student-*` / `probe-author` fixtures remain.
 
 ### Still open
 
-- **The two e-mail legs.** Opening the verification e-mail and the reset
-  e-mail, checking their Czech rendering, and completing each from its
-  genuine link. Needs a real inbox; it is the user's to do and the only
-  thing keeping ticket 06 from `done`.
+- ~~**The two e-mail legs.**~~ Closed by the user on 2026-09-03: both
+  mails were opened from a real inbox and completed from their genuine
+  links, and the Czech rendering is fine, so no template override is
+  needed. Ticket 06 and the area are `done`.
 - **`REFRESH_TOKEN_TTL` stays unverified.** Directus exposes no field for
   it, so no probe can assert it. `ACCESS_TOKEN_TTL` _is_ pinned
   (`data.expires === 15 * 60 * 1000`).
+- **The recorded cleanups now live outside this area.** The five
+  follow-ups the implementers noted but did not take were collected into
+  `../2026-09-03_auth-layer-tidy-up/spec.md` on 2026-09-03, and the
+  doubled site name in page titles went to
+  `../2026-09-03_unify-org-name/spec.md` (scope item 4). Closing area 02
+  loses nothing.
 - **No server-route test harness.** The forged-cookie proof above is a
   one-off curl, not a test, for the same reason ticket 05 left its 502
   re-login branch untested: nothing in the repo can construct an
