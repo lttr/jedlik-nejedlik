@@ -54,7 +54,7 @@ TODAY=$(date +%F)
 
 ```bash
 node .claude/skills/dependency-update/scripts/dep-scan.mjs > /tmp/dep-scan.json
-jq '.counts, .deleteWhen' /tmp/dep-scan.json
+jq '.counts, .hoistSkew' /tmp/dep-scan.json
 ```
 
 The JSON output holds one row per outdated direct dependency per workspace, with
@@ -71,9 +71,10 @@ The JSON output holds one row per outdated direct dependency per workspace, with
     (0.3.0 → 1.2.5) — never widen it to a range; rolldown ships a native binary
     and a skew against vite-plus's own copy breaks `vp` outright. Move it only
     in lock-step with a `vite-plus` bump.
-- `deleteWhen` lists the documented workarounds. Evaluate each condition against
-  what you learned reading release notes and report it as satisfied or not.
-  **Never remove a workaround**, even when its condition is satisfied.
+- Read `pnpm-workspace.yaml` for the `# ISSUE:` / `# DELETE WHEN:` comment
+  pairs. Evaluate each condition against what you learned reading release notes
+  and report it as satisfied or not. **Never remove a workaround**, even when
+  its condition is satisfied.
 - `hoistSkew.skewed` lists packages installed at two majors that Nuxt also maps
   in its generated tsconfig `paths`. Report every row in the PR body; act only
   when one bites (§6). `checked: false` means `web/.nuxt` was missing — run
@@ -196,7 +197,7 @@ framework resolves, so that copy lands in `web/node_modules` and the paths
 follow it. Pin it **exactly**: the declaration exists to name the same copy the
 framework uses, so a range that can drift off it defeats the purpose. Document
 it as an `# ISSUE:` / `# DELETE-WHEN:` comment in `pnpm-workspace.yaml` — that
-is where §1 scrapes conditions from, and the exact pin makes the row
+is where §1 reads conditions from, and the exact pin makes the row
 `inScope: false` so a later run cannot bump it to the wrong major. `h3` on
 2026-09-03 is the worked example. `ofetch` is the next candidate: also
 installed at two majors, and currently correct only by luck of the hoist.

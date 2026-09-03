@@ -1,23 +1,24 @@
 #!/usr/bin/env node
 // Deterministic scan for the dependency-update skill.
 //
-// Runs `pnpm outdated --format=json` over the workspace, normalises its two
-// output shapes, tags each row against pnpm-workspace.yaml (exact pin,
-// `catalog:` alias, override workaround) so out-of-scope rows never surface as
-// phantom "outdated" entries, lists the DELETE-WHEN conditions, and resolves
-// every package to its GitHub repo. Everything else — release notes, impact,
-// batching — is the skill's job.
+// Runs `pnpm outdated --format=json -r`, tags each row against its package.json
+// and pnpm-workspace.yaml (exact pin, `catalog:`/`npm:` alias, override
+// workaround) so out-of-scope rows never surface as phantom "outdated" entries,
+// resolves every package to its GitHub repo, and reports hoist skew. Everything
+// else — release notes, impact, batching, DELETE-WHEN conditions — is the
+// skill's job, read straight from the files.
 //
 // Usage: node .claude/skills/dependency-update/scripts/dep-scan.mjs [--no-net]
 // Output: one JSON blob on stdout.
 
 import { execFileSync } from "node:child_process"
-import { existsSync, readFileSync } from "node:fs"
-import { dirname, join, resolve } from "node:path"
+import { readFileSync } from "node:fs"
+import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..")
 const offline = process.argv.includes("--no-net")
+const EXACT = /^\d+\.\d+\.\d+(?:[-+].*)?$/
 
 function readJson(path) {
   try {
@@ -27,86 +28,43 @@ function readJson(path) {
   }
 }
 
-function pnpmOutdated(args) {
-  const run = (a) =>
-    execFileSync("pnpm", ["outdated", "--format=json", ...a], {
-      cwd: repoRoot,
-      encoding: "utf8",
-      maxBuffer: 32 * 1024 * 1024,
-    })
+/** pnpm's stdout, also on exit 1 (`outdated` exits 1 whenever anything is outdated). */
+function pnpm(...args) {
   try {
-    return JSON.parse(run(args) || "{}")
+    return execFileSync("pnpm", args, { cwd: repoRoot, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
   } catch (error) {
-    // `pnpm outdated` exits 1 when anything is outdated but still prints JSON.
     if (error.stdout) {
-      try {
-        return JSON.parse(error.stdout || "{}")
-      } catch {
-        /* fall through */
-      }
+      return error.stdout
     }
-    throw new Error(`pnpm outdated ${args.join(" ")} failed: ${error.message}`, { cause: error })
+    throw error
   }
 }
 
-/** pnpm prints either { pkg: info } or { workspacePath: { pkg: info } }. */
-function normalise(raw, fallbackWorkspace, rows) {
-  for (const [key, value] of Object.entries(raw ?? {})) {
-    if (!value || typeof value !== "object") {
-      continue
-    }
-    // pnpm 11 recursive shape: flat, with a dependentPackages[] per row.
-    if (Array.isArray(value.dependentPackages) && value.dependentPackages.length > 0) {
-      for (const dependent of value.dependentPackages) {
-        add(rows, key, value, workspaceLabel(dependent.location ?? dependent.name))
-      }
-      continue
-    }
-    const isWorkspaceBucket =
-      !value.current &&
-      !value.latest &&
-      Object.values(value).some((v) => v && typeof v === "object" && (v.current || v.latest))
-    if (isWorkspaceBucket) {
-      for (const [pkg, info] of Object.entries(value)) {
-        add(rows, pkg, info, workspaceLabel(key))
-      }
-    } else {
-      add(rows, key, value, fallbackWorkspace)
-    }
-  }
+/** Package names under `overrides:` in pnpm-workspace.yaml. */
+function overriddenNames() {
+  const yaml = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8")
+  const block = yaml.match(/^overrides:\n((?:[ \t#].*\n|\n)*)/m)?.[1] ?? ""
+  return [...block.matchAll(/^[ \t]+["']?(@?[^"'#:\s]+)["']?[ \t]*:/gm)].map((m) => m[1])
 }
 
-function workspaceLabel(pathOrName) {
-  const relative = pathOrName.startsWith(repoRoot)
-    ? pathOrName.slice(repoRoot.length).replace(/^\/+/, "")
-    : pathOrName
-  return relative === "" ? "." : relative
-}
-
-function add(rows, name, info, workspace) {
-  const key = `${workspace}::${name}`
-  if (rows.has(key)) {
-    return
+/** Why a row is report-only, or null when it may be bumped. */
+function outOfScopeReason(name, spec, overrides) {
+  if (!spec) {
+    return "not a direct dependency — report only"
   }
-  rows.set(key, {
-    name,
-    workspace,
-    dependencyType: info.dependencyType ?? null,
-    current: info.current ?? null,
-    wanted: info.wanted ?? null,
-    latest: info.latest ?? null,
-  })
-}
-
-function parseVersion(version) {
-  const parts = String(version)
-    .replace(/^[^\d]*/, "")
-    .split(".")
-  return {
-    major: Number(parts[0]) || 0,
-    minor: Number(parts[1]) || 0,
-    patch: Number(parts[2]) || 0,
+  if (spec.startsWith("catalog:")) {
+    return `catalog: alias — resolved by pnpm-workspace.yaml (${spec}), report only`
   }
+  if (spec.startsWith("npm:")) {
+    return `aliased spec (${spec}) — report only`
+  }
+  if (EXACT.test(spec)) {
+    return `exact pin (${spec}) — deliberate, report only`
+  }
+  if (overrides.includes(name)) {
+    return "covered by a pnpm-workspace.yaml override workaround — report only"
+  }
+  return null
 }
 
 /** Semver bump kind, treating a 0.x minor as the breaking digit. */
@@ -114,214 +72,20 @@ function bumpKind(current, latest) {
   if (!current || !latest) {
     return "unknown"
   }
-  const a = parseVersion(current)
-  const b = parseVersion(latest)
-  if (a.major !== b.major) {
+  const [a, b] = [current, latest].map((v) =>
+    v.replace(/^\D*/, "").split(".").map((n) => Number(n) || 0),
+  )
+  if (a[0] !== b[0]) {
     return "major"
   }
-  if (a.major === 0) {
-    return a.minor !== b.minor ? "major" : "minor"
+  if (a[1] !== b[1]) {
+    return a[0] === 0 ? "major" : "minor"
   }
-  if (a.minor !== b.minor) {
-    return "minor"
-  }
-  if (a.patch !== b.patch) {
-    return "patch"
-  }
-  return "none"
+  return a[2] !== b[2] ? "patch" : "none"
 }
 
-const EXACT = /^\d+\.\d+\.\d+(?:[-+].*)?$/
-
-function workspacePackages() {
-  const yaml = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8")
-  const dirs = ["."]
-  let inPackages = false
-  for (const line of yaml.split("\n")) {
-    if (/^packages:\s*$/.test(line)) {
-      inPackages = true
-      continue
-    }
-    if (inPackages) {
-      const match = line.match(/^\s+-\s+["']?([^"'\s]+)["']?\s*$/)
-      if (match) {
-        dirs.push(match[1])
-      } else if (line.trim() !== "" && !line.trim().startsWith("#")) {
-        break
-      }
-    }
-  }
-  return dirs
-}
-
-/** Declared range per `workspace::name`, from each package.json. */
-function declaredSpecs(dirs) {
-  const specs = new Map()
-  for (const dir of dirs) {
-    const pkg = readJson(join(repoRoot, dir, "package.json"))
-    if (!pkg) {
-      continue
-    }
-    for (const field of ["dependencies", "devDependencies", "optionalDependencies"]) {
-      for (const [name, spec] of Object.entries(pkg[field] ?? {})) {
-        specs.set(`${dir}::${name}`, { spec, field })
-      }
-    }
-  }
-  return specs
-}
-
-/** DELETE-WHEN blocks: the ISSUE/DELETE WHEN comment pairs in the workspace file. */
-// Packages installed at more than one major, that Nuxt also maps in its
-// generated tsconfig `paths`. Under `shamefullyHoist` exactly one copy reaches
-// the repo root, Nuxt points bare imports at whichever that is, and which one
-// wins is decided at install time — not by the lockfile. So a regen can flip it
-// with no diff to show for it, and `import type { X } from "<pkg>"` silently
-// starts resolving against the wrong major. That is what h3 did on 2026-09-03:
-// h3 v2 rode in transitively with @nuxt/eslint, outranked nitro's v1 at the
-// root, and broke typecheck in every server file (fixed by the exact `h3` pin
-// in web/package.json). Reported, never auto-fixed — the cure is a pin naming
-// the copy the framework resolves, and that is a judgement call.
-function hoistSkew() {
-  const tsconfig = readJson(join(repoRoot, "web/.nuxt/tsconfig.server.json"))
-  const mapped = new Set(Object.keys(tsconfig?.compilerOptions?.paths ?? {}))
-  if (mapped.size === 0) {
-    return { checked: false, reason: "web/.nuxt/tsconfig.server.json absent — run `vp install` first", skewed: [] }
-  }
-
-  let tree
-  try {
-    tree = execFileSync("pnpm", ["list", "--depth", "Infinity", "--json", "-r"], {
-      cwd: repoRoot,
-      encoding: "utf8",
-      maxBuffer: 64 * 1024 * 1024,
-    })
-  } catch (error) {
-    return { checked: false, reason: `pnpm list failed: ${error.message}`, skewed: [] }
-  }
-
-  const majors = new Map()
-  const walk = (deps) => {
-    for (const [name, node] of Object.entries(deps ?? {})) {
-      if (node?.version) {
-        const major = node.version.split(".")[0]
-        if (!majors.has(name)) majors.set(name, new Set())
-        majors.get(name).add(major)
-      }
-      walk(node?.dependencies)
-    }
-  }
-  for (const ws of JSON.parse(tree || "[]")) {
-    walk(ws.dependencies)
-    walk(ws.devDependencies)
-  }
-
-  const skewed = []
-  for (const name of mapped) {
-    const seen = majors.get(name)
-    if (!seen || seen.size < 2) continue
-    const hoisted = readJson(join(repoRoot, "node_modules", name, "package.json"))?.version ?? null
-    const target = tsconfig.compilerOptions.paths[name]?.[0] ?? null
-    skewed.push({ name, majors: [...seen].sort(), hoistedAtRoot: hoisted, nuxtPathsAt: target })
-  }
-  return { checked: true, reason: null, skewed }
-}
-
-function deleteWhenConditions() {
-  const lines = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8").split("\n")
-  const conditions = []
-  lines.forEach((line, index) => {
-    const match = line.match(/#\s*DELETE[ -]WHEN:?\s*(.*)$/i)
-    if (!match) {
-      return
-    }
-    // A wrapped comment continues on following comment lines.
-    let text = match[1].trim()
-    for (let i = index + 1; i < lines.length; i++) {
-      const next = lines[i].match(/^\s*#\s{2,}(\S.*)$/)
-      if (!next) {
-        break
-      }
-      text += ` ${next[1].trim()}`
-    }
-    let issue = null
-    for (let i = index - 1; i >= 0; i--) {
-      const found = lines[i].match(/#\s*ISSUE:?\s*(.*)$/i)
-      if (found) {
-        issue = found[1].trim()
-        break
-      }
-      if (!lines[i].trim().startsWith("#")) {
-        break
-      }
-    }
-    conditions.push({ line: index + 1, issue, condition: text })
-  })
-  return conditions
-}
-
-function workspaceConfig() {
-  const yaml = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8")
-  const section = (name) => {
-    const lines = yaml.split("\n")
-    const start = lines.findIndex((l) => l.startsWith(`${name}:`))
-    if (start === -1) {
-      return []
-    }
-    const out = []
-    for (let i = start + 1; i < lines.length; i++) {
-      if (/^\S/.test(lines[i])) {
-        break
-      }
-      const trimmed = lines[i].trim()
-      if (trimmed && !trimmed.startsWith("#")) {
-        out.push(trimmed)
-      }
-    }
-    return out
-  }
-  const names = (entries) =>
-    entries.map((e) => e.match(/^["']?(@?[^"':\s]+)["']?\s*:/)?.[1]).filter(Boolean)
-  return {
-    catalog: names(section("catalog")),
-    overrides: names(section("overrides")),
-    minimumReleaseAgeExclude: section("minimumReleaseAgeExclude").map((l) =>
-      l.replace(/^-\s*["']?/, "").replace(/["']$/, ""),
-    ),
-  }
-}
-
-function scopeOf(row, declared, config) {
-  const spec = declared?.spec
-  if (spec?.startsWith("catalog:")) {
-    return {
-      inScope: false,
-      reason: `catalog: alias — resolved by pnpm-workspace.yaml (${spec}), report only`,
-    }
-  }
-  if (spec && EXACT.test(spec)) {
-    return { inScope: false, reason: `exact pin (${spec}) — deliberate, report only` }
-  }
-  if (spec?.startsWith("npm:")) {
-    return { inScope: false, reason: `aliased spec (${spec}) — report only` }
-  }
-  if (config.overrides.includes(row.name)) {
-    return {
-      inScope: false,
-      reason: "covered by a pnpm-workspace.yaml override workaround — report only",
-    }
-  }
-  if (!spec) {
-    return { inScope: false, reason: "not a direct dependency — report only" }
-  }
-  return { inScope: true, reason: null }
-}
-
-function extractGitHubRepo(field) {
-  if (!field) {
-    return null
-  }
-  const url = typeof field === "object" ? field.url : field
+function githubRepo(field) {
+  const url = typeof field === "object" ? field?.url : field
   if (typeof url !== "string") {
     return null
   }
@@ -333,66 +97,106 @@ function extractGitHubRepo(field) {
   return url.match(/github\.com[/:]([^/]+\/[^/]+?)(?:\.git|\/|$)/)?.[1] ?? null
 }
 
-async function resolveRepo(name) {
-  for (const base of [join(repoRoot, "node_modules"), join(repoRoot, "web/node_modules")]) {
-    const path = join(base, name, "package.json")
-    if (!existsSync(path)) {
-      continue
-    }
-    const pkg = readJson(path)
-    const repo = extractGitHubRepo(pkg?.repository) || extractGitHubRepo(pkg?.homepage)
+async function resolveRepo(name, workspaceDir) {
+  for (const base of [workspaceDir, repoRoot]) {
+    const pkg = readJson(join(base, "node_modules", name, "package.json"))
+    const repo = githubRepo(pkg?.repository) || githubRepo(pkg?.homepage)
     if (repo) {
-      return { repo, source: "node_modules" }
+      return { repo, repoSource: "node_modules" }
     }
   }
   if (offline) {
-    return { repo: null, source: "offline" }
+    return { repo: null, repoSource: "offline" }
   }
   try {
     const response = await fetch(`https://registry.npmjs.org/${name.replace("/", "%2F")}`, {
       signal: AbortSignal.timeout(10_000),
     })
     if (!response.ok) {
-      return { repo: null, source: "registry-miss" }
+      return { repo: null, repoSource: "registry-miss" }
     }
     const data = await response.json()
-    const latest = data["dist-tags"]?.latest
-    const manifest = latest ? data.versions?.[latest] : null
+    const manifest = data.versions?.[data["dist-tags"]?.latest]
     const repo =
-      extractGitHubRepo(data.repository) ||
-      extractGitHubRepo(manifest?.repository) ||
-      extractGitHubRepo(data.homepage)
-    return { repo: repo ?? null, source: repo ? "registry" : "registry-miss" }
+      githubRepo(data.repository) || githubRepo(manifest?.repository) || githubRepo(data.homepage)
+    return { repo, repoSource: repo ? "registry" : "registry-miss" }
   } catch (error) {
-    return { repo: null, source: `registry-error: ${error.message}` }
+    return { repo: null, repoSource: `registry-error: ${error.message}` }
   }
 }
 
-const dirs = workspacePackages()
-const declared = declaredSpecs(dirs)
-const config = workspaceConfig()
+// Packages installed at more than one major, that Nuxt also maps in its
+// generated tsconfig `paths`. Under `shamefullyHoist` exactly one copy reaches
+// the repo root, Nuxt points bare imports at whichever that is, and which one
+// wins is decided at install time — not by the lockfile. So a regen can flip it
+// with no diff to show for it, and `import type { X } from "<pkg>"` silently
+// starts resolving against the wrong major. That is what h3 did on 2026-09-03:
+// h3 v2 rode in transitively with @nuxt/eslint, outranked nitro's v1 at the
+// root, and broke typecheck in every server file (fixed by the exact `h3` pin
+// in web/package.json). Reported, never auto-fixed — the cure is a pin naming
+// the copy the framework resolves, and that is a judgement call.
+function hoistSkew() {
+  const paths = readJson(join(repoRoot, "web/.nuxt/tsconfig.server.json"))?.compilerOptions?.paths ?? {}
+  if (Object.keys(paths).length === 0) {
+    return { checked: false, reason: "web/.nuxt/tsconfig.server.json absent — run `vp install` first", skewed: [] }
+  }
+  let tree
+  try {
+    tree = JSON.parse(pnpm("list", "--depth", "Infinity", "--json", "-r"))
+  } catch (error) {
+    return { checked: false, reason: `pnpm list failed: ${error.message}`, skewed: [] }
+  }
 
-const rowMap = new Map()
-normalise(pnpmOutdated(["-r"]), null, rowMap)
+  const majors = new Map()
+  const walk = (deps) => {
+    for (const [name, node] of Object.entries(deps ?? {})) {
+      if (node?.version) {
+        majors.set(name, (majors.get(name) ?? new Set()).add(node.version.split(".")[0]))
+      }
+      walk(node?.dependencies)
+    }
+  }
+  for (const ws of tree) {
+    walk(ws.dependencies)
+    walk(ws.devDependencies)
+  }
 
-const rows = [...rowMap.values()].filter((row) => row.workspace)
-for (const row of rows) {
-  const spec = declared.get(`${row.workspace}::${row.name}`)
-  const scope = scopeOf(row, spec, config)
-  row.declared = spec?.spec ?? null
-  row.bump = bumpKind(row.current, row.latest)
-  row.inScope = scope.inScope
-  row.outOfScopeReason = scope.reason
+  const skewed = Object.keys(paths)
+    .filter((name) => majors.get(name)?.size > 1)
+    .map((name) => ({
+      name,
+      majors: [...majors.get(name)].sort(),
+      hoistedAtRoot: readJson(join(repoRoot, "node_modules", name, "package.json"))?.version ?? null,
+      nuxtPathsAt: paths[name][0] ?? null,
+    }))
+  return { checked: true, reason: null, skewed }
 }
 
-const resolved = await Promise.all(
-  [...new Set(rows.map((r) => r.name))].map(async (name) => [name, await resolveRepo(name)]),
-)
-const repos = new Map(resolved)
-for (const row of rows) {
-  const { repo, source } = repos.get(row.name)
-  row.repo = repo
-  row.repoSource = source
+const overrides = overriddenNames()
+const manifests = new Map()
+const rows = []
+for (const [name, info] of Object.entries(JSON.parse(pnpm("outdated", "--format=json", "-r") || "{}"))) {
+  // One row per dependent workspace; `location` is absolute.
+  for (const { location } of info.dependentPackages ?? []) {
+    if (!manifests.has(location)) {
+      manifests.set(location, readJson(join(location, "package.json")) ?? {})
+    }
+    const declared = manifests.get(location)[info.dependencyType]?.[name] ?? null
+    const reason = outOfScopeReason(name, declared, overrides)
+    rows.push({
+      name,
+      workspace: relative(repoRoot, location) || ".",
+      dependencyType: info.dependencyType ?? null,
+      current: info.current ?? null,
+      wanted: info.wanted ?? null,
+      latest: info.latest ?? null,
+      declared,
+      bump: bumpKind(info.current, info.latest),
+      inScope: reason === null,
+      outOfScopeReason: reason,
+      ...(await resolveRepo(name, location)),
+    })
+  }
 }
 
 rows.sort((a, b) => Number(b.inScope) - Number(a.inScope) || a.name.localeCompare(b.name))
@@ -400,8 +204,6 @@ rows.sort((a, b) => Number(b.inScope) - Number(a.inScope) || a.name.localeCompar
 console.log(
   JSON.stringify(
     {
-      generatedFrom: "pnpm outdated --format=json (root + -r)",
-      workspaces: dirs,
       counts: {
         total: rows.length,
         inScope: rows.filter((r) => r.inScope).length,
@@ -409,8 +211,6 @@ console.log(
         major: rows.filter((r) => r.inScope && r.bump === "major").length,
       },
       updates: rows,
-      workspaceConfig: config,
-      deleteWhen: deleteWhenConditions(),
       hoistSkew: hoistSkew(),
     },
     null,
