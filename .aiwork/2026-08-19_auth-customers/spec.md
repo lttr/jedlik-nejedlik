@@ -1,3 +1,8 @@
+---
+status: done
+verified: [human]
+---
+
 # Spec — Area 02: Auth layer
 
 Decisions were settled in [grilling.md](grilling.md) (three rounds, all
