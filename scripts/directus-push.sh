@@ -38,7 +38,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 storages="$(coolify service storage list "$SERVICE_UUID" --format json)"
 created=0
 created_paths=()
-extensions_changed=0
+changed=0
 
 # sync_file <local path> <mount path> — prints what it did, echoes "changed"
 # into the caller's tally via the globals above.
@@ -74,13 +74,14 @@ sync_file() {
 }
 
 for template in "$ROOT"/directus/templates/*.liquid; do
-  sync_file "$template" "$TEMPLATES_DIR/$(basename "$template")" || true
+  sync_file "$template" "$TEMPLATES_DIR/$(basename "$template")" &&
+    changed=1 || true
 done
 
 # Every file of every extension, minus anything installed rather than authored.
 while IFS= read -r source; do
   sync_file "$source" "$EXTENSIONS_DIR/${source#"$ROOT"/directus/extensions/}" &&
-    extensions_changed=1 || true
+    changed=1 || true
 done < <(find "$ROOT/directus/extensions" -type f -not -path '*/node_modules/*' | sort)
 
 if [[ "$created" == 1 ]]; then
@@ -96,10 +97,13 @@ if [[ "$created" == 1 ]]; then
     echo "  - '.$path:$path'"
   done
   echo "  coolify deploy uuid $SERVICE_UUID"
-elif [[ "$extensions_changed" == 1 ]]; then
-  # Extensions are registered at boot (EXTENSIONS_AUTO_RELOAD is off), unlike
-  # templates, which Directus reads from disk on every send.
+elif [[ "$changed" == 1 ]]; then
+  # Coolify writes a file storage's content to the host only when it renders
+  # the compose at deploy time. Until then the bind mount still serves the
+  # previous revision, so the container keeps reading the old file however
+  # often Directus re-reads it. A restart would re-execute the container
+  # against those same stale host files, so templates need the deploy too.
   echo
-  echo "Extension code changed — restart the service to load it:"
-  echo "  coolify service restart $SERVICE_UUID"
+  echo "Content changed. Deploy to write the files to the host:"
+  echo "  coolify deploy uuid $SERVICE_UUID"
 fi

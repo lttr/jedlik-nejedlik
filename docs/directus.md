@@ -202,14 +202,24 @@ UI (the service → **Compose file**) or `PATCH /api/v1/services/<uuid>` with a
 base64 `docker_compose_raw`, then `coolify deploy uuid <uuid>`. The script
 prints the exact lines to paste.
 
-After that first mount, what a content change needs:
+After that first mount, **every content change needs a redeploy**, templates
+included. Coolify writes a file storage's content to the host only when it
+renders the compose at deploy time. Until then the bind mount still serves the
+previous revision, so the container keeps rendering the old file however often
+Directus re-reads it.
 
-| Change                   | Redeploy                                          |
-| ------------------------ | ------------------------------------------------- |
-| Extension content change | Yes — extensions are registered at boot           |
-| Template content change  | No — Directus re-reads the template on every send |
+| Change                   | Redeploy                                     |
+| ------------------------ | -------------------------------------------- |
+| Extension content change | Yes: extensions are registered at boot       |
+| Template content change  | Yes: the host file is only written on deploy |
 
-The script says which applies and prints the command; it can only tell a real
+It has already gone wrong once. The 2026-09-02 push updated
+`user-registration.liquid` in the storage with no deploy after it, so
+registration mails kept rendering the older revision, the one with
+`{{ projectLogo }}`. Without `PUBLIC_URL` that variable emits a relative
+`/assets/<id>` that no mail client can resolve.
+
+The script says which applies and prints the command. It can only tell a real
 change from a no-op because the storage listing carries the stored content.
 
 If a pushed file shows up inside the container as a _directory_ rather than a
