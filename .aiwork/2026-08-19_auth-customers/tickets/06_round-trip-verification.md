@@ -1,6 +1,7 @@
 ---
-status: in-progress
+status: done
 blocked_by: [03, 04, 05]
+verified: [behaviour, human]
 references:
   - "Spec: ../spec.md"
 ---
@@ -14,12 +15,12 @@ outcome and closes the area.
 
 ## Acceptance criteria
 
-- [ ] Documented manual round-trip completed, including **both** e-mail
-      legs (verification and reset); Czech rendering of each checked
-      (template override opened as follow-up only if poor) — **the only
-      thing still open in this area.** Every leg that does not need an
-      inbox was driven on 2026-08-28 (see below); the two e-mail legs need
-      a real mailbox and are the user's to do
+- [x] Documented manual round-trip completed, including **both** e-mail
+      legs (verification and reset); Czech rendering of each checked and
+      fine, so no template-override follow-up — closed by the user on
+      2026-09-03. Every leg that does not need an inbox was driven on
+      2026-08-28 (see below); the two e-mail legs were completed from a
+      real mailbox
 - [x] Full probe suite (area 01's + auth probes) green twice
       consecutively, self-cleaning — 90/90, 2026-08-28, `vp run
 directus:probe` with `DIRECTUS_PROBE_ADMIN_TOKEN`, sandbox disabled;
@@ -101,9 +102,11 @@ with a local `pnpm dev:agent` and `agent-browser`:
 - **Cleanup** — all three throwaway users deleted; only the three
   permanent `probe-student-*` / `probe-author` fixtures remain.
 
-Still open, needing a real inbox: opening the verification e-mail and the
-reset e-mail, checking their Czech rendering, and completing each from
-its genuine link.
+The two legs needing a real inbox — opening the verification e-mail and
+the reset e-mail and completing each from its genuine link — were done by
+the user on 2026-09-03. Both mails render correctly in Czech, so the
+template-override follow-up the spec held open is not needed. This closes
+the ticket and the area's verify criterion.
 
 Not provable through the API and therefore left unverified:
 `REFRESH_TOKEN_TTL`. Directus exposes no field for it; `ACCESS_TOKEN_TTL`
