@@ -90,7 +90,7 @@ useSeoMeta({
 }
 
 .thank-you-content p {
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-bottom: var(--space-3);
 }
 

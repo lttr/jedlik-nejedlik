@@ -84,7 +84,7 @@ h2 {
 
 .form-wrapper > p {
   text-align: center;
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-block: var(--space-1);
 }
 

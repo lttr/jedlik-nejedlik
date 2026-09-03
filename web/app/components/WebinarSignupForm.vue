@@ -119,7 +119,7 @@ textarea {
 .consent-note {
   font-size: var(--font-size--1);
   line-height: var(--font-lineheight-3);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-bottom: var(--space-4);
 }
 

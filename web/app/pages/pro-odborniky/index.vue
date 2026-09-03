@@ -279,7 +279,7 @@ const { data: biographies } = await useBiographyExpert()
   font-size: var(--font-size-00);
   font-style: italic;
   font-variant-numeric: tabular-nums;
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .conf-name {

@@ -38,6 +38,6 @@ const hintId = computed(() => `${id}-hint`)
 .password-hint {
   font-size: var(--font-size--1);
   line-height: var(--font-lineheight-3);
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 </style>

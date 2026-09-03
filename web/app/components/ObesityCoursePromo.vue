@@ -793,7 +793,7 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
   font-size: var(--font-size-0);
   text-align: center;
   font-style: italic;
-  color: var(--text-2);
+  color: var(--text-color-2);
   max-width: var(--size-content-2);
   margin-inline: auto;
 }
@@ -920,7 +920,7 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
 
 .unique-card p {
   font-size: var(--font-size-0);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin: 0;
 }
 
@@ -968,14 +968,14 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
 }
 
 .comparison-column--other h3 {
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .comparison-column--other li::before {
   content: "✗";
   position: absolute;
   left: 0;
-  color: var(--text-2);
+  color: var(--text-color-2);
   font-weight: bold;
 }
 
@@ -1046,7 +1046,7 @@ const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
   padding: 0 var(--space-5) var(--space-5);
   margin: 0;
   font-size: var(--font-size-0);
-  color: var(--text-2);
+  color: var(--text-color-2);
   line-height: var(--font-lineheight-3);
 }
 

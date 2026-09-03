@@ -74,7 +74,7 @@
 
 .page-header .lead {
   font-size: var(--font-size-2);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin: 0;
 }
 
