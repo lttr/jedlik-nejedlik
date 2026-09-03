@@ -75,5 +75,19 @@ peerDependencyRules:
   allowedVersions:
     vite: "*"
 
+# ISSUE: `web/` declares `h3` even though nothing in our code has it as a real
+#   dependency — Nuxt owns it. `@eslint/config-inspector` drags in the
+#   pre-release h3 2.0.1-rc.29, `shamefullyHoist` lifts THAT copy to the root,
+#   and Nuxt's generated tsconfig `paths` then map bare `h3` at it. Server code
+#   doing `import type { H3Event } from "h3"` gets v2's event while
+#   `defineEventHandler` (nitro 2.13.4, h3 ^1.15.11) hands over v1's — 27
+#   typecheck errors, all in `web/layers/*/server`. Declaring h3 in `web/` puts
+#   v1 in `web/node_modules` and the paths follow it.
+# DELETE WHEN: no second h3 major is installed (`pnpm why h3` finds one
+#   version), or Nuxt moves to nitro 3 / h3 v2 and this becomes the wrong pin
+#   rather than an unneeded one.
+# The pin is EXACT and tracks whatever `nitropack` resolves — it exists to be
+# the same copy Nuxt uses, so a range that could drift off it defeats it.
+
 minimumReleaseAgeExclude:
   - "@lttr/nuxt-validated-runtime-config@0.1.2"
