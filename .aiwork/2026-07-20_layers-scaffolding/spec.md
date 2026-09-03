@@ -1,4 +1,5 @@
 ---
+status: done
 references:
   - "Parent: ../2026-06-09_kurzy-platforma/areas.md (area 00, TR-1b)"
   - "PRD: ../2026-06-09_kurzy-platforma/spec.md"
