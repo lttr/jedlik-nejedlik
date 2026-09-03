@@ -4,7 +4,7 @@
       <!-- Dead link: nothing to fix on the form, so offer a fresh link. -->
       <template v-if="linkIsDead">
         <AuthFormError :message="errorMessage" />
-        <p>Nechte si prosím poslat nový odkaz — ten původní platí jen omezenou dobu.</p>
+        <p>Nechte si prosím poslat nový odkaz. Ten původní platí jen omezenou dobu.</p>
         <button type="button" class="p-button-brand" @click="askForNewLink">
           Poslat nový odkaz
         </button>
