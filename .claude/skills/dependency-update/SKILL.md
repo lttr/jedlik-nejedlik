@@ -74,6 +74,10 @@ The JSON output holds one row per outdated direct dependency per workspace, with
 - `deleteWhen` lists the documented workarounds. Evaluate each condition against
   what you learned reading release notes and report it as satisfied or not.
   **Never remove a workaround**, even when its condition is satisfied.
+- `hoistSkew.skewed` lists packages installed at two majors that Nuxt also maps
+  in its generated tsconfig `paths`. Report every row in the PR body; act only
+  when one bites (§6). `checked: false` means `web/.nuxt` was missing — run
+  `vp install` and scan again rather than reporting "none".
 - `counts.inScope == 0` → nothing to do. Write the weekly note (§7), say so,
   stop.
 
@@ -172,6 +176,36 @@ On failure in a **batch** run:
 A **migration** run has nothing to bisect: on failure, hand over directly with
 the failure at the top.
 
+### Type errors naming two copies of one package
+
+A failure like "Type `X` from `.pnpm/pkg@1.…` is missing the following
+properties from `X` from `.pnpm/pkg@2.…`" is not a bad bump to bisect. The repo
+sets `shamefullyHoist`, so exactly one copy of a duplicated package reaches the
+root `node_modules`, and Nuxt's generated tsconfig `paths` map bare imports at
+whichever landed there. Which copy wins is decided during install, not by the
+lockfile — so a regen can flip it with nothing in the diff to explain why.
+
+Read `hoistSkew` from the scan before bisecting anything, and check the chain
+that owns the package (`nuxt` → `@nuxt/nitro-server` → `nitropack` → its `h3`
+range) to learn which major is correct. That answers it outright; don't
+reconstruct old installs to prove when it broke, because the framework's
+declared range decides it either way.
+
+The fix is to declare the package in `web/package.json` at the major the
+framework resolves, so that copy lands in `web/node_modules` and the paths
+follow it. Pin it **exactly**: the declaration exists to name the same copy the
+framework uses, so a range that can drift off it defeats the purpose. Document
+it as an `# ISSUE:` / `# DELETE-WHEN:` comment in `pnpm-workspace.yaml` — that
+is where §1 scrapes conditions from, and the exact pin makes the row
+`inScope: false` so a later run cannot bump it to the wrong major. `h3` on
+2026-09-03 is the worked example. `ofetch` is the next candidate: also
+installed at two majors, and currently correct only by luck of the hoist.
+
+When a hand-resolved `pnpm-lock.yaml` conflict is what preceded the failure,
+re-run a full `vp install` before believing any of it. A lockfile-only install
+leaves `node_modules` and `web/.nuxt/tsconfig.*.json` describing the old tree,
+and the resulting errors point at packages that are already fine.
+
 Report every dropped package as deferred in the PR body: a problem package
 must be visible, never silently skipped.
 
@@ -216,6 +250,10 @@ OVER with the failure quoted). Then these sections:
   later run.
 - **Reported, not touched** — pins, catalog aliases, override workarounds, with
   the newer version available.
+- **Hoist skew** — each `hoistSkew.skewed` row: the package, the majors
+  installed, and which one Nuxt's tsconfig `paths` currently point at. A row
+  where those disagree with the framework's own range is a latent typecheck
+  break, whether or not this run tripped it.
 - **DELETE-WHEN status** — each condition: satisfied / not satisfied, and why.
 - **Not verified** — what this run could NOT check (e.g. runtime behaviour of
   the Directus SDK against the live CMS, visual rendering).

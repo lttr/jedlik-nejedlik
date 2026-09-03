@@ -172,6 +172,61 @@ function declaredSpecs(dirs) {
 }
 
 /** DELETE-WHEN blocks: the ISSUE/DELETE WHEN comment pairs in the workspace file. */
+// Packages installed at more than one major, that Nuxt also maps in its
+// generated tsconfig `paths`. Under `shamefullyHoist` exactly one copy reaches
+// the repo root, Nuxt points bare imports at whichever that is, and which one
+// wins is decided at install time — not by the lockfile. So a regen can flip it
+// with no diff to show for it, and `import type { X } from "<pkg>"` silently
+// starts resolving against the wrong major. That is what h3 did on 2026-09-03:
+// h3 v2 rode in transitively with @nuxt/eslint, outranked nitro's v1 at the
+// root, and broke typecheck in every server file (fixed by the exact `h3` pin
+// in web/package.json). Reported, never auto-fixed — the cure is a pin naming
+// the copy the framework resolves, and that is a judgement call.
+function hoistSkew() {
+  const tsconfig = readJson(join(repoRoot, "web/.nuxt/tsconfig.server.json"))
+  const mapped = new Set(Object.keys(tsconfig?.compilerOptions?.paths ?? {}))
+  if (mapped.size === 0) {
+    return { checked: false, reason: "web/.nuxt/tsconfig.server.json absent — run `vp install` first", skewed: [] }
+  }
+
+  let tree
+  try {
+    tree = execFileSync("pnpm", ["list", "--depth", "Infinity", "--json", "-r"], {
+      cwd: repoRoot,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+    })
+  } catch (error) {
+    return { checked: false, reason: `pnpm list failed: ${error.message}`, skewed: [] }
+  }
+
+  const majors = new Map()
+  const walk = (deps) => {
+    for (const [name, node] of Object.entries(deps ?? {})) {
+      if (node?.version) {
+        const major = node.version.split(".")[0]
+        if (!majors.has(name)) majors.set(name, new Set())
+        majors.get(name).add(major)
+      }
+      walk(node?.dependencies)
+    }
+  }
+  for (const ws of JSON.parse(tree || "[]")) {
+    walk(ws.dependencies)
+    walk(ws.devDependencies)
+  }
+
+  const skewed = []
+  for (const name of mapped) {
+    const seen = majors.get(name)
+    if (!seen || seen.size < 2) continue
+    const hoisted = readJson(join(repoRoot, "node_modules", name, "package.json"))?.version ?? null
+    const target = tsconfig.compilerOptions.paths[name]?.[0] ?? null
+    skewed.push({ name, majors: [...seen].sort(), hoistedAtRoot: hoisted, nuxtPathsAt: target })
+  }
+  return { checked: true, reason: null, skewed }
+}
+
 function deleteWhenConditions() {
   const lines = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8").split("\n")
   const conditions = []
@@ -356,6 +411,7 @@ console.log(
       updates: rows,
       workspaceConfig: config,
       deleteWhen: deleteWhenConditions(),
+      hoistSkew: hoistSkew(),
     },
     null,
     2,
