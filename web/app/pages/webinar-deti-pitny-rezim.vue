@@ -158,7 +158,7 @@ useSeoMeta({
 }
 
 .lecturer figcaption p:last-child {
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .signup-section {
@@ -174,7 +174,7 @@ useSeoMeta({
 
 .signup-note {
   text-align: center;
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-bottom: var(--space-5);
 }
 </style>

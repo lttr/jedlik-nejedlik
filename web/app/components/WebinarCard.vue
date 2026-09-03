@@ -51,7 +51,7 @@ defineProps<{
 
 .webinar-card :deep(p) {
   margin: 0;
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .webinar-card :deep(.webinar-meta) {

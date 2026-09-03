@@ -241,7 +241,7 @@
 
 .page-header .lead {
   font-size: var(--font-size-2);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin: 0;
 }
 
@@ -367,7 +367,7 @@
 .stob-attribution {
   text-align: center;
   font-size: var(--font-size--1);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-top: var(--space-2);
 }
 

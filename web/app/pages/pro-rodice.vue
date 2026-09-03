@@ -85,7 +85,7 @@
 }
 
 .page-header p {
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin: 0;
 }
 
@@ -209,7 +209,7 @@
 
 .course-card p {
   margin: 0;
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .p-button {

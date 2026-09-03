@@ -380,7 +380,7 @@ useSeoMeta({
 .emphasis-question {
   font-size: var(--font-size-2);
   margin-bottom: var(--space-4);
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .lead {
@@ -538,14 +538,14 @@ useSeoMeta({
 }
 
 .for-whom-card--no h3 {
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .for-whom-card--no li::before {
   content: "✗";
   position: absolute;
   left: 0;
-  color: var(--text-2);
+  color: var(--text-color-2);
   font-weight: bold;
 }
 
@@ -697,7 +697,7 @@ useSeoMeta({
   padding: 0 var(--space-5) var(--space-5);
   margin: 0;
   font-size: var(--font-size-0);
-  color: var(--text-2);
+  color: var(--text-color-2);
   line-height: var(--font-lineheight-3);
 }
 

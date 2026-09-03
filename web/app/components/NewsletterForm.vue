@@ -111,7 +111,7 @@ async function onSubmit(event: Event) {
 
 .newsletter-header p {
   margin: 0;
-  color: var(--text-2);
+  color: var(--text-color-2);
 }
 
 .newsletter-header .highlight {
@@ -158,7 +158,7 @@ async function onSubmit(event: Event) {
 .consent-note {
   font-size: var(--font-size--1);
   line-height: var(--font-lineheight-3);
-  color: var(--text-2);
+  color: var(--text-color-2);
   margin-bottom: var(--space-4);
 }
 </style>
