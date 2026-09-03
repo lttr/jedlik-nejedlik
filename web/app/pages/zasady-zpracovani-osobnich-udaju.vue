@@ -13,8 +13,8 @@
       <h2>Kdo je správce?</h2>
 
       <p>
-        <strong>Jsme</strong> zapsaný spolek <strong>Jedlík Nejedlík</strong>, se sídlem K Lesu 334,
-        Svinary, 500 09 Hradec Králové, IČO 199 71 192, provozovatel webové stránky
+        <strong>Jsme</strong> zapsaný spolek <strong>Jedlík-nejedlík, z. s.</strong>, se sídlem K
+        Lesu 334, Svinary, 500 09 Hradec Králové, IČO 199 71 192, provozovatel webové stránky
         www.jedlik-nejedlik.cz. Vaše osobní údaje zpracováváme jako správce, tj.
         <strong
           >určujeme, jak budou osobní údaje zpracovávány a za jakým účelem, po jak dlouhou dobu a

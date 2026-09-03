@@ -1,6 +1,6 @@
 <template>
   <div class="contacts-card p-stack">
-    <h3>Jedlík nejedlík</h3>
+    <h3>Jedlík-nejedlík</h3>
     <section class="p-flow">
       <div>
         <h4 class="subheading">Poradna</h4>

@@ -68,7 +68,7 @@
       <li>kontinuitu od MŠ přes ZŠ.</li>
     </ul>
 
-    <h2>Jak vám může pomoci Jedlík-Nejedlík</h2>
+    <h2>Jak vám může pomoci Jedlík-nejedlík</h2>
 
     <p>Pomůžeme vám:</p>
 

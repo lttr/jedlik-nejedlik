@@ -230,7 +230,7 @@ const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64
 const { data: petraPhoto } = await useDirectusImage("421732fb-1f4b-484c-a5eb-35074abfa139")
 
 useSeoMeta({
-  title: "Webinář: Generace alfa u stolu | Jedlík-nejedlík",
+  title: "Webinář: Generace alfa u stolu",
   description:
     "Online webinář pro rodiče dětí 1–15 let. Pochopte, proč vaše dítě reaguje u jídla jinak, a získejte konkrétní opěrné body pro každodenní situace. 290 Kč.",
 })

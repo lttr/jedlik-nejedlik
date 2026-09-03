@@ -29,7 +29,7 @@ const exampleCard: Card = {
     { text: "jedlík", to: "/" },
     { text: "nejedlík", to: "/" },
   ],
-  title: "Jedlík nejedlík",
+  title: "Jedlík-nejedlík",
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",
 }
 </script>

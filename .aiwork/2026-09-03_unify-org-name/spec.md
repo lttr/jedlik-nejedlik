@@ -1,5 +1,6 @@
 ---
-status: not-started
+status: in-progress
+verified: [checks, behaviour, review]
 references:
   - "Legal name source: Simpleshop sender settings, `Jedlík-nejedlík, z. s.`"
   - "Notes: ~/notes/projects/Jedlík nejedlík/Jedlík-nejedlík - e-mail.md"
