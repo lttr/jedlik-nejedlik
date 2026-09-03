@@ -2,11 +2,11 @@
  * Czech subject lines for the transactional e-mails Directus sends.
  *
  * The bodies come from the templates in directus/templates/, but a subject
- * cannot be set from a template: neither `POST /auth/password/request` nor
- * `POST /users/invite` forwards a `subject` to the service and the
- * registration one is hardcoded, so the English defaults in
+ * cannot be set from a template. Neither `POST /auth/password/request` nor
+ * `POST /users/invite` forwards a `subject` to the service, and the
+ * registration subject is hardcoded, so the English defaults in
  * api/src/services/users.ts always win over the API. `email.send` is a filter
- * event — what it returns is what gets sent — so this is the one place a Czech
+ * event whose return value is what gets sent, so this is the one place a Czech
  * subject can be substituted.
  *
  * Keyed on `template.name`, not on the English subject text: the template name
