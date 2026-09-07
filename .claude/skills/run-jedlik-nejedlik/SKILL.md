@@ -1,6 +1,6 @@
 ---
 name: run-jedlik-nejedlik
-description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own Chrome via agent-browser: headless by default, headed plus page-bridge only when the user is watching that browser now; never a pre-existing browser, never xdg-open.
+description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own browser: headless by default, headed plus page-bridge only when the user is watching that browser now; never a pre-existing browser, never xdg-open.
 ---
 
 Nuxt 4 site in `web/`, repo root as cwd. Build with `vp run build` — never
@@ -25,7 +25,10 @@ If the log says `Using alternative port`, use that port instead.
 
 ## Drive
 
-`agent-browser` (bundled with Vite+) launches its own Chrome for Testing.
+Browser mechanics belong to the `playwright-cli` skill from the browser plugin
+(commands, refs, sessions, output dir). Load it, run its preflight once per
+session, and follow it; this section only adds what is specific to this site
+and names no tool commands on purpose. The CLI is bundled with Vite+.
 
 **Headless is the default.** Pick the mode by _who consumes the pixels_, not by
 whether a human is at the keyboard — in a CLI session someone is always at the
@@ -44,28 +47,24 @@ keyboard, so that test always answers "headed" and is useless.
   screenshots, and stopping. If the skill is not listed, the plain headed
   session is enough.
 
-When in doubt, headless. A window the user did not ask for is not free: headed
-Chrome is materially more prone to wedged `Page.captureScreenshot` calls, and
-each one costs a recovery round trip.
-
-```bash
-agent-browser open http://localhost:3000/            # add --headed only when the user is watching
-agent-browser snapshot                               # interactive elements with refs
-agent-browser screenshot "$PWD/shot.png"             # absolute path
-```
+When in doubt, headless. A window the user did not ask for is not free.
 
 Rules:
 
-- Drive only the browser `agent-browser` launched. Never `agent-browser connect
-  <port>` to a browser already running on the machine — it may hold the user's
-  personal or work sessions.
+- Open the site at `http://localhost:3000/` (or the alternative port from the
+  log). Drive only the browser the tool launched itself. Never connect to a
+  browser already running on the machine — it may hold the user's personal or
+  work sessions.
 - Never `xdg-open` a URL to show the user something — it opens their default
   browser. The headed session is already visible.
-- Wedged CDP call (typically a hung screenshot): `agent-browser close --all`,
-  then reopen. The first `open` after `close --all` can fail once with
-  "Failed to connect" — retry it.
+- Headed/headless is fixed when a session opens. No window although you asked
+  for one, or a window you did not ask for: close the session, then reopen.
+- The mobile pass is a 375px-wide viewport (375×800).
 - Screenshots meant as evidence go in `.aiwork/<task>/screenshots/`
-  (gitignored); scratch ones in the session scratchpad, not `/tmp`.
+  (gitignored); scratch ones in the session scratchpad, not `/tmp`. Save them
+  there by absolute path at capture time rather than into the tool's own
+  output directory.
+- Close the browser when done.
 
 Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`, so
 no events fire locally.
@@ -77,7 +76,8 @@ TaskStop the Monitor, then free the port by port — never by process pattern
 
 ```bash
 fuser -k 3000/tcp
-agent-browser close --all
 ```
+
+Then close the browser session.
 
 `pnpm dev` (wrapped in `vp run`) is the human path; same server, same HMR.

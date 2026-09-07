@@ -13,7 +13,7 @@ Out of scope: `vp run check:all` (static) and `vp run directus:probe`
 
 - Dev server running and driven per `run-jedlik-nejedlik` (needs
   `NUXT_PUBLIC_DIRECTUS_URL` in the environment; ask, never invent).
-- `agent-browser` available (bundled with Vite+).
+- The `playwright-cli` skill (browser plugin) loaded and its preflight green.
 - A diff with a runtime surface: a page, a component a page renders, or a
   server route. Docs, tests, config only → SKIP and name the files.
 - The claim to verify: `$ARGUMENTS` as a path to a ticket, spec, or any file
@@ -49,7 +49,7 @@ reached no page (server route only, no page renders it) this pass is SKIP;
 say so and name the routes.
 
 1. Screenshot each route and state at the default viewport and at 375px
-   (`agent-browser set viewport 375 800`).
+   (375×800, per `run-jedlik-nejedlik`).
 2. Read every screenshot back and judge it as a page, not a DOM:
    - anything overlapping, clipped, or overflowing the viewport
    - layout broken or cramped at 375px
