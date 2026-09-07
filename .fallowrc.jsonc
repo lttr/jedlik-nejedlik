@@ -16,7 +16,7 @@
     "web/vitest.*.config.ts",
     "web/tests/probes/**",
     // Read by the directus-sync CLI (directus:pull/diff tasks), never imported.
-    "directus-sync.config.cjs",
+    "directus/sync.config.cjs",
     // Loaded by @lttr/nuxt-validated-runtime-config via path convention.
     "web/server/runtime-config.schema.ts",
   ],

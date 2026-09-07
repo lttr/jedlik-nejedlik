@@ -18,25 +18,34 @@ claude mcp add --transport http directus <directus-url>/mcp \
 ```
 
 The same credential doubles as the admin token for the commands below. Extract
-it with `claude mcp get directus` rather than minting a second one.
+it with `claude mcp get directus` rather than minting a second one, and keep it
+in `web/.env` so the commands work outside a Claude session too.
 
 ## Config as code (pull-only)
 
 The instance's configuration (roles, policies, permissions, flows, settings, …)
 and the schema snapshot are committed under `directus/config/`, dumped with
 [directus-sync](https://github.com/tractr/directus-sync) (config in
-`directus-sync.config.cjs`; requires the `directus-extension-sync` extension on
+`directus/sync.config.cjs`; requires the `directus-extension-sync` extension on
 the instance):
 
 ```bash
-DIRECTUS_TOKEN=<admin-token> vp run directus:pull   # refresh the committed dump
-DIRECTUS_TOKEN=<admin-token> vp run directus:diff   # detect drift against the dump
+vp run directus:pull   # refresh the committed dump
+vp run directus:diff   # detect drift against the dump
 ```
+
+Both run through `scripts/directus-sync.sh`, which resolves the admin token
+itself: an exported `DIRECTUS_TOKEN` wins, otherwise `DIRECTUS_TOKEN` and then
+`DIRECTUS_PROBE_ADMIN_TOKEN` from `web/.env` (gitignored — the probe admin
+token _is_ the MCP credential, so one copy serves both). With none of them set
+the task prints where to get a token and exits; it never falls through to
+directus-sync's email/password auth, which is what the bare
+`Missing option directusEmail` error used to mean.
 
 The workflow is **pull-only**: Directus is configured in its admin app and
 changes are pulled into the repo as reviewable diffs. The dump is never pushed
 back. Flow `operations` are excluded because they embed third-party API keys
-(see the note in `directus-sync.config.cjs`).
+(see the note in `directus/sync.config.cjs`).
 
 The instance intermittently answers `503 no available server` under rapid
 requests, so retry before concluding anything is broken.

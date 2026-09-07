@@ -89,9 +89,12 @@ export default defineConfig({
         input: srcInput,
       },
       // Network-facing Directus config-as-code commands — never cache, a
-      // replayed result would mask drift on the live instance.
-      "directus:pull": { command: "directus-sync pull", cache: false },
-      "directus:diff": { command: "directus-sync diff", cache: false },
+      // replayed result would mask drift on the live instance. The wrapper
+      // resolves the admin token from web/.env so neither needs a hand-typed
+      // DIRECTUS_TOKEN= prefix; it errors out rather than falling back to
+      // directus-sync's interactive email/password auth.
+      "directus:pull": { command: "scripts/directus-sync.sh pull", cache: false },
+      "directus:diff": { command: "scripts/directus-sync.sh diff", cache: false },
       // Pushes directus/templates/ and directus/extensions/ to the instance as
       // Coolify file storages. The one place the repo writes to Directus — both
       // are authored here, unlike the pull-only config dump.

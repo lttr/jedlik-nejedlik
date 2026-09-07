@@ -11,6 +11,8 @@
 // Never commit tokens.
 module.exports = {
   directusUrl: "https://obsah-jedlika.lttr.cz",
+  // Relative to the repo root — scripts/directus-sync.sh always runs there and
+  // passes this file with `-c`, so the config need not sit in the root itself.
   dumpPath: "./directus/config",
   // Stable key order → reviewable git diffs.
   sortJson: true,

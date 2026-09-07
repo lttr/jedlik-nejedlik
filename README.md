@@ -67,9 +67,13 @@ via the `@nuxt/image` Directus provider. Its configuration is committed under
 `directus/config/` and pulled — never pushed — with directus-sync:
 
 ```bash
-DIRECTUS_TOKEN=<admin-token> vp run directus:pull   # refresh the committed dump
-DIRECTUS_TOKEN=<admin-token> vp run directus:diff   # detect drift against the dump
+vp run directus:pull   # refresh the committed dump
+vp run directus:diff   # detect drift against the dump
 ```
+
+Both need an admin token in `web/.env` (`DIRECTUS_TOKEN`, or the
+`DIRECTUS_PROBE_ADMIN_TOKEN` the probes already use — the same credential); the
+task says so and stops if neither is set.
 
 **[docs/directus.md](docs/directus.md)** covers the rest: the MCP endpoint,
 where a permission rule lives in the admin app and in the dump, the role and
