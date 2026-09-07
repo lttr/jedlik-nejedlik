@@ -26,6 +26,13 @@ Out of scope: `vp run check:all` (static) and `vp run directus:probe`
 
 Input: the spec's acceptance criteria and the diff (`git diff master...`).
 
+0. **Confirm the surface exists before driving it.** For every changed
+   component, grep its usages and check at least one sits in an _uncommented_
+   `<template>` on a routable page — `pages/` keeps sections commented out for
+   months, and a spec written from a grep will happily name a route that no
+   longer renders the code. Cheaper than discovering it by scrolling. A
+   component whose only remaining usage is `pages/style.vue` has **no visitor
+   surface**: verify it there, but report that as a finding, not as a pass.
 1. Map each criterion to the route and state where a visitor meets it. Follow
    an internal change up to every route that renders it.
 2. Drive each one through the browser, the smallest path that executes the

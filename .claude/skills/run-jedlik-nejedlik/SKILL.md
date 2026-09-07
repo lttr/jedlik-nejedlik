@@ -1,6 +1,6 @@
 ---
 name: run-jedlik-nejedlik
-description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own Chrome via agent-browser: headed plus page-bridge when the user is watching, headless when unattended; never a pre-existing browser, never xdg-open.
+description: Run and drive the jedlik-nejedlik Nuxt site. Use when asked to start the dev server, build, verify a change in the real app, or screenshot a page. Drives its own Chrome via agent-browser: headless by default, headed plus page-bridge only when the user is watching that browser now; never a pre-existing browser, never xdg-open.
 ---
 
 Nuxt 4 site in `web/`, repo root as cwd. Build with `vp run build` — never
@@ -25,25 +25,31 @@ If the log says `Using alternative port`, use that port instead.
 
 ## Drive
 
-`agent-browser` (bundled with Vite+) launches its own Chrome for Testing. Pick
-the mode by whether a human is at the keyboard:
+`agent-browser` (bundled with Vite+) launches its own Chrome for Testing.
 
-- **Interactive** (the user is watching, pointing, asking for fixes): open
-  **headed**, and call the Skill tool with `page-bridge` if it is listed. It
-  puts a floating toolbar on the page so the user can pick an element, comment
-  on one, or send a note, and each arrives as a live notification with the
-  selector and computed styles. Its `open` replaces the one below; it documents
-  its own sink, hiding the toolbar before screenshots, and stopping. If the
-  skill is not listed, the plain headed session is enough.
-- **Unattended** (a subagent, CI, or a task the user handed off to run on its
-  own): open headless, no page-bridge — nobody is there to click.
+**Headless is the default.** Pick the mode by _who consumes the pixels_, not by
+whether a human is at the keyboard — in a CLI session someone is always at the
+keyboard, so that test always answers "headed" and is useless.
 
-When in doubt, a live chat session is interactive. A window opening
-unnecessarily costs nothing; a headless run the user could not see costs a
-round trip.
+- **Headless** — the screenshots are for you: verification, checking a change
+  landed, reading a rendered page. This is most runs. A `/verify` pass is
+  **always** headless, even though the user typed the command a minute ago:
+  they handed the task off and are not watching the window.
+- **Headed** — the user is watching this browser _now_: they asked to see it,
+  or you are iterating on a design together. Then also call the Skill tool with
+  `page-bridge` if it is listed. It puts a floating toolbar on the page so the
+  user can pick an element, comment on one, or send a note, and each arrives as
+  a live notification with the selector and computed styles. Its `open`
+  replaces the one below; it documents its own sink, hiding the toolbar before
+  screenshots, and stopping. If the skill is not listed, the plain headed
+  session is enough.
+
+When in doubt, headless. A window the user did not ask for is not free: headed
+Chrome is materially more prone to wedged `Page.captureScreenshot` calls, and
+each one costs a recovery round trip.
 
 ```bash
-agent-browser open --headed http://localhost:3000/   # interactive; drop --headed when unattended
+agent-browser open http://localhost:3000/            # add --headed only when the user is watching
 agent-browser snapshot                               # interactive elements with refs
 agent-browser screenshot "$PWD/shot.png"             # absolute path
 ```
