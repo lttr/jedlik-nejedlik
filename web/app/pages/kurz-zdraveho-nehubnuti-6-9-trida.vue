@@ -9,8 +9,8 @@
       time-range="17:05 do 18:20"
       lessons-part1="22. 9., 6. 10., 20. 10., 3. 11. a 10. 11. 2026"
       lessons-part2="5. 1., 19. 1., 2. 2., 16. 2. a 23. 2. 2027"
-      :capacity="8"
-      order-url="https://www.stob.cz/cs/orderProcess/2922"
+      :capacity="10"
+      order-url="https://forms.gle/Rs3LT1jiuAihHihy5"
     />
   </PageWrapper>
 </template>
