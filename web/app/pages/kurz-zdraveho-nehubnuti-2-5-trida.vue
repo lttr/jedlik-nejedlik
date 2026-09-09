@@ -10,7 +10,7 @@
       lessons-part1="5. 10., 19. 10., 2. 11., 23. 11. a 7. 12. 2026"
       lessons-part2="11. 1., 25. 1., 8. 2., 22. 2. a 8. 3. 2027"
       :capacity="10"
-      order-url="https://www.stob.cz/cs/orderProcess/2940"
+      order-url="https://forms.gle/Rs3LT1jiuAihHihy5"
     />
   </PageWrapper>
 </template>

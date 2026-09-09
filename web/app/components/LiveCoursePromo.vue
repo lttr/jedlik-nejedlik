@@ -28,7 +28,6 @@
           <a :href="orderUrl" class="cta-button primary large" target="_blank" rel="noopener">
             Objednat kurz
           </a>
-          <p class="cta-note">Objednávka probíhá v&nbsp;rezervačním systému STOB.</p>
         </div>
       </div>
     </section>
@@ -190,7 +189,6 @@
           <a :href="orderUrl" class="cta-button primary large" target="_blank" rel="noopener">
             Objednat kurz
           </a>
-          <p class="cta-note">Objednávka probíhá v&nbsp;rezervačním systému STOB.</p>
         </div>
       </div>
     </section>
@@ -246,7 +244,7 @@ const {
   lessonsPart2: string
   /** Maximum number of children in the group */
   capacity: number
-  /** STOB order process URL */
+  /** Sign-up form the "Objednat kurz" button opens */
   orderUrl: string
 }>()
 </script>
@@ -359,12 +357,6 @@ const {
 .cta-button.large {
   padding: var(--space-4) var(--space-7);
   font-size: var(--font-size-1);
-}
-
-.cta-note {
-  font-size: var(--font-size-0);
-  color: var(--text-2);
-  margin: 0;
 }
 
 /* Section common */
@@ -583,10 +575,6 @@ const {
   font-size: var(--font-size-0);
   max-width: var(--size-content-2);
   margin-bottom: var(--space-3);
-}
-
-.pricing-section .cta-note {
-  color: rgb(255 255 255 / 80%);
 }
 
 /* Capacity */
