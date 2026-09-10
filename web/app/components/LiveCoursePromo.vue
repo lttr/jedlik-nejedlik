@@ -25,9 +25,14 @@
         </dl>
 
         <div class="hero-cta">
-          <a :href="orderUrl" class="cta-button primary large" target="_blank" rel="noopener">
+          <LiveCourseBuyLink
+            :course-id
+            class="cta-button primary large"
+            target="_blank"
+            rel="noopener"
+          >
             Objednat kurz
-          </a>
+          </LiveCourseBuyLink>
         </div>
       </div>
     </section>
@@ -186,9 +191,14 @@
             Ingelheim, která se dlouhodobě věnuje péči o&nbsp;zdraví jak současných, tak budoucích
             generací.
           </p>
-          <a :href="orderUrl" class="cta-button primary large" target="_blank" rel="noopener">
+          <LiveCourseBuyLink
+            :course-id
+            class="cta-button primary large"
+            target="_blank"
+            rel="noopener"
+          >
             Objednat kurz
-          </a>
+          </LiveCourseBuyLink>
         </div>
       </div>
     </section>
@@ -224,7 +234,7 @@ const {
   lessonsPart1,
   lessonsPart2,
   capacity,
-  orderUrl,
+  courseId,
 } = defineProps<{
   /** e.g. "6.–9. třída" */
   gradeRange: string
@@ -244,8 +254,8 @@ const {
   lessonsPart2: string
   /** Maximum number of children in the group */
   capacity: number
-  /** Sign-up form the "Objednat kurz" button opens */
-  orderUrl: string
+  /** Live Course the "Objednat kurz" button sells */
+  courseId: LiveCourseId
 }>()
 </script>
 

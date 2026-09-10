@@ -16,7 +16,9 @@
           <span>Začínáme <strong>11.&nbsp;ledna 2027</strong></span>
         </p>
         <div class="hero-cta">
-          <a :href="registrationUrl" class="cta-button primary large">Chci se přihlásit</a>
+          <LiveCourseBuyLink :course-id class="cta-button primary large"
+            >Chci se přihlásit</LiveCourseBuyLink
+          >
         </div>
       </div>
     </section>
@@ -222,7 +224,9 @@
             Kurzovné je možné rozdělit do dvou splátek (2×&nbsp;2&nbsp;000&nbsp;Kč)
           </p>
           <p class="price-start">Začínáme 11.&nbsp;ledna 2027</p>
-          <a :href="registrationUrl" class="cta-button primary large">Chci se přihlásit</a>
+          <LiveCourseBuyLink :course-id class="cta-button primary large"
+            >Chci se přihlásit</LiveCourseBuyLink
+          >
         </div>
       </div>
     </section>
@@ -432,8 +436,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const registrationUrl = "https://form.simpleshop.cz/yXRL9/buy/"
+<script lang="ts" setup>
+const courseId = "online-3-7-2027-01" satisfies LiveCourseId
 </script>
 
 <style scoped>
