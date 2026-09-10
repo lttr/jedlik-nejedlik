@@ -191,6 +191,14 @@ from 04a reference exact versions. Existing pages
 `obchodni-podminky.vue` / `zasady-zpracovani-osobnich-udaju.vue` are the
 starting point.
 
+- **Already built elsewhere:** cookie consent shipped in
+  `../2026-09-09_meta-pixel/` — a bottom bar with Přijmout/Odmítnout, the
+  decision in `localStorage` only, withdrawal from the footer and the privacy
+  policy, and the Meta Pixel gated behind it. The privacy policy's cookies
+  section was corrected there too (Meta named as recipient, measurement stated
+  as cookieless, transfers outside the EU). Not lawyer-reviewed — the site
+  owner signed it off. This area covers the purchase-side documents; it does
+  not re-open cookie consent.
 - **Depends on:** lawyer input (external); technically only touches 04a's
   checkbox wiring.
 - **Verify:** consent record stores correct document version + timestamp.

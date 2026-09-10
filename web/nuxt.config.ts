@@ -97,6 +97,14 @@ export default defineNuxtConfig({
     },
   },
 
+  // The Live Course thank-you page is reached only through SimpleShop's
+  // post-payment redirect. `robots: false` is the one switch that both renders
+  // the `noindex` meta tag and keeps the URL out of `sitemap.xml` and
+  // `robots.txt`'s allow list; the page's own `useRobotsRule` would do neither.
+  routeRules: {
+    "/dekujeme-za-objednavku-kurzu": { robots: false },
+  },
+
   sourcemap: {
     client: "hidden",
   },

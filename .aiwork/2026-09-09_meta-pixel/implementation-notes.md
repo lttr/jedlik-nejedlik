@@ -43,3 +43,47 @@
   beacon for the unregistered `127.0.0.1` domain, so the event was proven by stubbing
   `fbevents.js` and recording the SDK calls the app makes. That proves what the site
   sends, not what Meta receives; closed by the marketer in Events Manager.
+
+## 03 — Thank-you page fires Purchase
+
+**For the site owner — paste these into SimpleShop's per-product "URL po uhrazení".**
+Until they are pasted, `Purchase` cannot fire at all:
+
+- `yXRL9` (Online kurz 3–7 let) →
+  `https://www.jedlik-nejedlik.cz/dekujeme-za-objednavku-kurzu?kurz=online-3-7-2027-01`
+- `JmEVq` (naživo 2.–5. třída, HK) →
+  `https://www.jedlik-nejedlik.cz/dekujeme-za-objednavku-kurzu?kurz=nazivo-2-5-hk-2026-10`
+- `RYlVD` (naživo 6.–9. třída, HK) →
+  `https://www.jedlik-nejedlik.cz/dekujeme-za-objednavku-kurzu?kurz=nazivo-6-9-hk-2026-09`
+
+The webinar (`n05o4`) and the e-book (`gN5Qq`) must keep pointing at SimpleShop's
+own post-payment page — their download lives there.
+
+**Outstanding owner decision — the first real `Purchase`.** The spec closed this as
+a test order placed once Meta's receiving end is ready and then refunded, not the
+first genuine buyer. Still needs the owner to place and refund it, after the
+marketer confirms events arrive in Events Manager.
+
+**Marketer note:** drafted in Czech at `marketer-note.md` in this folder, for the
+site owner to send. It ends with an unsigned "S pozdravem" on purpose.
+
+Other notes:
+
+- The decision ticket 02 handed on: the thank-you page's copy is driven from
+  `LIVE_COURSES` (heading from `name`, start date from `startDate`, "11. 1. 2027").
+  The promo pages keep their own prose ("11. ledna 2027") because driving those from
+  the table would change their rendered date format, a copy change nobody asked for.
+  The duplication is therefore only half-resolved — a date change still needs two
+  edits. Worth a follow-up if dates move.
+- Accepted limit: a buyer who accepts cookies _on the thank-you page itself_ loses
+  their `Purchase`. The event fires on mount and the plugin drops it when consent is
+  not yet granted, matching `InitiateCheckout`. In practice they decided before
+  clicking the buy button. Firing on a later grant would need a consent watcher; not
+  built, and the spec does not ask for it.
+- Small deviation: `noindex` is applied as `routeRules: { robots: false }` rather
+  than the page-level `useRobotsRule`, which left the URL in `sitemap.xml` (verified
+  — it was listed). Same meta tag, plus sitemap and robots.txt exclusion.
+- Beyond the ticket's files: the new page was a byte-identical fork of
+  `dekujeme-za-zajem-o-newsletter.vue`'s shell, so the shell moved into
+  `ThankYouPage.vue` and the newsletter page was rewritten onto it. That page is
+  outside ticket 03's scope; re-verified visually at both viewports.

@@ -28,3 +28,12 @@ export const LIVE_COURSES = {
 } as const
 
 export type LiveCourseId = keyof typeof LIVE_COURSES
+
+/**
+ * Narrows an unvalidated value — the thank-you page's `kurz` query parameter —
+ * to a Live Course id, so an unknown or missing one falls back instead of
+ * indexing the table with a cast.
+ */
+export function isLiveCourseId(value: unknown): value is LiveCourseId {
+  return typeof value === "string" && Object.hasOwn(LIVE_COURSES, value)
+}
