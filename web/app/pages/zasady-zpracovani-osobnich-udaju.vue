@@ -108,18 +108,41 @@
         nestanoví delší dobu k jejich uchování nebo jsme v konkrétních případech neuvedli jinak.
       </p>
 
-      <h2>Cookies</h2>
+      <h2 id="cookies">Cookies</h2>
 
       <p>
-        Při procházení našich webových stránek
-        <strong>zaznamenáváme</strong> vaši IP adresu, jak dlouho se na stránce zdržíte a ze které
-        stránky přicházíte. Používání cookies pro měření návštěvnosti webu a přizpůsobení zobrazení
-        webových stránek vnímáme jako svůj oprávněný zájem správce, neboť věříme, že díky tomu vám
-        <strong>můžeme</strong> nabídnout ještě lepší služby. Cookies pro cílení reklamy budou
-        zpracovávány jen na základě vašeho souhlasu. Naše webové stránky lze procházet také v
-        režimu, který neumožňuje sbírání osobních údajů. Používání cookies můžete na svém počítači
-        zakázat.
+        Návštěvnost webu <strong>měříme</strong> nástrojem Plausible, který nepoužívá cookies. Bez
+        cookies <strong>zaznamenáváme</strong> jen to, ze které stránky přicházíte, jak dlouho se na
+        stránce zdržíte a ze které země jste. Toto měření <strong>provádíme</strong> na základě
+        svého oprávněného zájmu správce, neboť věříme, že díky tomu vám
+        <strong>můžeme</strong> nabídnout ještě lepší služby.
       </p>
+
+      <p>
+        Cookies pro cílení reklamy <strong>používáme</strong> jen na základě vašeho souhlasu. Jde o
+        Meta Pixel společnosti Meta Platforms Ireland Limited (Merrion Road, Dublin 4, Irsko), která
+        je v tomto případě příjemcem vašich osobních údajů. <strong>Slouží</strong> nám k měření
+        účinnosti naší reklamy na Facebooku a Instagramu a k jejímu cílení. Jak s údaji nakládá
+        Meta, se dočtete v
+        <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener"
+          >zásadách ochrany soukromí společnosti Meta</a
+        >. Dokud souhlas neudělíte, <strong>nenačteme</strong> ani samotný skript, takže se k Meta
+        nedostane žádný váš údaj.
+      </p>
+
+      <p>
+        Meta může osobní údaje <strong>zpracovávat</strong> i mimo Evropskou unii, zejména ve
+        Spojených státech amerických, a to na základě standardních smluvních doložek schválených
+        Evropskou komisí a rámce EU–USA pro ochranu osobních údajů.
+      </p>
+
+      <p>
+        Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout. Změna
+        se projeví při načtení další stránky. Naše webové stránky lze procházet také v režimu, který
+        neumožňuje sbírání osobních údajů, a používání cookies můžete zakázat i ve svém prohlížeči.
+      </p>
+
+      <p><CookieConsentButton class="p-button" /></p>
 
       <h2>Zabezpečení a ochrana osobních údajů</h2>
 
@@ -150,7 +173,8 @@
       <p>
         <strong>Nemáme</strong> v úmyslu předat osobní údaje do třetí země (do země mimo EU) nebo
         mezinárodní organizaci. Příjemci osobních údajů ve třetích zemích jsou poskytovatelé
-        mailingových / cloudových služeb.
+        mailingových / cloudových služeb. Výjimkou je cílení reklamy přes Meta Pixel, ke kterému
+        dochází jen s vaším souhlasem – viz kapitola Cookies.
       </p>
 
       <h2>Vaše práva v souvislosti s ochranou osobních údajů</h2>

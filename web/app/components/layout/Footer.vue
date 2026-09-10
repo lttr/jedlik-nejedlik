@@ -30,6 +30,9 @@
               >Zásady zpracování osobních údajů</NuxtLink
             >
           </li>
+          <li>
+            <CookieConsentButton class="link consent-button" />
+          </li>
         </ul>
       </section>
       <section class="social-links">
@@ -61,6 +64,12 @@
 
 .p-stack {
   --stack-space: var(--space-2);
+}
+
+.consent-button {
+  /* Puleo styles bare buttons; unset it all so the control reads as a link. */
+  all: unset;
+  cursor: pointer;
 }
 
 .link {

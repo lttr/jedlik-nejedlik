@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, behaviour, review]
 blocked_by: []
 references:
   - "Spec: ../spec.md"
@@ -14,12 +15,12 @@ Pixel loads through `@nuxt/scripts` (new to the project) with the Meta Pixel reg
 
 ## Acceptance criteria
 
-- [ ] Before any decision and after **Odmítnout**, the network tab shows no request to any Meta host; after **Přijmout**, pixel requests appear
-- [ ] Bar shows on first visit, disappears after either choice, stays gone across navigation and after reload, with no hydration mismatch or flash when a decision is stored
-- [ ] Both buttons equally weighted, short text, link to the privacy policy; readable and tappable at 375px without blocking content
-- [ ] Bar is mounted once and covers both layouts (default and homepage)
-- [ ] Footer legal links carry a control that reopens the bar; the privacy policy's cookies section carries the same control; a changed decision takes effect on the next page load
-- [ ] Pixel loads only in production (mirrors Plausible); dev and the test hostname load nothing
-- [ ] Plausible behaviour unchanged
-- [ ] Privacy policy cookies section: legitimate-interest cookie claim corrected (measurement is cookieless), Meta Platforms Ireland named as ad-targeting recipient with purpose and link to Meta's privacy policy, sentence on transfers outside the EU, how to withdraw consent
-- [ ] `vp run check:all` passes; `verify` skill run on the banner flow and the policy page
+- [x] Before any decision and after **Odmítnout**, the network tab shows no request to any Meta host; after **Přijmout**, pixel requests appear
+- [x] Bar shows on first visit, disappears after either choice, stays gone across navigation and after reload, with no hydration mismatch or flash when a decision is stored
+- [x] Both buttons equally weighted, short text, link to the privacy policy; readable and tappable at 375px without blocking content
+- [x] Bar is mounted once and covers both layouts (default and homepage)
+- [x] Footer legal links carry a control that reopens the bar; the privacy policy's cookies section carries the same control; a changed decision takes effect on the next page load
+- [x] Pixel loads only in production (mirrors Plausible); dev and the test hostname load nothing
+- [x] Plausible behaviour unchanged
+- [x] Privacy policy cookies section: legitimate-interest cookie claim corrected (measurement is cookieless), Meta Platforms Ireland named as ad-targeting recipient with purpose and link to Meta's privacy policy, sentence on transfers outside the EU, how to withdraw consent
+- [x] `vp run check:all` passes; `verify` skill run on the banner flow and the policy page

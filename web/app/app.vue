@@ -2,6 +2,12 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <!-- Mounted here, above the layouts, so one bar covers them both. Client-only
+       because the decision lives in localStorage: a server-rendered bar would
+       hydration-mismatch for everyone who already decided. -->
+  <ClientOnly>
+    <CookieConsentBar />
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
