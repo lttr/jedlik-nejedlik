@@ -9,8 +9,20 @@ _Avoid_: Course Platform / platforma kurzů (too grand), e-learning, vzdělávac
 portál.
 
 **Course** (Kurz):
-A purchasable digital product made of Sections.
+An educational programme the client sells. It comes in two forms, and where the
+form matters the specific term is used.
 _Avoid_: product (reserve for a future generic sellable), e-shop item.
+
+**On-demand Course** (Videokurz):
+A Course delivered as a digital product made of Sections in the LMS, watched at
+the Student's own pace. The LMS terms below (Section, Lesson, Entitlement, …)
+apply to this form.
+_Avoid_: online course (ambiguous — a Live Course can also be online).
+
+**Live Course** (Kurz s lektorem):
+A Course led by a lecturer at fixed times — in person ("naživo") or online —
+identified by its start date and, in person, its place.
+_Avoid_: course run, cohort, term, turnus.
 
 **Section** (Sekce):
 An ordered group of Lessons within a Course; the unit that carries an Unlock
