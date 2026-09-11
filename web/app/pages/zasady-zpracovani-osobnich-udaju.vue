@@ -119,6 +119,13 @@
       </p>
 
       <p>
+        Pokud si u nás <strong>vytvoříte</strong> účet a <strong>přihlásíte</strong> se,
+        <strong>ukládáme</strong> do vašeho prohlížeče nezbytnou technickou cookie, která udržuje
+        vaše přihlášení. Bez ní bychom vás <strong>nedokázali</strong> udržet přihlášené, a proto k
+        ní <strong>nepotřebujeme</strong> váš souhlas.
+      </p>
+
+      <p>
         Cookies pro cílení reklamy <strong>používáme</strong> jen na základě vašeho souhlasu. Jde o
         Meta Pixel společnosti Meta Platforms Ireland Limited (Merrion Road, Dublin 4, Irsko), která
         je v tomto případě příjemcem vašich osobních údajů. <strong>Slouží</strong> nám k měření
@@ -137,9 +144,10 @@
       </p>
 
       <p>
-        Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout. Změna
-        se projeví při načtení další stránky. Naše webové stránky lze procházet také v režimu, který
-        neumožňuje sbírání osobních údajů, a používání cookies můžete zakázat i ve svém prohlížeči.
+        Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout.
+        Odvolání <strong>uplatníme</strong> ihned — již načtený Meta Pixel přestane odesílat údaje.
+        Naše webové stránky lze procházet také v režimu, který neumožňuje sbírání osobních údajů, a
+        používání cookies můžete zakázat i ve svém prohlížeči.
       </p>
 
       <p><CookieConsentButton class="p-button" /></p>

@@ -27,13 +27,22 @@ const ignoreEvent: TrackMetaPixelEvent = () => {}
  * Claims the one slot this event has in the current session, returning whether
  * it was still free. Kept next to the sending code so no caller has to invent a
  * key format of its own.
+ *
+ * Touching `sessionStorage` throws outright where the browser refuses storage
+ * (cookies blocked for the site, hardened privacy modes), and an unguarded
+ * throw here would take the whole event down. Such a visitor gets no slot
+ * bookkeeping at all: the sale is measured, and a reload may double-count it.
  */
 function claimOncePerSession(event: MetaPixelEvent, contentName: string | undefined): boolean {
   const key = `meta-pixel:${event}:${contentName ?? ""}`
-  if (sessionStorage.getItem(key) !== null) {
-    return false
+  try {
+    if (sessionStorage.getItem(key) !== null) {
+      return false
+    }
+    sessionStorage.setItem(key, "1")
+  } catch {
+    return true
   }
-  sessionStorage.setItem(key, "1")
   return true
 }
 
@@ -67,6 +76,22 @@ export default defineNuxtPlugin(() => {
   // visitor who has not accepted would reach Meta the moment they do. The
   // consent check comes before the once-per-session claim, so a refusing
   // visitor who later accepts has not silently spent their one slot.
+  // A visitor who withdraws mid-visit must reach the pixel that is already
+  // loaded: `@nuxt/scripts` cannot unload a script, but Meta's own consent call
+  // stops the loaded pixel from sending. Without it, silencing `track` below
+  // would only stop our own events while the pixel kept going for the rest of
+  // the SPA session. `hasRevoked` keeps the first acceptance clean: a `grant`
+  // is sent only to undo a revoke, never before Meta's `init`.
+  let hasRevoked = false
+  watch(isGranted, (granted) => {
+    if (!granted) {
+      proxy.fbq("consent", "revoke")
+      hasRevoked = true
+    } else if (hasRevoked) {
+      proxy.fbq("consent", "grant")
+    }
+  })
+
   const track: TrackMetaPixelEvent = (event, contentName, options) => {
     if (!isGranted.value) {
       return

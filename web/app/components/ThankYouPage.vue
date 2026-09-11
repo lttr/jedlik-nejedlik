@@ -44,15 +44,21 @@ const { title } = defineProps<{ title: string }>()
 }
 
 /* The page's own copy arrives through the slot, so it carries the page's scope
-   rather than this component's; `:slotted` is what reaches it. */
-.thank-you-content :slotted(p) {
+   rather than this component's; `:slotted` is what reaches it. The bare `p` is
+   the signature below: it needs the same rule at the same specificity, which is
+   how it rendered before this shell was extracted. */
+.thank-you-content :slotted(p),
+.thank-you-content p {
   color: var(--text-color-2);
   margin-bottom: var(--space-3);
 }
 
 .thank-you-content :slotted(.lead) {
   font-size: var(--font-size-2);
-  color: var(--text-1);
+  /* Inherited on purpose. This was `var(--text-1)`, a property no stylesheet
+     defines, so the declaration has always been dropped and the lead has always
+     inherited. Naming a real token here would change the rendered colour. */
+  color: inherit;
 }
 
 .team-signature {

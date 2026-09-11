@@ -1,8 +1,7 @@
 <template>
-  <aside v-if="isBarOpen" class="consent-bar" aria-label="Souhlas s cookies">
+  <aside v-if="isBarOpen" ref="bar" class="consent-bar" aria-label="Souhlas s cookies">
     <p class="text p-secondary-text-regular">
-      Pro cílení reklamy na Facebooku a Instagramu potřebujeme váš souhlas s cookies. Návštěvnost
-      webu měříme bez nich. Více v
+      Používáme cookies a další technologie, abychom vám mohli nabídnout lepší služby. Více v
       <NuxtLink class="link" to="/zasady-zpracovani-osobnich-udaju#cookies"
         >zásadách zpracování osobních údajů</NuxtLink
       >.
@@ -16,7 +15,21 @@
 </template>
 
 <script lang="ts" setup>
+import { useElementSize } from "@vueuse/core"
+
 const { isBarOpen, decide } = useCookieConsent()
+
+// The bar is fixed over the bottom of the page, so without this the footer's
+// last links — the consent control among them — sit under it and no amount of
+// scrolling reaches them. It wraps to several lines at 375px, hence measuring
+// rather than guessing a height.
+const bar = useTemplateRef("bar")
+const { height } = useElementSize(bar, undefined, { box: "border-box" })
+useHead({
+  bodyAttrs: {
+    style: computed(() => (isBarOpen.value ? `padding-block-end: ${height.value}px` : "")),
+  },
+})
 </script>
 
 <style scoped>
@@ -30,7 +43,7 @@ const { isBarOpen, decide } = useCookieConsent()
   gap: var(--space-3) var(--space-6);
   align-items: center;
   justify-content: center;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-5) var(--space-4);
   color: var(--text-color-1-inverse);
   background-color: var(--color-midnight);
   box-shadow: var(--shadow-4);

@@ -87,3 +87,24 @@ Other notes:
   `dekujeme-za-zajem-o-newsletter.vue`'s shell, so the shell moved into
   `ThankYouPage.vue` and the newsletter page was rewritten onto it. That page is
   outside ticket 03's scope; re-verified visually at both viewports.
+
+## Wrap-up review
+
+- Deliberate deviation from the spec, and the reason: withdrawal now takes effect
+  **immediately**, not on the next page load. The spec accepted the delay because
+  `@nuxt/scripts` cannot unload a loaded script — true, but Meta's own
+  `fbq("consent","revoke")` stops the loaded pixel from sending, so the accepted
+  limitation was larger than it needed to be. The privacy policy's withdrawal
+  sentence was corrected to match. The `_fbp` cookie still survives a withdrawal.
+- The privacy policy gained a paragraph naming the necessary login/session cookie:
+  the auth layer ships `nuxt-auth-utils` with a session cookie, and the rewritten
+  Cookies chapter otherwise implied the site sets none. Needs the site owner's
+  sign-off along with the rest of the policy edit.
+- `127.0.0.1` is now in `IGNORED_HOSTNAMES`, so a local production build no longer
+  loads the real pixel. Every future local pixel check must be served on a hostname
+  outside that list — the wrap-up pass used `127.0.0.2`.
+- Left unfixed and worth a decision, full reasoning in `review.md`: the online
+  course's buy link navigates in the same tab, so its `InitiateCheckout` races the
+  unload and will under-report against the two `target="_blank"` courses; and no
+  `PageView` fires on client-side route changes, so Meta cannot build URL-based
+  custom audiences. Both are product calls, and the second is in the marketer note.
