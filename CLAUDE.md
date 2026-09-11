@@ -14,6 +14,14 @@ Three separate buckets — none replaces the others:
 
 Conventional Commits. The scope is a code area (`auth`, `consent`), never the branch. Subjects take a colon, not an em dash.
 
+## Shipping
+
+"Ship it" starts with the task folder: mark the spec `status: done` and commit it with the rest of the work.
+
+Where it goes next depends on the branch. A branch that lives only on this machine is rebased onto `master`, `master` is fast-forwarded to it and pushed, and then the worktree and the branch are removed. A branch that is already pushed is shipped by pushing to it and opening a PR if it has none.
+
+The push to `master` is what triggers the Coolify deploy. Watch it with the `monitor-deploy` skill and report the outcome.
+
 ## Non-obvious
 
 - Toolchain is Vite+ (`vp`). Build with `vp run build`, never `vp build` (raw Vite, no `index.html` entry). Running/driving the dev server: see the `run-jedlik-nejedlik` skill.
