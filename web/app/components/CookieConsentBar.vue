@@ -34,6 +34,9 @@ useHead({
 
 <style scoped>
 .consent-bar {
+  /* Puleo's focus ring defaults to --brand-color, near-invisible on the midnight bar. */
+  --focus-color: var(--color-pale-blue);
+
   position: fixed;
   inset-inline: 0;
   bottom: 0;

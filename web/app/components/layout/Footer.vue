@@ -47,6 +47,9 @@
 
 <style scoped>
 .footer {
+  /* Puleo's focus ring defaults to --brand-color, near-invisible on the dark footer. */
+  --focus-color: var(--color-pale-blue);
+
   color: var(--text-color-1-inverse);
   background-color: var(--color-midnight);
   padding-block: var(--space-9);
@@ -67,9 +70,14 @@
 }
 
 .consent-button {
-  /* Puleo styles bare buttons; unset it all so the control reads as a link. */
-  all: unset;
-  cursor: pointer;
+  /* Puleo's button styles are all :where()-wrapped, so a plain class outranks them.
+     Reset only the button box; text and focus ring stay inherited. */
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+  font: inherit;
 }
 
 .link {
