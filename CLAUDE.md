@@ -10,6 +10,10 @@ Three separate buckets — none replaces the others:
 - **Behaviour** — the `verify` skill: run the real app, drive the changed flow, screenshot it and look at the image. Catches what only shows at runtime (hydration mismatch, null data, layout broken at 375px). A green `check:all` does not verify behaviour.
 - **Code quality** — `/code-review`, `/simplify`; judgement calls, not checks.
 
+## Commits
+
+Conventional Commits. The scope is a code area (`auth`, `consent`), never the branch. Subjects take a colon, not an em dash.
+
 ## Non-obvious
 
 - Toolchain is Vite+ (`vp`). Build with `vp run build`, never `vp build` (raw Vite, no `index.html` entry). Running/driving the dev server: see the `run-jedlik-nejedlik` skill.
