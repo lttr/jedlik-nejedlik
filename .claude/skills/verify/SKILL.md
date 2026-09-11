@@ -43,10 +43,10 @@ Input: the spec's acceptance criteria and the diff (`git diff master...`).
 
 ## Pass 2 — Appearance: does it look right?
 
-Input: every page Pass 1 touched, in every state it reached. Not the diff,
-not the spec: this pass has the same checklist for every ticket. If Pass 1
-reached no page (server route only, no page renders it) this pass is SKIP;
-say so and name the routes.
+Input: the pages Pass 1 touched whose template or styles the diff changed,
+in every state Pass 1 reached there. Behaviour-only changes render as before
+and are not re-judged. For a whole spec or branch, every page Pass 1 touched.
+Nothing visual changed → SKIP; say so and name the routes.
 
 1. Screenshot each route and state at the default viewport and at 375px
    (375×800, per `run-jedlik-nejedlik`).

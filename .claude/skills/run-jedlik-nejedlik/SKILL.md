@@ -23,6 +23,20 @@ Always address it as `localhost`, never `127.0.0.1` — `nuxi dev` binds the
 hostname `localhost`, which may resolve to IPv6 only, and then a v4 probe hangs.
 If the log says `Using alternative port`, use that port instead.
 
+## Production build
+
+Behaviour gated off in dev (`import.meta.dev`, hostname allow-lists) is only
+visible on a built site:
+
+```bash
+vp run build
+PORT=3100 node web/.output/server/index.mjs
+```
+
+Same env requirement as dev. Use a host the gate does not exclude. Observe
+third-party scripts by blocking their hosts in the browser session and reading
+what the app queued, so nothing real leaves the machine.
+
 ## Drive
 
 Browser mechanics belong to the `playwright-cli` skill from the browser plugin
