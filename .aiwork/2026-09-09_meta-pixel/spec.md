@@ -1,5 +1,5 @@
 ---
-status: not-started
+status: done
 references:
   - "intent.md (this folder)"
   - "Pixel ID: 3144448269086284 (client e-mail, 2026-09)"
