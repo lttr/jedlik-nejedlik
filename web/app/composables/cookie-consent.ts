@@ -15,7 +15,7 @@ interface ConsentDecision {
 }
 
 interface CookieConsent {
-  /** The visitor accepted ad-targeting cookies; gates the Meta Pixel. */
+  /** The visitor accepted optional cookies; gates every consent-only script. */
   isGranted: ComputedRef<boolean>
   /** No decision on record for the current version, so the bar asks for one. */
   isBarOpen: ComputedRef<boolean>

@@ -138,16 +138,28 @@
       </p>
 
       <p>
-        Meta může osobní údaje <strong>zpracovávat</strong> i mimo Evropskou unii, zejména ve
-        Spojených státech amerických, a to na základě standardních smluvních doložek schválených
+        Se stejným souhlasem <strong>používáme</strong> také nástroj Microsoft Clarity společnosti
+        Microsoft, který nám <strong>pomáhá</strong> pochopit, jak se stránky používají. Podrobnosti
+        najdete v
+        <a
+          href="https://privacy.microsoft.com/cs-cz/privacystatement"
+          target="_blank"
+          rel="noopener"
+          >prohlášení o zásadách ochrany osobních údajů společnosti Microsoft</a
+        >.
+      </p>
+
+      <p>
+        Tito příjemci mohou osobní údaje <strong>zpracovávat</strong> i mimo Evropskou unii, zejména
+        ve Spojených státech amerických, a to na základě standardních smluvních doložek schválených
         Evropskou komisí a rámce EU–USA pro ochranu osobních údajů.
       </p>
 
       <p>
         Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout.
-        Odvolání <strong>uplatníme</strong> ihned — již načtený Meta Pixel přestane odesílat údaje.
-        Naše webové stránky lze procházet také v režimu, který neumožňuje sbírání osobních údajů, a
-        používání cookies můžete zakázat i ve svém prohlížeči.
+        Odvolání <strong>uplatníme</strong> ihned &ndash; již načtené skripty přestanou odesílat
+        údaje. Naše webové stránky lze procházet také v režimu, který neumožňuje sbírání osobních
+        údajů, a používání cookies můžete zakázat i ve svém prohlížeči.
       </p>
 
       <p><CookieConsentButton class="p-button" /></p>
@@ -181,8 +193,8 @@
       <p>
         <strong>Nemáme</strong> v úmyslu předat osobní údaje do třetí země (do země mimo EU) nebo
         mezinárodní organizaci. Příjemci osobních údajů ve třetích zemích jsou poskytovatelé
-        mailingových / cloudových služeb. Výjimkou je cílení reklamy přes Meta Pixel, ke kterému
-        dochází jen s vaším souhlasem – viz kapitola Cookies.
+        mailingových / cloudových služeb. Výjimkou jsou nástroje pro měření a cílení reklamy, ke
+        kterým dochází jen s vaším souhlasem &ndash; viz kapitola Cookies.
       </p>
 
       <h2>Vaše práva v souvislosti s ochranou osobních údajů</h2>

@@ -7,23 +7,24 @@ const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
 const isProduction = process.env.NODE_ENV === "production"
 
 // Public in every page's source by design and identical across environments,
-// so it is hardcoded rather than read from the environment.
+// so they are hardcoded rather than read from the environment.
 const META_PIXEL_ID = "3144448269086284"
+const CLARITY_ID = "yhsa8yprqa"
 
-// No `trigger` here on purpose: without one, Nuxt Scripts only carries the id
-// into the runtime config instead of loading the pixel on app start. The load
-// gate is the consent trigger in `plugins/meta-pixel.client.ts`.
+// No `trigger` on purpose: without one, Nuxt Scripts only carries the id into
+// the runtime config instead of loading the script on app start. The load gate
+// is the consent trigger in each script's client plugin.
 //
-// `bundle` and `proxy` are off: their defaults would self-host `fbevents.js`
-// and relay Meta's endpoints through our own server, so every visitor would
-// reach Meta from the server's address instead of their own. The pixel is meant
-// to talk to Meta directly, and only that keeps "no request reaches Meta before
-// consent" a claim about the browser rather than about our proxy.
-const metaPixelConfig = isProduction
+// `bundle` and `proxy` are off so each vendor is reached from the visitor's
+// browser, not self-hosted or relayed through our server — that is what keeps
+// "no request before consent" a claim about the browser. Clarity's bundling is
+// broken anyway: the build-time fetch returns an empty body.
+const scriptsConfig = isProduction
   ? {
       scripts: {
         registry: {
           metaPixel: { id: META_PIXEL_ID, scriptOptions: { bundle: false, proxy: false } },
+          clarity: { id: CLARITY_ID, scriptOptions: { bundle: false, proxy: false } },
         },
       },
     }
@@ -164,7 +165,7 @@ export default defineNuxtConfig({
 
   ...plausibleConfig,
 
-  ...metaPixelConfig,
+  ...scriptsConfig,
 
   sentry: {
     org: "lukas-trumm",
