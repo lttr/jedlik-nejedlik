@@ -24,6 +24,7 @@ The push to `master` is what triggers the Coolify deploy. Watch it with the `mon
 
 ## Non-obvious
 
+- Before writing or editing Czech copy in `web/app/`, call the Skill tool with `writing:czech-typography` (dashes, quotes, non-breaking spaces, units).
 - Toolchain is Vite+ (`vp`). Build with `vp run build`, never `vp build` (raw Vite, no `index.html` entry). Running/driving the dev server: see the `run-jedlik-nejedlik` skill.
 - The `rolldown` pin in `web/` is exact and load-bearing — never widen or remove it (skew against vite-plus's bundled copy breaks `vp`). Details in the `dependency-update` skill.
 - The pre-commit hook is part of the gate: it runs `vp staged` and then `check:all` in full. The hook is commented — read `.vite-hooks/pre-commit`. The build is not a check; it runs on deploy (`vp run build` locally).
