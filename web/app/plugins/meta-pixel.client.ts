@@ -1,5 +1,5 @@
 /** Standard Meta events this site sends. Not a `value` or a price among them. */
-type MetaPixelEvent = "InitiateCheckout" | "Purchase"
+type MetaPixelEvent = "PageView" | "InitiateCheckout" | "Purchase"
 
 interface TrackOptions {
   /**
@@ -101,5 +101,16 @@ export default defineNuxtPlugin(() => {
     }
     proxy.fbq("track", event, contentName === undefined ? {} : { content_name: contentName })
   }
+
+  // A SPA route change makes no new document, so the registry's one `PageView`
+  // at load is all Meta would see. `from.matched` is empty only on that initial
+  // navigation, so this never double-counts it.
+  useRouter().afterEach((to, from) => {
+    if (from.matched.length === 0 || to.fullPath === from.fullPath) {
+      return
+    }
+    track("PageView")
+  })
+
   return { provide: { trackMetaPixelEvent: track } }
 })

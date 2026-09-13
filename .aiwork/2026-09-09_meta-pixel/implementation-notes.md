@@ -46,8 +46,8 @@
 
 ## 03 — Thank-you page fires Purchase
 
-**For the site owner — paste these into SimpleShop's per-product "URL po uhrazení".**
-Until they are pasted, `Purchase` cannot fire at all:
+**Resolved (2026-09-13):** the site owner pasted these into SimpleShop's
+per-product "URL po uhrazení":
 
 - `yXRL9` (Online kurz 3–7 let) →
   `https://www.jedlik-nejedlik.cz/dekujeme-za-objednavku-kurzu?kurz=online-3-7-2027-01`
@@ -59,13 +59,12 @@ Until they are pasted, `Purchase` cannot fire at all:
 The webinar (`n05o4`) and the e-book (`gN5Qq`) must keep pointing at SimpleShop's
 own post-payment page — their download lives there.
 
-**Outstanding owner decision — the first real `Purchase`.** The spec closed this as
-a test order placed once Meta's receiving end is ready and then refunded, not the
-first genuine buyer. Still needs the owner to place and refund it, after the
-marketer confirms events arrive in Events Manager.
+**Still open — the first real `Purchase`.** The spec closed this as a test order
+placed once Meta's receiving end is ready and then refunded, not the first genuine
+buyer. Still needs the owner to place and refund it, after the marketer confirms
+events arrive in Events Manager.
 
-**Marketer note:** drafted in Czech at `marketer-note.md` in this folder, for the
-site owner to send. It ends with an unsigned "S pozdravem" on purpose.
+**Marketer note:** sent (2026-09-13). Drafted in Czech at `marketer-note.md`.
 
 Other notes:
 
@@ -103,8 +102,29 @@ Other notes:
 - `127.0.0.1` is now in `IGNORED_HOSTNAMES`, so a local production build no longer
   loads the real pixel. Every future local pixel check must be served on a hostname
   outside that list — the wrap-up pass used `127.0.0.2`.
+- **Resolved (2026-09-13):** the missing `PageView` on client-side route changes.
+  A `router.afterEach` in the plugin now sends one per SPA navigation, behind the
+  same consent gate; the registry's `clientInit` still covers the initial one, and
+  `from.matched.length === 0` keeps that from being counted twice. Verified on a
+  production build served at `127.0.0.2:3100` with `fbevents.js` stubbed: accept →
+  two navigations → `init`, `PageView`, `PageView`, `PageView` in the queue;
+  refuse → `init` plus the load-time `PageView` only, and no request to any
+  Facebook host.
 - Left unfixed and worth a decision, full reasoning in `review.md`: the online
   course's buy link navigates in the same tab, so its `InitiateCheckout` races the
-  unload and will under-report against the two `target="_blank"` courses; and no
-  `PageView` fires on client-side route changes, so Meta cannot build URL-based
-  custom audiences. Both are product calls, and the second is in the marketer note.
+  unload and will under-report against the two `target="_blank"` courses. A product
+  call.
+
+## Privacy policy, second pass (2026-09-13)
+
+The Cookies chapter was halved: Meta's postal address, the "příjemce vašich
+osobních údajů" phrasing, Clarity's own paragraph and the standalone EU-transfer
+paragraph are gone, the transfer sentence folded into the marketing paragraph.
+Three paragraphs now — measurement and the login cookie, the two consent-based
+tools with their links and the transfer note, withdrawal. Owner's earlier sign-off
+was on the longer text; the substance is unchanged.
+
+Open question left with the owner: whether Plausible belongs in a chapter about
+cookies at all. It sets none, so the cookie rules do not reach it and its
+transparency duty is met elsewhere in the policy; the sentence stays for now
+because it explains why the banner has no analytics toggle.
