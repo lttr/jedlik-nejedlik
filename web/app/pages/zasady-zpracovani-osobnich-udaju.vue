@@ -111,55 +111,37 @@
       <h2 id="cookies">Cookies</h2>
 
       <p>
-        Návštěvnost webu <strong>měříme</strong> nástrojem Plausible, který nepoužívá cookies. Bez
-        cookies <strong>zaznamenáváme</strong> jen to, ze které stránky přicházíte, jak dlouho se na
-        stránce zdržíte a ze které země jste. Toto měření <strong>provádíme</strong> na základě
-        svého oprávněného zájmu správce, neboť věříme, že díky tomu vám
-        <strong>můžeme</strong> nabídnout ještě lepší služby.
+        Návštěvnost webu <strong>měříme</strong> nástrojem Plausible, který nepoužívá cookies a
+        <strong>zaznamenává</strong> jen to, odkud přicházíte, jak dlouho se na stránce zdržíte a ze
+        které země jste. <strong>Děláme</strong> to na základě svého oprávněného zájmu. Pokud se
+        <strong>přihlásíte</strong> ke svému účtu, <strong>ukládáme</strong> navíc nezbytnou
+        technickou cookie, která udržuje vaše přihlášení &ndash; k té souhlas
+        <strong>nepotřebujeme</strong>.
       </p>
 
       <p>
-        Pokud si u nás <strong>vytvoříte</strong> účet a <strong>přihlásíte</strong> se,
-        <strong>ukládáme</strong> do vašeho prohlížeče nezbytnou technickou cookie, která udržuje
-        vaše přihlášení. Bez ní bychom vás <strong>nedokázali</strong> udržet přihlášené, a proto k
-        ní <strong>nepotřebujeme</strong> váš souhlas.
-      </p>
-
-      <p>
-        Cookies pro cílení reklamy <strong>používáme</strong> jen na základě vašeho souhlasu. Jde o
-        Meta Pixel společnosti Meta Platforms Ireland Limited (Merrion Road, Dublin 4, Irsko), která
-        je v tomto případě příjemcem vašich osobních údajů. <strong>Slouží</strong> nám k měření
-        účinnosti naší reklamy na Facebooku a Instagramu a k jejímu cílení. Jak s údaji nakládá
-        Meta, se dočtete v
+        Jen s vaším souhlasem <strong>používáme</strong> Meta Pixel k měření a cílení naší reklamy
+        na Facebooku a Instagramu a Microsoft Clarity k pochopení toho, jak se stránky používají.
+        Dokud souhlas neudělíte, <strong>nenačteme</strong> ani jejich skripty. Podrobnosti najdete
+        v
         <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener"
           >zásadách ochrany soukromí společnosti Meta</a
-        >. Dokud souhlas neudělíte, <strong>nenačteme</strong> ani samotný skript, takže se k Meta
-        nedostane žádný váš údaj.
-      </p>
-
-      <p>
-        Se stejným souhlasem <strong>používáme</strong> také nástroj Microsoft Clarity společnosti
-        Microsoft, který nám <strong>pomáhá</strong> pochopit, jak se stránky používají. Podrobnosti
-        najdete v
+        >
+        a v
         <a
           href="https://privacy.microsoft.com/cs-cz/privacystatement"
           target="_blank"
           rel="noopener"
-          >prohlášení o zásadách ochrany osobních údajů společnosti Microsoft</a
-        >.
+          >prohlášení společnosti Microsoft</a
+        >. Oba příjemci mohou údaje <strong>zpracovávat</strong> i mimo Evropskou unii, a to na
+        základě standardních smluvních doložek schválených Evropskou komisí a rámce EU&ndash;USA pro
+        ochranu osobních údajů.
       </p>
 
       <p>
-        Tito příjemci mohou osobní údaje <strong>zpracovávat</strong> i mimo Evropskou unii, zejména
-        ve Spojených státech amerických, a to na základě standardních smluvních doložek schválených
-        Evropskou komisí a rámce EU–USA pro ochranu osobních údajů.
-      </p>
-
-      <p>
-        Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout.
-        Odvolání <strong>uplatníme</strong> ihned &ndash; již načtené skripty přestanou odesílat
-        údaje. Naše webové stránky lze procházet také v režimu, který neumožňuje sbírání osobních
-        údajů, a používání cookies můžete zakázat i ve svém prohlížeči.
+        Souhlas <strong>můžete</strong> kdykoli odvolat: v nastavení cookies zvolte Odmítnout,
+        <strong>uplatníme</strong> ho ihned. Cookies <strong>můžete</strong> zakázat i ve svém
+        prohlížeči.
       </p>
 
       <p><CookieConsentButton class="p-button" /></p>
