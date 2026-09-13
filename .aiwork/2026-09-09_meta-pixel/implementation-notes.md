@@ -110,10 +110,22 @@ Other notes:
   two navigations → `init`, `PageView`, `PageView`, `PageView` in the queue;
   refuse → `init` plus the load-time `PageView` only, and no request to any
   Facebook host.
-- Left unfixed and worth a decision, full reasoning in `review.md`: the online
-  course's buy link navigates in the same tab, so its `InitiateCheckout` races the
-  unload and will under-report against the two `target="_blank"` courses. A product
-  call.
+- **Retracted (2026-09-13):** review finding 3, the same-tab `InitiateCheckout`
+  race. It assumed an image beacon. The current `fbevents.js` has none: it sends
+  via `fetch` with `keepalive: true`, falling back to `sendBeacon` and `formPOST`
+  (transports tagged `rqm` in the script). All three outlive the document, so the
+  online course's same-tab buy link loses nothing and needs no `target="_blank"`.
+  What does remain, for the same-tab link only: a click landing before
+  `fbevents.js` has loaded leaves the call in the `fbq` queue, undispatched, and
+  the unload takes it. A short window, not worth code.
+
+Attempted and inconclusive: observing the pixel's transport end-to-end on a
+production build at `127.0.0.2:3100` with the real `fbevents.js` and
+`facebook.com` blocked in the browser. Consent granted, SDK loaded,
+`fbq.callMethod` live &mdash; and not one request to `facebook.com`, for any
+event. Same wall as the tickets: Meta suppresses sending on an unregistered
+domain, so the script's own source is the only local evidence and Events Manager
+the only real one.
 
 ## Privacy policy, second pass (2026-09-13)
 
