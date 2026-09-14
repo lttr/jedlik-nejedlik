@@ -1,15 +1,6 @@
 <template>
   <NuxtLink :to="`/kurzy/${course.slug}`" class="course-card">
-    <NuxtImg
-      v-if="course.cover"
-      class="cover"
-      sizes="90vw sm:480px"
-      loading="lazy"
-      :src="course.cover.id"
-      :width="course.cover.width"
-      :height="course.cover.height"
-      :alt="course.cover.description ?? ''"
-    />
+    <CourseCover v-if="course.cover" :image="course.cover" sizes="90vw sm:480px" loading="lazy" />
     <div class="body p-flow">
       <!-- Only an Author's own session ever carries a draft here (ADR 0004);
            the card marks it and otherwise treats it like any other Course,
@@ -50,14 +41,6 @@ defineProps<{
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
   }
-}
-
-.cover {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 .body {
