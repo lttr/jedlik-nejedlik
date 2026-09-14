@@ -1,5 +1,5 @@
 ---
-status: ready
+status: in-progress
 blocked_by: [04]
 references:
   - "Spec: ../spec.md"
@@ -12,8 +12,8 @@ references:
 
 ## Acceptance criteria
 
-- [ ] Logged-in Author: draft Course card shows a „Koncept" badge in its normal position; its Sales Page renders
-- [ ] Logged-in Student and anonymous visitor: draft Course absent from the Catalog, its Sales Page 404s
-- [ ] Probe: Author token reads a draft Course and its outline; Student and anonymous tokens do not, asserting status and error codes
-- [ ] Verified in the running app as Author, Student and visitor
-- [ ] `vp run check:all` passes
+- [x] Logged-in Author: draft Course card shows a „Koncept" badge in its normal position; its Sales Page renders
+- [ ] Logged-in Student and anonymous visitor: draft Course absent from the Catalog, its Sales Page 404s (visitor observed; Student blocked: Catalog and Sales Page fail on the Student policy's `directus_files` read, see implementation notes)
+- [x] Probe: Author token reads a draft Course and its outline; Student and anonymous tokens do not, asserting status and error codes
+- [ ] Verified in the running app as Author, Student and visitor (Author and visitor observed; Student blocked as above)
+- [x] `vp run check:all` passes
