@@ -86,6 +86,21 @@ Rules:
 Plausible analytics ignores `localhost` and `jedlik-nejedlik-test.lttr.cz`, so
 no events fire locally.
 
+## Cloud container quirks
+
+- The headless Chromium cannot open a TLS tunnel through the container's agent
+  proxy: every external host fails with `ERR_CONNECTION_RESET`, so Directus
+  images and Sentry never load in the browser, while the Nitro side (and
+  `curl`) reach them fine. Verify an image in two steps: `curl` the exact URL
+  the `<img>` requests (status 200, `image/png`) as the permission evidence,
+  then hand the browser those bytes for that URL with `run-code` and
+  `page.context().route(pattern, route => route.fulfill({ path, contentType }))`
+  so the layout screenshot shows a real image. Say so in the evidence; never
+  put the workaround in app code.
+- The Vite watcher occasionally misses a template edit under `web/layers/**`
+  (a `touch` does not help). If the served HTML still shows the old markup
+  after ~10s, restart the dev server (Stop below, then Start).
+
 ## Stop
 
 TaskStop the Monitor, then free the port by port — never by process pattern
