@@ -130,3 +130,45 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
   defaults `availability` to InStock; accepted.
 - `sitemap.sources` is declared in the shop layer's `nuxt.config.ts`; defu
   concatenates it with the root config.
+
+## 05 — Author draft preview (chain stopped here)
+
+- **Blocks shipping the area; needs the site owner:** a logged-in Student
+  cannot use the shop pages at all. A session reads Directus with its own
+  policy only (the Public policy does not apply to authenticated requests),
+  and the Student policy's `directus_files` read rule covers only entitled
+  lesson materials, with a field list lacking `description`. Both shop routes
+  select `cover.{id,width,height,description}`, so Directus answers 403
+  FORBIDDEN on that field and `/api/courses` and `/api/courses/<slug>` return
+  500 for every Student, published Course included (user story 25 fails).
+  Authors get a milder form: their file read is scoped to „Materiály kurzů",
+  so every cover is `null` in the preview.
+- **The fix:** on the Student and Autor policies, add a `directus_files` read
+  permission mirroring the Public policy's existing file rule (filter on the
+  `Public` folder by name, same field list, see the Public row in
+  `directus/config/collections/permissions.json`). It grants logged-in roles
+  exactly what anonymous visitors already read. The run did not make it: the
+  harness refused to let an agent grant production permissions, which is the
+  correct boundary for access control. After the change: `vp run
+directus:pull`, extend `author-preview.probe.ts` so Author and Student
+  tokens fetch `COVER_FILE_ID` and read `cover.description` (200), run the
+  probes, verify `/kurzy` and `/kurzy/test-kurz-publikovany` as a logged-in
+  Student, tick the two open criteria and set the ticket `done`.
+- What ticket 05 did land (commit `efe3c60`): the „Koncept" badge on the
+  Catalog card, and `author-preview.probe.ts` (Author reads the draft and its
+  outline; Student and anonymous get 200 with an empty list, the observed
+  denial). Author and visitor passes ran in the app; the Student pass is the
+  one blocked.
+- ADR 0004's "no new permissions" consequence does not hold for logged-in
+  readers; amend it in one line once the permission lands.
+- No „Koncept" badge in the Sales Page hero: the extra branch pushed the page
+  template over fallow's cognitive-complexity gate. The Catalog badge and the
+  draft URL carry the preview.
+- Fixture oddity, not this area's: the draft `[TEST]` course and the client's
+  draft course still hold `<p>…</p>` HTML in `description`, which the
+  plain-text teaser renders verbatim on an Author's cards. Replace with plain
+  text in Directus.
+- Accepted limit seen during verification: the login form submitted natively
+  before hydration once, sending credentials as a GET query into the dev log.
+  A `method="post"` on the form in `prihlaseni.vue` would close that; not
+  changed here because it belongs to the auth layer, not this area.
