@@ -74,3 +74,22 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
   `sections.lessons.id` selection used for the lesson count.
 - The desktop grid uses `auto-fill` rather than puleo's `auto-fit`, so a lone
   course keeps its column width instead of stretching across the row.
+
+## 04 — Sales Page
+
+- The purchase button is a static link to `/objednavka/<slug>`, the order
+  route area 04a will own. Until 04a lands the route does not exist, so the
+  dev console logs a Vue Router "No match found" warning on the Sales Page.
+  Expected, not a defect.
+- The site has no `app/error.vue`, so "the site's normal 404" is Nuxt's
+  default English error page. The Sales Page throws the same
+  `createError({ statusCode: 404, fatal: true })` shape as a route miss, so
+  `/kurzy/neexistuje` and `/kurzy/test-kurz-draft` are word-for-word the same
+  as `/neexistuje`. A branded Czech 404 would be a separate `error.vue` task
+  and this page would pick it up automatically.
+- Outline order is applied server-side by the codec (`parseSalesCourse` runs
+  `compareCatalogOrder` on sections and lessons), not by Directus deep sort;
+  covered by `web/tests/unit/sales.test.ts`.
+- The `["published", "draft"]` status list lives once in
+  `web/layers/shop/server/utils/shop-statuses.ts` so both routes filter
+  identically.
