@@ -109,3 +109,24 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
   fails on the proxy's certificate) after the bundles are written. The
   tree-shaking evidence for the warning came from those bundles; the built
   site was not run here. Coolify builds on a normal network.
+
+## 07 — Metadata, structured data, sitemap
+
+- **For a human:** run the published Sales Page through Google's Rich
+  Results Test once it is live; the container could only validate the JSON-LD
+  offline (parse and shape assertions, all passed).
+- **Decide:** sitemap entries carry no `lastmod`, because the Public policy's
+  `course` read fields exclude `date_updated`. Exposing it is a production
+  permission change.
+- No schema.org identity is configured site-wide, so the Course `provider`
+  is an Organization built from `site.name` and `site.url` on the page.
+  Setting `schemaOrg.identity` in `nuxt.config.ts` would take over
+  automatically.
+- The og:image URL is hand-built in `web/layers/shop/shared/utils/og-image.ts`
+  rather than via `$img()`: the `@nuxt/image` Directus provider bakes the
+  Directus URL in at build time, while the page reads the runtime config, and
+  the two could diverge.
+- The bundled Offer resolver adds `priceValidUntil` (end of next year) and
+  defaults `availability` to InStock; accepted.
+- `sitemap.sources` is declared in the shop layer's `nuxt.config.ts`; defu
+  concatenates it with the root config.
