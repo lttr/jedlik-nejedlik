@@ -52,3 +52,25 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 - The fixture cover is a generated 1200×675 gradient PNG, not a photo. The
   `[TEST]` course must be removed or archived before launch (spec, Open
   Concerns).
+
+## 03 — Catalog
+
+- **Check once on a normal network:** Chromium in the cloud container cannot
+  tunnel TLS through the agent proxy, so Directus covers never load in the
+  headless browser there. The anonymous cover permission was proven with
+  `curl` (200) and the visual pass fed the browser those same bytes via a
+  Playwright route (recipe in `run-jedlik-nejedlik`, "Cloud container
+  quirks"). Reload `/kurzy` once outside the container to see the cover load
+  natively.
+- The status filter is `_in: ["published", "draft"]`, not `published` alone:
+  Directus's own policy decides who gets drafts (ADR 0004), and the explicit
+  list keeps any future status (archived) out. `status` rides in the payload
+  for the „Koncept" badge (ticket 05).
+- Directus is asked for `sort: ["sort", "id"]`; Postgres puts nulls last on
+  ascending sort, which matches `compareCatalogOrder`, but the comparator is
+  still applied server-side so the order does not rest on a database default.
+- `CourseCollection.sections` and `SectionCollection.lessons` in the directus
+  layer were widened to accept nested objects, so the SDK types the
+  `sections.lessons.id` selection used for the lesson count.
+- The desktop grid uses `auto-fill` rather than puleo's `auto-fit`, so a lone
+  course keeps its column width instead of stretching across the row.
