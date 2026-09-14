@@ -87,12 +87,15 @@ in v1.
 
 ## 03 — Catalog + sales pages (FP-2, BP-2)
 
-**Status:** not-started
-Course listing + course detail/sales page in the `shop` layer, content from
-Directus. Public, CZK prices, no search (out of scope).
+**Status:** not-started → `../2026-09-14_catalog-sales-pages/`
+Catalog + sales page in the `shop` layer. Hard facts (title, slug, teaser,
+cover, price, section/lesson outline) from Directus; long-form sales copy in
+an optional per-course Vue component. Public, CZK prices, no search (out of
+scope). Renames the auth layer's session concept Student → Account.
 
-- **Depends on:** 00, 01.
-- **Verify:** dummy course renders from staging Directus.
+- **Depends on:** 00, 01, 02 (session-scoped read path, ADR 0004).
+- **Verify:** `[TEST]` fixture course renders anonymously (incl. cover);
+  author sees drafts, student and visitor do not.
 
 ## 04a — Checkout: order + consent + GoPay redirect (FP-3, TO-5)
 

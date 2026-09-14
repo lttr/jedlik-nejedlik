@@ -1,10 +1,10 @@
 # Kurzy
 
 **LMS**:
-The bounded context for selling and delivering Courses — identity, catalog,
+The bounded context for selling and delivering Courses: identity, catalog,
 payment, and test-gated learning. In prose the system is _LMS_ (indeclinable: "v
-LMS", "náš LMS"); user-facing, the area is _Kurzy_ — never show "LMS" to
-Students.
+LMS", "náš LMS"). User-facing, the area is _Kurzy_, and "LMS" never appears in
+front of Students.
 _Avoid_: Course Platform / platforma kurzů (too grand), e-learning, vzdělávací
 portál.
 
@@ -17,16 +17,24 @@ _Avoid_: product (reserve for a future generic sellable), e-shop item.
 A Course delivered as a digital product made of Sections in the LMS, watched at
 the Student's own pace. The LMS terms below (Section, Lesson, Entitlement, …)
 apply to this form.
-_Avoid_: online course (ambiguous — a Live Course can also be online).
+_Avoid_: online course (ambiguous, because a Live Course can also be online).
 
 **Live Course** (Kurz s lektorem):
-A Course led by a lecturer at fixed times — in person ("naživo") or online —
+A Course led by a lecturer at fixed times, in person ("naživo") or online,
 identified by its start date and, in person, its place.
 _Avoid_: course run, cohort, term, turnus.
 
+**Catalog** (Nabídka kurzů):
+The public list of Courses offered for sale.
+_Avoid_: shop, e-shop, offer, listing.
+
+**Sales Page** (Prodejní stránka):
+The public page of a single Course that presents it and starts the purchase.
+_Avoid_: product page, PDP, detail page, landing page.
+
 **Section** (Sekce):
-An ordered group of Lessons within a Course; the unit that carries an Unlock
-Rule.
+An ordered group of Lessons within a Course. It is the unit that carries an
+Unlock Rule.
 _Avoid_: module, chapter.
 
 **Lesson** (Lekce):
@@ -35,7 +43,7 @@ _Avoid_: unit, episode.
 
 **Asset** (Podklad):
 A media file used by a Lesson. A **video Asset** lives in Cloudflare Stream and
-is referenced by its UID; a **static Asset** (image, PDF, document) lives in
+is referenced by its UID. A **static Asset** (image, PDF, document) lives in
 Directus. The distinction matters because video is streamed and access-gated,
 static files are not.
 _Avoid_: file, media, upload.
@@ -54,10 +62,19 @@ _Avoid_: import, sync.
 The per-Section policy that decides when a Student may enter that Section.
 _Avoid_: gate, lock.
 
+**Account** (Účet):
+A Directus identity that can log in to the site, whoever it belongs to: a
+Student or a staff Author. What a session represents.
+_Avoid_: User (ambiguous with Directus staff), login, profile, member.
+
 **Student** (Student):
-The end user who learns; also the buyer. A Directus end-user identity, distinct
-from a Directus staff/admin user.
-_Avoid_: User (ambiguous with Directus staff), customer, account, member.
+The Account that learns and buys. The identity every Order, Entitlement and
+Progress record belongs to.
+_Avoid_: User (ambiguous with Directus staff), customer, member.
+
+**Author** (Autor):
+A staff Account that creates and publishes Course content in Directus.
+_Avoid_: admin (a broader role), editor, lecturer, teacher.
 
 **Order** (Objednávka):
 A Student's request to buy one Course.
