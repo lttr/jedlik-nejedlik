@@ -1,5 +1,5 @@
 // Keeps a live session's Directus tokens (and the cookie's 30-day window)
-// rolling while a Student browses.
+// rolling while an Account browses.
 //
 // `/api/**` is excluded: the auth routes manage the session themselves, and
 // nuxt-auth-utils' internal `/api/_auth/session` request carries the
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    await resolveStudentAccessToken(event)
+    await resolveAccountAccessToken(event)
   } catch {
     // Already logged. A token we could not renew must not take a public page
     // down; the next request tries again.

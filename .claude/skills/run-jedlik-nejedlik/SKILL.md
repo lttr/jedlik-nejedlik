@@ -42,7 +42,10 @@ what the app queued, so nothing real leaves the machine.
 Browser mechanics belong to the `playwright-cli` skill from the browser plugin
 (commands, refs, sessions, output dir). Load it, run its preflight once per
 session, and follow it; this section only adds what is specific to this site
-and names no tool commands on purpose. The CLI is bundled with Vite+.
+and names no tool commands on purpose. The CLI is bundled with Vite+. In a
+root container (Claude Code on the web) Chromium only launches with
+`launchOptions.chromiumSandbox: false` in the global
+`~/.playwright/cli.config.json`; `scripts/cloud-setup.sh` writes it.
 
 **Headless is the default.** Pick the mode by _who consumes the pixels_, not by
 whether a human is at the keyboard — in a CLI session someone is always at the

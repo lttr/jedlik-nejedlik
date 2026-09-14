@@ -5,7 +5,7 @@ import { authMessages } from "../../shared/utils/auth-messages"
 
 // Nitro sends `createError`'s Czech `message` and, as `statusMessage`, the
 // code passed to `authError`. Anything else (network failure, unexpected 500)
-// is not something a Student can act on.
+// is not something an Account can act on.
 const FetchErrorBody = z.object({
   data: z.object({ message: z.string().min(1), statusMessage: z.string().optional() }),
 })

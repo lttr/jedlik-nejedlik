@@ -17,7 +17,7 @@ export function directusErrorCode(error: unknown): string | undefined {
   return parsed.success ? parsed.data.errors[0]?.extensions.code : undefined
 }
 
-// Log the cause for us; show the Student one generic sentence.
+// Log the cause for us; show the Account one generic sentence.
 export function unexpectedAuthError(
   context: string,
   cause: unknown,

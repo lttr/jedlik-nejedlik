@@ -1,11 +1,11 @@
 // Both legs of "forgot password", proxied to Directus's native endpoints.
 // Directus mints the token and sends the e-mail; our code only sees the token
-// when the Student brings it back.
+// when the Account brings it back.
 import { passwordRequest, passwordReset } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-const ResetRequestSchema = z.object({ email: StudentEmail })
+const ResetRequestSchema = z.object({ email: AccountEmail })
 
 const ResetSchema = z.object({ token: z.string().min(1), password: z.string() })
 
@@ -48,7 +48,7 @@ export async function requestPasswordReset(event: H3Event, email: string): Promi
   }
 }
 
-export async function resetStudentPassword(
+export async function resetAccountPassword(
   event: H3Event,
   { token, password }: PasswordReset,
 ): Promise<void> {
@@ -57,7 +57,7 @@ export async function resetStudentPassword(
   } catch (error) {
     const code = directusErrorCode(error)
     // Expired, used and forged tokens need not share a Directus code, and the
-    // Student is told one thing about all of them, so branch on what is *not*
+    // Account is told one thing about all of them, so branch on what is *not*
     // about the link. FAILED_VALIDATION can only mean Directus disagrees with
     // PASSWORD_MIN_LENGTH: `readPasswordReset` already checked the length.
     if (code === "FAILED_VALIDATION") {

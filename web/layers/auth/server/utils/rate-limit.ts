@@ -86,7 +86,7 @@ export const PASSWORD_REQUEST_RATE_LIMIT: RateLimit = {
   message: authMessages.tooManyResetRequests,
 }
 
-// Needs an unguessable token and sends nothing; only has to absorb a Student
+// Needs an unguessable token and sends nothing; only has to absorb an Account
 // mistyping a too-short password.
 export const PASSWORD_RESET_RATE_LIMIT: RateLimit = {
   bucket: "password-reset",

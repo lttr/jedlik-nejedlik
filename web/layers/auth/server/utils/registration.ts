@@ -5,10 +5,10 @@ import { registerUser, registerUserVerify } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import type { Credentials } from "../../shared/types/student"
+import type { Credentials } from "../../shared/types/account"
 
 const RegistrationSchema = z.object({
-  email: StudentEmail,
+  email: AccountEmail,
   password: z.string(),
 })
 
@@ -36,6 +36,9 @@ export async function readVerificationToken(event: H3Event): Promise<string> {
 
 // Directus answers 204 whether the address was free or already taken, so
 // accounts stay unenumerable; the page's confirmation is written for both.
+// Still `registerStudent` after the Account rename: the instance's
+// `public_registration_role` is the Student role, so what registration
+// creates is a Student (GLOSSARY.md); Authors are made in the Data Studio.
 export async function registerStudent(event: H3Event, registration: Credentials): Promise<void> {
   try {
     await getDirectusAnonymousServerClient(event).request(
@@ -54,8 +57,8 @@ export async function registerStudent(event: H3Event, registration: Credentials)
 }
 
 // Expired, already used and forged tokens all come back as 403 INVALID_TOKEN
-// (probe), which is one message to the Student.
-export async function verifyStudentEmail(event: H3Event, token: string): Promise<void> {
+// (probe), which is one message to the Account.
+export async function verifyAccountEmail(event: H3Event, token: string): Promise<void> {
   try {
     await getDirectusAnonymousServerClient(event).request(registerUserVerify(token))
   } catch (error) {

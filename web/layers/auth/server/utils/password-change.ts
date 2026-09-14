@@ -1,11 +1,11 @@
-// The write goes through the Student's own Directus session: the app holds no
+// The write goes through the Account's own Directus session: the app holds no
 // other credential, and the Student policy allows updating only `password` on
 // the own `directus_users` row.
 import { readMe, updateUser } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import type { PasswordChange } from "../../shared/types/student"
+import type { PasswordChange } from "../../shared/types/account"
 
 const PasswordChangeSchema = z.object({
   currentPassword: z.string().min(1),
@@ -26,16 +26,16 @@ export async function readPasswordChange(event: H3Event): Promise<PasswordChange
 // Directus deletes every session of a user whose password changed, sparing
 // only the one named in the access token's `session` claim, which only
 // cookie-mode logins carry. Ours are `mode: "json"`, so the change signs the
-// Student out everywhere, this browser included; the re-login below keeps it
+// Account out everywhere, this browser included; the re-login below keeps it
 // signed in. Asserted by the probe.
-export async function changeStudentPassword(event: H3Event, change: PasswordChange): Promise<void> {
-  const { student, client } = await requireStudentDirectusClient(event)
+export async function changeAccountPassword(event: H3Event, change: PasswordChange): Promise<void> {
+  const { account, client } = await requireAccountDirectusClient(event)
 
   // Directus has no "verify password" endpoint, so the check is a real login.
   // A session cookie alone must not be enough to take an account over.
-  const proof = await authenticateStudent(
+  const proof = await authenticateAccount(
     event,
-    { email: student.email, password: change.currentPassword },
+    { email: account.email, password: change.currentPassword },
     authMessages.passwordChangeUnavailable,
   )
   if (proof === null) {
@@ -60,12 +60,12 @@ export async function changeStudentPassword(event: H3Event, change: PasswordChan
   }
 
   try {
-    await logInStudent(event, { email: student.email, password: change.newPassword })
+    await logInAccount(event, { email: account.email, password: change.newPassword })
   } catch (error) {
     // The password did change; only this session failed to re-establish. Its
     // refresh token is one Directus just deleted, so drop it.
     console.error("[auth] Could not re-issue a session after a password change", error)
-    await dropStudentSession(event)
+    await dropAccountSession(event)
     throw authError(502, "auth_unavailable", authMessages.passwordChangedLogInAgain)
   }
 }

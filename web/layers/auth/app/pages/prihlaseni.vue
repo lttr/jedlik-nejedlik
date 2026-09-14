@@ -57,7 +57,7 @@ const route = useRoute()
 const { logIn } = useAuthActions()
 const { pending, errorMessage, submit } = useAuthForm()
 
-// Both /overeni-emailu and /obnova-hesla send the Student here and say why.
+// Both /overeni-emailu and /obnova-hesla send the Account here and say why.
 const notice = computed(() => {
   if (route.query[EMAIL_VERIFIED_QUERY] !== undefined) {
     return authMessages.emailVerified
