@@ -8,10 +8,7 @@ export interface CatalogOrderKeys {
 }
 
 export function compareCatalogOrder(a: CatalogOrderKeys, b: CatalogOrderKeys): number {
-  const bySort = (a.sort ?? Number.POSITIVE_INFINITY) - (b.sort ?? Number.POSITIVE_INFINITY)
-  // Infinity - Infinity is NaN, which is the "both unset" tie.
-  if (Number.isNaN(bySort) || bySort === 0) {
-    return a.id - b.id
-  }
-  return bySort
+  const aSort = a.sort ?? Number.POSITIVE_INFINITY
+  const bSort = b.sort ?? Number.POSITIVE_INFINITY
+  return aSort === bSort ? a.id - b.id : aSort - bSort
 }

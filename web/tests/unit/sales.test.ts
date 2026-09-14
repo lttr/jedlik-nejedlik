@@ -3,8 +3,10 @@ import { describe, expect, it } from "vitest"
 import { parseSalesCourse } from "../../layers/shop/shared/utils/sales"
 
 // A course row as Directus returns it for the Sales Page query: the public
-// Course columns plus status and the expanded outline. Rows arrive in
-// whatever order the database chose; the codec owns the outline order.
+// Course columns and the expanded outline. `status` rides along because the
+// query filters on it; the codec drops it, the Sales Page shows no draft
+// marker. Rows arrive in whatever order the database chose; the codec owns
+// the outline order.
 function row(overrides: Record<string, unknown> = {}): unknown {
   return {
     id: 1,
@@ -25,9 +27,10 @@ function lesson(id: number, sort: number | null, type: "video" | "text" = "video
 }
 
 describe("parseSalesCourse", () => {
-  it("keeps the hero fields and the status", () => {
+  it("keeps the hero fields and drops the status", () => {
     const course = parseSalesCourse(row())
-    expect(course).toMatchObject({ id: 1, status: "published", slug: "kurz", price_czk: 1490 })
+    expect(course).toMatchObject({ id: 1, slug: "kurz", price_czk: 1490 })
+    expect(course).not.toHaveProperty("status")
     expect(course.sections).toEqual([])
   })
 

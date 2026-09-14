@@ -10,14 +10,7 @@ export default defineEventHandler(async (event): Promise<SalesCourse> => {
   const rows = await client.request(
     readItems("course", {
       fields: [
-        "id",
-        "status",
-        "sort",
-        "title",
-        "slug",
-        "description",
-        "price_czk",
-        { cover: ["id", "width", "height", "description"] },
+        ...COURSE_PUBLIC_FIELDS,
         {
           sections: [
             "id",

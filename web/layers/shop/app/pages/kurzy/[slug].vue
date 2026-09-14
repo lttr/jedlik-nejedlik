@@ -2,15 +2,12 @@
   <PageWrapper>
     <article v-if="course" class="sales-page p-flow">
       <header class="hero">
-        <NuxtImg
+        <CourseCover
           v-if="course.cover"
           class="cover"
+          :image="course.cover"
           sizes="90vw md:640px"
           fetchpriority="high"
-          :src="course.cover.id"
-          :width="course.cover.width"
-          :height="course.cover.height"
-          :alt="course.cover.description ?? ''"
         />
         <div class="hero-body p-flow">
           <h1>{{ course.title }}</h1>
@@ -68,20 +65,24 @@ const directusUrl = useRuntimeConfig().public.directusUrl
 // Absolute on purpose: the Course resolver leaves `url` as given, unlike the
 // breadcrumb and offer ones, and a crawler wants the canonical form.
 const courseUrl = new URL(`/kurzy/${slug}`, siteConfig.url).href
-const ogImage = (): string | undefined =>
-  course.value?.cover ? courseOgImageUrl(directusUrl, course.value.cover.id) : undefined
+// Computed, not a function: the same URL is asked for six times per head
+// evaluation (og, twitter, both dimensions, the schema.org image), and it is
+// only rebuilt when the Course itself changes.
+const ogImage = computed(() =>
+  course.value?.cover ? courseOgImageUrl(directusUrl, course.value.cover.id) : undefined,
+)
 
 useSeoMeta({
   title: () => course.value?.title ?? "Kurz",
   description: () => course.value?.description,
   ogTitle: () => course.value?.title,
   ogDescription: () => course.value?.description,
-  ogImage,
-  ogImageWidth: () => (ogImage() ? OG_IMAGE_WIDTH : undefined),
-  ogImageHeight: () => (ogImage() ? OG_IMAGE_HEIGHT : undefined),
+  ogImage: () => ogImage.value,
+  ogImageWidth: () => (ogImage.value === undefined ? undefined : OG_IMAGE_WIDTH),
+  ogImageHeight: () => (ogImage.value === undefined ? undefined : OG_IMAGE_HEIGHT),
   ogType: "website",
   twitterCard: "summary_large_image",
-  twitterImage: ogImage,
+  twitterImage: () => ogImage.value,
 })
 
 // A Course entity with its offer, never a Product as well (spec). No identity
@@ -93,7 +94,7 @@ useSchemaOrg(
     if (current === undefined) {
       return []
     }
-    const imageUrl = ogImage()
+    const imageUrl = ogImage.value
     const image =
       imageUrl === undefined
         ? undefined
@@ -144,11 +145,6 @@ useSchemaOrg(
 }
 
 .cover {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
   border-radius: var(--radius-3);
 }
 

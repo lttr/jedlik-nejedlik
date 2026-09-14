@@ -1,3 +1,5 @@
+import { NON_BREAKING_SPACE } from "./typography"
+
 // The one place a price becomes text (spec, "Price"): a price typed into
 // copy or a component is a defect. `price_czk` is whole koruny, so there is
 // nothing to round.
@@ -7,8 +9,6 @@
 // space would let a line break inside „1 490 Kč". Hand-rolled rather than
 // `Intl.NumberFormat("cs-CZ")` so the output does not depend on the ICU data
 // of whichever runtime renders it.
-const NON_BREAKING_SPACE = " "
-
 export function formatPriceCzk(priceCzk: number): string {
   const grouped = String(priceCzk).replaceAll(/\B(?=(\d{3})+(?!\d))/g, NON_BREAKING_SPACE)
   return `${grouped}${NON_BREAKING_SPACE}Kč`
