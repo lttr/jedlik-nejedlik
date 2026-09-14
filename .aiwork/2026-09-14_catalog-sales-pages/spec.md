@@ -1,6 +1,5 @@
 ---
-status: blocked
-blocked_by: "ticket 05: Directus file-read permission for the Student and Autor policies (implementation-notes.md)"
+status: done
 references:
   - "Epic: ../2026-06-09_kurzy-platforma/areas.md"
   - "ADR 0004: ../../docs/adr/0004-course-pages-read-through-nitro.md"
