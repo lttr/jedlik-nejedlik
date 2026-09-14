@@ -29,6 +29,16 @@ useSeoMeta({
 const key = "catalog"
 const { data: courses, error } = await useFetch("/api/courses", { key, default: () => [] })
 watchAsyncDataError(key, error)
+
+// The bespoke registry is checked here, the one place that already holds
+// every Course slug, so the check costs no request. Development only: a
+// production build drops the block with `import.meta.dev`.
+if (import.meta.dev) {
+  const orphans = orphanSalesContentSlugs(courses.value.map((course) => course.slug))
+  if (orphans.length > 0) {
+    console.warn(`[sales-content] registry keys with no Course behind them: ${orphans.join(", ")}`)
+  }
+}
 </script>
 
 <style scoped>

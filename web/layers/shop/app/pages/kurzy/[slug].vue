@@ -26,9 +26,10 @@
         </div>
       </header>
 
-      <!-- bespoke: ticket 06 mounts the per-Course sales component here,
-           between the hero and the outline. The skeleton keeps everything
-           else (spec, "Where content lives"). -->
+      <!-- The bespoke block: hand-built copy for Courses that have some,
+           nothing for the rest. The skeleton keeps everything else (spec,
+           "Where content lives"). -->
+      <SalesBespoke :slug />
 
       <SalesOutline :sections="course.sections" />
     </article>
