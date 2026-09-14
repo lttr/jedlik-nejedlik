@@ -37,13 +37,13 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 
 ## 02 — Directus teaser, cover folder, fixture
 
-- **Needs the site owner:** an Author cannot use the cover picker as intended.
-  The Autor policy's `directus_files` create rule pins uploads to „Materiály
-  kurzů" by UUID and its read rule covers only that folder, so an Author can
-  neither upload into nor browse `Public/kurzy`. Today a cover has to be
-  uploaded by an admin or Redaktor. Widening the Autor policy is a
-  production permission change; decide whether Authors get read + create on
-  `Public/kurzy` (`directus/config/collections/permissions.json`, Autor rows).
+- **Resolved (site owner).** An Author could not use the cover picker: create
+  was pinned to „Materiály kurzů" and neither files nor folders were readable
+  under `Public`. The Autor policy now also writes in `Public/kurzy` — create
+  validates against both folders by UUID, update and delete match the cover
+  folder — and reads the `Public` folder tree, so an Author owns a course's
+  cover as well as its materials. `author.probe.ts` covers the round trip and
+  still asserts a foreign folder is refused.
 - No Public-policy change was needed: its files read rule already matches
   `folder.parent.name icontains "Public"`, which covers the new child folder.
 - The new fixture lessons carry a placeholder `body` beyond the ticket's
@@ -112,9 +112,10 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 - **For a human:** run the published Sales Page through Google's Rich
   Results Test once it is live; the container could only validate the JSON-LD
   offline (parse and shape assertions, all passed).
-- **Decide:** sitemap entries carry no `lastmod`, because the Public policy's
-  `course` read fields exclude `date_updated`. Exposing it is a production
-  permission change.
+- Sitemap entries carry no `lastmod`: the Public policy's `course` read fields
+  exclude `date_updated`. Decided to leave it that way — `lastmod` is only a
+  crawl hint, and exposing the field would tell anyone when a page was last
+  edited.
 - No schema.org identity is configured site-wide, so the Course `provider`
   is an Organization built from `site.name` and `site.url` on the page.
   Setting `schemaOrg.identity` in `nuxt.config.ts` would take over
