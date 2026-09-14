@@ -1325,7 +1325,10 @@
     },
     "validation": {
       "folder": {
-        "_eq": "6173b74f-9990-41a2-b931-ff591ee6a5ed"
+        "_in": [
+          "6173b74f-9990-41a2-b931-ff591ee6a5ed",
+          "59ffe3f9-4f57-44c4-8b01-2f019979d425"
+        ]
       }
     }
   },
@@ -1352,6 +1355,11 @@
                 "_eq": "Materiály kurzů"
               }
             }
+          }
+        },
+        {
+          "folder": {
+            "_eq": "59ffe3f9-4f57-44c4-8b01-2f019979d425"
           }
         }
       ]
@@ -1452,6 +1460,11 @@
           }
         },
         {
+          "folder": {
+            "_eq": "59ffe3f9-4f57-44c4-8b01-2f019979d425"
+          }
+        },
+        {
           "uploaded_by": {
             "_eq": "$CURRENT_USER"
           }
@@ -1480,6 +1493,18 @@
           "parent": {
             "name": {
               "_eq": "Materiály kurzů"
+            }
+          }
+        },
+        {
+          "name": {
+            "_eq": "Public"
+          }
+        },
+        {
+          "parent": {
+            "name": {
+              "_eq": "Public"
             }
           }
         }

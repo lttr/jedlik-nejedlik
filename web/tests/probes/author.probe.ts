@@ -2,6 +2,7 @@ import { afterAll, describe, expect, it } from "vitest"
 import {
   ENTITLED_ID,
   MATERIALS_FOLDER_ID,
+  PUBLIC_COURSES_FOLDER_ID,
   PUBLIC_FOLDER_ID,
   PUBLISHED_COURSE_ID,
   UNENTITLED_ID,
@@ -213,6 +214,46 @@ describe("author content management", () => {
     expect(item(uploaded).folder).toBe(MATERIALS_FOLDER_ID)
     expect((await probeSend("DELETE", `/files/${fileId}`, undefined, AUTHOR)).status).toBe(204)
     forget(leftovers.files, fileId)
+  })
+
+  it("owns a course cover in Public/kurzy end to end", async () => {
+    // The second folder the create validation allows, so an author can finish
+    // a course without an admin uploading its cover.
+    const uploaded = await probeUpload(
+      AUTHOR,
+      { name: "test-autor-probe-cover.txt", content: "cover", type: "text/plain" },
+      { title: "[TEST] Autor probe cover", folder: PUBLIC_COURSES_FOLDER_ID },
+    )
+    expect(uploaded.status).toBe(200)
+    const coverId = item(uploaded).id as string
+    leftovers.files.push(coverId)
+    expect(item(uploaded).folder).toBe(PUBLIC_COURSES_FOLDER_ID)
+
+    const described = await probeSend(
+      "PATCH",
+      `/files/${coverId}`,
+      { description: "[TEST] popis obálky" },
+      AUTHOR,
+    )
+    expect(described.status).toBe(200)
+    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
+    forget(leftovers.files, coverId)
+  })
+
+  it("replaces a cover someone else uploaded", async () => {
+    const admins = await probeUpload(
+      ADMIN,
+      { name: "test-admin-cover.txt", content: "admin cover", type: "text/plain" },
+      { folder: PUBLIC_COURSES_FOLDER_ID },
+    )
+    expect(admins.status).toBe(200)
+    const coverId = item(admins).id as string
+    leftovers.files.push(coverId)
+    expect(
+      (await probeSend("PATCH", `/files/${coverId}`, { title: "[TEST] přepsáno" }, AUTHOR)).status,
+    ).toBe(200)
+    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
+    forget(leftovers.files, coverId)
   })
 
   it("refuses an upload naming a folder outside the materials folder", async () => {

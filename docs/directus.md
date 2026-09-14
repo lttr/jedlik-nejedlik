@@ -91,20 +91,26 @@ The Public policy reads any file in the **Public** folder tree (that folder or
 a direct child, matched by name). A session never gets that policy, so the
 Student and Autor policies each carry their own copy of the rule — a logged-in
 reader sees exactly what an anonymous one does. Without it a Course cover is
-unreadable and the shop routes 500 on `cover.description`.
+unreadable and the shop routes 500 on `cover.description`. The Autor policy
+also reads `directus_folders` across that tree, which is what lets the cover
+picker navigate to `Public/kurzy`.
 
-The Autor policy is additionally scoped to the **Materiály kurzů** folder for
-writes, so an author cannot reach marketing assets:
+The Autor policy writes in two places, so an author owns a whole course —
+materials and cover — without reaching marketing assets:
 
-- read / update / delete match the folder **by name**, plus one level of
-  subfolders
-- create carries a preset and a validation pinning uploads to that folder **by
-  UUID**, so an upload with no folder chosen lands there and a foreign folder is
-  refused with `400 FAILED_VALIDATION`
+- **Materiály kurzů**: read / update / delete match the folder **by name**,
+  plus one level of subfolders
+- **Public/kurzy**: update and delete match it **by UUID**, so an author can
+  replace or remove a cover someone else uploaded
+- create validates `folder` against both folders **by UUID** and presets it to
+  Materiály kurzů, so an upload with no folder chosen lands there and any
+  other folder is refused with `400 FAILED_VALIDATION`
 
-The name-vs-UUID split is deliberate but inconsistent: renaming the folder
-breaks the first three rules and not the fourth, and an admin adding a subfolder
-would allow reads there while blocking uploads.
+Create must use UUIDs: validation on create sees a flat payload, where `folder`
+is a raw UUID and a relational filter never matches (see above). The
+name-vs-UUID split elsewhere is deliberate but inconsistent — renaming
+Materiály kurzů breaks its three rules and not the create one, and an admin
+adding a subfolder there would allow reads while blocking uploads.
 
 ## Permission probes
 
