@@ -1,4 +1,4 @@
-// Where a Student ends up after logging in without an origin.
+// Where an Account ends up after logging in without an origin.
 export const DEFAULT_AUTH_REDIRECT = "/muj-ucet"
 
 // Landing page of the verification e-mail. Shared because the server builds
@@ -8,7 +8,7 @@ export const VERIFY_EMAIL_PATH = "/overeni-emailu"
 // Landing page of the password-reset e-mail, shared for the same reason.
 export const RESET_PASSWORD_PATH = "/obnova-hesla"
 
-// Query flags the e-mail pages set when sending the Student to the login
+// Query flags the e-mail pages set when sending the Account to the login
 // form, so it can say why they are there.
 export const EMAIL_VERIFIED_QUERY = "overeno"
 

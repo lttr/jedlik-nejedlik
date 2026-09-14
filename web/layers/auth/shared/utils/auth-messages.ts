@@ -17,7 +17,7 @@ export const authMessages = {
   tooManyRegistrations: "Příliš mnoho pokusů o registraci. Zkuste to prosím za chvíli.",
   registrationUnavailable: "Registrace je teď nedostupná. Zkuste to prosím za chvíli.",
 
-  // E-mail verification. A dead link is the one place a Student can be
+  // E-mail verification. A dead link is the one place an Account can be
   // stranded, so the message says what to do next.
   verificationFailed:
     "Odkaz pro ověření e-mailu je neplatný, už byl použit, nebo mu vypršela platnost.",
@@ -39,7 +39,7 @@ export const authMessages = {
 
   checkSpam: "Pokud zpráva do pár minut nedorazí, mrkněte se prosím i do spamu.",
 
-  // Change from the account page. The Student is already logged in, so there
+  // Change from the account page. The Account is already logged in, so there
   // is no account to enumerate and the wrong current password can be named.
   currentPasswordWrong: "Současné heslo není správné.",
   passwordChangedHere: "Heslo bylo změněno. Na ostatních zařízeních jsme vás odhlásili.",

@@ -3,7 +3,7 @@ import { z } from "zod"
 
 // The boundary that has to hold: every address reaches Directus in this one
 // shape (see normaliseEmail), whatever the browser sent.
-export const StudentEmail = z.string().transform(normaliseEmail).pipe(z.email())
+export const AccountEmail = z.string().transform(normaliseEmail).pipe(z.email())
 
 // Each route picks its own error for a malformed body, so the reply reveals no
 // more than that route's genuine failure would.

@@ -1,16 +1,16 @@
-import type { Student, StudentSecrets } from "./student"
+import type { Account, AccountSecrets } from "./account"
 
 // nuxt-auth-utils' key names: `user` is serialised to the client, `secure`
 // never leaves the server. Member-by-member because
-// `interface User extends Student {}` is an empty object type the lint bans.
+// `interface User extends Account {}` is an empty object type the lint bans.
 declare module "#auth-utils" {
   interface User {
-    email: Student["email"]
+    email: Account["email"]
   }
 
   interface SecureSessionData {
-    accessToken: StudentSecrets["accessToken"]
-    refreshToken: StudentSecrets["refreshToken"]
-    accessTokenExpiresAt: StudentSecrets["accessTokenExpiresAt"]
+    accessToken: AccountSecrets["accessToken"]
+    refreshToken: AccountSecrets["refreshToken"]
+    accessTokenExpiresAt: AccountSecrets["accessTokenExpiresAt"]
   }
 }

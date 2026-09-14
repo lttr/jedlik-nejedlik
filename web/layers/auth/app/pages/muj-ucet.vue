@@ -2,7 +2,7 @@
   <PageWrapper>
     <AuthPanel title="Můj účet">
       <p>
-        Jste přihlášeni jako <strong>{{ student?.email }}</strong>
+        Jste přihlášeni jako <strong>{{ account?.email }}</strong>
       </p>
 
       <button type="button" class="p-button" :disabled="logOutPending" @click="onLogOut">
@@ -45,7 +45,7 @@ definePageMeta({ middleware: "auth" })
 
 useHead({ title: "Můj účet" })
 
-const { student } = useStudent()
+const { account } = useAccount()
 const { logOut, changePassword } = useAuthActions()
 
 // Two forms, two pending/error pairs: a failed password change must not blank

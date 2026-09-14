@@ -2,30 +2,30 @@
 // names stop here. Keep new uses of the module in this file: the lint
 // exemption in vite.config.ts is scoped to it.
 import type { H3Event } from "h3"
-import type { Student, StudentSecrets } from "../../shared/types/student"
+import type { Account, AccountSecrets } from "../../shared/types/account"
 
-export interface StoredStudentSession {
-  student: Student | undefined
-  secrets: StudentSecrets | undefined
+export interface StoredAccountSession {
+  account: Account | undefined
+  secrets: AccountSecrets | undefined
 }
 
-export async function readStudentSession(event: H3Event): Promise<StoredStudentSession> {
+export async function readAccountSession(event: H3Event): Promise<StoredAccountSession> {
   const { user, secure } = await getUserSession(event)
-  return { student: user, secrets: secure }
+  return { account: user, secrets: secure }
 }
 
 // `replaceUserSession`, not `setUserSession`: h3 derives the sealed cookie's
 // expiry from the session's creation time, so only replacing on every token
 // refresh makes the 30 days slide instead of counting down from login.
-export async function writeStudentSession(
+export async function writeAccountSession(
   event: H3Event,
-  student: Student,
-  secrets: StudentSecrets,
+  account: Account,
+  secrets: AccountSecrets,
 ): Promise<void> {
-  await replaceUserSession(event, { user: student, secure: secrets })
+  await replaceUserSession(event, { user: account, secure: secrets })
 }
 
-export async function dropStudentSession(event: H3Event): Promise<void> {
+export async function dropAccountSession(event: H3Event): Promise<void> {
   await clearUserSession(event)
 
   // Also strip the cookie from the incoming request: during SSR the module

@@ -1,4 +1,4 @@
-import type { Credentials, PasswordChange } from "../../shared/types/student"
+import type { Credentials, PasswordChange } from "../../shared/types/account"
 
 export interface AuthActions {
   logIn: (credentials: Credentials) => Promise<void>
@@ -13,7 +13,7 @@ export interface AuthActions {
 // The only way the app talks to the auth routes. Credentials go out, a sealed
 // cookie comes back; no Directus token ever touches the browser (ADR 0002).
 export function useAuthActions(): AuthActions {
-  const { refresh } = useStudent()
+  const { refresh } = useAccount()
 
   return {
     async logIn(credentials) {
@@ -27,7 +27,7 @@ export function useAuthActions(): AuthActions {
     },
 
     // Neither ends logged in: the account is Unverified until the e-mailed
-    // link is followed, and the Student logs in afterwards.
+    // link is followed, and the Account logs in afterwards.
     async register(registration) {
       await $fetch("/api/auth/register", { method: "POST", body: registration })
     },

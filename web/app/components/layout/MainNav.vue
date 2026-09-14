@@ -22,7 +22,7 @@
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
         <!-- Auth is not launched yet: the sign-in entry point stays hidden, so only
-             an already-logged-in student sees the account link. -->
+             an already-logged-in Account sees the account link. -->
         <li v-if="loggedIn">
           <NuxtLink class="link" to="/muj-ucet">Můj účet</NuxtLink>
         </li>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-const { loggedIn } = useStudent()
+const { loggedIn } = useAccount()
 </script>
 
 <style scoped>

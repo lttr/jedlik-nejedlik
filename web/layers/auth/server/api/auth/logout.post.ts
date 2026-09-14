@@ -1,4 +1,4 @@
 export default defineEventHandler(async (event) => {
-  await logOutStudent(event)
+  await logOutAccount(event)
   sendNoContent(event)
 })

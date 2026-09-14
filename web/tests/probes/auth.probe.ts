@@ -264,7 +264,7 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   })
 
   it("stores the address verbatim, so the app has to normalise it first", async () => {
-    // Why StudentEmail lowercases: the mixed-case form would be a second row.
+    // Why AccountEmail lowercases: the mixed-case form would be a second row.
     const email = throwawayEmail("case")
     expect((await register(email.toUpperCase(), generatePassword())).status).toBe(204)
     const stored = await findUser(email.toUpperCase())
