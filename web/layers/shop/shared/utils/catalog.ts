@@ -11,9 +11,10 @@ export interface CatalogCourse extends Course {
   lessonCount: number
 }
 
-// The columns the Catalog query expands beyond `CourseSchema`. Lessons are
-// fetched as bare ids (`sections.lessons.id`), the cheapest shape the SDK
-// offers for a count in the same request as the course.
+// A whole Catalog row: the public Course columns plus the two the Catalog
+// query adds. Lessons are fetched as bare ids (`sections.lessons.id`), the
+// cheapest shape the SDK offers for a count in the same request as the
+// course.
 const CatalogRowSchema = CourseSchema.and(
   z.object({
     status: CourseStatusSchema,

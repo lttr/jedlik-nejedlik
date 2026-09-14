@@ -216,17 +216,35 @@ describe("author content management", () => {
     forget(leftovers.files, fileId)
   })
 
+  // Upload into the cover folder and track the row, so a failed assertion
+  // still leaves the afterAll sweep something to remove.
+  async function uploadCover(token: string, name: string, fields: Record<string, string> = {}) {
+    const response = await probeUpload(
+      token,
+      { name, content: "cover", type: "text/plain" },
+      { folder: PUBLIC_COURSES_FOLDER_ID, ...fields },
+    )
+    expect(response.status).toBe(200)
+    const coverId = item(response).id as string
+    leftovers.files.push(coverId)
+    return { response, coverId }
+  }
+
+  // The author removing the cover again: both the last assertion of a cover
+  // test and its cleanup, since a passing delete is what empties the row.
+  async function authorDeletesCover(coverId: string) {
+    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
+    forget(leftovers.files, coverId)
+  }
+
   it("owns a course cover in Public/kurzy end to end", async () => {
     // The second folder the create validation allows, so an author can finish
     // a course without an admin uploading its cover.
-    const uploaded = await probeUpload(
+    const { response: uploaded, coverId } = await uploadCover(
       AUTHOR,
-      { name: "test-autor-probe-cover.txt", content: "cover", type: "text/plain" },
-      { title: "[TEST] Autor probe cover", folder: PUBLIC_COURSES_FOLDER_ID },
+      "test-autor-probe-cover.txt",
+      { title: "[TEST] Autor probe cover" },
     )
-    expect(uploaded.status).toBe(200)
-    const coverId = item(uploaded).id as string
-    leftovers.files.push(coverId)
     expect(item(uploaded).folder).toBe(PUBLIC_COURSES_FOLDER_ID)
 
     const described = await probeSend(
@@ -236,24 +254,15 @@ describe("author content management", () => {
       AUTHOR,
     )
     expect(described.status).toBe(200)
-    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
-    forget(leftovers.files, coverId)
+    await authorDeletesCover(coverId)
   })
 
   it("replaces a cover someone else uploaded", async () => {
-    const admins = await probeUpload(
-      ADMIN,
-      { name: "test-admin-cover.txt", content: "admin cover", type: "text/plain" },
-      { folder: PUBLIC_COURSES_FOLDER_ID },
-    )
-    expect(admins.status).toBe(200)
-    const coverId = item(admins).id as string
-    leftovers.files.push(coverId)
+    const { coverId } = await uploadCover(ADMIN, "test-admin-cover.txt")
     expect(
       (await probeSend("PATCH", `/files/${coverId}`, { title: "[TEST] přepsáno" }, AUTHOR)).status,
     ).toBe(200)
-    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
-    forget(leftovers.files, coverId)
+    await authorDeletesCover(coverId)
   })
 
   it("refuses an upload naming a folder outside the materials folder", async () => {
