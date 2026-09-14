@@ -57,7 +57,75 @@ if (error.value !== undefined) {
   })
 }
 
-useHead({ title: () => course.value?.title ?? "Kurz" })
+// Head and structured data derive from the Course itself (spec, "Metadata
+// and structured data"): no SEO fields on `course`. The site's title template
+// and canonical link come from nuxt-seo-utils' defaults, so only what is
+// specific to this Course is set here. The og:image is the cover at 1200×630;
+// without a cover the site-wide one from `app.vue` stays. Getters, so a
+// refetched Course updates the tags too.
+const siteConfig = useSiteConfig()
+const directusUrl = useRuntimeConfig().public.directusUrl
+// Absolute on purpose: the Course resolver leaves `url` as given, unlike the
+// breadcrumb and offer ones, and a crawler wants the canonical form.
+const courseUrl = new URL(`/kurzy/${slug}`, siteConfig.url).href
+const ogImage = (): string | undefined =>
+  course.value?.cover ? courseOgImageUrl(directusUrl, course.value.cover.id) : undefined
+
+useSeoMeta({
+  title: () => course.value?.title ?? "Kurz",
+  description: () => course.value?.description,
+  ogTitle: () => course.value?.title,
+  ogDescription: () => course.value?.description,
+  ogImage,
+  ogImageWidth: () => (ogImage() ? OG_IMAGE_WIDTH : undefined),
+  ogImageHeight: () => (ogImage() ? OG_IMAGE_HEIGHT : undefined),
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterImage: ogImage,
+})
+
+// A Course entity with its offer, never a Product as well (spec). No identity
+// is configured for schema.org, so the provider is the site itself, from the
+// same site config that names it everywhere else.
+useSchemaOrg(
+  computed(() => {
+    const current = course.value
+    if (current === undefined) {
+      return []
+    }
+    const imageUrl = ogImage()
+    const image =
+      imageUrl === undefined
+        ? undefined
+        : defineImage({ url: imageUrl, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT })
+    const offers =
+      current.price_czk === undefined
+        ? undefined
+        : defineOffer({
+            price: current.price_czk,
+            priceCurrency: "CZK",
+            url: courseUrl,
+            availability: "InStock",
+          })
+    return [
+      defineCourse({
+        name: current.title,
+        description: current.description ?? "",
+        url: courseUrl,
+        image,
+        provider: { name: siteConfig.name, url: siteConfig.url },
+        offers,
+      }),
+      defineBreadcrumb({
+        itemListElement: [
+          { name: "Domů", item: "/" },
+          { name: "Kurzy", item: "/kurzy" },
+          { name: current.title },
+        ],
+      }),
+    ]
+  }),
+)
 </script>
 
 <style scoped>
