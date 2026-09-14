@@ -11,6 +11,10 @@
       :alt="course.cover.description ?? ''"
     />
     <div class="body p-flow">
+      <!-- Only an Author's own session ever carries a draft here (ADR 0004);
+           the card marks it and otherwise treats it like any other Course,
+           sort position included. -->
+      <span v-if="course.status === 'draft'" class="draft-badge">Koncept</span>
       <h2 class="title">{{ course.title }}</h2>
       <p v-if="course.description" class="teaser">{{ course.description }}</p>
       <p class="meta">
@@ -59,6 +63,19 @@ defineProps<{
 .body {
   --flow-space: var(--space-2);
   padding: var(--space-5);
+}
+
+.draft-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-round);
+  background: var(--brand-color);
+  color: var(--text-color-1-inverse);
+  font-size: var(--font-size--2);
+  font-weight: var(--font-weight-label);
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .title {
