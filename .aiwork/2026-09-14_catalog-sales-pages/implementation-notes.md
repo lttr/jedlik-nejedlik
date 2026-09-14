@@ -55,13 +55,10 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 
 ## 03 — Catalog
 
-- **Check once on a normal network:** Chromium in the cloud container cannot
-  tunnel TLS through the agent proxy, so Directus covers never load in the
-  headless browser there. The anonymous cover permission was proven with
-  `curl` (200) and the visual pass fed the browser those same bytes via a
-  Playwright route (recipe in `run-jedlik-nejedlik`, "Cloud container
-  quirks"). Reload `/kurzy` once outside the container to see the cover load
-  natively.
+- Covers never loaded in the cloud container's Chromium (no TLS tunnel
+  through the agent proxy), so the cover permission was proven there with
+  `curl` and a Playwright route. Since checked on a normal network: `/kurzy`
+  loads the cover natively at 480×270.
 - The status filter is `_in: ["published", "draft"]`, not `published` alone:
   Directus's own policy decides who gets drafts (ADR 0004), and the explicit
   list keeps any future status (archived) out. `status` rides in the payload
@@ -131,36 +128,27 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 - `sitemap.sources` is declared in the shop layer's `nuxt.config.ts`; defu
   concatenates it with the root config.
 
-## 05 — Author draft preview (chain stopped here)
+## 05 — Author draft preview
 
-- **Blocks shipping the area; needs the site owner:** a logged-in Student
-  cannot use the shop pages at all. A session reads Directus with its own
-  policy only (the Public policy does not apply to authenticated requests),
-  and the Student policy's `directus_files` read rule covers only entitled
-  lesson materials, with a field list lacking `description`. Both shop routes
-  select `cover.{id,width,height,description}`, so Directus answers 403
-  FORBIDDEN on that field and `/api/courses` and `/api/courses/<slug>` return
-  500 for every Student, published Course included (user story 25 fails).
-  Authors get a milder form: their file read is scoped to „Materiály kurzů",
-  so every cover is `null` in the preview.
-- **The fix:** on the Student and Autor policies, add a `directus_files` read
-  permission mirroring the Public policy's existing file rule (filter on the
-  `Public` folder by name, same field list, see the Public row in
-  `directus/config/collections/permissions.json`). It grants logged-in roles
-  exactly what anonymous visitors already read. The run did not make it: the
-  harness refused to let an agent grant production permissions, which is the
-  correct boundary for access control. After the change: `vp run
-directus:pull`, extend `author-preview.probe.ts` so Author and Student
-  tokens fetch `COVER_FILE_ID` and read `cover.description` (200), run the
-  probes, verify `/kurzy` and `/kurzy/test-kurz-publikovany` as a logged-in
-  Student, tick the two open criteria and set the ticket `done`.
-- What ticket 05 did land (commit `efe3c60`): the „Koncept" badge on the
-  Catalog card, and `author-preview.probe.ts` (Author reads the draft and its
-  outline; Student and anonymous get 200 with an empty list, the observed
-  denial). Author and visitor passes ran in the app; the Student pass is the
-  one blocked.
-- ADR 0004's "no new permissions" consequence does not hold for logged-in
-  readers; amend it in one line once the permission lands.
+- **Permission granted (site owner, this machine).** A session reads Directus
+  with its own policy only, and neither the Student nor the Autor policy
+  could read a cover: both shop routes select `cover.description`, so
+  `/api/courses` answered 500 for every Student. Student and Autor now each
+  carry a `directus_files` read rule mirroring the Public policy's — same
+  `Public` folder filter, all fields — which grants a logged-in role exactly
+  what an anonymous visitor already reads. Live permission ids 108 and 109,
+  in the dump as two new rows.
+- ADR 0004's "Why" now records that grant; the no-new-permissions claim holds
+  for Courses, not for files a session reads.
+- `author-preview.probe.ts` covers both halves: the „Koncept" badge case
+  (Author reads the draft and its outline, Student and anonymous get 200 with
+  an empty list) and the cover — Author, both Students and an anonymous
+  visitor each read the published cover through the shop routes' own
+  `cover.{id,width,height,description}` selection. 114 probes pass.
+- The Student pass ran in the app against the fixture Student, whose password
+  is now `DIRECTUS_TEST_STUDENT_PASSWORD` in `web/.env`: the Catalog lists the
+  published Course with its cover and hides the draft, and
+  `/kurzy/test-kurz-draft` 404s. Screenshots in `screenshots/`.
 - No „Koncept" badge in the Sales Page hero: the extra branch pushed the page
   template over fallow's cognitive-complexity gate. The Catalog badge and the
   draft URL carry the preview.

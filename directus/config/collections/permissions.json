@@ -971,6 +971,41 @@
     "validation": null
   },
   {
+    "_syncId": "cc586c3a-e8ab-4972-8c88-7471a645f1bb",
+    "action": "read",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "_or": [
+            {
+              "folder": {
+                "parent": {
+                  "name": {
+                    "_icontains": "Public"
+                  }
+                }
+              }
+            },
+            {
+              "folder": {
+                "name": {
+                  "_icontains": "Public"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
     "_syncId": "4d7c9c6f-4401-4ca4-b203-d580969b6634",
     "action": "update",
     "collection": "directus_users",
@@ -1349,6 +1384,41 @@
               }
             }
           }
+        }
+      ]
+    },
+    "policy": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "31f50dda-b3cc-4493-9f46-bef72b003e7b",
+    "action": "read",
+    "collection": "directus_files",
+    "fields": [
+      "*"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "_or": [
+            {
+              "folder": {
+                "parent": {
+                  "name": {
+                    "_icontains": "Public"
+                  }
+                }
+              }
+            },
+            {
+              "folder": {
+                "name": {
+                  "_icontains": "Public"
+                }
+              }
+            }
+          ]
         }
       ]
     },

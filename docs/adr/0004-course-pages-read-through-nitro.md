@@ -18,7 +18,10 @@ Courses only. The Catalog marks a draft card with a „Koncept" badge.
 
 ## Why
 
-Preview costs one route and no new permissions. Enforcement stays in
+Preview costs one route and no new Course permissions, though reading with
+the session did need Student and Autor to get their own copy of the Public
+policy's `directus_files` rule: the Public policy does not apply to a
+logged-in request, so without it a cover is unreadable. Enforcement stays in
 Directus, which is the platform's authorization boundary, instead of app
 code deciding who may see a draft. The alternative was a service account
 holding a token, reached through a secret preview URL. That would bring a
