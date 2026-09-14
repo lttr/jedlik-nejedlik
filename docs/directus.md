@@ -145,8 +145,21 @@ Stable `[TEST]`-marked rows the probes depend on (current ids are pinned in
 
 - three probe users: `probe-author@jedlik-nejedlik.cz` (Autor),
   `probe-student-entitled@…` and `probe-student-unentitled@…` (Student)
-- one published `[TEST]` course, plus the entitlement linking it to the
-  entitled student
+- one published `[TEST]` course (`test-kurz-publikovany`, id 1) shaped like a
+  real offer: a plain-text teaser in `description`, `price_czk` 1490, `sort`
+  set, a placeholder cover stored in `Public/kurzy`, and three sections mixing
+  `video` and `text` lessons (every lesson carries a `body`, the first video
+  a `video_uid` and a Material). Plus the entitlement linking it to the
+  entitled student.
+- one draft `[TEST]` course (`test-kurz-draft`) that must stay draft
+- the `Public/kurzy` folder, a child of `Public`. It is the `cover` field's
+  default folder and the only place a course cover may live: the public
+  policy's `directus_files` read rule matches a folder named `Public` or a
+  direct child of one, so a cover elsewhere loads for nobody. The cover probe
+  pins the folder and the fixture cover's file id.
+
+The client's own dummy course (`prvni-manualni-testovaci`) is not a fixture:
+it stays draft and untouched.
 
 The unentitled student must stay **unentitled**. Granting them a course breaks
 the student probes, which is what happened after the FP-11 walkthrough.

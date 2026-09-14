@@ -21,6 +21,12 @@ export const MATERIAL_FILE_ID = "c1cee206-b8e2-41fb-975c-862b84f65a84"
 export const MATERIALS_FOLDER_ID = "6173b74f-9990-41a2-b931-ff591ee6a5ed"
 // A folder the author has no business writing to — the public asset root.
 export const PUBLIC_FOLDER_ID = "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+// `Public/kurzy`: the course-cover folder, pinned as the `cover` field's
+// default. Public because its parent is named "Public" (the public policy's
+// directus_files rule matches folder name and parent name).
+export const PUBLIC_COURSES_FOLDER_ID = "59ffe3f9-4f57-44c4-8b01-2f019979d425"
+// The published [TEST] course's cover (a placeholder PNG in Public/kurzy).
+export const COVER_FILE_ID = "749f89ba-0eff-4923-8f21-5034c60b123b"
 
 export interface ProbeResponse {
   status: number

@@ -10,8 +10,10 @@
     "group": null,
     "hidden": false,
     "interface": "file-image",
-    "note": null,
-    "options": null,
+    "note": "Obrázek kurzu pro katalog, prodejní stránku a náhled při sdílení odkazu (ideálně 1200×675 px). Musí ležet ve složce „Public/kurzy“: veřejnost smí číst jen soubory ze složek pojmenovaných Public a jejich podsložek, obrázek odjinud se na webu nezobrazí.",
+    "options": {
+      "folder": "59ffe3f9-4f57-44c4-8b01-2f019979d425"
+    },
     "readonly": false,
     "required": false,
     "searchable": true,
