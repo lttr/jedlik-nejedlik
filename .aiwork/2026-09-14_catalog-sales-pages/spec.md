@@ -1,5 +1,5 @@
 ---
-status: not-started
+status: in-progress
 references:
   - "Epic: ../2026-06-09_kurzy-platforma/areas.md"
   - "ADR 0004: ../../docs/adr/0004-course-pages-read-through-nitro.md"
