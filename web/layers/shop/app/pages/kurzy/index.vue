@@ -19,8 +19,10 @@
 </template>
 
 <script lang="ts" setup>
-useHead({ title: "Kurzy" })
+// The site's title template and canonical link come from nuxt-seo-utils'
+// defaults; only what is specific to the Catalog is set here.
 useSeoMeta({
+  title: "Kurzy",
   description: "Nabídka videokurzů Jedlík-nejedlík o výživě a výchově dětí.",
 })
 
@@ -29,6 +31,23 @@ useSeoMeta({
 const key = "catalog"
 const { data: courses, error } = await useFetch("/api/courses", { key, default: () => [] })
 watchAsyncDataError(key, error)
+
+// Breadcrumbs and an item list of what the page shows (spec, "Metadata and
+// structured data"). An Author's own drafts ride along in their session
+// only; a crawler gets the published list.
+useSchemaOrg(
+  computed(() => [
+    defineBreadcrumb({
+      itemListElement: [{ name: "Domů", item: "/" }, { name: "Kurzy" }],
+    }),
+    defineItemList({
+      itemListElement: courses.value.map((course) => ({
+        name: course.title,
+        item: `/kurzy/${course.slug}`,
+      })),
+    }),
+  ]),
+)
 
 // The bespoke registry is checked here, the one place that already holds
 // every Course slug, so the check costs no request. Development only: a

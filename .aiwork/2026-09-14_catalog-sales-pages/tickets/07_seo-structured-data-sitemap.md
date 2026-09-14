@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, behaviour]
 blocked_by: [04]
 references:
   - "Spec: ../spec.md"
@@ -15,8 +16,8 @@ references:
 
 ## Acceptance criteria
 
-- [ ] Sales Page head carries title, description, og:image (1200×630 cover transform) and canonical URL
-- [ ] JSON-LD: Course + offers (price, CZK) on the Sales Page; breadcrumbs on both pages; ItemList on the Catalog; validates in a structured-data checker
-- [ ] `sitemap.xml` lists published Course URLs and reflects a newly published Course without a deploy; drafts never appear
-- [ ] Verified in the running app by inspecting head and JSON-LD for the fixture Course
-- [ ] `vp run check:all` passes
+- [x] Sales Page head carries title, description, og:image (1200×630 cover transform) and canonical URL
+- [x] JSON-LD: Course + offers (price, CZK) on the Sales Page; breadcrumbs on both pages; ItemList on the Catalog; validates in a structured-data checker (offline: JSON parse + shape assertions; Google's Rich Results Test remains for a human)
+- [x] `sitemap.xml` lists published Course URLs and reflects a newly published Course without a deploy; drafts never appear
+- [x] Verified in the running app by inspecting head and JSON-LD for the fixture Course
+- [x] `vp run check:all` passes
