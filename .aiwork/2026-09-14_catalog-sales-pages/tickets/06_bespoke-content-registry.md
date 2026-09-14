@@ -1,5 +1,7 @@
 ---
-status: ready
+status: done
+verified: [checks, behaviour]
+verified_flow: /kurzy/test-kurz-publikovany bespoke block between hero and outline (default + 375), same page complete without block after a local key rename, orphan-key console.warn on /kurzy in dev, warning absent from built bundles
 blocked_by: [04]
 references:
   - "Spec: ../spec.md"
@@ -11,10 +13,10 @@ references:
 
 ## Acceptance criteria
 
-- [ ] Registry maps slug → component; a bespoke component for the fixture Course renders in the slot between hero and outline
-- [ ] A Course without a registry entry renders a complete Sales Page with no bespoke block
-- [ ] Development-only warning when a registry key matches no Course; silent in production
-- [ ] Unit test covers registry hit and miss
-- [ ] No price appears in bespoke copy; the skeleton still owns cover, title, teaser, price, outline and button
-- [ ] Verified in the running app with and without a registry entry
-- [ ] `vp run check:all` passes
+- [x] Registry maps slug → component; a bespoke component for the fixture Course renders in the slot between hero and outline
+- [x] A Course without a registry entry renders a complete Sales Page with no bespoke block
+- [x] Development-only warning when a registry key matches no Course; silent in production
+- [x] Unit test covers registry hit and miss
+- [x] No price appears in bespoke copy; the skeleton still owns cover, title, teaser, price, outline and button
+- [x] Verified in the running app with and without a registry entry
+- [x] `vp run check:all` passes
