@@ -37,7 +37,8 @@ export type CourseCollection = z.input<typeof CourseSchema> & {
   user_created: string | null
   date_created: string | null
   date_updated: string | null
-  sections: number[]
+  // O2M: ids on the wire, rows when the query expands the relation.
+  sections: SectionCollection[] | number[]
 }
 
 export type SectionCollection = z.input<typeof SectionSchema> & {
@@ -45,7 +46,7 @@ export type SectionCollection = z.input<typeof SectionSchema> & {
   unlock_delay_days: number | null
   date_created: string | null
   date_updated: string | null
-  lessons: number[]
+  lessons: LessonCollection[] | number[]
 }
 
 export type LessonCollection = z.input<typeof LessonSchema> & {

@@ -16,6 +16,9 @@
           <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
         </li>
         <li>
+          <NuxtLink class="link" to="/kurzy">Kurzy</NuxtLink>
+        </li>
+        <li>
           <NuxtLink class="link" to="/podcast">Podcast</NuxtLink>
         </li>
         <li>

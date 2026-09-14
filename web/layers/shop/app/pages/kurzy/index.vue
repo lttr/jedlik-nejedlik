@@ -1,0 +1,48 @@
+<template>
+  <PageWrapper>
+    <div class="p-flow">
+      <h1>Kurzy</h1>
+
+      <p v-if="error" class="notice" role="alert">
+        Nabídku kurzů se teď nepodařilo načíst. Zkuste to prosím za&nbsp;chvíli.
+      </p>
+      <p v-else-if="courses.length === 0" class="notice">
+        Zatím nenabízíme žádný kurz. Na&nbsp;prvním pracujeme, brzy ho tu najdete.
+      </p>
+      <ul v-else class="catalog p-auto-grid">
+        <li v-for="course of courses" :key="course.id">
+          <CatalogCourseCard :course />
+        </li>
+      </ul>
+    </div>
+  </PageWrapper>
+</template>
+
+<script lang="ts" setup>
+useHead({ title: "Kurzy" })
+useSeoMeta({
+  description: "Nabídka videokurzů Jedlík-nejedlík o výživě a výchově dětí.",
+})
+
+// Through Nitro, never Directus from the browser (ADR 0004): the route reads
+// with the caller's own session, so an Author sees their drafts here.
+const key = "catalog"
+const { data: courses, error } = await useFetch("/api/courses", { key, default: () => [] })
+watchAsyncDataError(key, error)
+</script>
+
+<style scoped>
+.catalog {
+  --auto-grid-min: 18rem;
+  /* auto-fill, not auto-fit: one course must not stretch across the row. */
+  --auto-grid-repeat: auto-fill;
+  --flow-space: var(--space-6);
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.notice {
+  --flow-space: var(--space-6);
+  max-width: var(--size-content-2);
+}
+</style>
