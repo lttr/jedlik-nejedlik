@@ -91,9 +91,13 @@ The Public policy reads any file in the **Public** folder tree (that folder or
 a direct child, matched by name). A session never gets that policy, so the
 Student and Autor policies each carry their own copy of the rule — a logged-in
 reader sees exactly what an anonymous one does. Without it a Course cover is
-unreadable and the shop routes 500 on `cover.description`. The Autor policy
-also reads `directus_folders` across that tree, which is what lets the cover
-picker navigate to `Public/kurzy`.
+unreadable and the shop routes 500 on `cover.description`. The flip side: an
+Author now reads every marketing asset under `Public` too — the write scoping
+below is what keeps those assets safe, not the read rule. The Autor policy
+also reads `directus_folders` for `Public` and its **direct children**, which
+is what lets the cover picker navigate to `Public/kurzy`; a folder one level
+deeper would be invisible to it, and its files unreadable, because both rules
+match `parent.name` and stop there.
 
 The Autor policy writes in two places, so an author owns a whole course —
 materials and cover — without reaching marketing assets:
