@@ -93,3 +93,19 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 - The `["published", "draft"]` status list lives once in
   `web/layers/shop/server/utils/shop-statuses.ts` so both routes filter
   identically.
+
+## 06 — Bespoke content registry
+
+- Registry entries are `defineAsyncComponent` imports, so each Course's copy
+  is its own chunk and the registry loads in plain vitest. The map is
+  module-private and the lookup takes it as a defaulted parameter, so the unit
+  test does not pin the real fixture key: removing the `[TEST]` Course at
+  launch breaks no test, only the dev warning fires until its entry in
+  `web/layers/shop/app/utils/sales-content.ts` is deleted too.
+- The dev warning runs on the Catalog page, where every slug is known
+  without an extra request. It fires twice per load in dev (server render and
+  hydration); intentional.
+- `vp run build` cannot finish in the cloud container (`@nuxt/fonts` download
+  fails on the proxy's certificate) after the bundles are written. The
+  tree-shaking evidence for the warning came from those bundles; the built
+  site was not run here. Coolify builds on a normal network.
