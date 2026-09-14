@@ -9,9 +9,12 @@
     "field": "description",
     "group": null,
     "hidden": false,
-    "interface": "input-rich-text-html",
-    "note": "Prodejní text kurzu pro veřejnou stránku",
-    "options": null,
+    "interface": "input-multiline",
+    "note": "Upoutávka kurzu: 2–3 věty prostým textem (bez formátování). Zobrazuje se na kartě v katalogu kurzů, v úvodu prodejní stránky a jako popis pro vyhledávače a sociální sítě.",
+    "options": {
+      "placeholder": "Dvě až tři věty, které kurz prodají.",
+      "trim": true
+    },
     "readonly": false,
     "required": false,
     "searchable": true,

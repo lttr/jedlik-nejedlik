@@ -15,6 +15,11 @@
     "parent": null
   },
   {
+    "_syncId": "59ffe3f9-4f57-44c4-8b01-2f019979d425",
+    "name": "kurzy",
+    "parent": "532bfb77-87fb-46c5-94e7-addfb04e79a0"
+  },
+  {
     "_syncId": "6173b74f-9990-41a2-b931-ff591ee6a5ed",
     "name": "Materiály kurzů",
     "parent": null
