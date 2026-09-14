@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, behaviour]
 blocked_by: [03]
 references:
   - "Spec: ../spec.md"
@@ -14,10 +15,10 @@ The page uses the same session-derived Nitro read path as the Catalog. The skele
 
 ## Acceptance criteria
 
-- [ ] `/kurzy/<slug>` renders cover, title, teaser, formatted price, outline and „Koupit kurz" for the fixture Course
-- [ ] Video and text Lessons are distinguished in the outline
-- [ ] Unknown slug returns the site's 404 page; no redirect to the Catalog
-- [ ] Catalog cards link to their Sales Page
-- [ ] The price reaches the page only through the shared formatter
-- [ ] Verified anonymously in the running app, including at 375px
-- [ ] `vp run check:all` passes
+- [x] `/kurzy/<slug>` renders cover, title, teaser, formatted price, outline and „Koupit kurz" for the fixture Course
+- [x] Video and text Lessons are distinguished in the outline
+- [x] Unknown slug returns the site's 404 page; no redirect to the Catalog
+- [x] Catalog cards link to their Sales Page
+- [x] The price reaches the page only through the shared formatter
+- [x] Verified anonymously in the running app, including at 375px
+- [x] `vp run check:all` passes
