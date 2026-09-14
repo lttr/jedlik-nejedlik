@@ -3,9 +3,11 @@
 # Dependencies are installed by the SessionStart hook, not here.
 set -euo pipefail
 
-# Vite+ toolchain (vp, vpx).
+# Vite+ toolchain (vp, vpx). The installer adds its bin dir to ~/.bashrc; new
+# sessions get it from there, this one needs it on PATH now. Both layouts: the
+# current split one (~/.local/share) and the older monolithic ~/.vite-plus.
+export PATH="$HOME/.local/share/vite-plus/bin:$HOME/.vite-plus/bin:$PATH"
 command -v vp >/dev/null || curl -fsSL https://vite.plus | bash
-. "$HOME/.vite-plus/env"
 
 # playwright-cli (vp global) drives the browser for the run/verify skills.
 # Its default browser is the system Chrome, which the container lacks;
