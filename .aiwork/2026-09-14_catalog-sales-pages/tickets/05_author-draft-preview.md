@@ -1,5 +1,7 @@
 ---
-status: in-progress
+status: done
+verified: [checks, behaviour]
+verified_flow: logged-in Student (fixture) on /kurzy — published Course with a natively loaded cover, draft absent — and /kurzy/test-kurz-publikovany renders with 0 console errors, /kurzy/test-kurz-draft 404s; default + 375; Author and visitor passes from the earlier run
 blocked_by: [04]
 references:
   - "Spec: ../spec.md"
@@ -13,7 +15,7 @@ references:
 ## Acceptance criteria
 
 - [x] Logged-in Author: draft Course card shows a „Koncept" badge in its normal position; its Sales Page renders
-- [ ] Logged-in Student and anonymous visitor: draft Course absent from the Catalog, its Sales Page 404s (visitor observed; Student blocked: Catalog and Sales Page fail on the Student policy's `directus_files` read, see implementation notes)
+- [x] Logged-in Student and anonymous visitor: draft Course absent from the Catalog, its Sales Page 404s
 - [x] Probe: Author token reads a draft Course and its outline; Student and anonymous tokens do not, asserting status and error codes
-- [ ] Verified in the running app as Author, Student and visitor (Author and visitor observed; Student blocked as above)
+- [x] Verified in the running app as Author, Student and visitor
 - [x] `vp run check:all` passes

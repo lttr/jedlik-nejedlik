@@ -87,8 +87,14 @@ Two behaviours worth knowing before you rely on them:
 Policies: Administrator, Redaktor, **Autor** (course authoring), **Student**
 (paid content), and Public.
 
-The Autor policy is scoped to the **Materiály kurzů** folder, so an author
-cannot reach marketing assets:
+The Public policy reads any file in the **Public** folder tree (that folder or
+a direct child, matched by name). A session never gets that policy, so the
+Student and Autor policies each carry their own copy of the rule — a logged-in
+reader sees exactly what an anonymous one does. Without it a Course cover is
+unreadable and the shop routes 500 on `cover.description`.
+
+The Autor policy is additionally scoped to the **Materiály kurzů** folder for
+writes, so an author cannot reach marketing assets:
 
 - read / update / delete match the folder **by name**, plus one level of
   subfolders
@@ -133,6 +139,11 @@ below, each variable mapping to the user with the matching email. To obtain one:
 - **API**: `PATCH /users/<id>` with a fresh random `token` (e.g. from
   `openssl rand -hex 32`), authorized with the admin token. Look the user id up
   live by email first, or take it from `web/tests/probes/support.ts`.
+
+`DIRECTUS_TEST_STUDENT_PASSWORD` is the fifth: the login password of the
+entitled probe student, for in-app passes that need a logged-in Student. No
+test reads it — the probes authenticate with the tokens above — so rotating it
+breaks nothing.
 
 Directus masks static tokens on read, so a lost token cannot be recovered.
 Repeat either step above to rotate it, then update `web/.env`. Rotating replaces
