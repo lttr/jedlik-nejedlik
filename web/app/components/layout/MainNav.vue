@@ -16,13 +16,15 @@
           <NuxtLink class="link" to="/pro-odborniky">Pro odborníky</NuxtLink>
         </li>
         <li>
-          <NuxtLink class="link" to="/kurzy">Kurzy</NuxtLink>
-        </li>
-        <li>
           <NuxtLink class="link" to="/podcast">Podcast</NuxtLink>
         </li>
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
+        </li>
+        <!-- The Catalog and the account end the row together: both belong to the
+             buying story rather than to the marketing pages. -->
+        <li>
+          <NuxtLink class="link" to="/kurzy">Kurzy</NuxtLink>
         </li>
         <!-- Auth is not launched yet: the sign-in entry point stays hidden, so only
              an already-logged-in Account sees the account link. -->
@@ -69,6 +71,11 @@ const { loggedIn } = useAccount()
       background-color: var(--color-pale-blue);
       border-radius: var(--radius-default);
     }
+  }
+
+  .link.router-link-exact-active {
+    background-color: color-mix(in srgb, var(--color-pale-blue) 45%, transparent);
+    border-radius: var(--radius-default);
   }
 }
 
