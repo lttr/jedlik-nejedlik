@@ -161,3 +161,7 @@ false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
   before hydration once, sending credentials as a GET query into the dev log.
   A `method="post"` on the form in `prihlaseni.vue` would close that; not
   changed here because it belongs to the auth layer, not this area.
+- Follow-up filed, not fixed here: both new read rules — and the Public one
+  they copy — identify the folder with `name _icontains "Public"`, so a future
+  `Republikace` folder would publish itself. Spelling only, the grant is right
+  today. `.aiwork/2026-09-14_public-folder-filter/spec.md`.
