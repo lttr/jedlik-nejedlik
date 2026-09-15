@@ -80,6 +80,17 @@ _Avoid_: admin (a broader role), editor, lecturer, teacher.
 A Student's request to buy one Course.
 _Avoid_: purchase, transaction, cart.
 
+**Consent** (Souhlas):
+A Student's recorded agreement to one legal document at a given version,
+attached to an Order. In v1 the only Consent is to the terms; the privacy
+policy is information, not a Consent, and no § 1837 waiver is asked for.
+_Avoid_: acceptance, checkbox, agreement.
+
+**Billing Details** (Fakturační údaje):
+The optional name, company, IČO and address a Student keeps on their Account
+and that an Order copies at purchase for the Invoice.
+_Avoid_: address, contact, customer data.
+
 **Entitlement** (Oprávnění ke kurzu):
 A Student's right to access one Course.
 _Avoid_: licence, subscription, enrolment.

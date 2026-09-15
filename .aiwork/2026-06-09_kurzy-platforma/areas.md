@@ -87,7 +87,7 @@ in v1.
 
 ## 03 — Catalog + sales pages (FP-2, BP-2)
 
-**Status:** not-started → `../2026-09-14_catalog-sales-pages/`
+**Status:** done → `../2026-09-14_catalog-sales-pages/`
 Catalog + sales page in the `shop` layer. Hard facts (title, slug, teaser,
 cover, price, section/lesson outline) from Directus; long-form sales copy in
 an optional per-course Vue component. Public, CZK prices, no search (out of
@@ -99,7 +99,10 @@ scope). Renames the auth layer's session concept Student → Account.
 
 ## 04a — Checkout: order + consent + GoPay redirect (FP-3, TO-5)
 
-**Status:** not-started
+**Status:** specced → `../2026-09-15_checkout-gopay/` (04a and 04b merged
+into one area; Billing Details moved here from 05; no § 1837 waiver is asked
+for, the buyer keeps the withdrawal right; guest flow settled by prototype,
+ADR 0005)
 Order creation for a logged-in student, consent checkboxes (§1837 + terms;
 wording placeholder until area 10), redirect to GoPay. Return URL is UX
 only — no granting happens here.
@@ -110,7 +113,8 @@ only — no granting happens here.
 
 ## 04b — GoPay notification + entitlement grant (BP-6, TO-5)
 
-**Status:** not-started
+**Status:** specced → `../2026-09-15_checkout-gopay/` (merged with 04a).
+Go-live steps needing GoPay credentials: `../2026-09-15_gopay-go-live/`
 **Server notification endpoint in Nitro** as the sole trigger for granting
 the entitlement (idempotent per GoPay payment ID). Abandoned payment =
 unpaid order, no entitlement, no invoice.
@@ -202,6 +206,12 @@ starting point.
   as cookieless, transfers outside the EU). Not lawyer-reviewed — the site
   owner signed it off. This area covers the purchase-side documents; it does
   not re-open cookie consent.
+- **Also owns (found in 04's grilling, 2026-09-15):** the § 1824a
+  confirmation e-mail — a text-form contract confirmation with the terms
+  attached, sent before access is granted; 04 leaves an `onPaid` hook for
+  it. And the rewording of the terms' withdrawal clause: 04 asks for no
+  § 1837 waiver, so the clause promising loss of the withdrawal right is
+  dormant.
 - **Depends on:** lawyer input (external); technically only touches 04a's
   checkbox wiring.
 - **Verify:** consent record stores correct document version + timestamp.
