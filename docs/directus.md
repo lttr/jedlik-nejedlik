@@ -1,13 +1,13 @@
 # Working with Directus
 
-Operational notes for the CMS at `https://obsah-jedlika.lttr.cz`. Why Directus
+Operational notes for the CMS at `NUXT_PUBLIC_DIRECTUS_URL` (`web/.env`). Why Directus
 owns both content and transactional data is [ADR 0001](adr/0001-directus-system-of-record.md);
 how the site authenticates against it is [ADR 0002](adr/0002-nitro-mediated-auth-sessions.md).
 This page is the _how_, not the _why_.
 
 ## Admin app and MCP
 
-Admin app: <https://obsah-jedlika.lttr.cz/admin>.
+Admin app: `$NUXT_PUBLIC_DIRECTUS_URL/admin`.
 
 Directus also exposes a [Model Context Protocol](https://directus.io/docs/guides/ai/mcp)
 endpoint for AI-assisted content management. To wire it into Claude Code:
@@ -19,7 +19,8 @@ claude mcp add --transport http directus <directus-url>/mcp \
 
 The same credential doubles as the admin token for the commands below. Extract
 it with `claude mcp get directus` rather than minting a second one, and keep it
-in `web/.env` so the commands work outside a Claude session too.
+as `DIRECTUS_PROBE_ADMIN_TOKEN` in `web/.env` so the commands work outside a
+Claude session too.
 
 ## Config as code (pull-only)
 
@@ -34,12 +35,11 @@ vp run directus:pull   # refresh the committed dump
 vp run directus:diff   # detect drift against the dump
 ```
 
-Both run through `scripts/directus-sync.sh`, which resolves the admin token
-itself: an exported `DIRECTUS_TOKEN` wins, otherwise `DIRECTUS_TOKEN` and then
-`DIRECTUS_PROBE_ADMIN_TOKEN` from `web/.env` (gitignored — the probe admin
-token _is_ the MCP credential, so one copy serves both). With none of them set
-the task prints where to get a token and exits; it never falls through to
-directus-sync's email/password auth, which is what the bare
+Both run through `scripts/directus-sync.sh`, which reads the admin token from
+`DIRECTUS_PROBE_ADMIN_TOKEN` in `web/.env` (gitignored). That token is the MCP
+credential, so one copy serves the sync tasks and the permission probes alike.
+Without it the task prints where to get a token and exits. It never falls
+through to directus-sync's email and password auth, which is what the bare
 `Missing option directusEmail` error used to mean.
 
 The workflow is **pull-only**: Directus is configured in its admin app and
@@ -133,39 +133,42 @@ via `process.loadEnvFile()`, and shell-set variables take precedence.
 The suite is self-cleaning: it deletes everything it creates. A failed run can
 leave rows behind, which the next run's admin sweep removes.
 
-### Tokens
+### Test accounts
 
-Four environment variables, values never committed:
-`DIRECTUS_PROBE_AUTHOR_TOKEN`, `DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN`,
-`DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN`, `DIRECTUS_PROBE_ADMIN_TOKEN` (the
-admin one is only for fixtures and cleanup: reuse the MCP credential, which
-`claude mcp get directus` prints).
+Three permanent accounts on the instance, one per access level the site
+distinguishes, so a probe can check what each level may and may not do.
 
-The three role tokens are the static access tokens of the fixture probe users
-below, each variable mapping to the user with the matching email. To obtain one:
+- **Author.** The editorial role: what an author may create, preview and
+  upload, and where the folder rules stop them.
+- **Entitled student.** A customer who owns a course: the paid path works.
+- **Unentitled student.** A customer who owns nothing: the control case. A
+  leak shows up as something this account can see. Never grant it a course.
 
-- **Admin app**: **User Directory →** _probe user_ **→ Token**. Click the
-  generate icon, save the user, and copy the value into `web/.env`.
-- **API**: `PATCH /users/<id>` with a fresh random `token` (e.g. from
-  `openssl rand -hex 32`), authorized with the admin token. Look the user id up
-  live by email first, or take it from `web/tests/probes/support.ts`.
+Each account has a `DIRECTUS_PROBE_<ACCOUNT>_EMAIL` and a
+`DIRECTUS_PROBE_<ACCOUNT>_TOKEN` in `web/.env`, and all three share one
+`DIRECTUS_PROBE_PASSWORD`. The token is what the probe suite sends: one request,
+no session. The e-mail and password are for signing in by hand, in the site or
+in the Directus admin app, which both need a real login. No test reads them.
 
-`DIRECTUS_TEST_STUDENT_PASSWORD` is the fifth: the login password of the
-entitled probe student, for in-app passes that need a logged-in Student. No
-test reads it — the probes authenticate with the tokens above — so rotating it
-breaks nothing.
+The password is shared and is not a secret, because the accounts hold no real
+data. Change it on all three at once.
 
-Directus masks static tokens on read, so a lost token cannot be recovered.
-Repeat either step above to rotate it, then update `web/.env`. Rotating replaces
-the old token immediately, with no overlap window.
+`DIRECTUS_PROBE_ADMIN_TOKEN` stands apart. It creates fixtures and cleans up
+after a run, never appears in an assertion, and nobody signs in with it. It is
+the MCP credential (`claude mcp get directus`).
+
+To rotate a token, open **User Directory →** the account **→ Token** and
+generate a new one, or `PATCH /users/<id>` with a random `token` under the
+admin token (`web/tests/probes/support.ts` pins the ids). Directus masks tokens
+on read, so a lost one is replaced, never recovered, and the old value stops
+working at once.
 
 ### Fixtures: do not delete
 
 Stable `[TEST]`-marked rows the probes depend on (current ids are pinned in
 `web/tests/probes/support.ts`):
 
-- three probe users: `probe-author@jedlik-nejedlik.cz` (Autor),
-  `probe-student-entitled@…` and `probe-student-unentitled@…` (Student)
+- the three probe users above (one Autor, two Student)
 - one published `[TEST]` course (`test-kurz-publikovany`, id 1) shaped like a
   real offer: a plain-text teaser in `description`, `price_czk` 1490, `sort`
   set, a placeholder cover stored in `Public/kurzy`, and three sections mixing
@@ -182,8 +185,9 @@ Stable `[TEST]`-marked rows the probes depend on (current ids are pinned in
 The client's own dummy course (`prvni-manualni-testovaci`) is not a fixture:
 it stays draft and untouched.
 
-The unentitled student must stay **unentitled**. Granting them a course breaks
-the student probes, which is what happened after the FP-11 walkthrough.
+The unentitled student must stay **unentitled**. Granting them a course turns
+the control case into a second entitled student and the student probes go
+green on a leak — which is what happened after the FP-11 walkthrough.
 
 ## Transactional e-mails
 

@@ -6,7 +6,7 @@ with a CMS-driven article workflow, landing pages, webinars, and lead-capture
 forms.
 
 - **Production:** <https://www.jedlik-nejedlik.cz>
-- **CMS (Directus):** <https://obsah-jedlika.lttr.cz>
+- **CMS (Directus):** `NUXT_PUBLIC_DIRECTUS_URL` in `web/.env`; the admin app is at `/admin` on it
 
 ## Tech stack
 
@@ -71,9 +71,8 @@ vp run directus:pull   # refresh the committed dump
 vp run directus:diff   # detect drift against the dump
 ```
 
-Both need an admin token in `web/.env` (`DIRECTUS_TOKEN`, or the
-`DIRECTUS_PROBE_ADMIN_TOKEN` the probes already use — the same credential); the
-task says so and stops if neither is set.
+Both need `DIRECTUS_PROBE_ADMIN_TOKEN` in `web/.env`, the same admin token the
+permission probes use. The task says so and stops when it is missing.
 
 **[docs/directus.md](docs/directus.md)** covers the rest: the MCP endpoint,
 where a permission rule lives in the admin app and in the dump, the role and

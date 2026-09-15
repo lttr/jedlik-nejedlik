@@ -18,10 +18,9 @@ import {
 // get the same answer as for a slug that never existed. Relies on the
 // [TEST]-marked draft fixture course (one section, one text lesson).
 //
-// Required environment (static tokens of the fixture users, never committed):
-//   DIRECTUS_PROBE_AUTHOR_TOKEN             probe-author@jedlik-nejedlik.cz (Autor)
-//   DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN   probe-student-entitled@jedlik-nejedlik.cz
-//   DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN probe-student-unentitled@jedlik-nejedlik.cz
+// Required environment: DIRECTUS_PROBE_AUTHOR_TOKEN,
+// DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN and DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN,
+// the static tokens of the fixture users (docs/directus.md, Test accounts).
 
 const AUTHOR = roleToken("DIRECTUS_PROBE_AUTHOR_TOKEN")
 const ENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN")

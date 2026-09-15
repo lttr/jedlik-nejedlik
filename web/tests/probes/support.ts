@@ -8,7 +8,12 @@ import { randomUUID } from "node:crypto"
 
 import { expect } from "vitest"
 
-export const DIRECTUS_URL = "https://obsah-jedlika.lttr.cz"
+// The instance under test is the one the app talks to (web/.env, loaded by
+// vitest.probes.config.ts).
+export const DIRECTUS_URL = process.env.NUXT_PUBLIC_DIRECTUS_URL ?? ""
+if (DIRECTUS_URL === "") {
+  throw new Error("Probes require the NUXT_PUBLIC_DIRECTUS_URL environment variable")
+}
 
 // Stable [TEST] fixture identifiers on the production instance (not secrets).
 // See .aiwork/2026-07-22_directus-data-model/implementation-notes.md.
