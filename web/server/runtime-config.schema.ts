@@ -7,6 +7,7 @@ import { definePublicSchema, url } from "@lttr/nuxt-validated-runtime-config/sch
 import type { Url } from "@lttr/nuxt-validated-runtime-config/schema"
 
 export const publicSchema = definePublicSchema({
+  coursesPublic: z.boolean(),
   directusUrl: url("DIRECTUS_URL", { public: true }),
 })
 
@@ -18,6 +19,7 @@ export const privateSchema: z.ZodType | undefined = z.looseObject({
 
 declare module "nuxt/schema" {
   interface PublicRuntimeConfig {
+    coursesPublic: boolean
     // `url()` brands its output as `Url`; keep the augmentation in sync by hand.
     directusUrl: Url
   }

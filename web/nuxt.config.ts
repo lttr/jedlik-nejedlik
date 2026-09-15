@@ -94,6 +94,8 @@ export default defineNuxtConfig({
       },
     },
     public: {
+      // Shop launch switch, off unless NUXT_PUBLIC_COURSES_PUBLIC is set.
+      coursesPublic: false,
       directusUrl: "",
     },
   },

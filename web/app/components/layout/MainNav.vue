@@ -21,15 +21,14 @@
         <li>
           <NuxtLink class="link" to="/kontakt">Kontakt</NuxtLink>
         </li>
-        <!-- The Catalog and the account end the row together: both belong to the
-             buying story rather than to the marketing pages. -->
-        <li>
+        <li v-if="coursesPublic">
           <NuxtLink class="link" to="/kurzy">Kurzy</NuxtLink>
         </li>
-        <!-- Auth is not launched yet: the sign-in entry point stays hidden, so only
-             an already-logged-in Account sees the account link. -->
         <li v-if="loggedIn">
           <NuxtLink class="link" to="/muj-ucet">Můj účet</NuxtLink>
+        </li>
+        <li v-else-if="coursesPublic">
+          <NuxtLink class="link" to="/prihlaseni">Přihlásit se</NuxtLink>
         </li>
       </ul>
     </div>
@@ -38,6 +37,8 @@
 
 <script lang="ts" setup>
 const { loggedIn } = useAccount()
+
+const { coursesPublic } = useRuntimeConfig().public
 </script>
 
 <style scoped>
