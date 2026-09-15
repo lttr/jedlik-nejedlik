@@ -6,6 +6,9 @@ const STORAGE_KEY = "cookie-consent"
 /** Bump to re-ask everyone, e.g. when another vendor is added. */
 const CONSENT_VERSION = 1
 
+/** Shared across instances, so the settings button can open the bar in dev. */
+const isForcedOpen = ref(false)
+
 export type ConsentStatus = "granted" | "denied"
 
 interface ConsentDecision {
@@ -24,10 +27,11 @@ interface CookieConsent {
 }
 
 /**
- * The visitor's cookie decision, kept in `localStorage` only — nothing about it
+ * The visitor's cookie decision, kept in `localStorage` only. Nothing about it
  * reaches the server. The stored decision is the single source of truth: the
  * bar is open exactly while there is none, and reopening it clears the old one.
- * Instances share state in-tab through VueUse's storage event.
+ * In dev the bar stays hidden until the settings button asks for it. Instances
+ * share state in-tab through VueUse's storage event.
  */
 export function useCookieConsent(): CookieConsent {
   const decision = useStorage<ConsentDecision | null>(STORAGE_KEY, null, undefined, {
@@ -36,14 +40,17 @@ export function useCookieConsent(): CookieConsent {
 
   const isDecided = computed(() => decision.value?.version === CONSENT_VERSION)
   const isGranted = computed(() => isDecided.value && decision.value?.status === "granted")
-  const isBarOpen = computed(() => !isDecided.value)
+  // `import.meta.dev` is compile-time, so this drops out of the built site.
+  const isBarOpen = computed(() => !isDecided.value && (isForcedOpen.value || !import.meta.dev))
 
   function decide(status: ConsentStatus): void {
     decision.value = { status, decidedAt: new Date().toISOString(), version: CONSENT_VERSION }
+    isForcedOpen.value = false
   }
 
   function reopen(): void {
     decision.value = null
+    isForcedOpen.value = true
   }
 
   return { isGranted, isBarOpen, decide, reopen }
