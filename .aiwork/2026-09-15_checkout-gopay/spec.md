@@ -1,5 +1,5 @@
 ---
-status: not-started
+status: in-progress
 verified: []
 references:
   - "Grilling decisions: grilling.md (rounds in grill-round-1.md … grill-round-3.md)"
