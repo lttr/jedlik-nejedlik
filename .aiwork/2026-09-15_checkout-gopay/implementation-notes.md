@@ -73,6 +73,42 @@ commits land on the task branch directly. The fix for the skill is to pin
 implementers to their worktree at launch rather than have them switch into it,
 and to keep the orchestrator out of worktree isolation so it can still merge.
 
+## Ticket 02 — GoPay client and mock gateway
+
+- **The env vars are `NUXT_GOPAY_ENV`, `NUXT_GOPAY_GOID`, `NUXT_GOPAY_CLIENT_ID`,
+  `NUXT_GOPAY_CLIENT_SECRET`** — the spec and the ticket name them without the
+  prefix, but Nuxt only maps `NUXT_`-prefixed variables into runtime config (as
+  with `NUXT_SESSION_PASSWORD`). `.env.example` and the run skill carry the real
+  names. **Add `NUXT_GOPAY_ENV=mock` to the main checkout's `web/.env` once**:
+  `.worktreeinclude` copies that file into every new worktree, and without the
+  line the dev server refuses to boot.
+
+- **Nuxt puts every env override through `destr`, so an all-digits secret
+  arrives as a `number`.** `NUXT_GOPAY_GOID=8123456789` failed validation as
+  "expected string, received number"; the schema now accepts `string | number`.
+  Worth remembering for any future numeric-looking secret in runtime config.
+
+- **Deviation from the spec, deliberate.** The spec says the schema rejects
+  `mock` when `NODE_ENV=production`; it actually rejects `mock` whenever the
+  build is not a dev build (`import.meta.dev`). `nuxi prepare` and `nuxi
+typecheck` both run with `NODE_ENV=production` and would otherwise strip the
+  mock out of the type graph during `check:all`. Same protection, one fewer way
+  to get it wrong.
+
+- **Nothing in this area has ever talked to the real GoPay.** The four calls are
+  verified only against a stubbed `$fetch` — headers, URLs, bodies, token
+  caching and its two-minute refresh. Closing that needs the sandbox credentials
+  listed under Open Concerns plus one live create+inquire, and belongs in
+  `../2026-09-15_gopay-go-live/`.
+
+- **`vp run build` does not work in the Claude Code remote container**: the task
+  loses the proxy environment and `@nuxt/fonts` dies with
+  `SELF_SIGNED_CERT_IN_CHAIN`. `npx nuxi build` from `web/` is the same build and
+  works. Likewise `playwright-cli` is a Vite+ global whose bin directory
+  (`~/.local/share/vite-plus/bin`) is not on an agent shell's PATH, so the
+  browser plugin's preflight reports it missing. Both recipes are now in the
+  `run-jedlik-nejedlik` skill.
+
 ## Open concerns carried from the spec (not resolved here, by decision)
 
 - The terms page's withdrawal clause promises loss of the withdrawal right on
