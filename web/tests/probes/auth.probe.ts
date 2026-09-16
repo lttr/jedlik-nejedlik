@@ -152,14 +152,20 @@ describe("login / refresh / logout round-trip", () => {
     expect(data.expires).toBe(15 * 60 * 1000)
   })
 
-  it("hands out a token that cannot read its own e-mail back", async () => {
+  it("hands out a token that reads its own row and nobody else's", async () => {
     const data = tokens(await login(active.email, active.password))
     const me = await probe("/users/me?fields=id,email", data.access_token)
-    // The Student policy has no `read` on `directus_users`, so `email` is
-    // silently dropped: why the session caches the e-mail in the cookie.
+    // The Student policy reads the own row (id, e-mail and the billing
+    // fields); the session still caches the e-mail in the cookie, which is
+    // now a saved round-trip rather than the only way to know it.
     expect(me.status).toBe(200)
     expect(item(me).id).toBe(active.id)
-    expect(item(me).email).toBeUndefined()
+    expect(item(me).email).toBe(active.email)
+
+    // The row filter is the load-bearing half of that rule: a collection read
+    // returns the caller's own row and no other account.
+    const everyone = await probe("/users?fields=id,email&limit=-1", data.access_token)
+    expect(items(everyone).map((user) => user.id)).toEqual([active.id])
   })
 
   it("refreshes into a fresh pair and invalidates the used refresh token", async () => {
@@ -303,32 +309,25 @@ describe("password change from the account page", () => {
     return { student, accessToken }
   }
 
-  it("lets a Student change their own password and locks the old one out", async () => {
+  // Both spellings of the write behave the same now that a Student reads
+  // their own row: Directus answers the PATCH with the updated row, 200. While
+  // the Student policy had no `read` on `directus_users`, `/users/me` answered
+  // 403 over a password it had already written — a lie the route avoided by
+  // writing by id, which it still does (see the password-change util).
+  it.each([
+    ["by id", (student: Fixture) => `/users/${student.id}`],
+    ["through /users/me", () => "/users/me"],
+  ])("changes a Student's own password %s and locks the old one out", async (_label, path) => {
     const { student, accessToken } = await signedIn()
     const newPassword = generatePassword()
 
-    const changed = await probeSend(
-      "PATCH",
-      `/users/${student.id}`,
-      { password: newPassword },
-      accessToken,
-    )
-    expect(changed.status).toBe(204)
+    const changed = await probeSend("PATCH", path(student), { password: newPassword }, accessToken)
+    expect(changed.status).toBe(200)
+    // The answer is the row read back through the read rule, so no password.
+    expect(item(changed).id).toBe(student.id)
+    expect(item(changed).password).toBeUndefined()
 
     expect((await login(student.email, student.password)).status).toBe(401)
-    expect((await login(student.email, newPassword)).status).toBe(200)
-  })
-
-  it("answers PATCH /users/me with 403 even though it wrote the password", async () => {
-    // Why the route uses `PATCH /users/:pk`: Directus reads the row back
-    // before replying, `/users/me` does not tolerate the refused read, and the
-    // Student policy has no `read` on `directus_users`.
-    const { student, accessToken } = await signedIn()
-    const newPassword = generatePassword()
-
-    const changed = await probeSend("PATCH", "/users/me", { password: newPassword }, accessToken)
-    expect(changed.status).toBe(403)
-    // Written anyway: the 403 is a lie.
     expect((await login(student.email, newPassword)).status).toBe(200)
   })
 
@@ -346,7 +345,7 @@ describe("password change from the account page", () => {
       { password: generatePassword() },
       here.access_token,
     )
-    expect(changed.status).toBe(204)
+    expect(changed.status).toBe(200)
 
     for (const session of [elsewhere, here]) {
       const refreshed = await probeSend("POST", "/auth/refresh", {
