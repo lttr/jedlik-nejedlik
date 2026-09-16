@@ -11,7 +11,48 @@ export const publicSchema = definePublicSchema({
   directusUrl: url("DIRECTUS_URL", { public: true }),
 })
 
+const GOPAY_CREDENTIAL_ENV_VARS: Record<string, string> = {
+  goid: "NUXT_GOPAY_GOID",
+  clientId: "NUXT_GOPAY_CLIENT_ID",
+  clientSecret: "NUXT_GOPAY_CLIENT_SECRET",
+}
+
+// The payment gateway. `mock` is a development fixture (layers/shop/mock-gopay)
+// that a production build does not even contain, so it is refused there
+// however the environment is set; sandbox and production need credentials,
+// mock needs none.
+const gopaySchema = z
+  .looseObject({
+    env: z.enum(["mock", "sandbox", "production"], {
+      error: "NUXT_GOPAY_ENV must be one of: mock, sandbox, production",
+    }),
+    // Nuxt puts every env override through `destr`, so an all-digits GoID or
+    // client id arrives as a number however the default is typed. The client
+    // turns them back into text.
+    goid: z.union([z.string(), z.number()]),
+    clientId: z.union([z.string(), z.number()]),
+    clientSecret: z.union([z.string(), z.number()]),
+  })
+  .superRefine((gopay, ctx) => {
+    if (gopay.env === "mock") {
+      if (!import.meta.dev) {
+        ctx.addIssue({ code: "custom", message: "NUXT_GOPAY_ENV=mock is refused in production" })
+      }
+      return
+    }
+    for (const [key, envVar] of Object.entries(GOPAY_CREDENTIAL_ENV_VARS)) {
+      if (gopay[key] === "") {
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: `${envVar} is required when NUXT_GOPAY_ENV is ${gopay.env}`,
+        })
+      }
+    }
+  })
+
 export const privateSchema: z.ZodType | undefined = z.looseObject({
+  gopay: gopaySchema,
   session: z.looseObject({
     password: z.string().min(32, { error: "NUXT_SESSION_PASSWORD must be at least 32 characters" }),
   }),

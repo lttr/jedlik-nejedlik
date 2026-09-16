@@ -78,6 +78,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    // Which payment gateway the shop talks to, and the credentials for it.
+    // Placeholders only: the values come from NUXT_GOPAY_* in the
+    // environment and are validated at boot (server/runtime-config.schema.ts).
+    gopay: {
+      env: "",
+      goid: "",
+      clientId: "",
+      clientSecret: "",
+    },
     session: {
       // All session config lives here: nuxt-auth-utils' `SessionConfig`
       // requires `password`, so a layer cannot contribute a partial one.
