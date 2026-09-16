@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "directus": {
+      "type": "http",
+      "url": "${NUXT_PUBLIC_DIRECTUS_URL}/mcp",
+      "headers": {
+        "Authorization": "Bearer ${DIRECTUS_PROBE_ADMIN_TOKEN}"
+      }
+    }
+  }
+}
