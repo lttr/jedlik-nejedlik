@@ -111,7 +111,8 @@ typecheck` both run with `NODE_ENV=production` and would otherwise strip the
 
 ## Ticket 01 — Billing Details and the Service Account
 
-Done, `verified: [checks, probes]`. The instance changes were applied partly by
+Done, `verified: [checks, probes, behaviour]`. The instance changes were applied
+partly by
 the implementer and partly by hand (see "Where the run stopped" below); they are
 all recorded in `directus/config/**` and `vp run directus:diff` is clean.
 
@@ -150,6 +151,24 @@ all recorded in `directus/config/**` and `vp run directus:diff` is clean.
   right. The ADR was corrected; **the spec's Implementation Decisions section
   still lists four and should be amended.** The account's `order` read likewise
   includes the `billing_*` snapshot, which area 05 invoices from.
+
+- **The behaviour pass is the account page's password change** (`/muj-ucet`),
+  driven in the dev server against the live instance with a throwaway Student.
+  It is the one runtime surface this ticket moved: the route's Directus call now
+  gets a 200 where it used to get a 204. Wrong current password → „Současné heslo
+  není správné." and nothing written; correct one → „Heslo bylo změněno…", the
+  session survives a reload (the route's re-login still works), the old password
+  is refused at the login page and the new one is accepted. Screenshots in
+  `screenshots/01-ticket01-password-change-*.png`. Booting the dev server at all
+  is part of the evidence: the runtime-config schema requires
+  `shop.directusToken`, so it could not start before the token existed.
+
+- **Finding, pre-existing and not this ticket's:** after a _successful_ password
+  change both fields are cleared while still `required`, so `:user-invalid`
+  paints them red — a success banner above two red-outlined inputs. Visible in
+  both screenshots. Nothing in this ticket touches a template or a stylesheet;
+  tickets 03 and 05 build more forms in this style and could fix it once for the
+  auth layer.
 
 - **Unverified:** the runtime path that actually uses the Service Account token
   has never run end to end. The probes prove the permission matrix from outside,

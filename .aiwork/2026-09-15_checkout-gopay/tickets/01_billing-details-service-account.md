@@ -1,6 +1,6 @@
 ---
 status: done
-verified: [checks, probes]
+verified: [checks, probes, behaviour]
 blocked_by: []
 references:
   - "Spec: ../spec.md"
