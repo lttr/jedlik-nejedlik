@@ -73,12 +73,26 @@ afterAll(async () => {
 })
 
 describe("student billing details on the account", () => {
-  // The Student policy's `read` rule on `directus_users` (own row, limited to
-  // id, e-mail and the billing fields) is not on the instance yet, so there is
-  // nothing to assert about reading Billing Details back, and a `PATCH
-  // /users/me` still answers 403: Directus reads the updated row back through
-  // the read rules. Both assertions belong here once the rule exists.
-  // See .aiwork/2026-09-15_checkout-gopay/tickets/01_billing-details-service-account.md.
+  it("lets a Student write their own billing details and read them back", async () => {
+    // The unentitled fixture owns this test: the entitled row carries the
+    // seeded values the denial probes below assert are untouched.
+    const written = await probeSend("PATCH", "/users/me", BILLING, UNENTITLED)
+    // 200, not 204: Directus answers a PATCH with the updated row when the
+    // caller may read it back, which the own-row `read` rule now allows.
+    expect(written.status).toBe(200)
+    expect(item(written)).toMatchObject(BILLING)
+
+    const read = item(await probe("/users/me", UNENTITLED))
+    expect(read).toMatchObject(BILLING)
+    expect(read.id).toBe(UNENTITLED_ID)
+  })
+
+  it("reads back nothing beyond id, e-mail and the billing fields", async () => {
+    // A field-less read returns the whole allow list, so its key set is the
+    // rule: no status, no role, no password hash, no other account's data.
+    const read = item(await probe("/users/me", ENTITLED))
+    expect(new Set(Object.keys(read))).toEqual(new Set(["id", "email", ...BILLING_FIELDS]))
+  })
 
   it("denies reading another student's row", async () => {
     const response = await probe(`/users/${ENTITLED_ID}`, UNENTITLED)

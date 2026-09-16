@@ -33,9 +33,15 @@ const createdEntitlements: number[] = []
 
 let studentId: string
 let orderId: number
+// A second Student with an Order of their own, so "reads any order" can be
+// proved rather than inferred from whatever the instance happens to hold.
+let otherStudentId: string
+let otherOrderId: number
 
-function column(rows: Record<string, unknown>[], key: string): unknown[] {
-  return rows.map((row) => row[key])
+// Which Student an Order in a read belongs to, or undefined if the read did
+// not return it at all.
+function studentOfOrder(rows: Record<string, unknown>[], order: number): unknown {
+  return rows.find((row) => row.id === order)?.student
 }
 
 async function cleanUp(path: string, keys: (string | number)[]): Promise<void> {
@@ -48,13 +54,15 @@ async function cleanUp(path: string, keys: (string | number)[]): Promise<void> {
   }
 }
 
-// Skipped until the „Shop service" account exists and its token is in
-// web/.env. Ticket 01 could not create the account on the instance, so these
-// assertions have never run against it.
+// Runs only where the „Shop service" token is in the environment
+// (DIRECTUS_PROBE_SHOP_TOKEN in web/.env); the account itself is on the
+// instance and in the committed dump.
 // See .aiwork/2026-09-15_checkout-gopay/tickets/01_billing-details-service-account.md.
 describe.skipIf(SHOP === "")("shop service account", () => {
-  beforeAll(async () => {
-    const studentRole = await roleIdByName("Student", ADMIN)
+  // A throwaway Student and an Order of theirs, created with the admin token.
+  async function seedStudentWithOrder(
+    studentRole: string,
+  ): Promise<{ student: string; order: number }> {
     const user = await probeSend(
       "POST",
       "/users",
@@ -70,20 +78,27 @@ describe.skipIf(SHOP === "")("shop service account", () => {
     if (user.status !== 200) {
       throw new Error(`Probe fixture setup failed: POST /users returned ${user.status}`)
     }
-    studentId = item(user).id as string
-    createdUsers.push(studentId)
+    const student = item(user).id as string
+    createdUsers.push(student)
 
-    const order = await probeSend(
+    const created = await probeSend(
       "POST",
       "/items/order",
-      { student: studentId, course: PUBLISHED_COURSE_ID, price_czk: 1990 },
+      { student, course: PUBLISHED_COURSE_ID, price_czk: 1990 },
       ADMIN,
     )
-    if (order.status !== 200) {
-      throw new Error(`Probe fixture setup failed: POST /items/order returned ${order.status}`)
+    if (created.status !== 200) {
+      throw new Error(`Probe fixture setup failed: POST /items/order returned ${created.status}`)
     }
-    orderId = item(order).id as number
-    createdOrders.push(orderId)
+    const order = item(created).id as number
+    createdOrders.push(order)
+    return { student, order }
+  }
+
+  beforeAll(async () => {
+    const studentRole = await roleIdByName("Student", ADMIN)
+    ;({ student: studentId, order: orderId } = await seedStudentWithOrder(studentRole))
+    ;({ student: otherStudentId, order: otherOrderId } = await seedStudentWithOrder(studentRole))
   })
 
   afterAll(async () => {
@@ -94,10 +109,12 @@ describe.skipIf(SHOP === "")("shop service account", () => {
 
   describe("the writes the payment flow needs", () => {
     it("reads any order, not only one student's", async () => {
+      // Two Orders from two different Students: a row-filtered read would
+      // return at most one of them, whoever the token belongs to.
       const response = await probe("/items/order?fields=id,student,status&limit=-1", SHOP)
       const orders = nonEmptyItems(response)
-      expect(column(orders, "id")).toContain(orderId)
-      expect(new Set(column(orders, "student")).size).toBeGreaterThan(1)
+      expect(studentOfOrder(orders, orderId)).toBe(studentId)
+      expect(studentOfOrder(orders, otherOrderId)).toBe(otherStudentId)
     })
 
     it("stamps the Payment id on an order", async () => {

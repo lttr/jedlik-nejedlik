@@ -1,6 +1,6 @@
 // The write goes through the Account's own Directus session: the app holds no
-// other credential, and the Student policy allows updating only `password` on
-// the own `directus_users` row.
+// other credential, and the Student policy allows updating only `password` and
+// the billing fields on the own `directus_users` row.
 import { readMe, updateUser } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
@@ -45,9 +45,12 @@ export async function changeAccountPassword(event: H3Event, change: PasswordChan
   // this proof session must not survive.
   await revokeRefreshToken(event, proof.refreshToken)
 
-  // Not `PATCH /users/me`: it reads the row back afterwards and, since a
-  // Student has no `read` on `directus_users`, answers 403 with the password
-  // already written. `PATCH /users/<id>` answers cleanly (probe).
+  // `PATCH /users/<id>`, not `/users/me`. Both work today: the Student policy
+  // now reads the own row, so the read-back Directus does before replying
+  // succeeds and `/users/me` no longer answers 403 over a written password
+  // (probe). The by-id form is kept because it does not depend on that read
+  // rule at all — narrowing the rule again would turn `/users/me` back into a
+  // lie, and a password change is the wrong place to learn that.
   try {
     const { id } = await client.request(readMe({ fields: ["id"] }))
     await client.request(updateUser(id, { password: change.newPassword }))

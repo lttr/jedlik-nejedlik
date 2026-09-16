@@ -1,6 +1,6 @@
 ---
-status: blocked
-blocked_by: "Directus Service Account (role, policy, user, static token) and the Student own-row read rule on directus_users must be created by a human; see implementation-notes.md"
+status: in-progress
+blocked_by: ""
 verified: []
 references:
   - "Grilling decisions: grilling.md (rounds in grill-round-1.md … grill-round-3.md)"
