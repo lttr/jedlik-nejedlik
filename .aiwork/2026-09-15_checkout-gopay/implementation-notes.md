@@ -49,6 +49,30 @@ These were settled before the first implementer ran, from
   from the environment. Worth making that call tolerate a missing file, since
   the env vars are already present when it is.
 
+## Harness limitation worth knowing before the next `/implement-spec` run
+
+An implementer subagent whose working directory is pinned at launch **cannot**
+move itself into a per-ticket worktree with `EnterWorktree`. The switch appears
+to succeed, but the Bash tool keeps the launch pin and then refuses every
+command in every directory — it reports the newly entered worktree as "the
+shared checkout". Neither `ExitWorktree` (refused from a subagent with a cwd
+override) nor re-entering recovers; Read/Write/Edit keep working, so the agent
+looks alive while being unable to run a single check.
+
+The isolation is inherited, and it binds the orchestrator too: a session
+isolated in the task worktree cannot run `git -C` against a sibling ticket
+worktree either, so it cannot perform the rebase-then-fast-forward integration
+the skill's §4.3 describes. The per-ticket worktree fan-out therefore fails at
+both ends — the implementers cannot work in their worktrees, and the
+orchestrator cannot merge them.
+
+Consequence for this run: tickets were run one at a time in the task worktree
+instead (the skill's "lone frontier ticket works directly in the task worktree"
+case), which costs the parallelism but needs no cross-worktree merge at all —
+commits land on the task branch directly. The fix for the skill is to pin
+implementers to their worktree at launch rather than have them switch into it,
+and to keep the orchestrator out of worktree isolation so it can still merge.
+
 ## Open concerns carried from the spec (not resolved here, by decision)
 
 - The terms page's withdrawal clause promises loss of the withdrawal right on
