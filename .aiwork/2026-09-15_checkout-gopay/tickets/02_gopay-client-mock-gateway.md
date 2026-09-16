@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, behaviour]
 blocked_by: []
 references:
   - "Spec: ../spec.md"
@@ -16,9 +17,29 @@ The mock: `createPayment` returns a `gw_url` to a dev-only page showing the amou
 
 ## Acceptance criteria
 
-- [ ] `GOPAY_ENV`, `GOPAY_GOID`, `GOPAY_CLIENT_ID`, `GOPAY_CLIENT_SECRET` in runtime config, the validated schema and `.env.example`; `mock` refused under `NODE_ENV=production`
-- [ ] One client interface with two implementations; the real one issues the four calls with the documented headers, bodies and URLs (unit-tested against a stubbed `$fetch`)
-- [ ] Amount conversion and GoPay state → Order status mapping are pure functions with unit tests
-- [ ] In dev with `GOPAY_ENV=mock`, opening the mock page for a created Payment and clicking „Zaplatit" records `PAID`, calls the notification URL, and redirects to the return URL; „Zrušit" does the same with `CANCELED`
-- [ ] Mock page and routes are absent from a production build
-- [ ] `vp run check:all` green
+- [x] `GOPAY_ENV`, `GOPAY_GOID`, `GOPAY_CLIENT_ID`, `GOPAY_CLIENT_SECRET` in runtime config, the validated schema and `.env.example`; `mock` refused under `NODE_ENV=production`
+- [x] One client interface with two implementations; the real one issues the four calls with the documented headers, bodies and URLs (unit-tested against a stubbed `$fetch`)
+- [x] Amount conversion and GoPay state → Order status mapping are pure functions with unit tests
+- [x] In dev with `GOPAY_ENV=mock`, opening the mock page for a created Payment and clicking „Zaplatit" records `PAID`, calls the notification URL, and redirects to the return URL; „Zrušit" does the same with `CANCELED`
+- [x] Mock page and routes are absent from a production build
+- [x] `vp run check:all` green
+
+## Verification
+
+Nuxt reads env overrides with the `NUXT_` prefix, so the four variables are
+`NUXT_GOPAY_ENV`, `NUXT_GOPAY_GOID`, `NUXT_GOPAY_CLIENT_ID` and
+`NUXT_GOPAY_CLIENT_SECRET` (as `NUXT_SESSION_PASSWORD` already is).
+
+- **Checks** — `vp run check:all` green; 24 new unit tests (`tests/unit/gopay.test.ts`,
+  `tests/unit/gopay-api-client.test.ts`).
+- **Behaviour, dev app** (`NUXT_GOPAY_ENV=mock`): a Payment created through
+  `getGopayClient(event)` answers a `gw_url` on this server; the gateway page
+  renders the Course, amount and both buttons; „Zaplatit" records `PAID`,
+  „Zrušit" records `CANCELED`, each calls `/api/gopay/notify?id=<id>` on the
+  request's own origin (404 today — the route is ticket 04's, and the dev log
+  shows the attempt) and redirects to the return URL. Screenshots:
+  `../screenshots/02-mock-gateway-desktop.png`, `../screenshots/02-mock-gateway-375.png`.
+- **Behaviour, built site** (`nuxi build` with `NUXT_GOPAY_ENV=sandbox`): the
+  output contains no `platba-mock` page and no `/api/gopay/mock/**` route, both
+  answer 404 on the running server, and boot refuses `NUXT_GOPAY_ENV=mock`
+  („refused in production"), an unknown env value, and missing credentials.

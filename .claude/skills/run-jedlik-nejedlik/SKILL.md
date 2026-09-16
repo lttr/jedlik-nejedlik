@@ -23,6 +23,34 @@ Always address it as `localhost`, never `127.0.0.1` — `nuxi dev` binds the
 hostname `localhost`, which may resolve to IPv6 only, and then a v4 probe hangs.
 If the log says `Using alternative port`, use that port instead.
 
+## Payments: the mock gateway
+
+`NUXT_GOPAY_ENV` picks the gateway the shop talks to, and `mock` is the only
+value that needs no credentials. Put `NUXT_GOPAY_ENV=mock` in `web/.env`
+(gitignored) before starting the server: it selects the in-memory gateway
+**and** is what puts the gateway page and its routes into the build at all, so
+with any other value `/platba-mock/<id>` is a 404.
+
+The Checkout sends the browser to the gateway page, where „Zaplatit" and
+„Zrušit" record the state, call the site's own notification URL (rewritten
+onto the origin the request came in on, so it never reaches the deployed
+site) and redirect to the return URL. The same actions work without a browser,
+which is how a flow test pays:
+
+```bash
+# create a Payment without the Checkout (dev-only route)
+curl -s -X POST http://localhost:3000/api/gopay/mock/payments \
+  -H 'content-type: application/json' \
+  -d '{"priceCzk":1490,"returnUrl":"https://www.jedlik-nejedlik.cz/objednavka/42/navrat","notificationUrl":"https://www.jedlik-nejedlik.cz/api/gopay/notify"}'
+# pay it (or "cancel"); answers 303 to the return URL, notification already sent
+curl -s -i -X POST "http://localhost:3000/api/gopay/mock/payments/<id>/decide" \
+  -H 'content-type: application/json' -d '{"action":"pay"}'
+# read the recorded state back
+curl -s "http://localhost:3000/api/gopay/mock/payments/<id>"
+```
+
+State lives in process memory: restarting the server forgets every Payment.
+
 ## Production build
 
 Behaviour gated off in dev (`import.meta.dev`, hostname allow-lists) is only
@@ -36,6 +64,10 @@ PORT=3100 node web/.output/server/index.mjs
 Same env requirement as dev. Use a host the gate does not exclude. Observe
 third-party scripts by blocking their hosts in the browser session and reading
 what the app queued, so nothing real leaves the machine.
+
+A built server also validates the runtime config at boot and refuses to start
+on a bad one, which is the only place `NUXT_GOPAY_ENV=mock` gets rejected —
+worth a run whenever that schema changes.
 
 ## Drive
 
@@ -88,6 +120,14 @@ no events fire locally.
 
 ## Cloud container quirks
 
+- `playwright-cli` is installed as a Vite+ global, and its bin directory is on
+  PATH only for shells that read `~/.bashrc`. If the browser plugin's preflight
+  says the command is missing, prepend `$HOME/.local/share/vite-plus/bin` to
+  PATH and run it again before installing anything.
+- `vp run build` fails here in `@nuxt/fonts` with
+  `SELF_SIGNED_CERT_IN_CHAIN` fetching Google Fonts: the task does not carry
+  the proxy environment. `npx nuxi build` from `web/` is the same build
+  (`web/package.json`'s `build` script) and completes.
 - The headless Chromium cannot open a TLS tunnel through the container's agent
   proxy: every external host fails with `ERR_CONNECTION_RESET`, so Directus
   images and Sentry never load in the browser, while the Nitro side (and
