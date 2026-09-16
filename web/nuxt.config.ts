@@ -102,6 +102,12 @@ export default defineNuxtConfig({
         sameSite: "lax",
       },
     },
+    shop: {
+      // The Shop Service Account's static Directus token (ADR 0006), from
+      // NUXT_SHOP_DIRECTUS_TOKEN. Private: it grants the payment flow's
+      // writes, so it must never reach the browser.
+      directusToken: "",
+    },
     public: {
       // Shop launch switch, off unless NUXT_PUBLIC_COURSES_PUBLIC is set.
       coursesPublic: false,

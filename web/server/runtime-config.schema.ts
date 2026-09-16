@@ -53,6 +53,12 @@ const gopaySchema = z
 
 export const privateSchema: z.ZodType | undefined = z.looseObject({
   gopay: gopaySchema,
+  shop: z.looseObject({
+    // The Shop Service Account's static Directus token (ADR 0006). Without it
+    // no Payment can be stamped onto an Order and no Entitlement granted, so
+    // an empty one is a boot failure rather than a runtime surprise.
+    directusToken: z.string().min(1, { error: "NUXT_SHOP_DIRECTUS_TOKEN is required" }),
+  }),
   session: z.looseObject({
     password: z.string().min(32, { error: "NUXT_SESSION_PASSWORD must be at least 32 characters" }),
   }),
