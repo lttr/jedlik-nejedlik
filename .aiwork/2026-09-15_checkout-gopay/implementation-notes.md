@@ -109,54 +109,111 @@ typecheck` both run with `NODE_ENV=production` and would otherwise strip the
   browser plugin's preflight reports it missing. Both recipes are now in the
   `run-jedlik-nejedlik` skill.
 
-## Ticket 01 — Billing Details and the Service Account (STOPPED THE RUN)
+## Ticket 01 — Billing Details and the Service Account
 
-Left at `status: in-progress`, criteria 1 and 5 ticked, 2/3/4/6 not. The chain
-stops here: tickets 03–06 cannot be verified without what is missing below.
+Done, `verified: [checks, probes]`. The instance changes were applied partly by
+the implementer and partly by hand (see "Where the run stopped" below); they are
+all recorded in `directus/config/**` and `vp run directus:diff` is clean.
 
-**Only a human can finish this.** The privileged Directus calls were refused by
-the permission classifier, so the Service Account does not exist. To close it:
-create the „Služby" role and its policy (`app_access: false`) with the
-permissions ADR 0006 lists, the „Shop service" user, mint its static token into
-`NUXT_SHOP_DIRECTUS_TOKEN` (and `DIRECTUS_PROBE_SHOP_TOKEN` for the probes), add
-the Student `read` rule on `directus_users` (own row; `id`, `email`,
-`billing_*`), then `vp run directus:pull` and `vp run directus:probe`.
-`web/tests/probes/shop-service.probe.ts` unskips itself and is the acceptance
-test. The exact list is in the ticket's "Left to apply on the instance" section.
+- **The env var is `NUXT_SHOP_DIRECTUS_TOKEN`**, not `DIRECTUS_SHOP_TOKEN` as the
+  spec and the ticket say: the nested runtime-config key `shop.directusToken`
+  snake-cases to `SHOP_DIRECTUS_TOKEN`, and Nuxt only maps `NUXT_`-prefixed
+  variables. **It must also be set in Coolify** for the deployed site; the token
+  is stored hashed in Directus and is in no dump, so if it is lost it has to be
+  rotated in the admin app.
 
-- **What _is_ applied to production, and is recorded**: the six `billing_*`
-  fields on `order` and on `directus_users`, the Student `order` create rule
-  widened to accept the billing snapshot (permission 75), and the Student
-  `directus_users` update rule widened from `[password]` to password + the six
-  billing fields (permission 107). `vp run directus:diff` is clean, so the
-  instance is not ahead of the dump.
+- **Adding the Student's own-row read rule changed four `auth.probe.ts`
+  expectations, and that is a fix rather than a regression.** Directus answers a
+  `PATCH` with the updated row (200) once the caller may read it back, and with a
+  bare 204 — or a misleading 403 — when it may not. One of those probes was
+  literally named "answers PATCH /users/me with 403 even though it wrote the
+  password", with the comment "the 403 is a lie". `/users/me` is now honest. The
+  probes were rewritten to the new contract and the stale comments corrected.
+  All three security properties are still asserted and still hold: the old
+  password stops working and the new one works (now checked for both write
+  spellings, which the old `/users/me` test never did), a change still signs out
+  every session including the current one, and another Student's row stays
+  unreadable and unwritable.
 
-- **Directus reads an updated row back through the read rules.** A Student's
-  `PATCH /users/me` therefore answers **403** while the own-row read rule is
-  missing, even though the update rule now permits the fields. This is measured
-  against the instance, not inferred. Two assertions (own-row write, own-row
-  read) are absent from `billing-details.probe.ts` for that reason, with a
-  comment marking where they belong.
+- **Decision where the spec was silent:** the password-change route keeps
+  `PATCH /users/:pk` rather than switching to `/users/me`, even though
+  `/users/me` now works. The by-id form does not depend on the new read rule,
+  while `/users/me` would silently revert to "403 over an already-written
+  password" if that rule were ever narrowed — a password change is the wrong
+  place to discover that. The saving would have been one round-trip. The
+  `/users/me` contract is pinned by a probe, so the simplification stays
+  available.
 
-- **The app cannot boot on this branch until the token exists.** The
-  runtime-config schema requires `shop.directusToken`, so `vp run dev` fails.
-  That is spec-true — the checkout genuinely cannot work without it — but it is
-  what blocks local verification for tickets 03–06. If that proves too costly
-  before the account exists, the smallest fix is a dev-only exemption in
-  `web/server/runtime-config.schema.ts`, mirroring the `import.meta.dev` branch
-  ticket 02 already has there.
+- **Contradicts the spec and ADR 0006:** the Service Account's `course` read
+  covers `id, slug, price_czk, status, title`. Both documents listed only the
+  first four, but GoPay's `order_description` needs the title, so the instance is
+  right. The ADR was corrected; **the spec's Implementation Decisions section
+  still lists four and should be amended.** The account's `order` read likewise
+  includes the `billing_*` snapshot, which area 05 invoices from.
 
-- **Real environment variable is `NUXT_SHOP_DIRECTUS_TOKEN`**, not
-  `DIRECTUS_SHOP_TOKEN` as the spec and ticket say: the nested runtime-config key
-  `shop.directusToken` snake-cases to `SHOP_DIRECTUS_TOKEN`, and Nuxt only maps
-  `NUXT_`-prefixed variables. It also has to reach Coolify for deploys.
-
-- **Unverified:** `shop-service.probe.ts` has never executed — the account it
-  targets does not exist. Expect to fix small things in it on its first run.
+- **Unverified:** the runtime path that actually uses the Service Account token
+  has never run end to end. The probes prove the permission matrix from outside,
+  not that Nitro uses it correctly. That closes in ticket 04.
 
 - **`it.skip` fails the repo's lint** (`vitest/no-disabled-tests` under oxlint,
   enforced by `vp staged`); a conditional `describe.skipIf(...)` passes. Worth
   knowing before writing a gated probe.
+
+- **Probes should not lean on incidental instance data.**
+  `shop-service.probe.ts` originally inferred "the Order read is not row-filtered"
+  from the instance happening to hold Orders from more than one Student, and went
+  red as soon as that stopped being true. It now seeds two throwaway Students with
+  an Order each and cleans up after itself. Anything else resting on live data
+  deserves the same treatment.
+
+### Where the run stopped, and why it needed a human
+
+The permission classifier refuses bulk Directus permission grants, and escalates
+to a hard denial after a couple of similar calls. Two agent sessions hit it. The
+role, policy, its six permission rules, the Student read rule and the „Shop
+service" user were finished by hand from the orchestrator session and a
+user-run script. If this has to be redone on a fresh instance, expect to do it
+manually — the ADR's "Consequences" section already says the account is not
+reproducible from the repository, and the token never is.
+
+A caution for anyone writing that script: grants are **not** idempotent.
+Directus happily inserts a duplicate permission row for the same
+policy + collection + action, so a re-run after a partial failure silently
+doubles every rule that already landed. Check for the existing rule before
+creating it, and put the "does the user already exist" guard _before_ the
+grants, not after.
+
+## Where this run ended
+
+Stopped deliberately after ticket 01, at the maintainer's request — not because
+of a blocker. **Tickets 03, 04, 05 and 06 were never started**, so the spec's
+wrap-up (`/simplify`, `/code-review xhigh`, a full `/verify` over the branch,
+`review.md`) has not run either. The spec stays `in-progress`: it is neither
+blocked nor agent-done.
+
+Done: **02** (GoPay client and mock gateway) and **01** (Billing Details and the
+Service Account). Both carry `status: done` with every acceptance criterion
+ticked and the passes that actually ran in `verified:`.
+
+What the next session inherits, in the order the `blocked_by` graph allows:
+
+1. **03 — Checkout for a logged-in Student.** Unblocked now: both its blockers
+   are done and the dev server can finally boot, because
+   `NUXT_SHOP_DIRECTUS_TOKEN` exists. It owns the Billing Details form component
+   and the shop layer's shared notice component, per the orchestration decisions
+   at the top of this file.
+2. **04** and **06** follow 03; **05** was deliberately held behind 03 for the
+   form component.
+
+Two corrections to make to the spec while you are in there, both found by
+implementers and both recorded above: every `GOPAY_*` and the shop token need
+the `NUXT_` prefix to reach runtime config, and the Service Account's `course`
+read includes `title`.
+
+Nothing in this area has ever talked to a real GoPay, and the Service Account's
+token has never been exercised by a running request — only by the probes, from
+outside. Ticket 04 is the first thing that closes the second gap; the first
+needs GoPay sandbox credentials and belongs to `../2026-09-15_gopay-go-live/`.
 
 ## Open concerns carried from the spec (not resolved here, by decision)
 
