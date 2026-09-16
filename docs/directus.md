@@ -127,8 +127,9 @@ default test run.
 vp run directus:probe   # from the repo root
 ```
 
-Tokens live in `web/.env` (gitignored). `web/vitest.probes.config.ts` loads it
-via `process.loadEnvFile()`, and shell-set variables take precedence.
+Tokens live in `web/.env` (gitignored). `web/vitest.probes.config.ts` loads that
+file when it exists, and shell-set variables take precedence, so an environment
+that exports the `DIRECTUS_PROBE_*` variables itself needs no file.
 
 The suite is self-cleaning: it deletes everything it creates. A failed run can
 leave rows behind, which the next run's admin sweep removes.
