@@ -1010,7 +1010,13 @@
     "action": "update",
     "collection": "directus_users",
     "fields": [
-      "password"
+      "password",
+      "billing_name",
+      "billing_company",
+      "billing_ic",
+      "billing_street",
+      "billing_city",
+      "billing_zip"
     ],
     "permissions": {
       "_and": [
@@ -1191,7 +1197,13 @@
       "student",
       "course",
       "price_czk",
-      "consents"
+      "consents",
+      "billing_name",
+      "billing_company",
+      "billing_ic",
+      "billing_street",
+      "billing_city",
+      "billing_zip"
     ],
     "permissions": null,
     "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
