@@ -28,7 +28,8 @@ allows exactly:
 - `order`: read, and update of `status`, `gopay_payment_id` and
   `fakturoid_invoice_id`
 - `entitlement`: create and read
-- `course`: read of `id`, `slug`, `price_czk`, `status`
+- `course`: read of `id`, `slug`, `price_czk`, `status` and `title` — the
+  title is the Payment's `order_description`
 - `directus_users`: read of `id` and `email`, for the payer contact GoPay needs
 
 It may not create an Order, change a Course, touch a user or delete an

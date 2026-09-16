@@ -1006,6 +1006,33 @@
     "validation": null
   },
   {
+    "_syncId": "61312f5a-8d9b-412a-b545-fbc9978a4e58",
+    "action": "read",
+    "collection": "directus_users",
+    "fields": [
+      "id",
+      "email",
+      "billing_name",
+      "billing_company",
+      "billing_ic",
+      "billing_street",
+      "billing_city",
+      "billing_zip"
+    ],
+    "permissions": {
+      "_and": [
+        {
+          "id": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
+    "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
     "_syncId": "4d7c9c6f-4401-4ca4-b203-d580969b6634",
     "action": "update",
     "collection": "directus_users",
@@ -1272,6 +1299,105 @@
       ]
     },
     "policy": "a17cfc9d-ebf3-4254-a6bd-ce43f77ddb1d",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "ceb4162e-db3d-4d2e-865f-540bace46f35",
+    "action": "read",
+    "collection": "course",
+    "fields": [
+      "id",
+      "slug",
+      "price_czk",
+      "status",
+      "title"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "029073a2-c608-408d-94d8-8825ea8a80be",
+    "action": "read",
+    "collection": "directus_users",
+    "fields": [
+      "id",
+      "email"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "a270df54-51c8-4388-bae3-4f07764583ce",
+    "action": "create",
+    "collection": "entitlement",
+    "fields": [
+      "student",
+      "course",
+      "order"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "e3dc8d5e-6f7d-4bf4-9d9b-b9e69aae6cb4",
+    "action": "read",
+    "collection": "entitlement",
+    "fields": [
+      "id",
+      "student",
+      "course",
+      "order",
+      "granted_at"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "e7f0750c-5767-411d-b66c-d186f799f870",
+    "action": "read",
+    "collection": "order",
+    "fields": [
+      "id",
+      "student",
+      "course",
+      "status",
+      "price_czk",
+      "gopay_payment_id",
+      "fakturoid_invoice_id",
+      "billing_name",
+      "billing_company",
+      "billing_ic",
+      "billing_street",
+      "billing_city",
+      "billing_zip",
+      "date_created",
+      "date_updated"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "presets": null,
+    "validation": null
+  },
+  {
+    "_syncId": "10c67de4-9aa7-426b-955e-b170e02a402b",
+    "action": "update",
+    "collection": "order",
+    "fields": [
+      "status",
+      "gopay_payment_id",
+      "fakturoid_invoice_id"
+    ],
+    "permissions": {},
+    "policy": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
     "presets": null,
     "validation": null
   },
