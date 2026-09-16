@@ -1,8 +1,14 @@
+import { existsSync } from "node:fs"
+import { fileURLToPath } from "node:url"
+
 import { defineConfig } from "vitest/config"
 
-// Probe tokens (DIRECTUS_PROBE_*) live in web/.env, which vitest does not
-// load on its own — pull it in here so no shell preamble is needed.
-process.loadEnvFile(new URL(".env", import.meta.url).pathname)
+// Vitest does not read web/.env, so load the probe tokens (DIRECTUS_PROBE_*)
+// here when that file exists. Shell variables take precedence either way.
+const envFile = fileURLToPath(new URL(".env", import.meta.url))
+if (existsSync(envFile)) {
+  process.loadEnvFile(envFile)
+}
 
 // On-demand Directus permission probes against the production instance.
 // Run via `vp run directus:probe` — deliberately excluded from any default
