@@ -109,6 +109,55 @@ typecheck` both run with `NODE_ENV=production` and would otherwise strip the
   browser plugin's preflight reports it missing. Both recipes are now in the
   `run-jedlik-nejedlik` skill.
 
+## Ticket 01 — Billing Details and the Service Account (STOPPED THE RUN)
+
+Left at `status: in-progress`, criteria 1 and 5 ticked, 2/3/4/6 not. The chain
+stops here: tickets 03–06 cannot be verified without what is missing below.
+
+**Only a human can finish this.** The privileged Directus calls were refused by
+the permission classifier, so the Service Account does not exist. To close it:
+create the „Služby" role and its policy (`app_access: false`) with the
+permissions ADR 0006 lists, the „Shop service" user, mint its static token into
+`NUXT_SHOP_DIRECTUS_TOKEN` (and `DIRECTUS_PROBE_SHOP_TOKEN` for the probes), add
+the Student `read` rule on `directus_users` (own row; `id`, `email`,
+`billing_*`), then `vp run directus:pull` and `vp run directus:probe`.
+`web/tests/probes/shop-service.probe.ts` unskips itself and is the acceptance
+test. The exact list is in the ticket's "Left to apply on the instance" section.
+
+- **What _is_ applied to production, and is recorded**: the six `billing_*`
+  fields on `order` and on `directus_users`, the Student `order` create rule
+  widened to accept the billing snapshot (permission 75), and the Student
+  `directus_users` update rule widened from `[password]` to password + the six
+  billing fields (permission 107). `vp run directus:diff` is clean, so the
+  instance is not ahead of the dump.
+
+- **Directus reads an updated row back through the read rules.** A Student's
+  `PATCH /users/me` therefore answers **403** while the own-row read rule is
+  missing, even though the update rule now permits the fields. This is measured
+  against the instance, not inferred. Two assertions (own-row write, own-row
+  read) are absent from `billing-details.probe.ts` for that reason, with a
+  comment marking where they belong.
+
+- **The app cannot boot on this branch until the token exists.** The
+  runtime-config schema requires `shop.directusToken`, so `vp run dev` fails.
+  That is spec-true — the checkout genuinely cannot work without it — but it is
+  what blocks local verification for tickets 03–06. If that proves too costly
+  before the account exists, the smallest fix is a dev-only exemption in
+  `web/server/runtime-config.schema.ts`, mirroring the `import.meta.dev` branch
+  ticket 02 already has there.
+
+- **Real environment variable is `NUXT_SHOP_DIRECTUS_TOKEN`**, not
+  `DIRECTUS_SHOP_TOKEN` as the spec and ticket say: the nested runtime-config key
+  `shop.directusToken` snake-cases to `SHOP_DIRECTUS_TOKEN`, and Nuxt only maps
+  `NUXT_`-prefixed variables. It also has to reach Coolify for deploys.
+
+- **Unverified:** `shop-service.probe.ts` has never executed — the account it
+  targets does not exist. Expect to fix small things in it on its first run.
+
+- **`it.skip` fails the repo's lint** (`vitest/no-disabled-tests` under oxlint,
+  enforced by `vp staged`); a conditional `describe.skipIf(...)` passes. Worth
+  knowing before writing a gated probe.
+
 ## Open concerns carried from the spec (not resolved here, by decision)
 
 - The terms page's withdrawal clause promises loss of the withdrawal right on
