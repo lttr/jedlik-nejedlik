@@ -257,3 +257,39 @@ needs GoPay sandbox credentials and belongs to `../2026-09-15_gopay-go-live/`.
   `course` read includes `title`.
 - Ticket 06's stated gate is green: `vp run directus:probe` passes the
   `USER_REGISTER_URL_ALLOW_LIST` probe, so the instance setting is in place.
+
+### 03 — Checkout for a logged-in Student (42a4fa1)
+
+- **A repo-wide typing consequence, deliberate.** `Schema` now declares
+  `directus_users: AccountUserCollection[]`
+  (`web/layers/directus/shared/types/directus.ts`). Declaring that collection
+  **replaces** the SDK's built-in system-user shape, which is the only way the
+  `billing_*` columns become typed at all — but it also means any other
+  `directus_users` column the app ever reads or writes has to be added to that
+  interface or it will not typecheck. Today it lists `id`, `email`, `password`
+  and the six billing columns. `OrderCollection.consents` was likewise widened
+  from `number[]` to also accept `NewOrderConsent[]`, so the Order and its
+  Consent go to Directus in one nested create.
+- **Pre-existing site bug that will bite ticket 06 and any future form.**
+  `web/app/assets/css/main.css` has `input, textarea { max-width: none;
+width: 100% }`, which outranks Puleo's zero-specificity
+  `:where(input[type="checkbox"]) { inline-size: var(--space-4) }` — a bare
+  checkbox stretches to the full row width (measured 460 px). The Checkout works
+  around it in its own scoped style; the honest fix is one exclusion in
+  `main.css`, left alone as out of scope. Related trap found the same way:
+  `--font-size-00` does not exist in the Puleo scale (`--font-size--2` …
+  `--font-size-5`), and an undefined token fails silently by inheriting.
+- **Decision where the spec was silent: the 409 is rendered by the page, not by
+  the site's error page.** Nuxt's default error page would head the screen with
+  `already_entitled`. The Checkout instead shows the route's Czech sentence in
+  the new `<ShopNotice>` and never renders the form; the way onward depends on
+  which refusal it is. The helper that reads it, `readRefusal`, is unit-tested.
+- **Unverified until ticket 04, by design.** The Payment is created with
+  `callback.return_url = /objednavka/<id>/navrat` and
+  `callback.notification_url = /api/gopay/notify`; neither route existed yet, so
+  pressing „Zaplatit" at the mock logged an unanswered notification and dropped
+  the Student on a 404. Everything up to reaching the gateway is verified;
+  settlement is ticket 04's to close.
+- **Accepted limit in the Order-reuse check:** only the newest `created` Order
+  that has a `gopay_payment_id` is inquired, so a checkout costs at most one
+  GoPay round-trip. The reasoning is in the comment on `reusableOrder`.
