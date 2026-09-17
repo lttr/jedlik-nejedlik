@@ -114,18 +114,18 @@ can be developed, verified and demonstrated locally.
 
 ### Service Account (ADR 0006, to be written during implementation)
 
-- A Directus user „Shop service" with role „Služby", `app_access: false`, a static token in `DIRECTUS_SHOP_TOKEN`. Its policy: `order` read all + update on `status, gopay_payment_id, fakturoid_invoice_id`; `entitlement` create + read; `course` read (id, slug, price_czk, status); `directus_users` read (id, email) for the Payment's payer contact. Nothing else. Never the admin token.
+- A Directus user „Shop service" with role „Služby", `app_access: false`, a static token in `NUXT_SHOP_DIRECTUS_TOKEN`. Its policy: `order` read all + update on `status, gopay_payment_id, fakturoid_invoice_id`; `entitlement` create + read; `course` read (id, slug, title, price_czk, status); `directus_users` read (id, email) for the Payment's payer contact. Nothing else. Never the admin token.
 - Nitro gets a third server client next to the anonymous and the caller-bound ones, built from that token, used only by the Payment and settlement code.
 
 ### GoPay client
 
 - A Nitro util over `$fetch` with four calls: token (OAuth2 client credentials, `payment-all`, cached in process and refreshed two minutes before its 30-minute expiry), create Payment, inquire Payment, refund (implemented for completeness, unused by the UI). No SDK: GoPay ships none for Node and the third-party packages are years stale.
 - Create Payment: amount in haléře (`price_czk × 100`), `currency: CZK`, `order_number` = the Order id, `order_description` = the Course title, one `items` entry, `lang: CS`, `payer.contact.email` = the Student's e-mail, `callback.return_url` and `callback.notification_url` built with the auth layer's absolute-URL helper (site config, not the Host header). The Payment id is stamped onto the Order by the Service Account; the Order's `gopay_payment_id` is unique, which is the idempotency key.
-- Environment: `GOPAY_ENV=mock|sandbox|production`, `GOPAY_GOID`, `GOPAY_CLIENT_ID`, `GOPAY_CLIENT_SECRET`, `DIRECTUS_SHOP_TOKEN`, all in the runtime config, the validated runtime-config schema and `.env.example`. `mock` is rejected when `NODE_ENV=production`. Sandbox and production differ only in base URL.
+- Environment: `NUXT_GOPAY_ENV=mock|sandbox|production`, `NUXT_GOPAY_GOID`, `NUXT_GOPAY_CLIENT_ID`, `NUXT_GOPAY_CLIENT_SECRET`, `NUXT_SHOP_DIRECTUS_TOKEN` (the `NUXT_` prefix is what reaches runtime config), all in the runtime config, the validated runtime-config schema and `.env.example`. `mock` is rejected when `NODE_ENV=production`. Sandbox and production differ only in base URL.
 
 ### Mock gateway
 
-- Selected by `GOPAY_ENV=mock`. `createPayment` returns a `gw_url` to a dev-only page that shows the amount and two buttons, „Zaplatit" and „Zrušit"; `inquire` returns the state recorded by those buttons. Clicking a button records the state, calls the site's own notification route with the Payment id, then redirects to the return URL. State lives in process memory. The page and its routes are registered only in mock mode.
+- Selected by `NUXT_GOPAY_ENV=mock`. `createPayment` returns a `gw_url` to a dev-only page that shows the amount and two buttons, „Zaplatit" and „Zrušit"; `inquire` returns the state recorded by those buttons. Clicking a button records the state, calls the site's own notification route with the Payment id, then redirects to the return URL. State lives in process memory. The page and its routes are registered only in mock mode.
 
 ### Settlement (one function, two callers)
 
@@ -176,6 +176,8 @@ A good test drives a public seam and asserts observable outcomes: an HTTP status
 - The terms page promises loss of the withdrawal right when consented in the order form; with no § 1837 checkbox that clause is dormant and should be reworded. Owner: site owner with the lawyer, area 10.
 - GoPay sandbox credentials must be requested from GoPay by the association; until then only the mock exists. Owner: site owner.
 - Whether Live Courses ever join the Catalog and when SimpleShop is switched off remains unscheduled. Owner: site owner.
+
+All three were put to the maintainer on 2026-09-17 before the implementation run and carried deliberately: the wording is fine for now, the mock gateway is enough until go-live, and SimpleShop stays as it is because the Kurzy features are orthogonal to it.
 
 ## Further Notes
 
