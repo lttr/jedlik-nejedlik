@@ -45,9 +45,6 @@
       <NuxtLink to="/2026-online-kurz-deti" class="offer-link">
         Online kurz pro rodiče dětí s nadváhou a obezitou ve věku 3–7 let
       </NuxtLink>
-      <NuxtLink to="/kurz-zdraveho-nehubnuti-6-9-trida" class="offer-link">
-        Kurz zdravého (ne)hubnutí naživo – 6.–9.&nbsp;třída
-      </NuxtLink>
       <NuxtLink to="/kurz-zdraveho-nehubnuti-2-5-trida" class="offer-link">
         Kurz zdravého (ne)hubnutí naživo – 2.–5.&nbsp;třída
       </NuxtLink>

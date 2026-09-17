@@ -20,6 +20,8 @@ export const LIVE_COURSES = {
     startDate: "5. 10. 2026",
     buyUrl: "https://form.simpleshop.cz/JmEVq/buy/",
   },
+  // Taken off the site (no page, no buy link); the entry stays so the
+  // thank-you page still names the course for buyers who ordered earlier.
   "nazivo-6-9-hk-2026-09": {
     name: "Kurz (ne)hubnutí naživo 6.–9. třída, Hradec Králové",
     startDate: "22. 9. 2026",
