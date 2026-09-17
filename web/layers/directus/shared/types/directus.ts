@@ -70,7 +70,10 @@ export interface LessonMaterialCollection {
 export type OrderCollection = z.input<typeof OrderSchema> & {
   date_created: string | null
   date_updated: string | null
-  consents: number[]
+  // O2M: ids on the wire, rows when a query expands the relation, and the
+  // rows to write when the Checkout places an Order with its Consent in one
+  // request.
+  consents: number[] | OrderConsentCollection[] | NewOrderConsent[]
   // Billing Details as they were when the Order was placed. A snapshot, so a
   // later change on the Account never alters an issued invoice; all optional,
   // because a name is never a wall between a Student and a Course.
@@ -84,9 +87,32 @@ export type OrderCollection = z.input<typeof OrderSchema> & {
 
 export type OrderConsentCollection = z.input<typeof OrderConsentSchema>
 
+// A Consent as it is created: the id and the parent are Directus's to fill in
+// (the parent because it is nested under its Order), `granted_at` the Student
+// policy's preset, so that the moment of consent is the server's clock.
+export type NewOrderConsent = Pick<OrderConsentCollection, "document" | "document_version">
+
 export type EntitlementCollection = z.input<typeof EntitlementSchema>
 
+// The `directus_users` columns this app touches. Naming the collection in the
+// Schema replaces the SDK's built-in system shape, which is the only way the
+// Billing Details — custom columns Directus knows nothing about — become
+// typed; the price is that anything else the app reads or writes on a user has
+// to be listed here too.
+export interface AccountUserCollection {
+  id: string
+  email: string
+  password: string
+  billing_name: string | null
+  billing_company: string | null
+  billing_ic: string | null
+  billing_street: string | null
+  billing_city: string | null
+  billing_zip: string | null
+}
+
 export interface Schema {
+  directus_users: AccountUserCollection[]
   articles: ArticleCollection[]
   biography_expert: BiographyExpertCollection[]
   course: CourseCollection[]
