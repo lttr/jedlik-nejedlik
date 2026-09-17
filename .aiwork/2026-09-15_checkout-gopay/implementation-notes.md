@@ -244,3 +244,16 @@ needs GoPay sandbox credentials and belongs to `../2026-09-15_gopay-go-live/`.
   real GoPay. Owner: site owner, tracked in `../2026-09-15_gopay-go-live/`.
 - Whether Live Courses join the Catalog, and when SimpleShop is switched off,
   stays unscheduled. Owner: site owner.
+
+## Run 2 (2026-09-17): tickets 03–06
+
+- The maintainer cleared all three Open Concerns at the gate without resolving
+  them: the terms wording stays as it is for now, the mock gateway is enough
+  until GoPay go-live, and SimpleShop is left alone because the Kurzy features
+  are orthogonal to it. Recorded in the spec's Open Concerns too.
+- The two corrections run 1 left behind are now in the spec: the shop token is
+  `NUXT_SHOP_DIRECTUS_TOKEN` and every GoPay key carries the `NUXT_` prefix
+  (that prefix is what reaches runtime config), and the Service Account's
+  `course` read includes `title`.
+- Ticket 06's stated gate is green: `vp run directus:probe` passes the
+  `USER_REGISTER_URL_ALLOW_LIST` probe, so the instance setting is in place.
