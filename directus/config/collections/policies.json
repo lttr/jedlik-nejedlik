@@ -85,6 +85,23 @@
     ]
   },
   {
+    "_syncId": "b2d55a3b-021c-41b6-90c8-c0ea1d9a6680",
+    "admin_access": false,
+    "app_access": false,
+    "description": "Platební tok obchodu: označí objednávku zaplacenou a přidělí oprávnění ke kurzu. Nic jiného. Viz ADR 0006.",
+    "enforce_tfa": false,
+    "icon": "shopping_cart_checkout",
+    "ip_access": null,
+    "name": "Shop service",
+    "roles": [
+      {
+        "role": "8fe8c087-65ca-450e-b9e9-68a40e33eac5",
+        "sort": 1,
+        "user": null
+      }
+    ]
+  },
+  {
     "_syncId": "d15b2dbf-4d69-437b-9f39-a1447e9fca10",
     "admin_access": false,
     "app_access": true,

@@ -71,6 +71,15 @@ export type OrderCollection = z.input<typeof OrderSchema> & {
   date_created: string | null
   date_updated: string | null
   consents: number[]
+  // Billing Details as they were when the Order was placed. A snapshot, so a
+  // later change on the Account never alters an issued invoice; all optional,
+  // because a name is never a wall between a Student and a Course.
+  billing_name: string | null
+  billing_company: string | null
+  billing_ic: string | null
+  billing_street: string | null
+  billing_city: string | null
+  billing_zip: string | null
 }
 
 export type OrderConsentCollection = z.input<typeof OrderConsentSchema>

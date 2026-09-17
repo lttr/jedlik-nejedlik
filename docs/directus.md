@@ -17,6 +17,9 @@ claude mcp add --transport http directus <directus-url>/mcp \
   --header "Authorization: Bearer <your-mcp-user-token>"
 ```
 
+An edit made through the MCP counts as an admin-app edit: it changes the live
+instance and is pulled into the repo the same way, with `vp run directus:pull`.
+
 The same credential doubles as the admin token for the commands below. Extract
 it with `claude mcp get directus` rather than minting a second one, and keep it
 as `DIRECTUS_PROBE_ADMIN_TOKEN` in `web/.env` so the commands work outside a

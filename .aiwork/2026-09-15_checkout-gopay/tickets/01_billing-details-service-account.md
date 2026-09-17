@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, probes, behaviour]
 blocked_by: []
 references:
   - "Spec: ../spec.md"
@@ -16,9 +17,9 @@ Apply the Directus changes through the MCP (admin token), then `vp run directus:
 
 ## Acceptance criteria
 
-- [ ] `directus_users` and `order` each have optional `billing_name`, `billing_company`, `billing_ic`, `billing_street`, `billing_city`, `billing_zip`
-- [ ] Student policy: reads own row limited to id, e-mail and billing fields; updates own row limited to password and billing fields; the Order create rule accepts the billing snapshot; a probe shows another Student's row is unreadable and unwritable
-- [ ] A Directus user „Shop service" (role „Služby", `app_access: false`) with a static token; its policy allows only: order read + update of `status`, `gopay_payment_id`, `fakturoid_invoice_id`; entitlement create + read; course read of id, slug, price, status; users read of id and e-mail
-- [ ] Probes: the Service Account can do each of those and is refused an order create, a course update, a users update and an entitlement delete; a second Entitlement for the same Student × Course is refused
-- [ ] `DIRECTUS_SHOP_TOKEN` in runtime config, the validated runtime-config schema and `.env.example`; a third server-side Directus client built from it, next to the anonymous and caller-bound ones
-- [ ] `vp run directus:diff` clean, the dump diff touches only these records, probe stamp fresh, ADR 0006 written, `vp run check:all` green
+- [x] `directus_users` and `order` each have optional `billing_name`, `billing_company`, `billing_ic`, `billing_street`, `billing_city`, `billing_zip`
+- [x] Student policy: reads own row limited to id, e-mail and billing fields; updates own row limited to password and billing fields; the Order create rule accepts the billing snapshot; a probe shows another Student's row is unreadable and unwritable
+- [x] A Directus user „Shop service" (role „Služby", `app_access: false`) with a static token; its policy allows only: order read + update of `status`, `gopay_payment_id`, `fakturoid_invoice_id`; entitlement create + read; course read of id, slug, price, status; users read of id and e-mail
+- [x] Probes: the Service Account can do each of those and is refused an order create, a course update, a users update and an entitlement delete; a second Entitlement for the same Student × Course is refused
+- [x] `DIRECTUS_SHOP_TOKEN` in runtime config, the validated runtime-config schema and `.env.example`; a third server-side Directus client built from it, next to the anonymous and caller-bound ones
+- [x] `vp run directus:diff` clean, the dump diff touches only these records, probe stamp fresh, ADR 0006 written, `vp run check:all` green

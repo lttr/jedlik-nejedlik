@@ -1,5 +1,6 @@
 ---
-status: not-started
+status: in-progress
+blocked_by: ""
 verified: []
 references:
   - "Grilling decisions: grilling.md (rounds in grill-round-1.md … grill-round-3.md)"

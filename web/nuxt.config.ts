@@ -78,6 +78,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    // Which payment gateway the shop talks to, and the credentials for it.
+    // Placeholders only: the values come from NUXT_GOPAY_* in the
+    // environment and are validated at boot (server/runtime-config.schema.ts).
+    gopay: {
+      env: "",
+      goid: "",
+      clientId: "",
+      clientSecret: "",
+    },
     session: {
       // All session config lives here: nuxt-auth-utils' `SessionConfig`
       // requires `password`, so a layer cannot contribute a partial one.
@@ -92,6 +101,12 @@ export default defineNuxtConfig({
         secure: true,
         sameSite: "lax",
       },
+    },
+    shop: {
+      // The Shop Service Account's static Directus token (ADR 0006), from
+      // NUXT_SHOP_DIRECTUS_TOKEN. Private: it grants the payment flow's
+      // writes, so it must never reach the browser.
+      directusToken: "",
     },
     public: {
       // Shop launch switch, off unless NUXT_PUBLIC_COURSES_PUBLIC is set.
