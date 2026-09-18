@@ -100,7 +100,10 @@ export type SellableCourse = Course & { price_czk: number }
 // Nitro code.
 export interface CheckoutView {
   course: SellableCourse
-  email: string
+  // `null` for a visitor without a session: they see what they are buying and
+  // step 1's „Mám účet" / „Jsem tu poprvé" tabs, and nothing else (spec,
+  // „Checkout page", step 1).
+  email: string | null
   billing: BillingDetails
 }
 

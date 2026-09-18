@@ -24,6 +24,8 @@
 </template>
 
 <script lang="ts" setup>
+import { pendingCheckoutPath } from "../../../shop/shared/utils/pending-checkout"
+
 useHead({ title: "Ověření e-mailu" })
 
 const { verifyEmail } = useAuthActions()
@@ -37,8 +39,12 @@ onMounted(async () => {
   await submit(async () => {
     // A missing token is posted like any other; the route is the single judge.
     await verifyEmail(token)
+    // Back to the Checkout this Account was on, where step 1 asks for the
+    // password and nothing else (ADR 0005). Without a pending Checkout the
+    // login page says the same thing it always did.
+    const checkout = pendingCheckoutPath(await takePendingCheckoutSlug())
     await navigateTo(
-      { path: "/prihlaseni", query: { [EMAIL_VERIFIED_QUERY]: "1" } },
+      { path: checkout ?? "/prihlaseni", query: { [EMAIL_VERIFIED_QUERY]: "1" } },
       { replace: true },
     )
   })
