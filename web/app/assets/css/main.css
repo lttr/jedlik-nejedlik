@@ -91,6 +91,19 @@ textarea {
 :root {
   --success-alert-color: var(--positive-alert-color);
   --success-alert-bg-color: var(--positive-alert-bg-color);
+
+  /* A refusal that is neither a failure nor good news — „this Course is not on
+     sale yet". Red would read as a fault the visitor caused, green as a
+     confirmation; Puleo has no neutral alert pair, so it is built from grays. */
+  --info-alert-color: var(--gray-11);
+  --info-alert-bg-color: var(--gray-2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --info-alert-color: var(--gray-2);
+    --info-alert-bg-color: var(--gray-9);
+  }
 }
 
 .error-message {
@@ -103,6 +116,13 @@ textarea {
 .success-message {
   color: var(--success-alert-color);
   background-color: var(--success-alert-bg-color);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-3);
+}
+
+.info-message {
+  color: var(--info-alert-color);
+  background-color: var(--info-alert-bg-color);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-3);
 }

@@ -7,15 +7,17 @@
 <script lang="ts" setup>
 // The shop's one notice. The auth layer has `<AuthFormError>`, which only ever
 // says something went wrong; the Checkout, the return page and „Moje kurzy"
-// also have good news to deliver, so this one takes a tone. The classes are
-// the site-wide `.error-message` / `.success-message` from `main.css`, so a
-// shop notice looks like every other notice on the site.
+// also have good news to deliver, so this one takes a tone. `info` is for a
+// refusal that is neither: „this Course is not on sale yet" is nobody's fault
+// and nothing to celebrate. The classes are the site-wide `.error-message` /
+// `.success-message` / `.info-message` from `main.css`, so a shop notice looks
+// like every other notice on the site.
 //
 // The text can come as `message` (the usual case, straight from a form's
 // `errorMessage`) or as the default slot when it needs a link inside it.
 const { message = "", tone = "error" } = defineProps<{
   message?: string
-  tone?: "error" | "success"
+  tone?: "error" | "success" | "info"
 }>()
 
 const slots = useSlots()
