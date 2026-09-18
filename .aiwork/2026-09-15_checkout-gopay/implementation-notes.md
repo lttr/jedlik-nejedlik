@@ -488,3 +488,32 @@ Also worth knowing: `toBillingPayload`'s spread is **not** redundant, though it
 looks it. Removing it requires a type assertion the lint gate refuses
 (`no-unsafe-type-assertion`); the spread is what gives the payload all six keys
 cast-free. It now says so in a comment.
+
+## Wrap-up: `/code-review xhigh --fix` (read at 6cd55f1, fixed in 02799e2)
+
+Full findings and resolutions are in `review.md`. Three things belong here
+because a future reader would otherwise be misled:
+
+- **The mock gateway structurally cannot show the worst bug in this area.**
+  `PaymentSchema` defaults a missing `gw_url` to `""`, and a real GoPay
+  _inquiry_ answer carries no `gw_url` — but the mock always returns one. So a
+  returning Student with a live Payment would have been sent to
+  `navigateTo("")` in production while every unit test, every probe and every
+  behaviour pass stayed green. It was found by reading, not by running. Treat
+  „the flow probe passes" as saying nothing about GoPay's real response shapes
+  until `../2026-09-15_gopay-go-live/` exercises sandbox credentials.
+- **A review fix can be worse than what it replaced.** The accessibility fix on
+  the guest tabs implemented a roving `tabindex` that moved selection without
+  moving focus, leaving the keydown handler on the old tab: a keyboard user
+  reached the second tab once and could never get back — worse than the plain
+  buttons it replaced. `check:all` was green throughout. It was caught by
+  measuring `document.activeElement` in the browser, which is the only thing
+  that could have caught it.
+- **Two accepted behaviours, neither changed.** A checkout body with no
+  `billing` key at all now answers `invalid_billing` rather than
+  `consent_required`, because the missing-key issue also has
+  `path[0] === "billing"`; only a malformed request the page never sends reaches
+  it. And a save that fails as a _transport_ error (offline, connection aborted)
+  shows no notice at all, only the typed value kept — pre-existing `useAuthForm`
+  behaviour, not something this area introduced; a real 502 does show the Czech
+  message.
