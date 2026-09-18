@@ -13,11 +13,17 @@ export default defineEventHandler(async (event): Promise<CheckoutView> => {
   const { account } = await readAccountSession(event)
   const client = await getCallerDirectusClient(event)
 
-  const course = await loadCheckoutCourse(client, slug)
   if (account === undefined) {
+    const course = await loadCheckoutCourse(client, slug)
     return { course, email: null, billing: emptyBillingDetails() }
   }
 
+  // Neither read depends on the other, so they go together; the Entitlement
+  // check stays after them because it needs the Course's id.
+  const [course, billing] = await Promise.all([
+    loadCheckoutCourse(client, slug),
+    readAccountBilling(client),
+  ])
   await assertNotEntitled(client, course.id)
-  return { course, email: account.email, billing: await readAccountBilling(client) }
+  return { course, email: account.email, billing }
 })

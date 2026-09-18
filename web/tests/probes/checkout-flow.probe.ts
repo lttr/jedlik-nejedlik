@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
+import { BILLING_FIELDS } from "../../layers/shop/shared/utils/checkout"
 import { CookieJar, startAppServer } from "./app-server"
 import type { AppServer } from "./app-server"
 import { PUBLISHED_SLUG, item, items, probe, probeSend, roleToken } from "./support"
@@ -22,15 +23,6 @@ const SHOP_TOKEN = process.env.NUXT_SHOP_DIRECTUS_TOKEN ?? ""
 
 // No Order will ever carry this: the forged-notification case.
 const UNKNOWN_PAYMENT_ID = "900000000000000"
-
-const BILLING_COLUMNS = [
-  "billing_name",
-  "billing_company",
-  "billing_ic",
-  "billing_street",
-  "billing_city",
-  "billing_zip",
-] as const
 
 const BILLING = {
   billing_name: "[TEST] Probe Student",
@@ -143,7 +135,7 @@ const ready = STUDENT_EMAIL !== "" && STUDENT_PASSWORD !== "" && SHOP_TOKEN !== 
 describe.skipIf(!ready)("checkout flow through the mock gateway", () => {
   // A cold `nuxi dev` plus the first SSR compile.
   beforeAll(async () => {
-    const fields = `id,${BILLING_COLUMNS.join(",")}`
+    const fields = `id,${BILLING_FIELDS.join(",")}`
     const rows = items(
       await probe(`/users?fields=${fields}&filter[email][_eq]=${STUDENT_EMAIL}`, ADMIN),
     )
@@ -152,7 +144,7 @@ describe.skipIf(!ready)("checkout flow through the mock gateway", () => {
     }
     const student = rows[0]
     studentId = student.id as string
-    studentBilling = Object.fromEntries(BILLING_COLUMNS.map((c) => [c, student[c] ?? null]))
+    studentBilling = Object.fromEntries(BILLING_FIELDS.map((c) => [c, student[c] ?? null]))
 
     app = await startAppServer()
     await logIn()

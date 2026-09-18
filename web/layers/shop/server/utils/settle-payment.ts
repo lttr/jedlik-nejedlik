@@ -1,6 +1,5 @@
 import { createItem, readItems, updateItem } from "@directus/sdk"
 import type { H3Event } from "h3"
-import { z } from "zod"
 
 import { OrderSchema } from "../../../directus/shared/utils/schemas"
 import type { Order } from "../../../directus/shared/utils/schemas"
@@ -25,44 +24,21 @@ export const GOPAY_NOTIFY_RATE_LIMIT: RateLimit = {
   message: shopMessages.tooManyNotifications,
 }
 
-// Directus answers a duplicate row with this code; for the Entitlement it
-// means another caller already granted the Course, which is success.
-const DirectusErrorSchema = z.object({
-  errors: z.array(z.object({ extensions: z.object({ code: z.string() }) })).min(1),
-})
-
-function isRecordNotUnique(error: unknown): boolean {
-  const parsed = DirectusErrorSchema.safeParse(error)
-  return (
-    parsed.success &&
-    parsed.data.errors.some(({ extensions }) => extensions.code === "RECORD_NOT_UNIQUE")
-  )
-}
-
 // The Order a Payment belongs to. `gopay_payment_id` is unique, which is what
 // makes it the idempotency key.
 async function readOrderByPayment(
   client: DirectusRestClient,
   paymentId: string,
 ): Promise<Order | undefined> {
-  const rows = await client.request(
+  const row = await readFirstRow(
+    client,
     readItems("order", {
       fields: [...ORDER_FIELDS],
       filter: { gopay_payment_id: { _eq: paymentId } },
       limit: 1,
     }),
   )
-  const row = rows[0]
   return row === undefined ? undefined : OrderSchema.parse(row)
-}
-
-// The hook area 10 hangs the § 1824a confirmation e-mail on (spec, user story
-// 34). Deliberately empty here, and deliberately awaited before the grant, so
-// whatever it becomes runs exactly once per Order and a failure in it stops
-// the settlement rather than half-finishing it.
-async function onPaid(order: Order): Promise<void> {
-  void order
-  return Promise.resolve()
 }
 
 async function grantEntitlement(client: DirectusRestClient, order: Order): Promise<void> {
@@ -75,7 +51,9 @@ async function grantEntitlement(client: DirectusRestClient, order: Order): Promi
       ),
     )
   } catch (error) {
-    if (!isRecordNotUnique(error)) {
+    // Directus answers a duplicate row with this code; for the Entitlement it
+    // means another caller already granted the Course, which is success.
+    if (directusErrorCode(error) !== "RECORD_NOT_UNIQUE") {
       throw error
     }
     // Already granted — by an earlier notification, by the return page, or by
@@ -103,7 +81,9 @@ async function applyPaymentState(
     return order
   }
   if (target === "paid") {
-    await onPaid(order)
+    // Area 10's § 1824a confirmation e-mail (spec, user story 34) goes here,
+    // before the grant and awaited: that way it runs exactly once per Order,
+    // and a failure in it stops the settlement rather than half-finishing it.
     await grantEntitlement(client, order)
   }
   // Last, so a crash anywhere above leaves the Order unsettled and the next
@@ -115,8 +95,6 @@ async function applyPaymentState(
 export interface Settlement {
   // The Order as it stands after settling: its status is the outcome.
   order: Order
-  // What GoPay reported, for the caller's log line.
-  state: GopayPaymentState
 }
 
 // `undefined` means no Order carries this Payment id: a forged notification,
@@ -127,14 +105,27 @@ export async function settlePayment(
   event: H3Event,
   paymentId: string,
 ): Promise<Settlement | undefined> {
-  const client = getShopServiceDirectusClient(event)
-  const order = await readOrderByPayment(client, paymentId)
-  if (order === undefined) {
-    return undefined
+  const order = await readOrderByPayment(getShopServiceDirectusClient(event), paymentId)
+  return order === undefined ? undefined : settleOrder(event, order)
+}
+
+// The same settlement for a caller that already holds the Order: the return
+// page has just read it with the Student's own session, and looking it up
+// again by Payment id would buy nothing.
+export async function settleOrder(event: H3Event, order: Order): Promise<Settlement> {
+  const paymentId = order.gopay_payment_id
+  if (paymentId === undefined || order.status === "paid") {
+    // No Payment to ask about, or an Order already in its terminal state, in
+    // which case `applyPaymentState` would discard every answer an inquiry can
+    // give (`paid` is a no-op, `cancelled` is refused for a paid Order). GoPay
+    // sends more than one notification per Payment and retries a failed one up
+    // to twenty times, so the saved call is squarely on the retry path.
+    return { order }
   }
 
   // Never the notification's word for it: the state always comes from an
   // inquiry, so nothing a caller sends can fake a payment.
   const payment = await getGopayClient(event).inquirePayment(paymentId)
-  return { order: await applyPaymentState(client, order, payment.state), state: payment.state }
+  const client = getShopServiceDirectusClient(event)
+  return { order: await applyPaymentState(client, order, payment.state) }
 }

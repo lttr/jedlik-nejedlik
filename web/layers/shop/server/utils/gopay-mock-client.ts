@@ -79,20 +79,19 @@ export function createGopayMockClient(origin: string): GopayClient {
         notificationUrl: input.notificationUrl,
       }
       payments.set(payment.id, payment)
-      return Promise.resolve(toGopayPayment(payment, origin))
+      return toGopayPayment(payment, origin)
     },
 
     async inquirePayment(paymentId: string): Promise<GopayPayment> {
       const payment = payments.get(paymentId)
       if (payment === undefined) {
-        return Promise.reject(new Error(`Mock GoPay knows no Payment ${paymentId}`))
+        throw new Error(`Mock GoPay knows no Payment ${paymentId}`)
       }
-      return Promise.resolve(toGopayPayment(payment, origin))
+      return toGopayPayment(payment, origin)
     },
 
     async refundPayment(paymentId: string): Promise<void> {
       recordMockPaymentState(paymentId, "REFUNDED")
-      return Promise.resolve()
     },
   }
 }

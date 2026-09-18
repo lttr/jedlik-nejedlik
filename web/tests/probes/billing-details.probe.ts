@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
+import { BILLING_FIELDS } from "../../layers/shop/shared/utils/checkout"
 import {
   ENTITLED_ID,
   PUBLISHED_COURSE_ID,
@@ -23,15 +24,6 @@ import {
 const ENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN")
 const UNENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN")
 const ADMIN = roleToken("DIRECTUS_PROBE_ADMIN_TOKEN")
-
-const BILLING_FIELDS = [
-  "billing_name",
-  "billing_company",
-  "billing_ic",
-  "billing_street",
-  "billing_city",
-  "billing_zip",
-] as const
 
 // A full set of Billing Details, marked so a leftover row is recognisable.
 const BILLING = {

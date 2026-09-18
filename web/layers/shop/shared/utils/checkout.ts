@@ -25,24 +25,38 @@ export type BillingField = (typeof BILLING_FIELDS)[number]
 // `null` on the wire.
 export type BillingDetails = Record<BillingField, string>
 
-// The block the form keeps collapsed unless something in it is filled in.
-export const BILLING_COMPANY_FIELDS: readonly BillingField[] = [
-  "billing_company",
-  "billing_ic",
-  "billing_street",
-  "billing_city",
-  "billing_zip",
-]
+// The block the form keeps collapsed unless something in it is filled in:
+// everything but the name, derived so a seventh column joins it by itself.
+export const BILLING_COMPANY_FIELDS: readonly BillingField[] = BILLING_FIELDS.filter(
+  (field) => field !== "billing_name",
+)
 
+// What a browser may send as Billing Details, wherever it sends them from:
+// the Checkout's „Objednávka zavazující k platbě" and the Account's
+// „Fakturační údaje" save. Every field is required in the body and may be
+// empty — the form always sends all six, and a missing one would silently
+// keep the old value on one route and clear it on the other. Trimmed here so
+// nothing downstream has to, capped so a body cannot be used as storage.
+//
+// Written out rather than built from `BILLING_FIELDS`: a derived object schema
+// loses the field-by-field inferred type the routes take their request bodies
+// from, which is a worse trade than the one repetition. A column added above
+// belongs here too.
+const BillingFieldSchema = z.string().trim().max(200)
+
+export const BillingRequestSchema = z.object({
+  billing_name: BillingFieldSchema,
+  billing_company: BillingFieldSchema,
+  billing_ic: BillingFieldSchema,
+  billing_street: BillingFieldSchema,
+  billing_city: BillingFieldSchema,
+  billing_zip: BillingFieldSchema,
+})
+
+// All six empty, built from the one list of columns and checked by the schema
+// the routes use, so a column added above cannot be forgotten here.
 export function emptyBillingDetails(): BillingDetails {
-  return {
-    billing_name: "",
-    billing_company: "",
-    billing_ic: "",
-    billing_street: "",
-    billing_city: "",
-    billing_zip: "",
-  }
+  return BillingRequestSchema.parse(Object.fromEntries(BILLING_FIELDS.map((f) => [f, ""])))
 }
 
 // A Directus row (or a request body) in, a form-ready object out: anything
@@ -61,29 +75,14 @@ export function toBillingDetails(row: Partial<Record<BillingField, unknown>>): B
 export type BillingPayload = Record<BillingField, string | null>
 
 export function toBillingPayload(details: BillingDetails): BillingPayload {
+  // Spread first only to start from an object that already has all six keys;
+  // the loop below replaces every one of them.
   const payload: BillingPayload = { ...details }
   for (const field of BILLING_FIELDS) {
     payload[field] = details[field] === "" ? null : details[field]
   }
   return payload
 }
-
-// What a browser may send as Billing Details, wherever it sends them from:
-// the Checkout's „Objednávka zavazující k platbě" and the Account's
-// „Fakturační údaje" save. Every field is required in the body and may be
-// empty — the form always sends all six, and a missing one would silently
-// keep the old value on one route and clear it on the other. Trimmed here so
-// nothing downstream has to, capped so a body cannot be used as storage.
-const BillingFieldSchema = z.string().trim().max(200)
-
-export const BillingRequestSchema = z.object({
-  billing_name: BillingFieldSchema,
-  billing_company: BillingFieldSchema,
-  billing_ic: BillingFieldSchema,
-  billing_street: BillingFieldSchema,
-  billing_city: BillingFieldSchema,
-  billing_zip: BillingFieldSchema,
-})
 
 export function hasBillingCompanyDetails(details: BillingDetails): boolean {
   return BILLING_COMPANY_FIELDS.some((field) => details[field] !== "")
