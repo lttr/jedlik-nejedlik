@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
 import type { ProbeResponse } from "./support"
 import {
+  cleanUpItems,
   errorCode,
   generatePassword,
   item,
@@ -10,6 +11,7 @@ import {
   probeSend,
   roleIdByName,
   roleToken,
+  throwawayEmail,
 } from "./support"
 
 // The app's own constant, so the probe proves it still matches the instance.
@@ -32,13 +34,9 @@ interface Fixture {
 let studentRole: string
 const createdUsers: string[] = []
 
-function throwawayEmail(label: string): string {
-  return `probe-auth-${label}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@jedlik-nejedlik.cz`
-}
-
 async function createStudent(status: "active" | "unverified"): Promise<Fixture> {
   const password = generatePassword()
-  const email = throwawayEmail(status)
+  const email = throwawayEmail(`auth-${status}`)
   const response = await probeSend(
     "POST",
     "/users",
@@ -133,12 +131,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  if (createdUsers.length > 0) {
-    const response = await probeSend("DELETE", "/users", createdUsers, ADMIN)
-    if (response.status !== 204) {
-      throw new Error(`Probe cleanup failed: DELETE /users returned ${response.status}`)
-    }
-  }
+  await cleanUpItems("/users", createdUsers, ADMIN)
 })
 
 describe("login / refresh / logout round-trip", () => {
@@ -224,7 +217,7 @@ describe("login failures stay indistinguishable", () => {
   })
 
   it("answers an unknown e-mail exactly like a wrong password", async () => {
-    const unknown = await login(throwawayEmail("nobody"), generatePassword())
+    const unknown = await login(throwawayEmail("auth-nobody"), generatePassword())
     const wrong = await login(active.email, generatePassword())
     expect(unknown.status).toBe(wrong.status)
     expect(errorCode(unknown)).toBe(errorCode(wrong))
@@ -245,7 +238,7 @@ describe("login failures stay indistinguishable", () => {
 describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   // Registrations are rate-limited (see postWithBackoff), so spend sparingly.
   it("creates a Student-role, Unverified user who cannot log in yet", async () => {
-    const email = throwawayEmail("register")
+    const email = throwawayEmail("auth-register")
     const password = generatePassword()
     expect((await register(email, password)).status).toBe(204)
 
@@ -262,7 +255,7 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
 
   it("answers an already-registered address exactly like a fresh one", async () => {
     // Accounts stay unenumerable: a duplicate cannot be reported.
-    const email = throwawayEmail("dup")
+    const email = throwawayEmail("auth-dup")
     const password = generatePassword()
     expect((await register(email, password)).status).toBe(204)
     await findUser(email)
@@ -271,7 +264,7 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
 
   it("stores the address verbatim, so the app has to normalise it first", async () => {
     // Why AccountEmail lowercases: the mixed-case form would be a second row.
-    const email = throwawayEmail("case")
+    const email = throwawayEmail("auth-case")
     expect((await register(email.toUpperCase(), generatePassword())).status).toBe(204)
     const stored = await findUser(email.toUpperCase())
     expect(stored?.email).toBe(email.toUpperCase())
@@ -281,11 +274,11 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   it("enforces exactly the minimum length the app checks for", async () => {
     // One short must fail and the exact minimum pass, or PASSWORD_MIN_LENGTH
     // has drifted from the instance's `auth_password_policy`.
-    const short = await register(throwawayEmail("short"), "x".repeat(PASSWORD_MIN_LENGTH - 1))
+    const short = await register(throwawayEmail("auth-short"), "x".repeat(PASSWORD_MIN_LENGTH - 1))
     expect(short.status).toBe(400)
     expect(errorCode(short)).toBe("FAILED_VALIDATION")
 
-    const email = throwawayEmail("exact")
+    const email = throwawayEmail("auth-exact")
     expect((await register(email, "x".repeat(PASSWORD_MIN_LENGTH))).status).toBe(204)
     expect(await findUser(email)).toBeDefined()
   })
@@ -294,7 +287,7 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   // 502. Fix by setting USER_REGISTER_URL_ALLOW_LIST on the instance to
   // exactly VERIFICATION_URL.
   it("accepts the verification URL the app sends (USER_REGISTER_URL_ALLOW_LIST)", async () => {
-    const email = throwawayEmail("allowlist")
+    const email = throwawayEmail("auth-allowlist")
     const response = await register(email, generatePassword(), VERIFICATION_URL)
     expect(response.status).toBe(204)
     await findUser(email)
@@ -408,7 +401,7 @@ describe("password reset request", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () =>
     // The page's uniform confirmation is only honest because Directus itself
     // answers 204 either way.
     const known = await requestReset(active.email)
-    const unknown = await requestReset(throwawayEmail("nobody"))
+    const unknown = await requestReset(throwawayEmail("auth-nobody"))
     expect(known.status).toBe(204)
     expect(unknown.status).toBe(known.status)
     expect(unknown.body).toEqual(known.body)

@@ -36,11 +36,6 @@ const { course } = defineProps<{ course: SellableCourse }>()
   border-radius: var(--radius-2);
 }
 
-.muted {
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
-}
-
 .price {
   font-size: var(--font-size-3);
   color: var(--brand-color);

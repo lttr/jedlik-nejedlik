@@ -12,8 +12,9 @@
       <AuthFormError :message="logOutError" />
 
       <!-- Shop-layer sections, included here because the Account page is the
-           auth layer's (spec, „Placement"). Each fetches its own data, so a
-           slow Directus costs the section and not the whole page. -->
+           auth layer's (spec, „Placement"). Each reads its own data and its own
+           error, so a slow Directus costs the section and not the whole page;
+           the page only starts the two requests together (see below). -->
       <AccountMyCourses />
 
       <AccountBilling />
@@ -48,7 +49,20 @@
 </template>
 
 <script lang="ts" setup>
+import { emptyBillingDetails } from "../../../shop/shared/utils/checkout"
+
 definePageMeta({ middleware: "auth" })
+
+// Vue renders siblings in order, so `<AccountBilling>` would not even dispatch
+// its request until „Moje kurzy" had come back — a whole Directus round-trip of
+// added TTFB. Both are started here instead, under the keys and with the
+// defaults the two sections use, so each section's own `useFetch` resolves
+// from this one. Nothing is read here: the sections keep their own `error`, so
+// a slow or broken Directus still costs one section and not the page.
+await Promise.all([
+  useFetch("/api/account/courses", { key: "account:courses", default: () => [] }),
+  useFetch("/api/account/billing", { key: "account:billing", default: emptyBillingDetails }),
+])
 
 useHead({ title: "Můj účet" })
 

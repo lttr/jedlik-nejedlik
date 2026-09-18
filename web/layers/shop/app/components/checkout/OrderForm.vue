@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
     <CheckoutStep :number="2" title="Údaje a souhlas">
-      <BillingDetailsForm v-model="billing" />
+      <BillingDetailsForm v-model="draft" />
 
       <label class="consent">
         <input v-model="consent" type="checkbox" name="consent" required />
@@ -46,9 +46,16 @@ import type { BillingDetails, SellableCourse } from "../../../shared/utils/check
 // around both, so a single press sends the Billing Details, the Consent and
 // the Order together; the two boxes are only how it reads (prototype,
 // variant C).
-const { course, slug } = defineProps<{ course: SellableCourse; slug: string }>()
+const { course, slug, billing } = defineProps<{
+  course: SellableCourse
+  slug: string
+  // Pre-filled from the Account, so a returning Student only checks them.
+  billing: BillingDetails
+}>()
 
-const billing = defineModel<BillingDetails>("billing", { required: true })
+// The Student's own draft: nothing outside this form reads it, and it is only
+// ever seeded once — logging in is what mounts this form in the first place.
+const draft = ref({ ...billing })
 
 const TERMS_PATH = "/obchodni-podminky"
 const PRIVACY_PATH = "/zasady-zpracovani-osobnich-udaju"
@@ -63,7 +70,7 @@ async function onSubmit(): Promise<void> {
   await submit(async () => {
     const { gwUrl } = await $fetch<{ gwUrl: string }>(`/api/checkout/${slug}`, {
       method: "POST",
-      body: { consent: consent.value, billing: billing.value },
+      body: { consent: consent.value, billing: draft.value },
     })
     // GoPay's page, or the mock standing in for it: another origin in
     // production, so a full navigation rather than `navigateTo`.
@@ -88,23 +95,11 @@ form {
 }
 
 .consent input {
-  /* `main.css` gives every input `width: 100%`, which outranks Puleo's
-     zero-specificity checkbox sizing and stretches a bare checkbox across the
-     row. Puleo's own sizes, restored at a specificity that wins. */
-  flex: 0 0 auto;
-  inline-size: var(--space-4);
-  block-size: var(--space-4);
-  margin-block-start: 0.35rem;
-
-  @media (pointer: coarse) {
-    inline-size: var(--space-5);
-    block-size: var(--space-5);
-  }
-}
-
-.muted {
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
+  /* Not a sizing workaround — the design system sizes the box itself. The
+     sentence beside it is wider than the row at phone width, so without this
+     the flex line shrinks both items and the box loses its square. Puleo does
+     the same for a checkbox inside `.p-form-group`; this one is not in one. */
+  flex-shrink: 0;
 }
 
 .total {

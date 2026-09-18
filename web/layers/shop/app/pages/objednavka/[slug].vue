@@ -24,7 +24,7 @@
 
           <CheckoutOrderForm
             v-if="checkout.email !== null"
-            v-model:billing="billing"
+            :billing="checkout.billing"
             :course="checkout.course"
             :slug
           />
@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts" setup>
-import { emptyBillingDetails, readRefusal } from "../../../shared/utils/checkout"
+import { readRefusal } from "../../../shared/utils/checkout"
 import type { CheckoutView } from "../../../shared/utils/checkout"
 
 // Three steps on one page with the Course alongside (prototype, variant C).
@@ -96,19 +96,16 @@ if (error.value !== undefined && refusal.value === undefined) {
   throwPageError(error.value, route.path)
 }
 
-// Pre-filled from the Account, so a returning Student only checks them.
-const billing = ref(checkout.value?.billing ?? emptyBillingDetails())
-
 // Step 1 is done: ask the route again, which now answers with the Student's
 // e-mail, their Billing Details and any refusal their session brings with it
-// — all without a page change (spec, user story 2).
+// — all without a page change (spec, user story 2). The refreshed answer is
+// also what mounts step 2 for the first time, so its form reads the Billing
+// Details straight from this data; there is nothing to push into it.
 async function onLoggedIn(): Promise<void> {
   await refreshCheckout()
   if (error.value !== undefined && refusal.value === undefined) {
     showError(error.value)
-    return
   }
-  billing.value = checkout.value?.billing ?? emptyBillingDetails()
 }
 
 useSeoMeta({ title: "Objednávka kurzu", robots: "noindex, nofollow" })
@@ -137,11 +134,6 @@ useSeoMeta({ title: "Objednávka kurzu", robots: "noindex, nofollow" })
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-}
-
-.muted {
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
 }
 
 .aside {

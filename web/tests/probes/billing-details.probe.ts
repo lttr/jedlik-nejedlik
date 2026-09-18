@@ -4,6 +4,7 @@ import {
   ENTITLED_ID,
   PUBLISHED_COURSE_ID,
   UNENTITLED_ID,
+  cleanUpItems,
   errorCode,
   item,
   probe,
@@ -56,12 +57,7 @@ afterAll(async () => {
       throw new Error(`Probe cleanup failed: PATCH /users/${userId} returned ${response.status}`)
     }
   }
-  if (createdOrders.length > 0) {
-    const response = await probeSend("DELETE", "/items/order", createdOrders, ADMIN)
-    if (response.status !== 204) {
-      throw new Error(`Probe cleanup failed: DELETE /items/order returned ${response.status}`)
-    }
-  }
+  await cleanUpItems("/items/order", createdOrders, ADMIN)
 })
 
 describe("student billing details on the account", () => {

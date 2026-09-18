@@ -5,6 +5,7 @@ import {
   MATERIAL_FILE_ID,
   PUBLISHED_COURSE_ID,
   UNENTITLED_ID,
+  cleanUpItems,
   errorCode,
   item,
   items,
@@ -34,12 +35,7 @@ const ADMIN = roleToken("DIRECTUS_PROBE_ADMIN_TOKEN")
 const createdOrders: number[] = []
 
 afterAll(async () => {
-  if (createdOrders.length > 0) {
-    const response = await probeSend("DELETE", "/items/order", createdOrders, ADMIN)
-    if (response.status !== 204) {
-      throw new Error(`Probe cleanup failed: DELETE /items/order returned ${response.status}`)
-    }
-  }
+  await cleanUpItems("/items/order", createdOrders, ADMIN)
 })
 
 async function createOrder(token: string, payload: Record<string, unknown>) {

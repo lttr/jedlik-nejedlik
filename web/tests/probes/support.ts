@@ -164,3 +164,27 @@ export async function roleIdByName(name: string, token: string): Promise<string>
 export function generatePassword(): string {
   return `Pw-${randomUUID()}`
 }
+
+// A e-mail address no real person can hold, unique per call, on the site's own
+// domain — the label says which probe left it behind if cleanup ever misses one.
+export function throwawayEmail(label: string): string {
+  return `probe-${label}-${Date.now()}-${randomUUID().slice(0, 6)}@jedlik-nejedlik.cz`
+}
+
+// Delete the rows a probe created, by id, with a token that may. `path` is the
+// collection endpoint (`/items/order`, `/users`); an empty list is a no-op, and
+// anything but Directus's 204 is a failed cleanup on a shared instance, which
+// is worth a throw rather than a silent leftover.
+export async function cleanUpItems(
+  path: string,
+  keys: (string | number)[],
+  token: string,
+): Promise<void> {
+  if (keys.length === 0) {
+    return
+  }
+  const response = await probeSend("DELETE", path, keys, token)
+  if (response.status !== 204) {
+    throw new Error(`Probe cleanup failed: DELETE ${path} returned ${response.status}`)
+  }
+}
