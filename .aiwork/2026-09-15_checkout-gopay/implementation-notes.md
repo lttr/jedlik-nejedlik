@@ -312,3 +312,41 @@ use.
 
 **Run the remaining tickets one at a time in the task worktree.** That is not a
 preference; it is the only arrangement in which an implementer can run a check.
+
+### 04 — Settlement, notification route, return page (dd77ef0)
+
+- **Deviation from the spec's step order, deliberate and required; the spec is
+  amended to match.** „Settlement" said „inquire GoPay; load the Order by
+  `gopay_payment_id`". It is implemented the other way round: the Order is
+  loaded first, and GoPay is only asked about a Payment some Order actually
+  carries. Inquire-first makes a forged notification throw (the gateway does not
+  know the id) and answer 500 with a Sentry event, which contradicts this
+  ticket's own „unknown id answers 200 and writes nothing" and defeats user
+  story 32's „cannot be used to spam GoPay's API". Reasoning is in the comment
+  on `settlePayment`.
+- **Deviation, small: the mock gateway gained a third action.**
+  `POST /api/gopay/mock/payments/<id>/decide` accepts `{"action":"choose"}` →
+  `PAYMENT_METHOD_CHOSEN`, with no button on the page (the spec's two buttons
+  are unchanged). Without it the criterion naming that state cannot be observed
+  at all. The recipe is in the `run-jedlik-nejedlik` skill.
+- **Decision where the spec was silent: the return page does not surface a
+  settlement failure.** If the GoPay inquiry throws on the return route, it logs
+  a warning and renders the Order as it stands (pending) rather than erroring.
+  The notification route is the alarm path — GoPay retries it up to twenty times
+  and it is the one that reports to Sentry. A Student should not meet an error
+  page over a slow gateway.
+- **Decision where the spec was silent: the return route takes the Payment id
+  from the Order, not from `?id=`.** GoPay appends `?id=` itself and the page
+  ignores it. The Order is read with the Student's own session, so ownership is
+  Directus's decision and a foreign or unknown id is the same 404. Nothing the
+  browser sends is trusted.
+- **Sentry delivery was not observed, only the call.** The forced-failure run
+  answered 500 and logged from the same catch block one line below
+  `Sentry.captureException`, but nothing local can see the event land in
+  Sentry's UI. Closing that needs someone to look at the Sentry project after a
+  deliberate failure on a deployed instance.
+- `shop-service.probe.ts` still skips: `DIRECTUS_PROBE_SHOP_TOKEN` is not in
+  `web/.env`. Pre-existing, from ticket 01.
+- The Service Account's token is now exercised end to end by a running request,
+  closing the gap ticket 01 left open. Nothing here has still ever talked to a
+  real GoPay.
