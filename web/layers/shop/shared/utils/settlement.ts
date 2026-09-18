@@ -17,6 +17,12 @@ export function settlementStateForOrder(status: Order["status"]): SettlementStat
 
 // What the return route answers and the return page renders: the outcome, and
 // the Course it is about — its title to name it, its slug for „Zkusit znovu".
+//
+// Both are empty when the Course stopped being readable between the Order and
+// the return (unpublished, archived). The Order's status is the whole truth
+// and the Course is only how the page words it, so that costs the name, never
+// the outcome: an empty title leaves „Kurz máte od teď k dispozici" standing
+// on its own, and an empty slug is what withdraws „Zkusit znovu".
 export interface SettlementView {
   state: SettlementState
   courseTitle: string

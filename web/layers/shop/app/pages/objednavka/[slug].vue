@@ -32,7 +32,7 @@
           <!-- A visitor sees what is still to come, so the page reads as three
                steps rather than as a login form with something behind it. -->
           <template v-else>
-            <CheckoutStep :number="2" title="Údaje a souhlas" locked>
+            <CheckoutStep :number="2" title="Údaje a souhlas" locked>
               <p class="muted">Jméno na&nbsp;doklad a&nbsp;souhlas s&nbsp;obchodními podmínkami.</p>
             </CheckoutStep>
             <CheckoutStep :number="3" title="Platba" locked>

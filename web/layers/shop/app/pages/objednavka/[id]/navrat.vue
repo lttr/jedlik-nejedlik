@@ -3,6 +3,10 @@
     <div v-if="view" class="settlement p-flow">
       <h1 class="p-heading-3">{{ HEADINGS[view.state] }}</h1>
 
+      <!-- The title is empty for a Course the Student may no longer read, and
+           both sentences are written to stand without it: the surrounding
+           whitespace collapses, so „Kurz máte od teď k dispozici" is what is
+           left rather than a gap. -->
       <ShopNotice v-if="view.state === 'paid'" tone="success">
         Platba dorazila. Kurz <strong>{{ view.courseTitle }}</strong> máte od&nbsp;teď
         k&nbsp;dispozici.
@@ -70,10 +74,15 @@ const pendingMessage = computed(() =>
     : "Jakmile platba dorazí, najdete kurz v Mém účtu v sekci „Moje kurzy“. Tady už čekat nemusíte.",
 )
 
+// „Zkusit znovu" needs a Checkout to go back to, so it is offered only for a
+// failed Payment whose Course is still readable; the Account page is the way
+// onward for everything else.
+const retrySlug = computed(() => (view.value?.state === "failed" ? view.value.courseSlug : ""))
+
 const onward = computed(() =>
-  view.value?.state === "failed"
-    ? { to: checkoutPath(view.value.courseSlug), label: "Zkusit znovu" }
-    : { to: "/muj-ucet", label: "Moje kurzy" },
+  retrySlug.value === ""
+    ? { to: "/muj-ucet", label: "Moje kurzy" }
+    : { to: checkoutPath(retrySlug.value), label: "Zkusit znovu" },
 )
 
 // Two timers, both VueUse's, so there is one answer to „when does this stop

@@ -42,7 +42,11 @@ export const BILLING_COMPANY_FIELDS: readonly BillingField[] = BILLING_FIELDS.fi
 // loses the field-by-field inferred type the routes take their request bodies
 // from, which is a worse trade than the one repetition. A column added above
 // belongs here too.
-const BillingFieldSchema = z.string().trim().max(200)
+// The cap the routes enforce, and the `maxlength` the form carries, so the
+// browser stops a paste the route would only be able to refuse.
+export const BILLING_FIELD_MAX_LENGTH = 200
+
+const BillingFieldSchema = z.string().trim().max(BILLING_FIELD_MAX_LENGTH)
 
 export const BillingRequestSchema = z.object({
   billing_name: BillingFieldSchema,

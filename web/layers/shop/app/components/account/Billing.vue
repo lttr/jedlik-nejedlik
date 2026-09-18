@@ -38,9 +38,11 @@ const { data, error } = await useFetch<BillingDetails>("/api/account/billing", {
   default: emptyBillingDetails,
 })
 
-// A copy: the form edits it as the Student types, and a failed save must not
-// silently reset what they wrote.
-const billing = ref<BillingDetails>(data.value)
+// A copy, spread rather than aliased: `<BillingDetailsForm>` writes into this
+// object as the Student types, and handing it `data.value` itself would edit
+// the answer the fetch is caching — a refresh would then have nothing to put
+// back, and a failed save would silently look like a stored one.
+const billing = ref<BillingDetails>({ ...data.value })
 
 const { pending, errorMessage, succeeded: saved, submit } = useAuthForm()
 
