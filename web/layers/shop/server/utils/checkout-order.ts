@@ -176,9 +176,13 @@ export async function placeCheckoutOrder(
 
   try {
     // Remembered for next time (spec, user story 7). The Order keeps its own
-    // snapshot, so a later correction here never alters an issued invoice.
-    await client.request(updateMe(toBillingPayload(billing), { fields: ["id"] }))
-    const orderId = await createOrder(client, course, billing)
+    // snapshot, so a later correction here never alters an issued invoice —
+    // which is also why neither write needs the other, and the Student
+    // watching a disabled button waits for one round-trip rather than two.
+    const [, orderId] = await Promise.all([
+      client.request(updateMe(toBillingPayload(billing), { fields: ["id"] })),
+      createOrder(client, course, billing),
+    ])
     return await startPayment(event, orderId, course, email)
   } catch (error) {
     throw unexpectedShopError(

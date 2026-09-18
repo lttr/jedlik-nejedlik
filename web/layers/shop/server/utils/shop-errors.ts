@@ -6,6 +6,14 @@ export function shopError(statusCode: number, code: string, message: string): Er
   return createError({ statusCode, statusMessage: code, message })
 }
 
+// Absent is 404, worded like Nuxt's own route miss: a draft Course and
+// somebody else's Order have to be indistinguishable from a URL that never
+// existed (ADR 0004), so every shop read that comes up empty answers this and
+// nothing more specific.
+export function notFound(): Error {
+  return createError({ statusCode: 404, statusMessage: "Page not found" })
+}
+
 export const shopMessages = {
   // The two ways a Course is not buyable. Both are 409: the Course is real and
   // readable, the order just cannot be placed.

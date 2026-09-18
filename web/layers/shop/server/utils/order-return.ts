@@ -15,28 +15,28 @@ import type { SettlementView } from "../../shared/utils/settlement"
 const ReturnCourseSchema = z.object({ title: z.string(), slug: z.string() })
 
 async function readOwnOrder(client: DirectusRestClient, orderId: number): Promise<Order> {
-  const rows = await client.request(
-    readItems("order", { fields: [...ORDER_FIELDS], filter: { id: { _eq: orderId } }, limit: 1 }),
+  return OrderSchema.parse(
+    await readOnlyRow(
+      client,
+      readItems("order", { fields: [...ORDER_FIELDS], filter: { id: { _eq: orderId } }, limit: 1 }),
+    ),
   )
-  const row = rows[0]
-  if (row === undefined) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found" })
-  }
-  return OrderSchema.parse(row)
 }
 
 async function readOrderCourse(
   client: DirectusRestClient,
   courseId: number,
 ): Promise<z.output<typeof ReturnCourseSchema>> {
-  const rows = await client.request(
-    readItems("course", { fields: ["title", "slug"], filter: { id: { _eq: courseId } }, limit: 1 }),
+  return ReturnCourseSchema.parse(
+    await readOnlyRow(
+      client,
+      readItems("course", {
+        fields: ["title", "slug"],
+        filter: { id: { _eq: courseId } },
+        limit: 1,
+      }),
+    ),
   )
-  const row = rows[0]
-  if (row === undefined) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found" })
-  }
-  return ReturnCourseSchema.parse(row)
 }
 
 // The Student usually arrives before GoPay's notification does, so the page
@@ -45,10 +45,7 @@ async function readOrderCourse(
 // stands, which is the pending state, and GoPay's own notification (retried
 // up to twenty times) settles it behind them.
 async function settledStatus(event: H3Event, order: Order): Promise<Order["status"]> {
-  if (order.gopay_payment_id === undefined) {
-    return order.status
-  }
-  const settled = await settlePayment(event, order.gopay_payment_id).catch((error: unknown) => {
+  const settled = await settleOrder(event, order).catch((error: unknown) => {
     console.warn(`[shop] Could not settle order ${order.id} from the return page`, error)
     return undefined
   })
@@ -58,8 +55,13 @@ async function settledStatus(event: H3Event, order: Order): Promise<Order["statu
 export async function loadSettlementView(event: H3Event, orderId: number): Promise<SettlementView> {
   const { client } = await requireAccountDirectusClient(event)
   const order = await readOwnOrder(client, orderId)
-  const status = await settledStatus(event, order)
-  const course = await readOrderCourse(client, order.course)
+  // The Course only ever needs `order.course`, which the read above already
+  // gave us, so it must not wait behind GoPay's inquiry: the page polls this
+  // every three seconds until the Order settles.
+  const [status, course] = await Promise.all([
+    settledStatus(event, order),
+    readOrderCourse(client, order.course),
+  ])
 
   return {
     state: settlementStateForOrder(status),

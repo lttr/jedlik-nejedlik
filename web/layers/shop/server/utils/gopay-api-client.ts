@@ -41,27 +41,20 @@ const PaymentSchema = z
     gwUrl: payment.gw_url ?? "",
   }))
 
-interface GopayRequest {
-  method: "GET" | "POST"
-  path: string
-  headers: Record<string, string>
-  body?: string | Record<string, unknown>
-}
-
-async function send({ method, path, headers, body }: GopayRequest): Promise<unknown> {
-  return $fetch<unknown>(path, { method, headers, body })
-}
-
 // The token the other three calls ride on, kept for as long as GoPay says it
 // is good for.
 function createTokenSource(config: GopayApiConfig): () => Promise<string> {
   let token: { value: string; expiresAt: number } | undefined
+  // The fetch itself, not its result: at a cold start, and again at every
+  // renewal, several calls want the token at once, and each of them asking
+  // GoPay for its own would be the same request three times over. The auth
+  // layer's `refreshesInFlight` does this for refresh tokens.
+  let inFlight: Promise<string> | undefined
 
-  async function fetchToken(): Promise<string> {
+  async function requestToken(): Promise<string> {
     const credentials = Buffer.from(`${config.clientId}:${config.clientSecret}`).toString("base64")
-    const raw = await send({
+    const raw: unknown = await $fetch(`${config.baseUrl}/api/oauth2/token`, {
       method: "POST",
-      path: `${config.baseUrl}/api/oauth2/token`,
       headers: {
         Authorization: `Basic ${credentials}`,
         Accept: "application/json",
@@ -77,6 +70,20 @@ function createTokenSource(config: GopayApiConfig): () => Promise<string> {
     return parsed.access_token
   }
 
+  async function fetchToken(): Promise<string> {
+    const shared = inFlight
+    if (shared !== undefined) {
+      return shared
+    }
+    const pending = requestToken()
+    inFlight = pending
+    try {
+      return await pending
+    } finally {
+      inFlight = undefined
+    }
+  }
+
   return async function authorization(): Promise<string> {
     const cached = token
     const value =
@@ -89,16 +96,19 @@ export function createGopayApiClient(config: GopayApiConfig): GopayClient {
   const authorization = createTokenSource(config)
 
   async function authorized(
-    request: Omit<GopayRequest, "headers"> & { contentType?: string },
+    method: "GET" | "POST",
+    path: string,
+    body?: string | Record<string, unknown>,
+    contentType = "application/json",
   ): Promise<unknown> {
-    const { contentType = "application/json", ...rest } = request
-    return send({
-      ...rest,
+    return $fetch<unknown>(path, {
+      method,
       headers: {
         Authorization: await authorization(),
         Accept: "application/json",
         "Content-Type": contentType,
       },
+      body,
     })
   }
 
@@ -107,42 +117,35 @@ export function createGopayApiClient(config: GopayApiConfig): GopayClient {
       assertCallbackUrl("return_url", input.returnUrl)
       assertCallbackUrl("notification_url", input.notificationUrl)
       const amount = toHalere(input.priceCzk)
-      const raw = await authorized({
-        method: "POST",
-        path: `${config.baseUrl}/api/payments/payment`,
-        body: {
-          payer: { contact: { email: input.payerEmail } },
-          target: { type: "ACCOUNT", goid: config.goid },
-          amount,
-          currency: "CZK",
-          order_number: String(input.orderId),
-          order_description: input.courseTitle,
-          items: [{ type: "ITEM", name: input.courseTitle, amount, count: 1 }],
-          callback: {
-            return_url: input.returnUrl,
-            notification_url: input.notificationUrl,
-          },
-          lang: "CS",
+      const raw = await authorized("POST", `${config.baseUrl}/api/payments/payment`, {
+        payer: { contact: { email: input.payerEmail } },
+        target: { type: "ACCOUNT", goid: config.goid },
+        amount,
+        currency: "CZK",
+        order_number: String(input.orderId),
+        order_description: input.courseTitle,
+        items: [{ type: "ITEM", name: input.courseTitle, amount, count: 1 }],
+        callback: {
+          return_url: input.returnUrl,
+          notification_url: input.notificationUrl,
         },
+        lang: "CS",
       })
       return PaymentSchema.parse(raw)
     },
 
     async inquirePayment(paymentId: string): Promise<GopayPayment> {
-      const raw = await authorized({
-        method: "GET",
-        path: `${config.baseUrl}/api/payments/payment/${paymentId}`,
-      })
+      const raw = await authorized("GET", `${config.baseUrl}/api/payments/payment/${paymentId}`)
       return PaymentSchema.parse(raw)
     },
 
     async refundPayment(paymentId: string, amountCzk: number): Promise<void> {
-      await authorized({
-        method: "POST",
-        path: `${config.baseUrl}/api/payments/payment/${paymentId}/refund`,
-        contentType: "application/x-www-form-urlencoded",
-        body: `amount=${toHalere(amountCzk)}`,
-      })
+      await authorized(
+        "POST",
+        `${config.baseUrl}/api/payments/payment/${paymentId}/refund`,
+        `amount=${toHalere(amountCzk)}`,
+        "application/x-www-form-urlencoded",
+      )
     },
   }
 }

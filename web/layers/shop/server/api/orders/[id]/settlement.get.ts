@@ -5,7 +5,7 @@ import type { SettlementView } from "../../../../shared/utils/settlement"
 export default defineEventHandler(async (event): Promise<SettlementView> => {
   const orderId = Number(getRouterParam(event, "id"))
   if (!Number.isInteger(orderId)) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found" })
+    throw notFound()
   }
   return loadSettlementView(event, orderId)
 })
