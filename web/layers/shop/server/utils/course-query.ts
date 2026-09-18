@@ -1,3 +1,7 @@
+import { readItems } from "@directus/sdk"
+import type { QueryFields } from "@directus/sdk"
+
+import type { CourseCollection, Schema } from "../../../directus/shared/types/directus"
 import { CourseStatusSchema } from "../../../directus/shared/utils/schemas"
 
 // What the two shop routes ask Directus for. Server-only: this is Directus
@@ -28,3 +32,42 @@ export const COURSE_PUBLIC_FIELDS = [
 // straight through: the SDK's `_in` takes a mutable `string[]` and rejects
 // Zod's readonly tuple.
 export const SHOP_COURSE_STATUSES = [...CourseStatusSchema.options]
+
+// The Sales Page's extra selection: the outline, which is what a visitor may
+// read before buying.
+export const COURSE_OUTLINE_FIELDS = {
+  sections: [
+    "id",
+    "course",
+    "title",
+    "sort",
+    { lessons: ["id", "section", "title", "sort", "type"] },
+  ],
+} as const
+
+// One Course by slug for the whole shop — the Sales Page and the Checkout —
+// read with the caller's own client, so who may see a draft is Directus's
+// decision (ADR 0004). Absent is 404, worded like Nuxt's own route miss,
+// because a draft must not be distinguishable from a slug that never existed.
+// The columns are the caller's to choose — `QueryFields` is what checks them
+// against the schema — while the filter and the refusal are not. The row
+// comes back as `unknown` because every caller runs it through its own codec
+// anyway, and a codec that trusts an inferred shape checks nothing.
+export async function readCourseBySlug(
+  client: DirectusRestClient,
+  slug: string,
+  fields: QueryFields<Schema, CourseCollection>,
+): Promise<unknown> {
+  const rows = await client.request(
+    readItems("course", {
+      fields,
+      filter: { status: { _in: SHOP_COURSE_STATUSES }, slug: { _eq: slug } },
+      limit: 1,
+    }),
+  )
+  const row = rows[0]
+  if (row === undefined) {
+    throw createError({ statusCode: 404, statusMessage: "Page not found" })
+  }
+  return row
+}

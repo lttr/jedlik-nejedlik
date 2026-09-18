@@ -92,7 +92,11 @@ export type OrderConsentCollection = z.input<typeof OrderConsentSchema>
 // policy's preset, so that the moment of consent is the server's clock.
 export type NewOrderConsent = Pick<OrderConsentCollection, "document" | "document_version">
 
-export type EntitlementCollection = z.input<typeof EntitlementSchema>
+export type EntitlementCollection = Omit<z.input<typeof EntitlementSchema>, "course"> & {
+  // M2O: the id on the wire, the row when a query expands the relation, as
+  // „Moje kurzy" does to get a cover and a title.
+  course: number | CourseCollection
+}
 
 // The `directus_users` columns this app touches. Naming the collection in the
 // Schema replaces the SDK's built-in system shape, which is the only way the

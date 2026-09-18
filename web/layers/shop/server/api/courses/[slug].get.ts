@@ -1,33 +1,24 @@
-import { readItems } from "@directus/sdk"
-
 // The Sales Page (spec, "Routes and navigation"). The caller's own session
 // decides what Directus returns, so a draft is readable by its Author and
-// absent for everyone else. Absent means 404, the same 404 as a slug that
-// never existed: a visitor cannot confirm a draft this way.
-export default defineEventHandler(async (event): Promise<SalesCourse> => {
+// absent for everyone else.
+//
+// The same session decides ownership: a Student who already holds an
+// Entitlement for this Course is shown „Přejít do kurzu" instead of a buy
+// button. The Service Account is never involved (ADR 0004) — it could read
+// everyone's Entitlements, and this route only ever needs the caller's.
+export default defineEventHandler(async (event): Promise<SalesView> => {
   const slug = getRouterParam(event, "slug") ?? ""
-  const client = await getCallerDirectusClient(event)
-  const rows = await client.request(
-    readItems("course", {
-      fields: [
-        ...COURSE_PUBLIC_FIELDS,
-        {
-          sections: [
-            "id",
-            "course",
-            "title",
-            "sort",
-            { lessons: ["id", "section", "title", "sort", "type"] },
-          ],
-        },
-      ],
-      filter: { status: { _in: SHOP_COURSE_STATUSES }, slug: { _eq: slug } },
-      limit: 1,
-    }),
-  )
-  const row = rows[0]
-  if (row === undefined) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found" })
+  // Held apart from the client below on purpose: a visitor has no session,
+  // and the public policy grants no `entitlement` read at all, so asking
+  // would be a refusal rather than an empty list.
+  const session = await getAccountDirectusClient(event)
+  const client = session ?? getDirectusAnonymousServerClient(event)
+
+  const row = await readCourseBySlug(client, slug, [...COURSE_PUBLIC_FIELDS, COURSE_OUTLINE_FIELDS])
+  const course = parseSalesCourse(row)
+
+  return {
+    course,
+    entitled: session === null ? false : await holdsEntitlement(session, course.id),
   }
-  return parseSalesCourse(row)
 })

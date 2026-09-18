@@ -68,6 +68,23 @@ export function toBillingPayload(details: BillingDetails): BillingPayload {
   return payload
 }
 
+// What a browser may send as Billing Details, wherever it sends them from:
+// the Checkout's „Objednávka zavazující k platbě" and the Account's
+// „Fakturační údaje" save. Every field is required in the body and may be
+// empty — the form always sends all six, and a missing one would silently
+// keep the old value on one route and clear it on the other. Trimmed here so
+// nothing downstream has to, capped so a body cannot be used as storage.
+const BillingFieldSchema = z.string().trim().max(200)
+
+export const BillingRequestSchema = z.object({
+  billing_name: BillingFieldSchema,
+  billing_company: BillingFieldSchema,
+  billing_ic: BillingFieldSchema,
+  billing_street: BillingFieldSchema,
+  billing_city: BillingFieldSchema,
+  billing_zip: BillingFieldSchema,
+})
+
 export function hasBillingCompanyDetails(details: BillingDetails): boolean {
   return BILLING_COMPANY_FIELDS.some((field) => details[field] !== "")
 }

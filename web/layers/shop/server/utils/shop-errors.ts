@@ -14,6 +14,12 @@ export const shopMessages = {
 
   consentRequired: "Bez souhlasu s obchodními podmínkami objednávku dokončit nejde.",
   tooManyCheckouts: "Příliš mnoho pokusů o objednávku. Zkuste to prosím za chvíli.",
+
+  // „Fakturační údaje" on the Account page.
+  billingInvalid: "Fakturační údaje se nepodařilo přečíst. Zkontrolujte je prosím.",
+  billingUnsaved: "Fakturační údaje se teď nepodařilo uložit. Zkuste to prosím za chvíli.",
+  tooManyBillingSaves: "Příliš mnoho pokusů o uložení. Zkuste to prosím za chvíli.",
+
   // Read by GoPay's retry loop rather than by a person, but the shape stays
   // the same as every other refusal so the limiter needs no second contract.
   tooManyNotifications: "Příliš mnoho oznámení o platbě. Zkuste to prosím za chvíli.",

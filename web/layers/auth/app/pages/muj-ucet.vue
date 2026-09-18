@@ -11,6 +11,13 @@
 
       <AuthFormError :message="logOutError" />
 
+      <!-- Shop-layer sections, included here because the Account page is the
+           auth layer's (spec, „Placement"). Each fetches its own data, so a
+           slow Directus costs the section and not the whole page. -->
+      <AccountMyCourses />
+
+      <AccountBilling />
+
       <h2 class="p-heading-4">Změna hesla</h2>
 
       <p v-if="changed" class="success-message" role="status">

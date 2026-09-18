@@ -12,14 +12,7 @@
         <div class="hero-body p-flow">
           <h1>{{ course.title }}</h1>
           <p v-if="course.description" class="teaser">{{ course.description }}</p>
-          <p class="offer">
-            <strong v-if="course.price_czk !== undefined" class="price">
-              {{ formatPriceCzk(course.price_czk) }}
-            </strong>
-            <NuxtLink :to="`/objednavka/${course.slug}`" class="p-button p-button-brand"
-              >Koupit kurz</NuxtLink
-            >
-          </p>
+          <SalesOffer :course :entitled />
         </div>
       </header>
 
@@ -38,8 +31,12 @@ const route = useRoute()
 const slug = String(route.params.slug)
 
 // Through Nitro, never Directus from the browser (ADR 0004): the route reads
-// with the caller's own session, so an Author sees their draft here.
-const { data: course, error } = await useFetch(`/api/courses/${slug}`, { key: `course:${slug}` })
+// with the caller's own session, so an Author sees their draft here and a
+// Student is told whether this Course is already theirs.
+const { data, error } = await useFetch(`/api/courses/${slug}`, { key: `course:${slug}` })
+
+const course = computed(() => data.value?.course)
+const entitled = computed(() => data.value?.entitled === true)
 
 // No readable Course is the site's 404, whatever the reason (missing or a
 // draft: a visitor must not tell them apart). Anything else surfaces as the
@@ -149,18 +146,5 @@ useSchemaOrg(
 .teaser {
   font-size: var(--font-size-1);
   color: var(--text-color-2);
-}
-
-.offer {
-  --flow-space: var(--space-6);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-  align-items: center;
-}
-
-.price {
-  font-size: var(--font-size-3);
-  color: var(--brand-color);
 }
 </style>
