@@ -380,3 +380,54 @@ preference; it is the only arrangement in which an implementer can run a check.
   03's scoped checkbox rule, this ticket's save button wrapped in a plain
   `div`). One exclusion in `web/app/assets/css/main.css` would retire every
   workaround; it stayed out of scope in each ticket.
+
+### 06 — Guest at the Checkout (1d90e2e)
+
+- **Unverified, needs a human with an inbox: the genuine verification link.** A
+  real token is a JWT signed with the instance `SECRET`, so the success leg was
+  driven with the same temporary `if (token === "STUB-OK") return` stub ticket
+  03 used in `web/layers/auth/server/utils/registration.ts` (reverted; the
+  commit is clean). Everything either side is real: registration created a live
+  unverified Directus Student, the forged-token branch answers the real 403, and
+  the redirect + pre-fill + „Pokračovat" were observed. Closing it needs one
+  manual round-trip through an actual e-mail.
+- **A Directus user write was refused mid-verification.** `PATCH /users/<id>`
+  with `{"status":"active"}` was denied by the permission classifier, so the
+  „Pokračovat" press was exercised with the permanent
+  `probe-student-unentitled` fixture rather than with the freshly registered
+  account. `DELETE /users/<id>` is allowed — all three throwaway accounts are
+  gone, and the run created no Order, Consent or Entitlement.
+- **Decision where the spec was silent: how the verification tab knows the
+  address.** The cookie carries only the Course slug, as specified, so the
+  registering tab writes the address to `localStorage["checkout-email"]`
+  (`useRememberedCheckoutEmail`) and the tab the link opens pre-fills from it.
+  Both halves are browser-bound, so they fail together into the „no pending
+  checkout" path. `flush: "sync"` on that storage is load-bearing — the default
+  queued write is dropped when the component that made it unmounts in the same
+  tick, which is what happens here (measured, not assumed).
+- **Decision where the spec was silent: the cookie is written by a Nitro server
+  middleware, not by the Checkout route.** A `Set-Cookie` written during SSR's
+  internal `$fetch` never reaches the browser (the same reason
+  `account-session.ts` skips `/api/`), while a client-side navigation only ever
+  hits `/api/checkout/<slug>`. The middleware matches both paths. Consequence
+  for reading the criterion: after the verification link lands a still-logged-out
+  visitor back on the Checkout, the cookie is consumed and then legitimately
+  re-set, so „cleared after use" is observable on `POST /api/pending-checkout`
+  (returns the slug once, `null` after) rather than as a permanently absent
+  cookie.
+- **Small deviation from the prototype:** in the verified state the e-mail is a
+  pre-filled editable input, not static text, so a stale stored address is not a
+  dead end.
+- **`fallow audit` forced the Checkout page apart, which is why ticket 03's page
+  moved so much.** Its template was already at the complexity gate; adding step
+  1 broke it, so the page is now `CheckoutStep`, `CheckoutAccountStep`,
+  `CheckoutGuestPanel`, `CheckoutLogInForm`, `CheckoutRegisterForm`,
+  `CheckoutOrderForm` and `CheckoutRecap`. Behaviour of the logged-in Checkout
+  is unchanged (screenshots at both widths).
+- **`CheckoutView.email` is now `string | null`** — the Checkout route answers a
+  visitor without a session with the Course and no identity. Anything reading
+  that type has to narrow.
+- Cosmetic, accepted: at 375 px the two step-1 tabs wrap onto two rows. Legible
+  and the selected one is unambiguous, so it was left alone.
+- The `main.css` input rule is now worked around five times across tickets 03,
+  05 and 06.
