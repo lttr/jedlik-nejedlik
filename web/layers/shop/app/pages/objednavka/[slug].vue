@@ -6,7 +6,7 @@
       <!-- A Course this Student cannot buy: already theirs, or not on sale.
            The form is never rendered for them (ticket 03, acceptance). -->
       <div v-if="refusal" class="refused p-flow">
-        <ShopNotice :message="refusal.message" tone="success" />
+        <ShopNotice :message="refusal.message" :tone="refusalTone" />
         <p>
           <NuxtLink
             v-if="refusal.code === 'already_entitled'"
@@ -85,6 +85,12 @@ const verified = computed(() => route.query[EMAIL_VERIFIED_QUERY] !== undefined)
 // and may be refused only then: „Tenhle kurz už máte" belongs to the Account,
 // not to the request that rendered the page.
 const refusal = computed(() => readRefusal(error.value, 409))
+
+// Owning the Course already is good news; a Course that is not on sale yet is
+// nobody's fault, so it gets the neutral tone rather than the green one.
+const refusalTone = computed(() =>
+  refusal.value?.code === "already_entitled" ? "success" : "info",
+)
 
 if (error.value !== undefined && refusal.value === undefined) {
   throwPageError(error.value, route.path)
