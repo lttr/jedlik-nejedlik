@@ -26,7 +26,7 @@
           <dd>{{ payment.id }}</dd>
         </dl>
 
-        <form v-if="payment.state === 'CREATED'" class="actions" method="post" :action="decideUrl">
+        <form v-if="isPaymentLive(payment.state)" class="actions" method="post" :action="decideUrl">
           <button class="p-button p-button-brand" name="action" value="pay" type="submit">
             Zaplatit
           </button>
@@ -41,6 +41,8 @@
 </template>
 
 <script lang="ts" setup>
+import { isPaymentLive } from "../../../../shared/utils/gopay"
+
 // The developer's stand-in for GoPay's payment page (spec, „Mock gateway").
 // The buttons post a plain form, so the flow works with JavaScript off and
 // the same route can be called by a test.

@@ -12,6 +12,7 @@ import { z } from "zod"
 
 import { recordMockPaymentState } from "../../../../../../../server/utils/gopay-mock-client"
 import type { MockPayment } from "../../../../../../../server/utils/gopay-mock-client"
+import type { GopayPaymentState } from "../../../../../../../shared/utils/gopay"
 
 // „Zaplatit" and „Zrušit" — the only two things a payer can do at this
 // gateway. The page posts a plain form here, and so can any HTTP client
@@ -22,7 +23,18 @@ import type { MockPayment } from "../../../../../../../server/utils/gopay-mock-c
 // server-to-server, then send the payer back. The notification is awaited,
 // so by the time the redirect is answered the site has already settled the
 // Order — a flow test can assert straight after this call returns.
-const DecisionSchema = z.object({ action: z.enum(["pay", "cancel"]) })
+//
+// `choose` is the third, button-less action: it puts the Payment in
+// `PAYMENT_METHOD_CHOSEN` — GoPay's „the payer picked a method, the bank has
+// not answered yet" — which is the state the return page's pending branch and
+// the notification's „writes nothing" case are about (ticket 04, acceptance).
+const DecisionSchema = z.object({ action: z.enum(["pay", "cancel", "choose"]) })
+
+const MOCK_DECISION_STATES = {
+  pay: "PAID",
+  cancel: "CANCELED",
+  choose: "PAYMENT_METHOD_CHOSEN",
+} as const satisfies Record<"pay" | "cancel" | "choose", GopayPaymentState>
 
 export default defineEventHandler(async (event) => {
   const paymentId = getRouterParam(event, "id") ?? ""
@@ -31,10 +43,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: "action must be pay or cancel" })
   }
 
-  const payment = recordMockPaymentState(
-    paymentId,
-    decision.data.action === "pay" ? "PAID" : "CANCELED",
-  )
+  const payment = recordMockPaymentState(paymentId, MOCK_DECISION_STATES[decision.data.action])
   if (payment === undefined) {
     throw createError({ statusCode: 404, statusMessage: "Payment not found" })
   }

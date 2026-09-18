@@ -42,16 +42,10 @@ const slug = String(route.params.slug)
 const { data: course, error } = await useFetch(`/api/courses/${slug}`, { key: `course:${slug}` })
 
 // No readable Course is the site's 404, whatever the reason (missing or a
-// draft: a visitor must not tell them apart), worded like Nuxt's own route
-// miss. Anything else surfaces as the error it is. `fatal` makes a
-// client-side navigation show the error page too, not only a server render.
+// draft: a visitor must not tell them apart). Anything else surfaces as the
+// error it is.
 if (error.value !== undefined) {
-  throw createError({
-    statusCode: error.value.statusCode ?? 500,
-    statusMessage:
-      error.value.statusCode === 404 ? `Page not found: ${route.path}` : error.value.statusMessage,
-    fatal: true,
-  })
+  throwPageError(error.value, route.path)
 }
 
 // Head and structured data derive from the Course itself (spec, "Metadata

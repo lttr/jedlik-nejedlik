@@ -29,8 +29,9 @@ export const CHECKOUT_RATE_LIMIT: RateLimit = {
 }
 
 // Exactly the `order` columns the Student policy lets them read, because
-// `OrderSchema` insists on all of them.
-const ORDER_FIELDS = [
+// `OrderSchema` insists on all of them. The Service Account may read all of
+// them too, so the settlement selects the same list.
+export const ORDER_FIELDS = [
   "id",
   "student",
   "course",
