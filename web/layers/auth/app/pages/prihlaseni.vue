@@ -48,6 +48,8 @@
 </template>
 
 <script lang="ts" setup>
+import { authRedirectTarget } from "../../../shop/shared/utils/pending-checkout"
+
 definePageMeta({ middleware: "guest" })
 
 // Bare title: the page is `robots: false`, so no og:* tags.
@@ -74,7 +76,10 @@ const password = ref("")
 async function onSubmit() {
   await submit(async () => {
     await logIn({ email: email.value, password: password.value })
-    await navigateTo(safeRedirectPath(route.query.redirect))
+    // A visitor sent here from a Checkout has no `?redirect=` when the
+    // verification link brought them back; the pending-checkout cookie is the
+    // fallback target, and consuming it here is what clears it.
+    await navigateTo(authRedirectTarget(route.query.redirect, await takePendingCheckoutSlug()))
   })
 }
 </script>

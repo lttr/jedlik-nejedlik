@@ -1,5 +1,6 @@
 ---
-status: ready
+status: done
+verified: [checks, probes, behaviour]
 blocked_by: [03]
 references:
   - "Spec: ../spec.md"
@@ -16,9 +17,9 @@ Mechanism: a pending-checkout cookie (Course slug, 24 h, httpOnly, lax) set when
 
 ## Acceptance criteria
 
-- [ ] A visitor logs in inside step 1 and continues to step 2 without a page change
-- [ ] A visitor registers inside step 1, follows the verification link in a new tab, and lands on the same Checkout with the e-mail pre-filled and only a password to type; after „Pokračovat" step 2 is open
-- [ ] The password warning is shown in the registration tab before submitting
-- [ ] The pending-checkout cookie is cleared after use; a visitor who verifies without a pending checkout still lands on the login page with the existing notice
-- [ ] Logged-in visitors opening the Checkout never see step 1's forms; the auth layer's redirect rules still reject foreign targets (unit test)
-- [ ] Verified with the `verify` skill for both tabs at desktop and 375 px; `vp run check:all` green
+- [x] A visitor logs in inside step 1 and continues to step 2 without a page change
+- [x] A visitor registers inside step 1, follows the verification link in a new tab, and lands on the same Checkout with the e-mail pre-filled and only a password to type; after „Pokračovat" step 2 is open
+- [x] The password warning is shown in the registration tab before submitting
+- [x] The pending-checkout cookie is cleared after use; a visitor who verifies without a pending checkout still lands on the login page with the existing notice
+- [x] Logged-in visitors opening the Checkout never see step 1's forms; the auth layer's redirect rules still reject foreign targets (unit test)
+- [x] Verified with the `verify` skill for both tabs at desktop and 375 px; `vp run check:all` green
