@@ -431,3 +431,60 @@ preference; it is the only arrangement in which an implementer can run a check.
   and the selected one is unambiguous, so it was left alone.
 - The `main.css` input rule is now worked around five times across tickets 03,
   05 and 06.
+
+## Wrap-up: `/simplify` over the whole branch (f531ef6, 6b62229)
+
+Four reviewers (reuse, simplification, efficiency, altitude) over `master..HEAD`;
+~30 findings deduped to 20 applied in two passes.
+
+**A correction to the note repeated in tickets 03, 05 and 06.** „The `main.css`
+input rule has been worked around five times; one exclusion retires every
+workaround" was wrong on both halves, and the second pass measured it in the
+running app rather than reasoning about it:
+
+- The rule is real and is now fixed at the cause:
+  `input:not([type="checkbox"], [type="radio"]), textarea { width: 100% }`.
+- `OrderForm`'s checkbox workaround is **not** fully retired by it. What kept
+  the box square at 375 px was `flex: 0 0 auto`, not the width override — with
+  the block deleted outright the consent sentence overflows the flex line and
+  the box collapses to 13.7 × 18.1 px. A three-line `flex-shrink: 0` stays,
+  with the reason on it.
+- The three `<div>` wrappers around `<AuthSubmit>` were **never inert**. The
+  design system lays out every `<form>` as a grid, so an unwrapped submit
+  stretches — measured at 706 px in the Checkout's `LogInForm`. The proposed
+  `justify-self: start` on the component itself also shrinks the auth layer's
+  five bare submits (`/prihlaseni`'s button: 356 px → 120 px), which is a
+  visible change to pages outside this task. All three wrappers stand; the
+  comment that blamed `main.css` now gives the real reason.
+
+**Deliberately not fixed, each recorded with its reason.** All three are real
+and each would need the verified flows re-driven end to end, so they belong to
+a later pass rather than to this branch's wrap-up:
+
+1. **The auth layer now imports from the shop layer**, inverting a dependency
+   arrow that used to run one way. `/prihlaseni` and `/overeni-emailu` import
+   `pending-checkout` from the shop layer, and `/muj-ucet` renders two
+   shop-layer components. The deeper fix is for the auth layer to own a generic
+   _pending destination_ — a cookie holding a validated path rather than a
+   Course slug, which would collapse the slug regex and `checkoutPath()` into
+   one validated value. ~6 mechanical, net-deleting files, but it changes what
+   ticket 06's cookie contains, and that cookie is an acceptance criterion.
+2. **The mock GoPay implementation ships in production bundles.**
+   `gopay-mock-client.ts` lives in the always-built `shop/server/utils/` and is
+   statically imported by `gopay-client.ts`; only the mock's page and routes are
+   confined to the `mock-gopay` layer. That is also why the mock layer's routes
+   reach six directory levels up and forgo auto-imports. Moving the file into
+   the mock layer would make `getGopayClient` async (all three call sites
+   already await). Not a security hole — `mock` is refused under
+   `NODE_ENV=production` — but the boundary is stated in three places and
+   enforced in none.
+3. **`<ShopNotice>` is the site's best notice component, reachable only from the
+   shop layer.** `<AuthFormError>` is now a strict subset of it and 17 files
+   still hand-roll the same paragraph. Promoting it to the base layer is ~8
+   files of pure substitution; the `info` tone and its dark-mode tokens are
+   site assets today locked behind one layer.
+
+Also worth knowing: `toBillingPayload`'s spread is **not** redundant, though it
+looks it. Removing it requires a type assertion the lint gate refuses
+(`no-unsafe-type-assertion`); the spread is what gives the payload all six keys
+cast-free. It now says so in a comment.
