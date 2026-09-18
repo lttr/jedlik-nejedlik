@@ -350,3 +350,33 @@ preference; it is the only arrangement in which an implementer can run a check.
 - The Service Account's token is now exercised end to end by a running request,
   closing the gap ticket 01 left open. Nothing here has still ever talked to a
   real GoPay.
+
+### 05 — „Moje kurzy", „Fakturační údaje", Sales Page button (df31890)
+
+- **Decision where the spec was silent: an owner's Sales Page hides the price as
+  well as the buy button.** The spec only names the button. „Přejít do kurzu"
+  next to „1 490 Kč" reads as an invitation to buy again, so `<SalesOffer>`
+  drops the price for an owner and keeps the whole offer paragraph out of the
+  page when the Course has no price at all.
+- **Contradicts the research note's shape, deliberately.**
+  `research-repo-seams.md` §6 said to thread an `entitlement` field through the
+  Course object. `/api/courses/:slug` instead answers a
+  `SalesView { course, entitled }`, matching ticket 03's `CheckoutView`
+  precedent, so the Course codec stays a pure row codec and nothing
+  caller-specific leaks into it.
+- **A repo-wide typing consequence, small but real.**
+  `EntitlementCollection.course` is now `number | CourseCollection`
+  (`web/layers/directus/shared/types/directus.ts`) so „Moje kurzy" can expand
+  the relation. Same pattern as `OrderCollection.consents`; anything that
+  assumes `course` is a number now has to narrow.
+- Criterion 1 was checked against the permanent hand-granted fixture Entitlement
+  (id 1, course `test-kurz-publikovany`), not a fresh purchase.
+- **Unverified: the failure branches of the two new Account routes.** 401
+  without a session was checked on both; the 400 (bad billing body), the 502
+  (Directus down) and the rate-limit refusal were not forced — each renders
+  through the same `<ShopNotice>` + `useAuthForm` pair the Checkout already
+  exercises. Closing them needs a fault-injected Directus.
+- **The `main.css` input rule has now been worked around three times** (ticket
+  03's scoped checkbox rule, this ticket's save button wrapped in a plain
+  `div`). One exclusion in `web/app/assets/css/main.css` would retire every
+  workaround; it stayed out of scope in each ticket.
