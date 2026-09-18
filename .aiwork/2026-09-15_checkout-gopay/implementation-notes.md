@@ -293,3 +293,22 @@ width: 100% }`, which outranks Puleo's zero-specificity
 - **Accepted limit in the Order-reuse check:** only the newest `created` Order
   that has a `gopay_payment_id` is inquired, so a checkout costs at most one
   GoPay round-trip. The reasoning is in the comment on `reusableOrder`.
+
+### The per-ticket worktree fan-out was tried again, and failed again
+
+Run 2 dispatched tickets 04 and 05 into their own worktrees and hit exactly the
+limitation written up above: both implementers were pinned at launch to the task
+worktree, `EnterWorktree` reported success, and then every Bash call was refused
+in every directory. Ticket 05's implementer burned a full context window without
+reaching the code; ticket 04's was stopped before it wrote anything. Neither
+worktree nor branch survives.
+
+The orchestrator half binds too, as the earlier note predicted: from inside the
+task worktree, `git -C`, `git --git-dir` and any compound git command aimed at a
+sibling worktree are refused, so §4.3's rebase-then-fast-forward cannot run.
+`git worktree add` and `git worktree remove` with an absolute path are the two
+that do work, which is only enough to create and clean up worktrees nobody can
+use.
+
+**Run the remaining tickets one at a time in the task worktree.** That is not a
+preference; it is the only arrangement in which an implementer can run a check.
