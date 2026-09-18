@@ -1,6 +1,7 @@
 ---
-status: ready
+status: done
 blocked_by: [01]
+verified: [checks, probes, behaviour]
 references:
   - "Spec: ../spec.md"
   - "Catalog spec (purchase button): ../../2026-09-14_catalog-sales-pages/spec.md"
@@ -12,7 +13,7 @@ references:
 
 ## Acceptance criteria
 
-- [ ] With an Entitlement granted by hand in Directus, „Moje kurzy" lists that Course with cover, title and the placeholder; an anonymous visitor is sent to login; a Student with no Entitlement sees an empty state
-- [ ] „Fakturační údaje" pre-fills from the Account, saves, and a probe shows the fields land on the Student's own row only
-- [ ] Sales Page button in all three states, including the owner's „Přejít do kurzu"; the Entitlement read uses the caller's session (ADR 0004), no Service Account
-- [ ] Verified with the `verify` skill at desktop and 375 px; `vp run check:all` green
+- [x] With an Entitlement granted by hand in Directus, „Moje kurzy" lists that Course with cover, title and the placeholder; an anonymous visitor is sent to login; a Student with no Entitlement sees an empty state
+- [x] „Fakturační údaje" pre-fills from the Account, saves, and a probe shows the fields land on the Student's own row only
+- [x] Sales Page button in all three states, including the owner's „Přejít do kurzu"; the Entitlement read uses the caller's session (ADR 0004), no Service Account
+- [x] Verified with the `verify` skill at desktop and 375 px; `vp run check:all` green

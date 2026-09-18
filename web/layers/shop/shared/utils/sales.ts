@@ -17,6 +17,16 @@ export interface SalesCourse extends Course {
   sections: SalesSection[]
 }
 
+// What the Sales Page route answers: the Course, plus the one thing about it
+// that depends on who is asking. `entitled` is the caller's own Entitlement
+// for this Course, read with their own session (ADR 0004) — it decides
+// whether the button reads „Koupit kurz" or „Přejít do kurzu", and it is
+// always `false` for a visitor, who holds no Entitlements to read.
+export interface SalesView {
+  course: SalesCourse
+  entitled: boolean
+}
+
 const SalesRowSchema = CourseSchema.and(
   z.object({
     sections: z.array(SectionSchema.and(z.object({ lessons: z.array(LessonSchema) }))),

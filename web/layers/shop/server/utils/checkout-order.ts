@@ -1,15 +1,9 @@
-import { createItem, readItems, readMe, updateItem, updateMe } from "@directus/sdk"
+import { createItem, readItems, updateItem, updateMe } from "@directus/sdk"
 import type { H3Event } from "h3"
 
 import { CourseSchema, OrderSchema } from "../../../directus/shared/utils/schemas"
 import type { Order } from "../../../directus/shared/utils/schemas"
-import {
-  BILLING_FIELDS,
-  checkoutConsents,
-  reusableOrder,
-  toBillingDetails,
-  toBillingPayload,
-} from "../../shared/utils/checkout"
+import { checkoutConsents, reusableOrder, toBillingPayload } from "../../shared/utils/checkout"
 import type { BillingDetails, SellableCourse } from "../../shared/utils/checkout"
 import { assertCallbackUrl, isPaymentLive } from "../../shared/utils/gopay"
 
@@ -48,18 +42,7 @@ export async function loadCheckoutCourse(
   client: DirectusRestClient,
   slug: string,
 ): Promise<SellableCourse> {
-  const rows = await client.request(
-    readItems("course", {
-      fields: [...COURSE_PUBLIC_FIELDS],
-      filter: { status: { _in: SHOP_COURSE_STATUSES }, slug: { _eq: slug } },
-      limit: 1,
-    }),
-  )
-  const row = rows[0]
-  if (row === undefined) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found" })
-  }
-  const course = CourseSchema.parse(row)
+  const course = CourseSchema.parse(await readCourseBySlug(client, slug, [...COURSE_PUBLIC_FIELDS]))
   if (course.price_czk === undefined) {
     throw shopError(409, "course_not_for_sale", shopMessages.notForSale)
   }
@@ -73,17 +56,9 @@ export async function assertNotEntitled(
   client: DirectusRestClient,
   courseId: number,
 ): Promise<void> {
-  const held = await client.request(
-    readItems("entitlement", { fields: ["id"], filter: { course: { _eq: courseId } }, limit: 1 }),
-  )
-  if (held.length > 0) {
+  if (await holdsEntitlement(client, courseId)) {
     throw shopError(409, "already_entitled", shopMessages.alreadyEntitled)
   }
-}
-
-export async function readAccountBilling(client: DirectusRestClient): Promise<BillingDetails> {
-  const me = await client.request(readMe({ fields: [...BILLING_FIELDS] }))
-  return toBillingDetails(me)
 }
 
 // The Student's own `created` Orders for this Course, newest first. Ten is

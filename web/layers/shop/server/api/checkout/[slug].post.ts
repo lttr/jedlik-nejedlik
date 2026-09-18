@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { BillingRequestSchema } from "../../../shared/utils/checkout"
+
 // „Objednávka zavazující k platbě". The answer is the gateway URL the browser
 // is sent to; everything else the press does — the Billing Details on the
 // Account, the Order, its Consent, the Payment — happens on the way there.
@@ -7,18 +9,9 @@ import { z } from "zod"
 // The body carries no price: the amount is re-read from the Course, so a
 // tampered request buys nothing cheaper (spec, user story 27). Anything else
 // the browser sends is stripped by the schema.
-const BillingFieldSchema = z.string().trim().max(200)
-
 const CheckoutRequestSchema = z.object({
   consent: z.literal(true),
-  billing: z.object({
-    billing_name: BillingFieldSchema,
-    billing_company: BillingFieldSchema,
-    billing_ic: BillingFieldSchema,
-    billing_street: BillingFieldSchema,
-    billing_city: BillingFieldSchema,
-    billing_zip: BillingFieldSchema,
-  }),
+  billing: BillingRequestSchema,
 })
 
 export default defineEventHandler(async (event): Promise<{ gwUrl: string }> => {
