@@ -3,7 +3,7 @@
     <div class="gateway p-flow">
       <h1 class="p-heading-3">Testovací platební brána</h1>
       <p class="p-secondary-text-regular">
-        Tohle není GoPay. Stránka běží jen ve&nbsp;vývoji a zastupuje platební bránu.
+        Tohle není GoPay. Stránka běží jen ve&nbsp;vývoji a&nbsp;zastupuje platební bránu.
       </p>
 
       <ShopNotice v-if="payment === null">

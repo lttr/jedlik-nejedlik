@@ -11,8 +11,8 @@ import type { Credentials, Account, AccountSecrets } from "../../shared/types/ac
 // valid cannot finish expired.
 const REFRESH_SKEW_MS = 30_000
 
-// The session caches the lowercased e-mail: the Student policy has no `read`
-// on `directus_users`, so the stored value can never be read back.
+// The session caches the lowercased e-mail: the Student policy reads their own
+// row, so this is a round-trip saved rather than the only way to know it.
 const CredentialsSchema = z.object({
   email: AccountEmail,
   password: z.string().min(1),

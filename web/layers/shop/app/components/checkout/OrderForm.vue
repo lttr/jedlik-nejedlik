@@ -1,13 +1,16 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <CheckoutStep :number="2" title="Údaje a souhlas">
+    <!-- The title is interpolated, not markup, so the non-breaking space is
+         the character itself; an entity would show up as one. -->
+    <CheckoutStep :number="2" title="Údaje a souhlas">
       <BillingDetailsForm v-model="draft" />
 
       <label class="consent">
         <input v-model="consent" type="checkbox" name="consent" required />
         <span>
-          Souhlasím s
-          <NuxtLink :to="TERMS_PATH" target="_blank">obchodními podmínkami kurzu</NuxtLink>.
+          Souhlasím s&nbsp;<NuxtLink :to="TERMS_PATH" target="_blank"
+            >obchodními podmínkami kurzu</NuxtLink
+          >.
         </span>
       </label>
 
@@ -29,7 +32,7 @@
       </dl>
 
       <button type="submit" class="p-button p-button-brand pay" :disabled="pending">
-        Objednávka zavazující k platbě
+        Objednávka zavazující k&nbsp;platbě
       </button>
 
       <p class="muted">Pak vás přesměrujeme na&nbsp;platební bránu GoPay.</p>

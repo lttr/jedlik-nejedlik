@@ -31,8 +31,12 @@ export const shopMessages = {
   // Read by GoPay's retry loop rather than by a person, but the shape stays
   // the same as every other refusal so the limiter needs no second contract.
   tooManyNotifications: "Příliš mnoho oznámení o platbě. Zkuste to prosím za chvíli.",
+  tooManySettlementChecks: "Příliš mnoho dotazů na platbu. Zkuste to prosím za chvíli.",
+
+  // Covers the gateway too: a Payment GoPay would not create fails the same
+  // press as an Order Directus would not write, and the Student can do the
+  // same one thing about either.
   checkoutUnavailable: "Objednávku se teď nepodařilo vytvořit. Zkuste to prosím za chvíli.",
-  gatewayUnavailable: "Platební bránu se teď nepodařilo otevřít. Zkuste to prosím za chvíli.",
 } as const
 
 // Logs the cause for us and shows the Student one generic sentence, exactly

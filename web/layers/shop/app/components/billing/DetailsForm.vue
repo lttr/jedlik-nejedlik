@@ -1,10 +1,11 @@
 <template>
   <div class="billing">
     <div class="p-form-group">
-      <label :for="`${idPrefix}-name`">Jméno a příjmení (na&nbsp;doklad)</label>
+      <label :for="`${idPrefix}-name`">Jméno a&nbsp;příjmení (na&nbsp;doklad)</label>
       <input
         :id="`${idPrefix}-name`"
         v-model="details.billing_name"
+        :maxlength="BILLING_FIELD_MAX_LENGTH"
         type="text"
         name="billingName"
         autocomplete="name"
@@ -20,6 +21,7 @@
           <input
             :id="`${idPrefix}-company`"
             v-model="details.billing_company"
+            :maxlength="BILLING_FIELD_MAX_LENGTH"
             type="text"
             name="billingCompany"
             autocomplete="organization"
@@ -31,6 +33,7 @@
           <input
             :id="`${idPrefix}-ic`"
             v-model="details.billing_ic"
+            :maxlength="BILLING_FIELD_MAX_LENGTH"
             type="text"
             name="billingIc"
             inputmode="numeric"
@@ -38,10 +41,11 @@
         </div>
 
         <div class="p-form-group">
-          <label :for="`${idPrefix}-street`">Ulice a číslo popisné</label>
+          <label :for="`${idPrefix}-street`">Ulice a&nbsp;číslo popisné</label>
           <input
             :id="`${idPrefix}-street`"
             v-model="details.billing_street"
+            :maxlength="BILLING_FIELD_MAX_LENGTH"
             type="text"
             name="billingStreet"
             autocomplete="street-address"
@@ -54,6 +58,7 @@
             <input
               :id="`${idPrefix}-city`"
               v-model="details.billing_city"
+              :maxlength="BILLING_FIELD_MAX_LENGTH"
               type="text"
               name="billingCity"
               autocomplete="address-level2"
@@ -65,6 +70,7 @@
             <input
               :id="`${idPrefix}-zip`"
               v-model="details.billing_zip"
+              :maxlength="BILLING_FIELD_MAX_LENGTH"
               type="text"
               name="billingZip"
               autocomplete="postal-code"
@@ -78,7 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-import { hasBillingCompanyDetails } from "../../../shared/utils/checkout"
+import { BILLING_FIELD_MAX_LENGTH, hasBillingCompanyDetails } from "../../../shared/utils/checkout"
 import type { BillingDetails } from "../../../shared/utils/checkout"
 
 // The Billing Details, wherever they are being edited: step 2 of the Checkout

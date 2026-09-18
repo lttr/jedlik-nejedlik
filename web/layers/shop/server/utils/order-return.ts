@@ -12,6 +12,16 @@ import type { SettlementView } from "../../shared/utils/settlement"
 // (ADR 0004) — another Student's Order simply is not there, and answers the
 // same 404 as an id that never existed.
 
+// The return page polls this every three seconds for half a minute, and every
+// poll that finds an unsettled Order asks GoPay about the Payment. Generous
+// enough for several purchases from one household, tight enough that a
+// logged-in caller cannot use the page as a loop through GoPay's API.
+export const SETTLEMENT_RATE_LIMIT: RateLimit = {
+  bucket: "settlement",
+  max: 120,
+  message: shopMessages.tooManySettlementChecks,
+}
+
 const ReturnCourseSchema = z.object({ title: z.string(), slug: z.string() })
 
 async function readOwnOrder(client: DirectusRestClient, orderId: number): Promise<Order> {
@@ -23,20 +33,24 @@ async function readOwnOrder(client: DirectusRestClient, orderId: number): Promis
   )
 }
 
+// `readFirstRow`, not `readOnlyRow`: a Course turned back into a draft or
+// archived after the Order was placed is no longer readable to the Student,
+// and Directus answers that with no row. The outcome of a Payment must never
+// hang on the Catalog — a Student who has just paid has to be told so, even
+// when the page can no longer name what they bought.
 async function readOrderCourse(
   client: DirectusRestClient,
   courseId: number,
-): Promise<z.output<typeof ReturnCourseSchema>> {
-  return ReturnCourseSchema.parse(
-    await readOnlyRow(
-      client,
-      readItems("course", {
-        fields: ["title", "slug"],
-        filter: { id: { _eq: courseId } },
-        limit: 1,
-      }),
-    ),
+): Promise<z.output<typeof ReturnCourseSchema> | undefined> {
+  const row = await readFirstRow(
+    client,
+    readItems("course", {
+      fields: ["title", "slug"],
+      filter: { id: { _eq: courseId } },
+      limit: 1,
+    }),
   )
+  return row === undefined ? undefined : ReturnCourseSchema.parse(row)
 }
 
 // The Student usually arrives before GoPay's notification does, so the page
@@ -65,7 +79,7 @@ export async function loadSettlementView(event: H3Event, orderId: number): Promi
 
   return {
     state: settlementStateForOrder(status),
-    courseTitle: course.title,
-    courseSlug: course.slug,
+    courseTitle: course?.title ?? "",
+    courseSlug: course?.slug ?? "",
   }
 }

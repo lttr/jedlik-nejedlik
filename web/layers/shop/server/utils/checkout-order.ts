@@ -5,7 +5,7 @@ import { CourseSchema, OrderSchema } from "../../../directus/shared/utils/schema
 import type { Order } from "../../../directus/shared/utils/schemas"
 import { checkoutConsents, reusableOrder, toBillingPayload } from "../../shared/utils/checkout"
 import type { BillingDetails, SellableCourse } from "../../shared/utils/checkout"
-import { assertCallbackUrl, isPaymentLive } from "../../shared/utils/gopay"
+import { isPaymentLive } from "../../shared/utils/gopay"
 
 // Everything the Checkout does to Directus and to GoPay, so the two routes
 // above it stay the three lines the house style asks for. Reads and the Order
@@ -96,7 +96,14 @@ async function liveGatewayUrl(
       console.warn(`[shop] Could not inquire GoPay payment ${paymentId}`, error)
       return undefined
     })
-  return payment !== undefined && isPaymentLive(payment.state) ? payment.gwUrl : undefined
+  // The empty string is checked as carefully as `undefined`: GoPay answers an
+  // inquiry without a `gw_url`, which the codec turns into `""`, and a `""`
+  // that slipped through here would be handed to the browser as the gateway to
+  // follow — a press on „Objednávka zavazující k platbě" that goes nowhere.
+  if (payment === undefined || !isPaymentLive(payment.state) || payment.gwUrl === "") {
+    return undefined
+  }
+  return payment.gwUrl
 }
 
 // The Order and its Consent in one write, by the Student's own session: the
@@ -133,10 +140,10 @@ async function startPayment(
   course: SellableCourse,
   payerEmail: string,
 ): Promise<string> {
+  // The cap on both callbacks is GoPay's, so it is the client that checks
+  // them — once, for every caller, and where the unit suite can see it.
   const returnUrl = authPageUrl(event, `/objednavka/${orderId}/navrat`)
   const notificationUrl = authPageUrl(event, "/api/gopay/notify")
-  assertCallbackUrl("return_url", returnUrl)
-  assertCallbackUrl("notification_url", notificationUrl)
 
   const payment = await getGopayClient(event).createPayment({
     orderId,
@@ -152,6 +159,14 @@ async function startPayment(
   await getShopServiceDirectusClient(event).request(
     updateItem("order", orderId, { gopay_payment_id: payment.id }),
   )
+
+  // Stamped first, refused second: a Payment GoPay created but gave us no page
+  // for is still a Payment that can be settled, and the Order has to carry its
+  // id before anything else can go wrong. Sending the browser to `""` would
+  // look like a Checkout that quietly did nothing.
+  if (payment.gwUrl === "") {
+    throw new Error(`GoPay created payment ${payment.id} without a gateway URL`)
+  }
   return payment.gwUrl
 }
 
@@ -169,12 +184,12 @@ export async function placeCheckoutOrder(
   event: H3Event,
   { client, course, billing, email }: PlaceOrderInput,
 ): Promise<string> {
-  const live = await liveGatewayUrl(event, client, course.id)
-  if (live !== undefined) {
-    return live
-  }
-
   try {
+    const live = await liveGatewayUrl(event, client, course.id)
+    if (live !== undefined) {
+      return live
+    }
+
     // Remembered for next time (spec, user story 7). The Order keeps its own
     // snapshot, so a later correction here never alters an issued invoice —
     // which is also why neither write needs the other, and the Student
