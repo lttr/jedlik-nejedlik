@@ -9,8 +9,8 @@
     <form @submit.prevent="onSave">
       <BillingDetailsForm v-model="billing" id-prefix="account-billing" />
 
-      <!-- Wrapped so the button keeps its own width in the form's grid, which
-           stretches everything else to the panel. -->
+      <!-- Wrapped: the form is a grid, and a bare button is a grid item
+           stretched to the full panel. -->
       <div>
         <AuthSubmit :pending>Uložit údaje</AuthSubmit>
       </div>
@@ -35,11 +35,12 @@ import type { BillingDetails } from "../../../shared/utils/checkout"
 // runs.
 const { data, error } = await useFetch<BillingDetails>("/api/account/billing", {
   key: "account:billing",
+  default: emptyBillingDetails,
 })
 
 // A copy: the form edits it as the Student types, and a failed save must not
 // silently reset what they wrote.
-const billing = ref<BillingDetails>(data.value ?? emptyBillingDetails())
+const billing = ref<BillingDetails>(data.value)
 
 const { pending, errorMessage, succeeded: saved, submit } = useAuthForm()
 
@@ -66,13 +67,8 @@ async function onSave() {
   gap: var(--space-4);
 }
 
-.muted {
-  margin: 0;
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
-}
-
-.account-billing h2 {
+.account-billing h2,
+.account-billing p {
   margin: 0;
 }
 </style>

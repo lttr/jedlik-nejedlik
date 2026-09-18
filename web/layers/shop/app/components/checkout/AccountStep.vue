@@ -46,10 +46,3 @@ const emit = defineEmits<{ loggedIn: [] }>()
 // comes back here with an account of their own gets the tabs again.
 const registeredEmail = ref("")
 </script>
-
-<style scoped>
-.muted {
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
-}
-</style>

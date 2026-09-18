@@ -21,6 +21,7 @@
 </template>
 
 <script lang="ts" setup>
+import { checkoutPath } from "../../../../shared/utils/pending-checkout"
 import type { SettlementState, SettlementView } from "../../../../shared/utils/settlement"
 
 // Where GoPay sends the Student back. The route settles the Payment on the
@@ -58,8 +59,9 @@ if (error.value !== undefined) {
 }
 
 // True while the page is still re-asking; false once it has given up and
-// tells the Student where the Course will turn up instead.
-const waiting = ref(true)
+// tells the Student where the Course will turn up instead. Written once, by
+// the limit below.
+const waiting = ref(view.value?.state === "pending")
 
 // Non-breaking spaces as characters, not entities: this is text, not markup.
 const pendingMessage = computed(() =>
@@ -70,28 +72,39 @@ const pendingMessage = computed(() =>
 
 const onward = computed(() =>
   view.value?.state === "failed"
-    ? { to: `/objednavka/${view.value.courseSlug}`, label: "Zkusit znovu" }
+    ? { to: checkoutPath(view.value.courseSlug), label: "Zkusit znovu" }
     : { to: "/muj-ucet", label: "Moje kurzy" },
 )
 
-onMounted(() => {
-  if (view.value?.state !== "pending") {
-    waiting.value = false
-    return
-  }
-  const deadline = Date.now() + REFRESH_LIMIT_MS
-  const { pause } = useIntervalFn(() => {
+// Two timers, both VueUse's, so there is one answer to „when does this stop
+// polling": the poll stops itself the moment the Payment is no longer pending,
+// and the limit stops it for good half a minute in. Both are started on mount,
+// because neither belongs on the server.
+const { pause: stopPolling, resume: startPolling } = useIntervalFn(
+  async () => {
+    await refresh()
     if (view.value?.state !== "pending") {
-      pause()
-      return
+      stopPolling()
     }
-    if (Date.now() >= deadline) {
-      waiting.value = false
-      pause()
-      return
-    }
-    void refresh()
-  }, REFRESH_INTERVAL_MS)
+  },
+  REFRESH_INTERVAL_MS,
+  { immediate: false },
+)
+
+const { start: startLimit } = useTimeoutFn(
+  () => {
+    stopPolling()
+    waiting.value = false
+  },
+  REFRESH_LIMIT_MS,
+  { immediate: false },
+)
+
+onMounted(() => {
+  if (waiting.value) {
+    startPolling()
+    startLimit()
+  }
 })
 
 useSeoMeta({ title: "Platba za kurz", robots: "noindex, nofollow" })

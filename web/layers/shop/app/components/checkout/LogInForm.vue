@@ -24,8 +24,8 @@
       />
     </div>
 
-    <!-- Wrapped: `main.css` stretches every `input` to the full row, and a bare
-         button next to them reads as one more field. -->
+    <!-- Wrapped: the design system lays every `form` out as a grid, and a bare
+         button is a grid item stretched to the full column. -->
     <div>
       <AuthSubmit :pending>{{ verified ? "Pokračovat" : "Přihlásit se" }}</AuthSubmit>
     </div>

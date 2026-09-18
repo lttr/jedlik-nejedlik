@@ -40,11 +40,12 @@ import type { OwnedCourse } from "../../../shared/utils/owned-courses"
 // Through Nitro, never Directus from the browser (ADR 0004). No `error`
 // branch for a missing session: the page is behind the auth middleware, so an
 // anonymous visitor is at the login page long before this runs.
-const { data, error } = await useFetch<OwnedCourse[]>("/api/account/courses", {
+const { data: courses, error } = await useFetch<OwnedCourse[]>("/api/account/courses", {
   key: "account:courses",
+  // A failure is its own branch below; the list itself is never null, so the
+  // template never has to ask.
+  default: () => [],
 })
-
-const courses = computed(() => data.value ?? [])
 
 // One sentence for every failure: nothing here is the Student's doing and
 // there is nothing for them to correct.
@@ -63,7 +64,8 @@ const errorMessage = computed(() =>
   gap: var(--space-4);
 }
 
-.my-courses h2 {
+.my-courses h2,
+.my-courses p {
   margin: 0;
 }
 
@@ -93,11 +95,5 @@ const errorMessage = computed(() =>
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-}
-
-.muted {
-  margin: 0;
-  color: var(--text-color-2);
-  font-size: var(--font-size-0);
 }
 </style>

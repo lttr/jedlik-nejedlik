@@ -78,8 +78,16 @@ async function onSubmit() {
     await logIn({ email: email.value, password: password.value })
     // A visitor sent here from a Checkout has no `?redirect=` when the
     // verification link brought them back; the pending-checkout cookie is the
-    // fallback target, and consuming it here is what clears it.
-    await navigateTo(authRedirectTarget(route.query.redirect, await takePendingCheckoutSlug()))
+    // fallback target, and consuming it here is what clears it. An explicit
+    // `?redirect=` wins outright, so the cookie is not asked for at all — the
+    // round-trip could only delay the navigation, and a cookie left standing
+    // is the Checkout still waiting, which is what it is for. It expires on
+    // its own a day later.
+    const rawRedirect = route.query.redirect
+    const hasRedirect = typeof rawRedirect === "string" && rawRedirect !== ""
+    await navigateTo(
+      authRedirectTarget(rawRedirect, hasRedirect ? null : await takePendingCheckoutSlug()),
+    )
   })
 }
 </script>

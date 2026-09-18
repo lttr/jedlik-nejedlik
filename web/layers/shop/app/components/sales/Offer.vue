@@ -8,7 +8,7 @@
       class="p-button p-button-brand"
       >Přejít do kurzu</NuxtLink
     >
-    <NuxtLink v-else :to="`/objednavka/${course.slug}`" class="p-button p-button-brand"
+    <NuxtLink v-else :to="checkoutPath(course.slug)" class="p-button p-button-brand"
       >Koupit kurz</NuxtLink
     >
   </p>
@@ -17,6 +17,7 @@
 <script lang="ts" setup>
 import type { Course } from "../../../../directus/shared/utils/schemas"
 import { MY_COURSES_ANCHOR, MY_COURSES_PATH } from "../../../shared/utils/owned-courses"
+import { checkoutPath } from "../../../shared/utils/pending-checkout"
 
 // The Sales Page's one call to action, in its three states (spec,
 // „Placement"): a Course without a price is unbuyable rather than free (user

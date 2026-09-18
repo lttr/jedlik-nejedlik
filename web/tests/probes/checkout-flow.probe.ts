@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import { BILLING_FIELDS } from "../../layers/shop/shared/utils/checkout"
 import { CookieJar, startAppServer } from "./app-server"
 import type { AppServer } from "./app-server"
-import { PUBLISHED_SLUG, item, items, probe, probeSend, roleToken } from "./support"
+import { PUBLISHED_SLUG, cleanUpItems, item, items, probe, probeSend, roleToken } from "./support"
 
 // The payment flow end to end: a real Nuxt server against the real Directus
 // instance, paying through the mock gateway (spec, „Flow tests through the
@@ -118,16 +118,6 @@ async function returnView(orderId: number): Promise<{ state: string; courseSlug:
   return (await response.json()) as { state: string; courseSlug: string }
 }
 
-async function removeAll(collection: string, keys: number[]): Promise<void> {
-  if (keys.length === 0) {
-    return
-  }
-  const response = await probeSend("DELETE", `/items/${collection}`, keys, ADMIN)
-  if (response.status !== 204) {
-    throw new Error(`Flow-test cleanup failed: DELETE /items/${collection} → ${response.status}`)
-  }
-}
-
 // Runs only where the fixture Student and the Service Account's token are in
 // the environment; the flow cannot be faked without either.
 const ready = STUDENT_EMAIL !== "" && STUDENT_PASSWORD !== "" && SHOP_TOKEN !== ""
@@ -154,18 +144,20 @@ describe.skipIf(!ready)("checkout flow through the mock gateway", () => {
     // Orders first would orphan nothing, but the Entitlement points at an
     // Order, so it goes first either way.
     for (const orderId of createdOrders) {
-      await removeAll(
-        "entitlement",
+      await cleanUpItems(
+        "/items/entitlement",
         (await entitlementsOf(orderId)).map((row) => row.id as number),
+        ADMIN,
       )
-      await removeAll(
-        "order_consent",
+      await cleanUpItems(
+        "/items/order_consent",
         items(
           await probe(`/items/order_consent?fields=id&filter[order][_eq]=${orderId}`, ADMIN),
         ).map((row) => row.id as number),
+        ADMIN,
       )
     }
-    await removeAll("order", createdOrders)
+    await cleanUpItems("/items/order", createdOrders, ADMIN)
     // The Checkout remembers Billing Details on the Account; the fixture is
     // permanent, so it is put back the way it was found.
     await probeSend("PATCH", `/users/${studentId}`, studentBilling, ADMIN)

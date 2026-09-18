@@ -6,9 +6,9 @@
         Tohle není GoPay. Stránka běží jen ve&nbsp;vývoji a zastupuje platební bránu.
       </p>
 
-      <p v-if="payment === null" class="error-message" role="alert">
+      <ShopNotice v-if="payment === null">
         Tuhle platbu brána nezná. Vznikla nejspíš před restartem serveru.
-      </p>
+      </ShopNotice>
 
       <template v-else>
         <dl class="summary">
@@ -32,9 +32,9 @@
           </button>
           <button class="p-button" name="action" value="cancel" type="submit">Zrušit</button>
         </form>
-        <p v-else class="success-message" role="status">
+        <ShopNotice v-else tone="info">
           Platba je ve&nbsp;stavu {{ payment.state }}. Rozhodnout se dá jen jednou.
-        </p>
+        </ShopNotice>
       </template>
     </div>
   </PageWrapper>

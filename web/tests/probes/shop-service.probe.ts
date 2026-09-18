@@ -3,6 +3,7 @@ import {
   ENTITLED_ID,
   PUBLISHED_COURSE_ID,
   PUBLISHED_SLUG,
+  cleanUpItems,
   errorCode,
   generatePassword,
   item,
@@ -12,6 +13,7 @@ import {
   probeSend,
   roleIdByName,
   roleToken,
+  throwawayEmail,
 } from "./support"
 
 // The Shop Service Account's permission matrix (ADR 0006): the three writes
@@ -44,16 +46,6 @@ function studentOfOrder(rows: Record<string, unknown>[], order: number): unknown
   return rows.find((row) => row.id === order)?.student
 }
 
-async function cleanUp(path: string, keys: (string | number)[]): Promise<void> {
-  if (keys.length === 0) {
-    return
-  }
-  const response = await probeSend("DELETE", path, keys, ADMIN)
-  if (response.status !== 204) {
-    throw new Error(`Probe cleanup failed: DELETE ${path} returned ${response.status}`)
-  }
-}
-
 // Runs only where the „Shop service" token is in the environment
 // (DIRECTUS_PROBE_SHOP_TOKEN in web/.env); the account itself is on the
 // instance and in the committed dump.
@@ -67,7 +59,7 @@ describe.skipIf(SHOP === "")("shop service account", () => {
       "POST",
       "/users",
       {
-        email: `probe-shop-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@jedlik-nejedlik.cz`,
+        email: throwawayEmail("shop"),
         password: generatePassword(),
         role: studentRole,
         status: "active",
@@ -102,9 +94,9 @@ describe.skipIf(SHOP === "")("shop service account", () => {
   })
 
   afterAll(async () => {
-    await cleanUp("/items/entitlement", createdEntitlements)
-    await cleanUp("/items/order", createdOrders)
-    await cleanUp("/users", createdUsers)
+    await cleanUpItems("/items/entitlement", createdEntitlements, ADMIN)
+    await cleanUpItems("/items/order", createdOrders, ADMIN)
+    await cleanUpItems("/users", createdUsers, ADMIN)
   })
 
   describe("the writes the payment flow needs", () => {
