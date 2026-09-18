@@ -14,6 +14,9 @@ export const shopMessages = {
 
   consentRequired: "Bez souhlasu s obchodními podmínkami objednávku dokončit nejde.",
   tooManyCheckouts: "Příliš mnoho pokusů o objednávku. Zkuste to prosím za chvíli.",
+  // Read by GoPay's retry loop rather than by a person, but the shape stays
+  // the same as every other refusal so the limiter needs no second contract.
+  tooManyNotifications: "Příliš mnoho oznámení o platbě. Zkuste to prosím za chvíli.",
   checkoutUnavailable: "Objednávku se teď nepodařilo vytvořit. Zkuste to prosím za chvíli.",
   gatewayUnavailable: "Platební bránu se teď nepodařilo otevřít. Zkuste to prosím za chvíli.",
 } as const

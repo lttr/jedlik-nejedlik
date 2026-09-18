@@ -1,6 +1,7 @@
 ---
-status: ready
+status: done
 blocked_by: [03]
+verified: [checks, probes, behaviour]
 references:
   - "Spec: ../spec.md"
   - "Data model review (idempotency): ../../2026-07-22_directus-data-model/review.md"
@@ -14,10 +15,10 @@ Notification route: public GET with the Payment id, per-IP rate limit, no IP all
 
 ## Acceptance criteria
 
-- [ ] Paying in the mock gateway lands the Student on „Kurz je váš"; Directus holds the Order `paid` and one Entitlement linked to it
-- [ ] Calling the notification route a second (and third) time for the same Payment changes nothing: still one Entitlement, no error
-- [ ] Cancelling in the mock lands on „Platba neproběhla" with the Order `cancelled` and no Entitlement; „Zkusit znovu" creates a fresh Payment
-- [ ] A notification with an unknown id answers 200 and writes nothing; a notification for a Payment GoPay reports as `PAYMENT_METHOD_CHOSEN` writes nothing and the return page shows the pending state
-- [ ] A failure inside settlement reaches Sentry and answers 500 to GoPay
-- [ ] Flow tests under the probe config cover: paid, repeated notification, cancelled, forged id, Order reuse; run by `vp run directus:probe`
-- [ ] Verified with the `verify` skill in all three return states; `vp run check:all` green
+- [x] Paying in the mock gateway lands the Student on „Kurz je váš"; Directus holds the Order `paid` and one Entitlement linked to it
+- [x] Calling the notification route a second (and third) time for the same Payment changes nothing: still one Entitlement, no error
+- [x] Cancelling in the mock lands on „Platba neproběhla" with the Order `cancelled` and no Entitlement; „Zkusit znovu" creates a fresh Payment
+- [x] A notification with an unknown id answers 200 and writes nothing; a notification for a Payment GoPay reports as `PAYMENT_METHOD_CHOSEN` writes nothing and the return page shows the pending state
+- [x] A failure inside settlement reaches Sentry and answers 500 to GoPay
+- [x] Flow tests under the probe config cover: paid, repeated notification, cancelled, forged id, Order reuse; run by `vp run directus:probe`
+- [x] Verified with the `verify` skill in all three return states; `vp run check:all` green

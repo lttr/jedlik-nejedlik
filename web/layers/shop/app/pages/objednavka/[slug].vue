@@ -126,12 +126,7 @@ const { data: checkout, error } = await useFetch<CheckoutView>(`/api/checkout/${
 const refusal = readRefusal(error.value, 409)
 
 if (error.value !== undefined && refusal === undefined) {
-  throw createError({
-    statusCode: error.value.statusCode ?? 500,
-    statusMessage:
-      error.value.statusCode === 404 ? `Page not found: ${route.path}` : error.value.statusMessage,
-    fatal: true,
-  })
+  throwPageError(error.value, route.path)
 }
 
 // Pre-filled from the Account, so a returning Student only checks them.

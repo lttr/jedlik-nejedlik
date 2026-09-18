@@ -45,8 +45,23 @@ curl -s -X POST http://localhost:3000/api/gopay/mock/payments \
 # pay it (or "cancel"); answers 303 to the return URL, notification already sent
 curl -s -i -X POST "http://localhost:3000/api/gopay/mock/payments/<id>/decide" \
   -H 'content-type: application/json' -d '{"action":"pay"}'
+# "choose" is the third action, with no button on the page: it parks the
+# Payment in PAYMENT_METHOD_CHOSEN, the state that settles to nothing and
+# leaves the return page pending
+curl -s -X POST "http://localhost:3000/api/gopay/mock/payments/<id>/decide" \
+  -H 'content-type: application/json' -d '{"action":"choose"}'
 # read the recorded state back
 curl -s "http://localhost:3000/api/gopay/mock/payments/<id>"
+```
+
+The settlement is driven by hand the same way. The notification route answers
+`{"status":"paid"}`, `{"status":"unknown"}` for a Payment id no Order carries,
+and 500 when the inquiry itself fails — which is also what a restarted dev
+server produces, since the mock forgets every Payment while the Orders keep
+their ids:
+
+```bash
+curl -s -w ' [%{http_code}]\n' "http://localhost:3000/api/gopay/notify?id=<id>"
 ```
 
 State lives in process memory: restarting the server forgets every Payment.
