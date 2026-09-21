@@ -12,9 +12,9 @@
   "dependencies": {
     "@directus/sdk": "^25.0.1",
     "@lttr/puleo": "^0.8.1",
-    "@sentry/nuxt": "^10.74.0",
+    "@sentry/nuxt": "^10.75.0",
     "nuxt-auth-utils": "^0.5.30",
-    "zod": "^4.6.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@dxup/nuxt": "^0.5.10",
@@ -35,10 +35,10 @@
     "@nuxtjs/plausible": "^4.0.0",
     "@nuxtjs/seo": "^5.3.16",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^26.5.1",
-    "@vueuse/core": "^14.4.0",
-    "@vueuse/nuxt": "^14.4.0",
-    "eslint": "^10.10.0",
+    "@types/node": "^26.6.2",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/nuxt": "^15.0.0",
+    "eslint": "^10.11.0",
     "eslint-merge-processors": "^2.0.0",
     "eslint-plugin-baseline-js": "^0.7.1",
     "eslint-processor-vue-blocks": "^2.0.0",
@@ -48,7 +48,7 @@
     "rolldown": "1.2.5",
     "typescript": "^5.9.3",
     "vitest": "4.1.11",
-    "vue": "^3.5.42",
+    "vue": "^3.5.43",
     "vue-router": "^5.3.1",
     "vue-tsc": "^3.3.11"
   }
