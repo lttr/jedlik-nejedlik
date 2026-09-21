@@ -1,6 +1,6 @@
 ---
-reviewed_sha: 6cd55f1
-fixes_sha: 02799e2
+reviewed_sha: 8457b73
+fixes_sha: 0e3ae01
 date: 2026-09-18
 effort: xhigh
 verified: [checks, probes, behaviour]
@@ -9,9 +9,9 @@ verified: [checks, probes, behaviour]
 # Review — Area 04: Checkout + GoPay
 
 Branch review of `master..HEAD` on `checkout-gopay` (tickets 01–06, 99 files,
-~6 700 added lines), read at `6cd55f1` by `/code-review xhigh --fix` in a fresh
+~6 700 added lines), read at `8457b73` by `/code-review xhigh --fix` in a fresh
 context, after `/simplify` had already run. Fifteen findings, seven of them
-correctness. Fixes landed in `02799e2` and were driven in the running app before
+correctness. Fixes landed in `0e3ae01` and were driven in the running app before
 being committed.
 
 ## Correctness findings and resolutions

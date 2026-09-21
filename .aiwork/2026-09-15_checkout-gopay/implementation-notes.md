@@ -258,7 +258,7 @@ needs GoPay sandbox credentials and belongs to `../2026-09-15_gopay-go-live/`.
 - Ticket 06's stated gate is green: `vp run directus:probe` passes the
   `USER_REGISTER_URL_ALLOW_LIST` probe, so the instance setting is in place.
 
-### 03 — Checkout for a logged-in Student (42a4fa1)
+### 03 — Checkout for a logged-in Student (6ed1a65)
 
 - **A repo-wide typing consequence, deliberate.** `Schema` now declares
   `directus_users: AccountUserCollection[]`
@@ -313,7 +313,7 @@ use.
 **Run the remaining tickets one at a time in the task worktree.** That is not a
 preference; it is the only arrangement in which an implementer can run a check.
 
-### 04 — Settlement, notification route, return page (dd77ef0)
+### 04 — Settlement, notification route, return page (93c3ce1)
 
 - **Deviation from the spec's step order, deliberate and required; the spec is
   amended to match.** „Settlement" said „inquire GoPay; load the Order by
@@ -351,7 +351,7 @@ preference; it is the only arrangement in which an implementer can run a check.
   closing the gap ticket 01 left open. Nothing here has still ever talked to a
   real GoPay.
 
-### 05 — „Moje kurzy", „Fakturační údaje", Sales Page button (df31890)
+### 05 — „Moje kurzy", „Fakturační údaje", Sales Page button (95c4af5)
 
 - **Decision where the spec was silent: an owner's Sales Page hides the price as
   well as the buy button.** The spec only names the button. „Přejít do kurzu"
@@ -381,7 +381,7 @@ preference; it is the only arrangement in which an implementer can run a check.
   `div`). One exclusion in `web/app/assets/css/main.css` would retire every
   workaround; it stayed out of scope in each ticket.
 
-### 06 — Guest at the Checkout (1d90e2e)
+### 06 — Guest at the Checkout (4fee707)
 
 - **Unverified, needs a human with an inbox: the genuine verification link.** A
   real token is a JWT signed with the instance `SECRET`, so the success leg was
@@ -432,7 +432,7 @@ preference; it is the only arrangement in which an implementer can run a check.
 - The `main.css` input rule is now worked around five times across tickets 03,
   05 and 06.
 
-## Wrap-up: `/simplify` over the whole branch (f531ef6, 6b62229)
+## Wrap-up: `/simplify` over the whole branch (c159a58, aed9b6f)
 
 Four reviewers (reuse, simplification, efficiency, altitude) over `master..HEAD`;
 ~30 findings deduped to 20 applied in two passes.
@@ -489,7 +489,7 @@ looks it. Removing it requires a type assertion the lint gate refuses
 (`no-unsafe-type-assertion`); the spread is what gives the payload all six keys
 cast-free. It now says so in a comment.
 
-## Wrap-up: `/code-review xhigh --fix` (read at 6cd55f1, fixed in 02799e2)
+## Wrap-up: `/code-review xhigh --fix` (read at 8457b73, fixed in 0e3ae01)
 
 Full findings and resolutions are in `review.md`. Three things belong here
 because a future reader would otherwise be misled:
