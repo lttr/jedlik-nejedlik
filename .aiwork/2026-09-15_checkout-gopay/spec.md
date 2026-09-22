@@ -1,7 +1,7 @@
 ---
-status: agent-done
+status: done
 blocked_by: ""
-verified: [checks, probes, behaviour, review]
+verified: [checks, probes, behaviour, review, human]
 references:
   - "Grilling decisions: grilling.md (rounds in grill-round-1.md … grill-round-3.md)"
   - "Prototype (verdict: variant C): prototype/index.html"
