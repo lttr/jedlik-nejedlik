@@ -23,8 +23,6 @@ export function checkoutPath(slug: string): string {
   return `/objednavka/${slug}`
 }
 
-// The Checkout a stored slug points at, or null for anything else — an empty
-// cookie, a forged one, a slug with a scheme or a slash in it.
 export function pendingCheckoutPath(slug: unknown): string | null {
   return typeof slug === "string" && SLUG.test(slug) ? checkoutPath(slug) : null
 }

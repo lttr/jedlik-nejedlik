@@ -1,8 +1,8 @@
 import { NON_BREAKING_SPACE } from "./typography"
 
-// „1 lekce", „2–4 lekce", „5+ lekcí" (and „0 lekcí"). The count is a whole
-// number, so `Intl.PluralRules("cs")` only ever answers `one`, `few` or
-// `other` here — the two that take „lekce" against the one that does not.
+// The count is a whole number, so `Intl.PluralRules("cs")` only ever answers
+// `one`, `few` or `other` here — the two that take „lekce" against the one
+// that does not.
 const pluralRules = new Intl.PluralRules("cs")
 
 export function formatLessonCount(count: number): string {

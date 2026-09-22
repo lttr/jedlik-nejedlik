@@ -2,9 +2,8 @@ import { z } from "zod"
 
 import type { Course, Order } from "../../../directus/shared/utils/schemas"
 
-// The Checkout's vocabulary, pure so the page, the Nitro routes and the tests
-// all agree on it: what Billing Details are, which Consent an Order carries,
-// and which earlier Order a returning Student is sent back to.
+// The Checkout's vocabulary, kept pure so the page, the Nitro routes and the
+// tests all agree on it.
 
 // Billing Details carry the Directus column names on purpose. They are the
 // same six columns on `directus_users` (the Account) and on `order` (the
@@ -31,23 +30,17 @@ export const BILLING_COMPANY_FIELDS: readonly BillingField[] = BILLING_FIELDS.fi
   (field) => field !== "billing_name",
 )
 
-// What a browser may send as Billing Details, wherever it sends them from:
-// the Checkout's „Objednávka zavazující k platbě" and the Account's
-// „Fakturační údaje" save. Every field is required in the body and may be
-// empty — the form always sends all six, and a missing one would silently
-// keep the old value on one route and clear it on the other. Trimmed here so
-// nothing downstream has to, capped so a body cannot be used as storage.
-//
-// Written out rather than built from `BILLING_FIELDS`: a derived object schema
-// loses the field-by-field inferred type the routes take their request bodies
-// from, which is a worse trade than the one repetition. A column added above
-// belongs here too.
 // The cap the routes enforce, and the `maxlength` the form carries, so the
 // browser stops a paste the route would only be able to refuse.
 export const BILLING_FIELD_MAX_LENGTH = 200
 
 const BillingFieldSchema = z.string().trim().max(BILLING_FIELD_MAX_LENGTH)
 
+// What a browser may send as Billing Details, from the Checkout or from the
+// Account's „Fakturační údaje" save. Every field is required but may be empty,
+// because a missing one would keep the old value on one route and clear it on
+// the other. Spelled out rather than derived from `BILLING_FIELDS` so the
+// routes keep a field-by-field inferred type; a column added above goes here.
 export const BillingRequestSchema = z.object({
   billing_name: BillingFieldSchema,
   billing_company: BillingFieldSchema,
@@ -63,8 +56,6 @@ export function emptyBillingDetails(): BillingDetails {
   return BillingRequestSchema.parse(Object.fromEntries(BILLING_FIELDS.map((f) => [f, ""])))
 }
 
-// A Directus row (or a request body) in, a form-ready object out: anything
-// missing or null becomes an empty string, anything else is trimmed.
 export function toBillingDetails(row: Partial<Record<BillingField, unknown>>): BillingDetails {
   const details = emptyBillingDetails()
   for (const field of BILLING_FIELDS) {
@@ -110,10 +101,10 @@ export interface CheckoutView {
   billing: BillingDetails
 }
 
-// The terms' effective date, which is what the Order records as the version
-// the Student agreed to (spec, „Order flow"). A constant until area 10 owns
-// document versions; it must match the date at the foot of
-// `app/pages/obchodni-podminky.vue`.
+// The terms' effective date, recorded on the Order as the version the Student
+// agreed to. Must match the date at the foot of `app/pages/obchodni-podminky.vue`.
+// A constant until the legal-documents area (area 10 in
+// `.aiwork/2026-06-09_kurzy-platforma/areas.md`) makes document versions data.
 export const TERMS_VERSION = "2026-01-28"
 
 // The Consents an Order is created with. A list, because area 10 may add the
@@ -133,12 +124,11 @@ export function reusableOrder(orders: Order[]): Order | undefined {
     .toSorted((a, b) => b.id - a.id)[0]
 }
 
-// A refusal a page knows how to render itself, dug out of whatever `$fetch`
-// threw. A route's `createError({ statusMessage, message })` arrives in the
-// error's `data`, while the error's own `message` is ofetch's technical one
-// („[GET] …: 409"), so only the body is worth showing a Student. The status
-// code has to match too: a page asks for the refusal it can render, and
-// anything else stays an error.
+// A refusal a page can render itself, dug out of whatever `$fetch` threw.
+// A route's `createError({ statusMessage, message })` arrives in the error's
+// `data`; the error's own `message` is ofetch's technical „[GET] …: 409", so
+// only the body is worth showing a Student. The caller passes the status code
+// it can handle, because anything else has to stay an error.
 export interface Refusal {
   // `statusMessage` from the route: which refusal this is, for a page that
   // offers a different way onward for each.

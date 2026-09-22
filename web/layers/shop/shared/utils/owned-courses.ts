@@ -3,13 +3,13 @@ import { z } from "zod"
 import { CourseSchema } from "../../../directus/shared/utils/schemas"
 import type { Course } from "../../../directus/shared/utils/schemas"
 
-// What „Moje kurzy" is made of: the Courses a Student holds an Entitlement
-// for. Shared, because the Nitro route produces it and the Account page's
-// component renders it, and neither should have to guess the other's shape.
+// „Moje kurzy": the Courses a Student holds an Entitlement for. Shared,
+// because the Nitro route produces it and the Account page's component renders
+// it, and neither should have to guess the other's shape.
 
-// Where „Moje kurzy" lives. The Sales Page sends an owner straight to the
-// section rather than to the top of the Account page, so one constant per
-// thing keeps the link and the heading's `id` from drifting apart.
+// The Sales Page sends an owner straight to the section rather than to the top
+// of the Account page, so one constant per thing keeps the link and the
+// heading's `id` from drifting apart.
 export const MY_COURSES_PATH = "/muj-ucet"
 export const MY_COURSES_ANCHOR = "moje-kurzy"
 

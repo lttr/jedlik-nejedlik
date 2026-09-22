@@ -2,10 +2,8 @@ import { z } from "zod"
 
 import type { Order } from "../../../directus/shared/utils/schemas"
 
-// The vocabulary of the payment gateway, in one place: the states GoPay can
-// report, what each of them means for an Order, and the shapes the rest of
-// the shop hands to a GoPay client. Everything here is pure, so the mock and
-// the real client agree on it by construction.
+// The vocabulary of the payment gateway, in one place and pure, so the mock
+// and the real client agree on it by construction.
 
 // GoPay's payment states. `AUTHORIZED` (pre-authorised card) and the two
 // refund states never occur in this area's flow, but they are part of the
@@ -56,8 +54,6 @@ export function isPaymentLive(state: GopayPaymentState): boolean {
 // GoPay refuses a callback URL longer than this.
 export const GOPAY_CALLBACK_URL_MAX_LENGTH = 512
 
-// A Payment as the rest of the shop sees it: the id we stamp on the Order,
-// the state we settle from, and the gateway page to send the browser to.
 export interface GopayPayment {
   id: string
   state: GopayPaymentState
@@ -65,10 +61,10 @@ export interface GopayPayment {
 }
 
 // Everything a Payment needs that this area's code knows and the gateway
-// does not. The amount is `priceCzk` — re-read from the Course by the caller
-// (area 01 review), never taken from the browser — and converted here, so no
-// caller ever handles haléře. Both callback URLs are absolute and built from
-// the site config, not the request Host (`authPageUrl`).
+// does not. The amount is `priceCzk` — re-read from the Course by the caller,
+// never taken from the browser — and converted to haléře here, so no caller
+// has to. Both callback URLs are absolute and built from the site config, not
+// from the request Host (`authPageUrl`).
 export interface CreateGopayPaymentInput {
   orderId: number
   priceCzk: number
