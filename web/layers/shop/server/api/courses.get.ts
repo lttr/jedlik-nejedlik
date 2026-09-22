@@ -1,7 +1,5 @@
 import { readItems } from "@directus/sdk"
 
-// The Catalog (spec, "Scope of the Catalog"): every Course in a shop
-// status, in the Author's order.
 export default defineEventHandler(async (event): Promise<CatalogCourse[]> => {
   const client = await getCallerDirectusClient(event)
   const rows = await client.request(

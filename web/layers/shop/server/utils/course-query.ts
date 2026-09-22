@@ -24,13 +24,13 @@ export const COURSE_PUBLIC_FIELDS = [
 ] as const
 
 // The statuses the shop asks Directus for (spec, "Scope of the Catalog"),
-// spread out of the codec so the filter and the parsers are the same list.
-// `published` is what a visitor may read anyway; `draft` only ever comes back
-// for an Author's own token, because the public policy filters on published
-// (ADR 0004). Shared by the Catalog and the Sales Page routes so a visitor
-// cannot reach through one what the other hides. Spread rather than passed
-// straight through: the SDK's `_in` takes a mutable `string[]` and rejects
-// Zod's readonly tuple.
+// spread out of `CourseStatusSchema` so the filter and the parsers stay the
+// same list. Asking for `draft` is safe: the public policy filters on
+// published, so a draft only ever comes back for an Author's own token
+// (ADR 0004). The Catalog and the Sales Page routes share this one list, so a
+// visitor cannot reach through one what the other hides. Spread rather than
+// passed straight through: the SDK's `_in` takes a mutable `string[]` and
+// rejects Zod's readonly tuple.
 export const SHOP_COURSE_STATUSES = [...CourseStatusSchema.options]
 
 // The Sales Page's extra selection: the outline, which is what a visitor may
@@ -47,11 +47,11 @@ export const COURSE_OUTLINE_FIELDS = {
 
 // One Course by slug for the whole shop — the Sales Page and the Checkout —
 // read with the caller's own client, so who may see a draft is Directus's
-// decision (ADR 0004). Absent is the shop's 404. The columns are the caller's
-// to choose — `QueryFields` is what checks them against the schema — while the
-// filter and the refusal are not. The row
-// comes back as `unknown` because every caller runs it through its own codec
-// anyway, and a codec that trusts an inferred shape checks nothing.
+// decision (ADR 0004) and absent is the shop's 404. Callers pick their own
+// columns, checked against the schema by `QueryFields`; the status filter and
+// the 404 are not theirs to change. The row comes back as `unknown` because
+// every caller parses it with its own codec anyway, and a codec that trusts
+// an inferred shape checks nothing.
 export async function readCourseBySlug(
   client: DirectusRestClient,
   slug: string,

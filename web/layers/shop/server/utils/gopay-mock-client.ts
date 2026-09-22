@@ -24,7 +24,6 @@ export interface MockPayment {
 
 const payments = new Map<string, MockPayment>()
 
-// The gateway page for a Payment. Only mounted in a non-production build.
 export function mockGatewayPath(paymentId: string): string {
   return `/platba-mock/${paymentId}`
 }
@@ -39,8 +38,6 @@ export function readMockPayment(paymentId: string): MockPayment | undefined {
   return payments.get(paymentId)
 }
 
-// What „Zaplatit" and „Zrušit" do to a Payment. Unknown id answers
-// `undefined`, which the gateway route turns into a 404.
 export function recordMockPaymentState(
   paymentId: string,
   state: GopayPaymentState,

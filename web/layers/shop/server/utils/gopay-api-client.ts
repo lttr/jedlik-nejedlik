@@ -41,8 +41,6 @@ const PaymentSchema = z
     gwUrl: payment.gw_url ?? "",
   }))
 
-// The token the other three calls ride on, kept for as long as GoPay says it
-// is good for.
 function createTokenSource(config: GopayApiConfig): () => Promise<string> {
   let token: { value: string; expiresAt: number } | undefined
   // The fetch itself, not its result: at a cold start, and again at every

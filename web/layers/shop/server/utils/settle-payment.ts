@@ -63,7 +63,6 @@ async function grantEntitlement(client: DirectusRestClient, order: Order): Promi
   }
 }
 
-// What the Payment's state does to the Order, and only ever the difference.
 async function applyPaymentState(
   client: DirectusRestClient,
   order: Order,
@@ -81,9 +80,11 @@ async function applyPaymentState(
     return order
   }
   if (target === "paid") {
-    // Area 10's § 1824a confirmation e-mail (spec, user story 34) goes here,
-    // before the grant and awaited: that way it runs exactly once per Order,
-    // and a failure in it stops the settlement rather than half-finishing it.
+    // The § 1824a confirmation e-mail (spec, user story 34) belongs to the
+    // legal-documents area (`.aiwork/2026-06-09_kurzy-platforma/areas.md`,
+    // area 10) and goes here, before the grant and awaited: that way it runs
+    // exactly once per Order, and a failure in it stops the settlement rather
+    // than half-finishing it.
     await grantEntitlement(client, order)
   }
   // Last, so a crash anywhere above leaves the Order unsettled and the next
@@ -93,7 +94,6 @@ async function applyPaymentState(
 }
 
 export interface Settlement {
-  // The Order as it stands after settling: its status is the outcome.
   order: Order
 }
 
@@ -115,11 +115,11 @@ export async function settlePayment(
 export async function settleOrder(event: H3Event, order: Order): Promise<Settlement> {
   const paymentId = order.gopay_payment_id
   if (paymentId === undefined || order.status === "paid") {
-    // No Payment to ask about, or an Order already in its terminal state, in
-    // which case `applyPaymentState` would discard every answer an inquiry can
-    // give (`paid` is a no-op, `cancelled` is refused for a paid Order). GoPay
-    // sends more than one notification per Payment and retries a failed one up
-    // to twenty times, so the saved call is squarely on the retry path.
+    // Nothing to inquire about, or nothing an inquiry could change: for an
+    // Order already `paid`, `applyPaymentState` discards every answer GoPay
+    // can give (`paid` is a no-op, `cancelled` is refused for a paid Order).
+    // GoPay sends more than one notification per Payment and retries a failed
+    // one up to twenty times, so the call saved here is on the retry path.
     return { order }
   }
 

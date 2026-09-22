@@ -4,8 +4,8 @@
 //
 // The same session decides ownership: a Student who already holds an
 // Entitlement for this Course is shown „Přejít do kurzu" instead of a buy
-// button. The Service Account is never involved (ADR 0004) — it could read
-// everyone's Entitlements, and this route only ever needs the caller's.
+// button. The Shop Service Account is never involved (ADR 0004) — it could
+// read everyone's Entitlements, and this route only ever needs the caller's.
 export default defineEventHandler(async (event): Promise<SalesView> => {
   const slug = getRouterParam(event, "slug") ?? ""
   // Held apart from the client below on purpose: a visitor has no session,

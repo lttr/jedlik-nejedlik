@@ -6,7 +6,6 @@ import type { Schema } from "../../../directus/shared/types/directus"
 // one place. Two functions, because the one difference that matters between
 // the call sites is whether an absent row is an answer or a 404.
 
-// The row, or `undefined` when the filter matched nothing.
 export async function readFirstRow<T>(
   client: DirectusRestClient,
   command: RestCommand<T[], Schema>,

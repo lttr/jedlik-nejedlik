@@ -7,12 +7,15 @@ import { checkoutConsents, reusableOrder, toBillingPayload } from "../../shared/
 import type { BillingDetails, SellableCourse } from "../../shared/utils/checkout"
 import { isPaymentLive } from "../../shared/utils/gopay"
 
-// Everything the Checkout does to Directus and to GoPay, so the two routes
-// above it stay the three lines the house style asks for. Reads and the Order
-// write go through the Student's own session, which is what makes Directus the
-// one place that decides what they may see and place (ADR 0004); only the
-// Payment id is stamped by the Service Account, because a Student may not
-// write it (ADR 0006).
+// Everything the Checkout does to Directus and to GoPay, kept out of the two
+// routes that call it so they stay the few lines the house style asks for.
+// Reads and the Order write go through the Student's own session, which is
+// what makes Directus the one place that decides what they may see and place
+// (ADR 0004); only the Payment id is stamped by the Shop Service Account,
+// because a Student may not write it (ADR 0006).
+//
+// "spec" here and below is `.aiwork/2026-09-15_checkout-gopay/spec.md`, the
+// area spec the whole Checkout is built from.
 
 // Generous: placing an order is a deliberate act, and a Student who abandons
 // the gateway and comes back a few times must not be locked out of buying.
@@ -177,9 +180,6 @@ export interface PlaceOrderInput {
   email: string
 }
 
-// „Objednávka zavazující k platbě": the Billing Details land on the Account,
-// the Order and its Consent are placed, the Payment is created, and the
-// gateway URL comes back for the browser to follow.
 export async function placeCheckoutOrder(
   event: H3Event,
   { client, course, billing, email }: PlaceOrderInput,
