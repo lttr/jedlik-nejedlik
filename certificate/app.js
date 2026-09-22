@@ -1,5 +1,7 @@
-// TODO: standalone static page (HTML + plain JS, no TS/Vue). Migrate into the
-// Nuxt app or convert to TypeScript so the strict oxlint rules can apply.
+// TODO(certificate-into-nuxt): standalone static page (HTML + plain JS, no
+// TS/Vue). Migrate into the Nuxt app or convert to TypeScript so the strict
+// oxlint rules can apply. Not scheduled yet — open
+// .aiwork/<date>_certificate-into-nuxt when it is.
 /* eslint-disable
   max-lines-per-function,
   typescript/no-unsafe-argument,
@@ -312,7 +314,6 @@
   }
 
   function init() {
-    // Default issue date = today
     const today = new Date()
     const iso = today.toISOString().slice(0, 10)
     document.getElementById("issueDate").value = iso
