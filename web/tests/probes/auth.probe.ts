@@ -303,11 +303,10 @@ describe("password change from the account page", () => {
     return { student, accessToken }
   }
 
-  // `/users/{id}` and `/users/me` behave the same now that the Student policy
-  // grants `read` on `directus_users`: the PATCH answers 200 with the updated
-  // row. Before that read rule, `/users/me` answered 403 over a password it had
-  // already written, so the route writes by id — and still does (see the
-  // password-change util).
+  // Both forms answer 200 now that the Student policy grants `read` on
+  // `directus_users`. Before that rule `/users/me` answered 403 after it had
+  // already written the password, which is why the route writes by id (see
+  // the password-change util).
   it.each([
     ["by id", (student: Fixture) => `/users/${student.id}`],
     ["through /users/me", () => "/users/me"],

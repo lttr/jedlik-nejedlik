@@ -41,7 +41,6 @@ export interface ProbeResponse {
   }
 }
 
-// Without a token the request is anonymous, i.e. the public role.
 export async function probe(path: string, token?: string): Promise<ProbeResponse> {
   const response = await fetch(`${DIRECTUS_URL}${path}`, {
     headers: token === undefined ? {} : { Authorization: `Bearer ${token}` },

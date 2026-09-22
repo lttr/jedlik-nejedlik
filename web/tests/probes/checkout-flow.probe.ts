@@ -68,7 +68,6 @@ async function logIn(): Promise<void> {
   }
 }
 
-// The server side of the „Objednávka zavazující k platbě" button.
 async function placeOrder(): Promise<{ gwUrl: string; paymentId: string; orderId: number }> {
   const response = await site(`/api/checkout/${PUBLISHED_SLUG}`, {
     method: "POST",
