@@ -7,7 +7,6 @@ export interface AuthForm {
   // Reset as soon as the next attempt starts, so a success banner can never
   // sit next to a fresh error.
   succeeded: Ref<boolean>
-  // `validate` returns a Czech complaint, or null when the form may be sent.
   submit: (action: () => Promise<void>, validate?: () => string | null) => Promise<void>
 }
 

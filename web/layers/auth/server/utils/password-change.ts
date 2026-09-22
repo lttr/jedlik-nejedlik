@@ -45,12 +45,10 @@ export async function changeAccountPassword(event: H3Event, change: PasswordChan
   // this proof session must not survive.
   await revokeRefreshToken(event, proof.refreshToken)
 
-  // `PATCH /users/<id>`, not `/users/me`. Both work today: the Student policy
-  // now reads the own row, so the read-back Directus does before replying
-  // succeeds and `/users/me` no longer answers 403 over a written password
-  // (probe). The by-id form is kept because it does not depend on that read
-  // rule at all — narrowing the rule again would turn `/users/me` back into a
-  // lie, and a password change is the wrong place to learn that.
+  // `PATCH /users/<id>`, not `/users/me`: `/users/me` works only while the
+  // Student policy may read its own row, because Directus reads the row back
+  // before replying. The by-id form does not need that read rule, so
+  // narrowing the rule again cannot break a password change.
   try {
     const { id } = await client.request(readMe({ fields: ["id"] }))
     await client.request(updateUser(id, { password: change.newPassword }))

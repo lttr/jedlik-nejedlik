@@ -52,7 +52,6 @@ import { authRedirectTarget } from "../../../shop/shared/utils/pending-checkout"
 
 definePageMeta({ middleware: "guest" })
 
-// Bare title: the page is `robots: false`, so no og:* tags.
 useHead({ title: "Přihlášení" })
 
 const route = useRoute()
@@ -76,13 +75,10 @@ const password = ref("")
 async function onSubmit() {
   await submit(async () => {
     await logIn({ email: email.value, password: password.value })
-    // A visitor sent here from a Checkout has no `?redirect=` when the
-    // verification link brought them back; the pending-checkout cookie is the
-    // fallback target, and consuming it here is what clears it. An explicit
-    // `?redirect=` wins outright, so the cookie is not asked for at all — the
-    // round-trip could only delay the navigation, and a cookie left standing
-    // is the Checkout still waiting, which is what it is for. It expires on
-    // its own a day later.
+    // The verification link brings a Student back without `?redirect=`, so
+    // the pending-checkout cookie is the fallback target, and reading it here
+    // clears it. An explicit `?redirect=` wins and leaves the cookie alone:
+    // the Checkout it names is still waiting, and it expires a day later.
     const rawRedirect = route.query.redirect
     const hasRedirect = typeof rawRedirect === "string" && rawRedirect !== ""
     await navigateTo(

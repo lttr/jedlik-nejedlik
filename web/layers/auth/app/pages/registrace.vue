@@ -52,7 +52,6 @@
 <script lang="ts" setup>
 definePageMeta({ middleware: "guest" })
 
-// Bare title: the page is `robots: false`, so no og:* tags.
 useHead({ title: "Registrace" })
 
 const { register } = useAuthActions()
@@ -65,12 +64,10 @@ const submittedEmail = ref("")
 async function onSubmit() {
   await submit(
     async () => {
-      // Normalised here too, so the confirmation names what Directus was given.
       const address = normaliseEmail(email.value)
       await register({ email: address, password: password.value })
       submittedEmail.value = address
     },
-    // Saves a round-trip; the route enforces it again.
     () => validatePassword(password.value),
   )
 }

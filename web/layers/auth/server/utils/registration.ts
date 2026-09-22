@@ -25,7 +25,6 @@ export async function readRegistration(event: H3Event): Promise<Credentials> {
 }
 
 export async function readVerificationToken(event: H3Event): Promise<string> {
-  // A missing token is a dead link like any other.
   const { token } = await readAuthBody(
     event,
     VerificationSchema,
@@ -36,9 +35,9 @@ export async function readVerificationToken(event: H3Event): Promise<string> {
 
 // Directus answers 204 whether the address was free or already taken, so
 // accounts stay unenumerable; the page's confirmation is written for both.
-// Still `registerStudent` after the Account rename: the instance's
-// `public_registration_role` is the Student role, so what registration
-// creates is a Student (GLOSSARY.md); Authors are made in the Data Studio.
+//
+// Named for the Student, not the Account: Directus's `public_registration_role`
+// is the Student role, and Authors are made in the Data Studio.
 export async function registerStudent(event: H3Event, registration: Credentials): Promise<void> {
   try {
     await getDirectusAnonymousServerClient(event).request(

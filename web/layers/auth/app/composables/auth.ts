@@ -26,8 +26,9 @@ export function useAuthActions(): AuthActions {
       await refresh()
     },
 
-    // Neither ends logged in: the account is Unverified until the e-mailed
-    // link is followed, and the Account logs in afterwards.
+    // Neither ends logged in: registering creates an Unverified Account, and
+    // following the e-mailed link only verifies it. Logging in is a step of
+    // its own afterwards.
     async register(registration) {
       await $fetch("/api/auth/register", { method: "POST", body: registration })
     },

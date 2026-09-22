@@ -1,9 +1,6 @@
-// An Account is a Directus identity that can log in, whoever holds it: a
-// Student or a staff Author previewing a draft (GLOSSARY.md). It is what a
-// session represents, so the session plumbing says Account, never "user" or
-// "student"; Student is the learner and buyer, and stays on the Directus
-// columns that belong to one. The e-mail is a cache of the `directus_users`
-// row set at login, never queried or written back (ADR 0002).
+// What a session represents, whoever holds it (Account in GLOSSARY.md), so the
+// session plumbing says Account, never "user" or "student". The e-mail is a
+// cache of the `directus_users` row set at login, never written back (ADR 0002).
 export interface Account {
   email: string
 }

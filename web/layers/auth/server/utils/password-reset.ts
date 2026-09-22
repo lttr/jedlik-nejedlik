@@ -21,7 +21,6 @@ export async function readResetRequest(event: H3Event): Promise<string> {
 }
 
 export async function readPasswordReset(event: H3Event): Promise<PasswordReset> {
-  // A missing token is a dead link like any other.
   const reset = await readAuthBody(
     event,
     ResetSchema,
@@ -56,10 +55,10 @@ export async function resetAccountPassword(
     await getDirectusAnonymousServerClient(event).request(passwordReset(token, password))
   } catch (error) {
     const code = directusErrorCode(error)
-    // Expired, used and forged tokens need not share a Directus code, and the
-    // Account is told one thing about all of them, so branch on what is *not*
-    // about the link. FAILED_VALIDATION can only mean Directus disagrees with
-    // PASSWORD_MIN_LENGTH: `readPasswordReset` already checked the length.
+    // Every bad link (expired, used, forged) gets the same answer, so only the
+    // one failure that is not about the link is singled out. The length was
+    // checked in `readPasswordReset`, so FAILED_VALIDATION here means Directus
+    // disagrees with PASSWORD_MIN_LENGTH.
     if (code === "FAILED_VALIDATION") {
       throw authError(400, "invalid_password", authMessages.passwordTooShort)
     }

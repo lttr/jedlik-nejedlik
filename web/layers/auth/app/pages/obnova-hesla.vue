@@ -58,7 +58,6 @@
 </template>
 
 <script lang="ts" setup>
-// Bare title: the page is `robots: false`, so no og:* tags.
 useHead({ title: "Obnova hesla" })
 
 // No `guest` middleware: a link from an e-mail has to work whoever is logged
@@ -67,8 +66,6 @@ useHead({ title: "Obnova hesla" })
 const { requestPasswordReset, resetPassword } = useAuthActions()
 const { pending, errorMessage, errorCode, submit } = useAuthForm()
 
-// With a token from the e-mail the page sets a password; without one it
-// hands out the links.
 const { token } = useEmailedToken()
 const mode = ref<"reset" | "request" | "sent">(token === "" ? "request" : "reset")
 
@@ -81,7 +78,6 @@ const linkIsDead = computed(() => errorCode.value === "invalid_token")
 
 async function onRequest() {
   await submit(async () => {
-    // Normalised here too, so the confirmation names what Directus was given.
     const address = normaliseEmail(email.value)
     await requestPasswordReset(address)
     requestedFor.value = address
@@ -99,7 +95,6 @@ async function onReset() {
         { replace: true },
       )
     },
-    // Saves a round-trip; the route enforces it again.
     () => validatePassword(password.value),
   )
 }

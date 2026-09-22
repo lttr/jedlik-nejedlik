@@ -17,7 +17,6 @@ export function useEmailedToken(): EmailedToken {
   const scrubbed = new Promise<void>((resolve) => {
     onMounted(async () => {
       try {
-        // Nothing to scrub when the page was opened by hand.
         if (token !== "") {
           await navigateTo({ path: route.path, query: {} }, { replace: true })
         }

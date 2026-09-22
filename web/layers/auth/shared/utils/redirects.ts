@@ -1,4 +1,3 @@
-// Where an Account ends up after logging in without an origin.
 export const DEFAULT_AUTH_REDIRECT = "/muj-ucet"
 
 // Landing page of the verification e-mail. Shared because the server builds
