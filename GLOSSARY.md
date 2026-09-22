@@ -67,6 +67,13 @@ A Directus identity that can log in to the site, whoever it belongs to: a
 Student or a staff Author. What a session represents.
 _Avoid_: User (ambiguous with Directus staff), login, profile, member.
 
+**Unverified Account** (Neověřený účet):
+An Account whose registration e-mail has not been confirmed through the
+e-mailed link yet. Directus refuses it a login as if the password were wrong,
+so no session can exist for it (ADR 0005). Once the link is followed the
+Account is **verified** and behaves like any other; there is no third state.
+_Avoid_: pending, inactive, unconfirmed user.
+
 **Student** (Student):
 The Account that learns and buys. The identity every Order, Entitlement and
 Progress record belongs to.
@@ -79,6 +86,33 @@ _Avoid_: admin (a broader role), editor, lecturer, teacher.
 **Order** (Objednávka):
 A Student's request to buy one Course.
 _Avoid_: purchase, transaction, cart.
+
+**Checkout** (Objednávka kurzu):
+The flow on `/objednavka/<slug>` that turns a visitor's intent to buy one Course
+into a paid Order: the Account step, the Billing Details and Consent step, and
+the Payment step that hands over to GoPay.
+_Avoid_: cart, basket, purchase flow, order page.
+
+**Payment** (Platba):
+The GoPay payment created for one Order when the Student leaves the Checkout,
+identified by the GoPay payment id stamped onto the Order. Its state (`PAID`,
+`CANCELED`, `TIMEOUTED`, …) belongs to GoPay; the Order's status is what
+Settlement derives from it.
+_Avoid_: transaction, charge, purchase.
+
+**Settlement** (Vypořádání platby):
+Reading a Payment's state back from GoPay and moving its Order to `paid`
+(creating the Entitlement) or `cancelled`. One function, run both by GoPay's
+server-to-server notification and by the Student's return to the site, so it
+must be idempotent.
+_Avoid_: fulfilment, capture, callback handling, webhook.
+
+**Shop Service Account** (Servisní účet obchodu):
+The Directus Account „Shop service" whose static token lets Nitro make the
+three shop writes no session at the keyboard may make: stamping the Payment id
+onto an Order, moving the Order to `paid` or `cancelled`, and creating the
+Entitlement. Its policy allows nothing else (ADR 0006).
+_Avoid_: admin token, system user, bot.
 
 **Consent** (Souhlas):
 A Student's recorded agreement to one legal document at a given version,
