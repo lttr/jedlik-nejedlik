@@ -122,13 +122,16 @@ async function resolveRepo(name, workspaceDir) {
   }
 }
 
-// Under `shamefullyHoist` exactly one copy of a duplicated package reaches the
-// root, Nuxt's generated tsconfig `paths` point bare imports at that copy, and
-// which copy wins is decided at install time rather than by the lockfile — so a
-// regen can silently flip a type import onto the wrong major. Reporting the
-// candidates is all this script does: the cure is a pin naming the copy the
-// framework resolves, and that is a judgement call. See SKILL.md §6, "Type
-// errors naming two copies of one package", for the h3 worked example.
+// Packages installed at more than one major that Nuxt also maps in its
+// generated tsconfig `paths`. Under `shamefullyHoist` only one copy reaches
+// the root, and Nuxt points bare imports at that copy. Which copy wins is
+// decided at install time, not by the lockfile. A regen can therefore switch
+// `import type { X } from "<pkg>"` to the other major with no diff to show
+// for it. That is what h3 did on 2026-09-03: v2 came in transitively with
+// @nuxt/eslint, outranked nitro's v1 at the root, and broke typecheck in
+// every server file. The exact `h3` pin in web/package.json is the fix.
+// This function only reports the candidates. The cure is a pin naming the
+// copy the framework resolves, which is a judgement call.
 function hoistSkew() {
   const paths = readJson(join(repoRoot, "web/.nuxt/tsconfig.server.json"))?.compilerOptions?.paths ?? {}
   if (Object.keys(paths).length === 0) {

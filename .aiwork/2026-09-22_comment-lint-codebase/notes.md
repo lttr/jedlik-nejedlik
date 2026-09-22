@@ -210,6 +210,10 @@ Notes: No files outside web/tests/ were touched and no docs moved. One note for 
 
 ## Ticket 09 — certificate/
 
+Review (gv, 2026-09-22): the px annotations on `--space-*` were put back; they are wanted as a lookup table. The ticket keeps the header rewrite and the app.js edits.
+
+## Ticket 09 detail
+
 Fixed 23, left standing 12.
 
 - `certificate/assets/jn-tokens.css:13, :14, :15, :18, :20` — remove — restates the code: They name where each brand colour is meant to be used (surface, accent, CTA), which the hex and token name do not say; and five unflagged siblings on lines 16, 17, 19, 21, 22 carry the same annotation, so deleting half would leave an arbitrarily ragged block.
@@ -243,7 +247,9 @@ and three test comments in a follow-up commit. What remained after that is
 undefined term` on glossary headwords (decision 1b), the two TODOs that now
 carry a folder or source-file reference instead of an issue id
 (`certificate/app.js:1`, `email-subjects/index.js:1`), and the `dep-scan.mjs`
-file header.
+file header. Review (gv): the hoist-skew block in `dep-scan.mjs` was rewritten
+once more in short sentences with the h3 example inline, instead of pointing at
+SKILL.md.
 
 ## Verification
 
