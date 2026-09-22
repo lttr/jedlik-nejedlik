@@ -43,10 +43,9 @@ const { title } = defineProps<{ title: string }>()
   margin-bottom: var(--space-4);
 }
 
-/* The page's own copy arrives through the slot, so it carries the page's scope
-   rather than this component's; `:slotted` is what reaches it. The bare `p` is
-   the signature below: it needs the same rule at the same specificity, which is
-   how it rendered before this shell was extracted. */
+/* Slotted copy carries the page's scope, not this component's, so only
+   `:slotted` reaches it. The signature `p` in this template needs the identical
+   rule, at the same specificity, hence the second selector. */
 .thank-you-content :slotted(p),
 .thank-you-content p {
   color: var(--text-color-2);

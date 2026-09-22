@@ -739,7 +739,6 @@ useSeoMeta({
   background-color: color-mix(in srgb, var(--color-burgundy-red) 85%, black);
 }
 
-/* Responsive */
 @media (--lg-n-below) {
   .hero h1 {
     font-size: var(--font-size-5);

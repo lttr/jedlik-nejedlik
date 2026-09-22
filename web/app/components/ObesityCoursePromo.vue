@@ -1058,7 +1058,6 @@ const courseId = "online-3-7-2027-01" satisfies LiveCourseId
   color: var(--color-burgundy-red);
 }
 
-/* Responsive */
 @media (--lg-n-below) {
   .hero h1 {
     font-size: var(--font-size-5);

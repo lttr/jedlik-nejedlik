@@ -252,9 +252,7 @@ const {
   lessonsPart1: string
   /** Dates of lessons 6–10 */
   lessonsPart2: string
-  /** Maximum number of children in the group */
   capacity: number
-  /** Live Course the "Objednat kurz" button sells */
   courseId: LiveCourseId
 }>()
 </script>
@@ -607,7 +605,6 @@ const {
   color: var(--color-forest-green);
 }
 
-/* Responsive */
 @media (--md-n-below) {
   .key-facts {
     grid-template-columns: 1fr;

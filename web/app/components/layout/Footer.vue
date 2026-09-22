@@ -70,7 +70,8 @@
 }
 
 .consent-button {
-  /* Puleo's button styles are all :where()-wrapped, so a plain class outranks them.
+  /* The button styles of Puleo (`@lttr/puleo`, the CSS base loaded in
+     nuxt.config) are all :where()-wrapped, so a plain class outranks them.
      Reset only the button box; text and focus ring stay inherited. */
   border: none;
   background: none;

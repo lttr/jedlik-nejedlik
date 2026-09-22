@@ -46,26 +46,6 @@
     <section class="newsletter">
       <NewsletterForm />
     </section>
-
-    <!-- TODO: Courses Section
-    <section class="courses-section">
-      <h2 class="section-title">Kurzy</h2>
-      <article class="course-card">
-        <div class="course-card-content">
-          <div>
-            <h3>Kurz zdravého (ne)hubnutí</h3>
-            <p>Prezenční kurz v Hradci Králové pro děti a jejich rodiče</p>
-          </div>
-        </div>
-        <NuxtLink
-          class="p-button p-button-brand"
-          href="https://www.stob.cz/cs/kurz-zdraveho-ne-hubnuti-pro-deti-hradec-kralove-42"
-        >
-          Více informací
-        </NuxtLink>
-      </article>
-    </section>
-    -->
   </PageWrapper>
 </template>
 
@@ -167,55 +147,4 @@
   max-width: var(--size-content-3);
   margin-inline: auto;
 }
-
-/* Courses Section */
-/* TODO: Courses Section
-.courses-section {
-  padding-block: var(--space-8);
-  max-width: var(--size-content-3);
-  margin-inline: auto;
-}
-
-.course-card {
-  background: linear-gradient(
-    135deg,
-    var(--color-pale-blue) 0%,
-    var(--color-dull-blue) 100%
-  );
-  padding: var(--space-5);
-  border-radius: var(--radius-3);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  align-items: flex-start;
-
-  @media (--md-n-above) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.course-card-content {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.course-card h3 {
-  margin: 0 0 var(--space-1);
-  font-size: var(--font-size-2);
-}
-
-.course-card p {
-  margin: 0;
-  color: var(--text-color-2);
-}
-
-.p-button {
-  font-size: var(--font-size-0);
-  padding-inline: var(--space-5);
-  height: var(--size-5);
-}
-*/
 </style>

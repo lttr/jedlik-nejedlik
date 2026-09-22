@@ -1,15 +1,6 @@
 <template>
   <main class="main p-page-layout">
     <AboutProjectSection />
-    <!-- <HeroSection /> -->
-    <!-- <ParentsSection /> -->
-    <!-- <LecturesSection class="p-full-end" /> -->
-    <!-- <ExpertsSection /> -->
-    <!-- <IndividualSection /> -->
-    <!-- <TestimonialsSection /> -->
-    <!-- <AboutUsSection /> -->
-    <!-- <FaqSection class="p-inset-padded" /> -->
-    <!-- <ContactsSection /> -->
   </main>
 </template>
 
