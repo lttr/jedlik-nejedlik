@@ -22,8 +22,10 @@ No Renovate. `pnpm outdated` is the work list and pnpm's own
 A weekly Claude Code cloud routine reads that list, applies the bumps,
 repairs the code, runs
 `vp run check:all` and opens the PR from a `claude/deps-*` branch. All
-judgement lives in a committed skill (`.claude/skills/dependency-update/`),
-so the trigger stays swappable.
+judgement lives in a committed skill (`.claude/skills/nuxt-deps-update/`),
+so the trigger stays swappable. That skill carries this repo's rules and
+defers the generic procedure to the `maintenance` plugin's
+`dependency-update` skill.
 
 The exact pins, the `catalog:` aliases and the documented `DELETE-WHEN`
 workarounds in `pnpm-workspace.yaml` are out of the automation's scope: it
