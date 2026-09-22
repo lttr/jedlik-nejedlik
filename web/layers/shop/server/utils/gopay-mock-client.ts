@@ -5,11 +5,9 @@ import type {
   GopayPayment,
 } from "../../shared/utils/gopay"
 
-// A GoPay stand-in that never leaves the machine, so the whole payment can be
-// walked in dev without credentials (spec, „Mock gateway"). `createPayment`
-// hands back a `gw_url` to the dev-only gateway page; the buttons there
-// record the state, which is what `inquirePayment` then reports. State lives
-// in process memory and is gone on restart — a dev fixture, not a store.
+// A GoPay stand-in that never leaves the machine, so the payment flow can be
+// walked in dev without credentials. State lives in process memory — a dev
+// fixture, not a store. See docs/shop.md, „Payment and GoPay“.
 
 export interface MockPayment {
   id: string

@@ -1,7 +1,5 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <!-- The title is interpolated, not markup, so the non-breaking space is
-         the character itself; an entity would show up as one. -->
     <CheckoutStep :number="2" title="Údaje a souhlas">
       <BillingDetailsForm v-model="draft" />
 
@@ -45,18 +43,12 @@
 <script lang="ts" setup>
 import type { BillingDetails, SellableCourse } from "../../../shared/utils/checkout"
 
-// Steps 2 and 3 of the Checkout, for a Student whose step 1 is done. One form
-// around both, so a single press sends the Billing Details, the Consent and
-// the Order together; the two boxes are only how it reads (prototype,
-// variant C).
 const { course, slug, billing } = defineProps<{
   course: SellableCourse
   slug: string
   billing: BillingDetails
 }>()
 
-// The Student's own draft: nothing outside this form reads it, and it is only
-// ever seeded once — logging in is what mounts this form in the first place.
 const draft = ref({ ...billing })
 
 const TERMS_PATH = "/obchodni-podminky"
@@ -95,10 +87,8 @@ form {
 }
 
 .consent input {
-  /* The consent sentence is wider than the row at phone width, so without
-     this the flex line shrinks the checkbox with it and the box stops being
-     square. Puleo (`@lttr/puleo`) does the same for a checkbox inside
-     `.p-form-group`; this one is not in one. */
+  /* The consent sentence is wider than the row at phone width; without this
+     the flex line shrinks the checkbox with it and it stops being square. */
   flex-shrink: 0;
 }
 

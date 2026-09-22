@@ -34,10 +34,8 @@ export async function readVerificationToken(event: H3Event): Promise<string> {
 }
 
 // Directus answers 204 whether the address was free or already taken, so
-// accounts stay unenumerable; the page's confirmation is written for both.
-//
-// Named for the Student, not the Account: Directus's `public_registration_role`
-// is the Student role, and Authors are made in the Data Studio.
+// accounts stay unenumerable. Named for the Student because Directus's
+// `public_registration_role` is the Student role.
 export async function registerStudent(event: H3Event, registration: Credentials): Promise<void> {
   try {
     await getDirectusAnonymousServerClient(event).request(

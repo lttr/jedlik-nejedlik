@@ -87,13 +87,9 @@
 import { BILLING_FIELD_MAX_LENGTH, hasBillingCompanyDetails } from "../../../shared/utils/checkout"
 import type { BillingDetails } from "../../../shared/utils/checkout"
 
-// The Billing Details, wherever they are being edited: step 2 of the Checkout
-// and „Fakturační údaje" on the Account page. It renders fields and nothing
-// else — no heading, no submit button, no saving — so each page can put its
-// own copy around it and decide what pressing something means.
-//
-// Every field is optional on purpose: a name is never a wall between a Student
-// and a Course (spec, user story 9).
+// Fields only — no heading, no submit, no saving — so each page puts its own
+// copy around it. Every field is optional on purpose: a name is never a wall
+// between a Student and a Course.
 const details = defineModel<BillingDetails>({ required: true })
 
 // Two of these on one page would otherwise share `id`s and their labels would

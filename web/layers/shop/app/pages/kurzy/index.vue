@@ -19,8 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-// The site's title template and canonical link come from nuxt-seo-utils'
-// defaults; only what is specific to the Catalog is set here.
 useSeoMeta({
   title: "Kurzy",
   description: "Nabídka videokurzů Jedlík-nejedlík o výživě a výchově dětí.",

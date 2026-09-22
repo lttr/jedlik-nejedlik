@@ -6,7 +6,6 @@
         >zásadách zpracování osobních údajů</NuxtLink
       >.
     </p>
-    <!-- Both choices weigh the same: same class, same size, same colours. -->
     <div class="p-cluster">
       <button type="button" class="p-button" @click="decide('granted')">Přijmout</button>
       <button type="button" class="p-button" @click="decide('denied')">Odmítnout</button>
@@ -19,10 +18,8 @@ import { useElementSize } from "@vueuse/core"
 
 const { isBarOpen, decide } = useCookieConsent()
 
-// The bar is fixed over the bottom of the page, so without this the footer's
-// last links — the consent control among them — sit under it and no amount of
-// scrolling reaches them. It wraps to several lines at 375px, hence measuring
-// rather than guessing a height.
+// Without this the fixed bar covers the footer's last links, the consent
+// control among them. It wraps at 375px, so the height is measured, not guessed.
 const bar = useTemplateRef("bar")
 const { height } = useElementSize(bar, undefined, { box: "border-box" })
 useHead({

@@ -3,10 +3,8 @@ import { readMe } from "@directus/sdk"
 import { BILLING_FIELDS, toBillingDetails } from "../../shared/utils/checkout"
 import type { BillingDetails } from "../../shared/utils/checkout"
 
-// The Billing Details as they sit on the Account, read by both places that
-// pre-fill the form: step 2 of the Checkout and „Fakturační údaje" on the
-// Account page. Always `/users/me` on the caller's own session, so there is
-// no user id in shop code at all.
+// Always `/users/me` on the caller's own session, so no user id appears in
+// shop code at all.
 export async function readAccountBilling(client: DirectusRestClient): Promise<BillingDetails> {
   const me = await client.request(readMe({ fields: [...BILLING_FIELDS] }))
   return toBillingDetails(me)

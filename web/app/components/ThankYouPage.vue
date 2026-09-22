@@ -11,9 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-// The shell every thank-you page shares: centred card, success icon, heading,
-// signature, and one button back into the site. The page contributes only its
-// own copy, in the default slot, and its own link, in `action`.
 const { title } = defineProps<{ title: string }>()
 </script>
 

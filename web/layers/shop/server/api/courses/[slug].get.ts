@@ -1,11 +1,7 @@
-// The Sales Page (spec, "Routes and navigation"). The caller's own session
-// decides what Directus returns, so a draft is readable by its Author and
-// absent for everyone else.
-//
-// The same session decides ownership: a Student who already holds an
-// Entitlement for this Course is shown „Přejít do kurzu" instead of a buy
-// button. The Shop Service Account is never involved (ADR 0004) — it could
-// read everyone's Entitlements, and this route only ever needs the caller's.
+// The Sales Page. The caller's own session decides both what Directus returns
+// — a draft is readable by its Author, absent for everyone else — and whether
+// the Student is entitled (ADR 0004).
+// See docs/shop.md, „Catalog read path“.
 export default defineEventHandler(async (event): Promise<SalesView> => {
   const slug = getRouterParam(event, "slug") ?? ""
   // Held apart from the client below on purpose: a visitor has no session,

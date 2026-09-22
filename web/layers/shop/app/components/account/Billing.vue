@@ -25,23 +25,16 @@
 import { emptyBillingDetails } from "../../../shared/utils/checkout"
 import type { BillingDetails } from "../../../shared/utils/checkout"
 
-// „Fakturační údaje" on the Account page (spec, user story 21): the same form
-// the Checkout's step 2 shows, with its own copy and its own save button
-// around it. The fields themselves are `<BillingDetailsForm>` in both places,
-// so the two can never drift apart.
-//
-// Through Nitro, never Directus from the browser (ADR 0004); the page is
-// behind the auth middleware, so there is always a session by the time this
-// runs.
+// The same fields the Checkout's step 2 shows, with this page's own copy and
+// save button around them. Through Nitro, never Directus from the browser
+// (ADR 0004).
 const { data, error } = await useFetch<BillingDetails>("/api/account/billing", {
   key: "account:billing",
   default: emptyBillingDetails,
 })
 
-// A copy, spread rather than aliased: `<BillingDetailsForm>` writes into this
-// object as the Student types, and handing it `data.value` itself would edit
-// the answer the fetch is caching — a refresh would then have nothing to put
-// back, and a failed save would silently look like a stored one.
+// A copy, not an alias: the form writes here as the Student types, and
+// handing it `data.value` would edit the answer the fetch is caching.
 const billing = ref<BillingDetails>({ ...data.value })
 
 const { pending, errorMessage, succeeded: saved, submit } = useAuthForm()

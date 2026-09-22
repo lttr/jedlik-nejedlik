@@ -4,11 +4,9 @@ import { CourseSchema, LessonSchema, SectionSchema } from "../../../directus/sha
 import type { Course, Lesson, Section } from "../../../directus/shared/utils/schemas"
 import { compareCatalogOrder } from "./catalog-order"
 
-// What the Sales Page route returns: the public Course shape and the full
-// outline in display order. Lesson bodies and videos are not part of it; the
-// outline is what a visitor may read before buying. The Course's status is
-// not part of it either — the route's filter already decides whether a draft
-// is readable at all (ADR 0004), and the page renders no draft marker.
+// The outline a visitor may read before buying: no Lesson bodies or videos,
+// and no status — the route's filter already decides whether a draft is
+// readable at all (ADR 0004).
 export interface SalesSection extends Section {
   lessons: Lesson[]
 }
@@ -17,11 +15,9 @@ export interface SalesCourse extends Course {
   sections: SalesSection[]
 }
 
-// What the Sales Page route answers: the Course, plus the one thing about it
-// that depends on who is asking. `entitled` is the caller's own Entitlement
-// for this Course, read with their own session (ADR 0004) — it decides
-// whether the button reads „Koupit kurz" or „Přejít do kurzu", and it is
-// always `false` for a visitor, who holds no Entitlements to read.
+// `entitled` is the caller's own Entitlement, read with their own session
+// (ADR 0004): it decides whether the button reads „Koupit kurz" or „Přejít do
+// kurzu", and is always `false` for a visitor.
 export interface SalesView {
   course: SalesCourse
   entitled: boolean

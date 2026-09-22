@@ -15,13 +15,8 @@ export function settlementStateForOrder(status: Order["status"]): SettlementStat
   return status === "cancelled" ? "failed" : "pending"
 }
 
-// What the return route answers and the return page renders: the outcome, and
-// the Course it is about — its title to name it, its slug for „Zkusit znovu".
-//
-// Both are empty when the Course stopped being readable between the Order and
-// the return (unpublished, archived). The Course is only how the page words
-// the outcome, so that costs the wording, never the outcome: the page drops
-// the title and the „Zkusit znovu" link and says the rest anyway.
+// The Course fields are empty when it stopped being readable in the meantime.
+// See docs/shop.md, „Settlement".
 export interface SettlementView {
   state: SettlementState
   courseTitle: string

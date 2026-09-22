@@ -18,10 +18,9 @@
 
 <script lang="ts" setup>
 /**
- * Where SimpleShop sends a Live Course buyer after payment ("URL po uhrazení"),
- * one page for all three products: the static `kurz` query parameter says which
- * one was bought. It replaces SimpleShop's own post-payment page, so it has to
- * state that the confirmation and the doklad arrive by e-mail.
+ * Where SimpleShop sends a Live Course buyer after payment („URL po uhrazení"),
+ * one page for all three products: `kurz` says which one was bought. It replaces
+ * SimpleShop's own page, so it states that the confirmation arrives by e-mail.
  */
 
 /** Shown when `kurz` names no course we sell — the buyer still paid for something. */

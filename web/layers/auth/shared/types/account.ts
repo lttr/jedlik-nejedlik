@@ -1,6 +1,5 @@
-// What a session represents, whoever holds it (Account in GLOSSARY.md), so the
-// session plumbing says Account, never "user" or "student". The e-mail is a
-// cache of the `directus_users` row set at login, never written back (ADR 0002).
+// The e-mail is cached from the `directus_users` row at login, never written
+// back (ADR 0002).
 export interface Account {
   email: string
 }

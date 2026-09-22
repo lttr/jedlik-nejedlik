@@ -3,10 +3,8 @@
     E-mail je ověřený. Zadejte heslo a&nbsp;pokračujte v&nbsp;objednávce.
   </ShopNotice>
 
-  <!-- `role="tablist"` is a promise the rest of the widget has to keep: each
-       tab names the panel it controls, the panel names its tab back, and only
-       the selected tab is in the tab order — arrow keys move between them,
-       which is what a screen reader tells its user to press. -->
+  <!-- `role="tablist"` binds the whole widget to a keyboard contract.
+       See docs/shop.md, „Checkout page". -->
   <div class="tabs" role="tablist">
     <button
       v-for="(option, index) of TABS"
@@ -45,21 +43,15 @@ const TABS = [
   { tab: "register", label: "Jsem tu poprvé" },
 ] as const
 
-// Back from the verification link the Account already exists and only the
-// password is left to type, so „Mám účet" is the tab that is wanted (ADR
-// 0005) — and it is the right default for everyone else too.
+// „Mám účet" is the right default for everyone, and especially back from the
+// verification link, where only the password is left to type (ADR 0005).
 const tab = ref<"login" | "register">("login")
 
 const tabButtons = useTemplateRef<HTMLButtonElement[]>("tabButtons")
 
-// Arrow keys wrap, as a tablist is expected to. The strip only ever holds two
-// tabs, so left and right do the same thing; spelling both out is still less
-// surprising than one of them doing nothing.
-//
-// Focus has to follow the selection, not just the highlight: the tab left
-// behind drops out of the tab order the moment it is deselected, so a keyboard
-// user whose focus stayed on it would be stranded — the next arrow key would
-// be handled by the old tab and compute the same move again.
+// Focus has to follow the selection: the tab left behind drops out of the tab
+// order the moment it is deselected, so a keyboard user whose focus stayed on
+// it would be stranded. See docs/shop.md, „Checkout page".
 async function select(index: number): Promise<void> {
   const wrapped = (index + TABS.length) % TABS.length
   const next = TABS[wrapped]
@@ -81,8 +73,6 @@ async function select(index: number): Promise<void> {
 }
 
 .tabs button {
-  /* Narrow enough to keep each label on one line; at phone width the strip
-     wraps to two rows, which is why `.tabs` allows wrapping at all. */
   padding: var(--space-2) var(--space-3);
   font-size: var(--font-size-0);
   border: 0;

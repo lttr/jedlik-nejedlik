@@ -15,10 +15,6 @@
 <script lang="ts" setup>
 import type { SellableCourse } from "../../../shared/utils/checkout"
 
-// What is being bought, alongside the steps the whole way down — the point of
-// buying on the Course's own page rather than on a login form (spec, user
-// story 6). The delivery copy is static: it is the same for every On-demand
-// Course this area sells.
 const { course } = defineProps<{ course: SellableCourse }>()
 </script>
 
@@ -46,8 +42,6 @@ const { course } = defineProps<{ course: SellableCourse }>()
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  /* The stylesheet drops list markers site-wide, so an indent would only leave
-     the lines hanging off the rest of the recap. */
   padding-inline-start: 0;
 }
 </style>

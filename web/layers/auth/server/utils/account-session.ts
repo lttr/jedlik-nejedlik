@@ -1,5 +1,4 @@
-// Credentials in, a sealed cookie out, and the transparent refresh that keeps
-// it alive. No Directus token ever reaches the browser (ADR 0002).
+// No Directus token ever reaches the browser (ADR 0002).
 import { login, logout, refresh } from "@directus/sdk"
 import type { AuthenticationData } from "@directus/sdk"
 import type { H3Event } from "h3"
@@ -39,10 +38,8 @@ function toAccountSecrets(data: AuthenticationData): AccountSecrets {
 }
 
 // The one place a password goes to Directus. Null means Directus rejected the
-// credentials; the caller says what that means (wrong login, or wrong current
-// password). An outage throws instead, so it is never reported as a bad
-// password. This request's session is left untouched: verifying a password
-// is not adopting the identity behind it.
+// credentials and the caller says what that means; an outage throws instead, so
+// it is never reported as a bad password. This request's session is untouched.
 export async function authenticateAccount(
   event: H3Event,
   credentials: Credentials,
@@ -157,9 +154,8 @@ export async function resolveAccountAccessToken(event: H3Event): Promise<string 
   return refreshSession(event, account, secrets)
 }
 
-// Bound to the Account's own session, so gated reads and writes inherit
-// Directus permission enforcement (R-5): a Student sees their own rows, an
-// Author their drafts. Null when nobody is logged in.
+// Bound to the Account's own session, so Directus enforces its permissions on
+// every gated read and write (R-5). Null when nobody is logged in.
 export async function getAccountDirectusClient(event: H3Event): Promise<DirectusRestClient | null> {
   const token = await resolveAccountAccessToken(event)
   if (token === null) {

@@ -1,7 +1,6 @@
-// Catalog order (spec, "Read path"): `sort` ascending, a course with no
-// `sort` after every sorted one, `id` ascending as the tiebreaker. `sort` is
-// nullable and older rows have it unset, so without the null rule the
-// Author's ordering would depend on the database's null placement.
+// Catalog order (spec, "Read path"): `sort` ascending, unsorted last, `id` as
+// the tiebreaker. `sort` is nullable and older rows have it unset, so without
+// the null rule the order would depend on the database's null placement.
 export interface CatalogOrderKeys {
   id: number
   sort?: number

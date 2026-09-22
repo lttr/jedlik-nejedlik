@@ -1,15 +1,13 @@
-// The shop's answer to `authError`: one error shape for the Checkout, the
-// settlement and the Account's shop sections, so three tickets do not invent
-// three. `message` carries the Czech text the browser shows; `statusMessage`
-// becomes the HTTP reason phrase and must stay ASCII.
+// One error shape for the Checkout, the settlement and the Account's shop
+// sections. `message` carries the Czech text the browser shows;
+// `statusMessage` becomes the HTTP reason phrase and must stay ASCII.
 export function shopError(statusCode: number, code: string, message: string): Error {
   return createError({ statusCode, statusMessage: code, message })
 }
 
-// Absent is 404, worded like Nuxt's own route miss. A draft Course and
-// somebody else's Order have to be indistinguishable from a URL that never
-// existed (ADR 0004), so every shop read that comes up empty answers this
-// and nothing more specific.
+// A draft Course and somebody else's Order have to be indistinguishable from a
+// URL that never existed (ADR 0004), so every shop read that comes up empty
+// answers this 404 and nothing more specific.
 export function notFound(): Error {
   return createError({ statusCode: 404, statusMessage: "Page not found" })
 }

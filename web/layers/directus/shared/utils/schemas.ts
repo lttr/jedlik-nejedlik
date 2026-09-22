@@ -1,9 +1,8 @@
 import { z } from "zod"
 
-// Wire codecs: parse Directus responses and normalise null → undefined so
-// consumers get idiomatic optional keys. These are the single source of
-// truth for the collection shapes — wire types in ../types/directus.ts
-// derive from their inputs, consumer contracts from their outputs.
+// Wire codecs: parse Directus responses and normalise null → undefined. They
+// are the single source of truth for the collection shapes — the types in
+// ../types/directus.ts derive from them.
 
 export const ImageSchema = z
   .object({
@@ -44,13 +43,9 @@ export const BiographyExpertSchema = z
 
 // --- Kurzy (course → section → lesson) ------------------------------------
 
-// Consumer contract: the Course statuses the shop deals in. `published` is
-// what a visitor may read anyway; `draft` only ever comes back for an
-// Author's own token, because the public policy filters on published (ADR
-// 0004). Any status added later (archived, a Live Course marker) stays out
-// of the shop until it is listed here — the filter the routes send and the
-// codecs that parse the rows both derive from this one enum, so they cannot
-// disagree.
+// The Course statuses the shop deals in. `draft` only ever comes back for an
+// Author's own token (ADR 0004). A status left out here stays out of the shop:
+// the routes' filter and the codecs both derive from this enum.
 export const CourseStatusSchema = z.enum(["published", "draft"])
 
 export type CourseStatus = z.output<typeof CourseStatusSchema>

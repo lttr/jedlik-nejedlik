@@ -7,15 +7,10 @@ import { checkoutConsents, reusableOrder, toBillingPayload } from "../../shared/
 import type { BillingDetails, SellableCourse } from "../../shared/utils/checkout"
 import { isPaymentLive } from "../../shared/utils/gopay"
 
-// Everything the Checkout does to Directus and to GoPay, kept out of the two
-// routes that call it so they stay the few lines the house style asks for.
-// Reads and the Order write go through the Student's own session, which is
-// what makes Directus the one place that decides what they may see and place
-// (ADR 0004); only the Payment id is stamped by the Shop Service Account,
-// because a Student may not write it (ADR 0006).
-//
-// "spec" here and below is `.aiwork/2026-09-15_checkout-gopay/spec.md`, the
-// area spec the whole Checkout is built from.
+// Everything the Checkout writes to Directus and to GoPay: the Student's own
+// session, except the Payment id stamped by the Shop Service Account (ADR
+// 0006). See docs/shop.md, „Checkout". "spec" below is
+// `.aiwork/2026-09-15_checkout-gopay/spec.md`.
 
 // Generous: placing an order is a deliberate act, and a Student who abandons
 // the gateway and comes back a few times must not be locked out of buying.
@@ -38,9 +33,9 @@ export const ORDER_FIELDS = [
   "fakturoid_invoice_id",
 ] as const
 
-// A Course a Student may actually buy. Absent is 404 — the same 404 as a slug
-// that never existed, so a draft stays invisible (ADR 0004) — and a Course
-// without a price is refused rather than given away (spec, user story 24).
+// A Course a Student may actually buy: absent is the shop's 404 (ADR 0004),
+// and a Course without a price is refused rather than given away (spec, user
+// story 24).
 export async function loadCheckoutCourse(
   client: DirectusRestClient,
   slug: string,
@@ -78,11 +73,9 @@ async function readCreatedOrders(client: DirectusRestClient, courseId: number): 
   return rows.map((row) => OrderSchema.parse(row))
 }
 
-// A Student who walked away from the gateway and came back gets the same
-// Payment rather than a second Order (spec, user story 14). GoPay decides:
-// only it knows whether the Payment is still payable. An inquiry that fails
-// is treated as „no reusable Payment" — a fresh Order is always safe, a
-// gateway URL we could not confirm is not.
+// A Student who came back from the gateway gets the same Payment rather than a
+// second Order (spec, user story 14). An inquiry that fails counts as „no
+// reusable Payment": a fresh Order is always safe.
 async function liveGatewayUrl(
   event: H3Event,
   client: DirectusRestClient,
@@ -99,20 +92,18 @@ async function liveGatewayUrl(
       console.warn(`[shop] Could not inquire GoPay payment ${paymentId}`, error)
       return undefined
     })
-  // The empty string is checked as carefully as `undefined`: GoPay answers an
-  // inquiry without a `gw_url`, which the codec turns into `""`, and a `""`
-  // that slipped through here would be handed to the browser as the gateway to
-  // follow — a press on „Objednávka zavazující k platbě" that goes nowhere.
+  // `""` is as bad as `undefined`: GoPay can answer an inquiry without a
+  // `gw_url`, and handing that to the browser is a buy button that goes
+  // nowhere.
   if (payment === undefined || !isPaymentLive(payment.state) || payment.gwUrl === "") {
     return undefined
   }
   return payment.gwUrl
 }
 
-// The Order and its Consent in one write, by the Student's own session: the
-// `student` column is the policy's preset and its validation, so an Order can
-// only ever be placed for oneself. `price_czk` is the snapshot for the
-// invoice; what GoPay charges is re-read from the Course below.
+// The `student` column is the policy's preset and its validation, so an Order
+// can only ever be placed for oneself. `price_czk` is the snapshot for the
+// invoice.
 async function createOrder(
   client: DirectusRestClient,
   course: SellableCourse,
@@ -133,10 +124,9 @@ async function createOrder(
   return created.id
 }
 
-// The Payment, and the one write the Student is not allowed to make. The
-// amount comes from the Course row this request just read, never from the
-// browser (spec, user story 27). Both callbacks are absolute and built from
-// the site config, so a forged Host header cannot steer where GoPay reports.
+// The amount comes from the Course row, never from the browser (spec, user
+// story 27). Both callbacks are absolute and built from the site config, so a
+// forged Host header cannot steer where GoPay reports.
 async function startPayment(
   event: H3Event,
   orderId: number,
@@ -164,9 +154,7 @@ async function startPayment(
   )
 
   // Stamped first, refused second: a Payment GoPay created but gave us no page
-  // for is still a Payment that can be settled, and the Order has to carry its
-  // id before anything else can go wrong. Sending the browser to `""` would
-  // look like a Checkout that quietly did nothing.
+  // for can still be settled, so the Order has to carry its id first.
   if (payment.gwUrl === "") {
     throw new Error(`GoPay created payment ${payment.id} without a gateway URL`)
   }
@@ -190,10 +178,9 @@ export async function placeCheckoutOrder(
       return live
     }
 
-    // Remembered for next time (spec, user story 7). The Order keeps its own
-    // snapshot, so a later correction here never alters an issued invoice —
-    // which is also why neither write needs the other, and the Student
-    // watching a disabled button waits for one round-trip rather than two.
+    // Remembered for next time (spec, user story 7). Neither write needs the
+    // other — the Order keeps its own snapshot — so the Student waits for one
+    // round-trip rather than two.
     const [, orderId] = await Promise.all([
       client.request(updateMe(toBillingPayload(billing), { fields: ["id"] })),
       createOrder(client, course, billing),

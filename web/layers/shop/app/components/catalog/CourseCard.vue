@@ -3,8 +3,7 @@
     <CourseCover v-if="course.cover" :image="course.cover" sizes="90vw sm:480px" loading="lazy" />
     <div class="body p-flow">
       <!-- Only an Author's own session ever carries a draft here (ADR 0004);
-           the card marks it and otherwise treats it like any other Course,
-           sort position included. -->
+           the card marks it and otherwise treats it like any other Course. -->
       <span v-if="course.status === 'draft'" class="draft-badge">Koncept</span>
       <h2 class="title">{{ course.title }}</h2>
       <p v-if="course.description" class="teaser">{{ course.description }}</p>

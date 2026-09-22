@@ -27,12 +27,8 @@ interface CookieConsent {
 }
 
 /**
- * The visitor's cookie decision. It is kept in `localStorage` and never reaches
- * the server, and it is the only source of truth here: the bar is open exactly
- * while no decision for the current version is stored, and reopening the bar
- * clears the stored one. In dev the bar stays hidden until the settings button
- * asks for it. VueUse's storage event keeps instances of this composable in
- * sync within the tab.
+ * The visitor's cookie decision, the only source of truth for every
+ * consent-gated script. See docs/analytics.md, „Cookie consent".
  */
 export function useCookieConsent(): CookieConsent {
   const decision = useStorage<ConsentDecision | null>(STORAGE_KEY, null, undefined, {

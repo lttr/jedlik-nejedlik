@@ -5,13 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-// The shop's one notice. The auth layer's `<AuthFormError>` only ever says
-// something went wrong; the Checkout, the return page and „Moje kurzy" also
-// have good news to deliver, so this one takes a tone — `info` being the
-// refusal that is neither, like „this Course is not on sale yet". The classes
-// are the site-wide `.error-message` / `.success-message` / `.info-message`
-// from `main.css`. The text comes as `message`, or as the default slot when it
-// needs a link inside it.
+// The shop's one notice: unlike the auth layer's `<AuthFormError>` it also
+// carries good news, so it takes a tone — `info` being the refusal that is
+// neither. The classes are the site-wide ones from `main.css`.
 const { message = "", tone = "error" } = defineProps<{
   message?: string
   tone?: "error" | "success" | "info"

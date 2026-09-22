@@ -12,7 +12,6 @@ export const authMessages = {
   // Registration. A duplicate address cannot be reported: Directus answers
   // 204 either way.
   invalidEmail: "Zadejte prosím platný e-mail.",
-  // Must agree with PASSWORD_MIN_LENGTH; tests/unit/password.test.ts checks.
   passwordTooShort: "Heslo musí mít alespoň 8 znaků.",
   tooManyRegistrations: "Příliš mnoho pokusů o registraci. Zkuste to prosím za chvíli.",
   registrationUnavailable: "Registrace je teď nedostupná. Zkuste to prosím za chvíli.",

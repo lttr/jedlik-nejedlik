@@ -5,10 +5,8 @@ import { z } from "zod"
 import { getGopayClient } from "../../../../../server/utils/gopay-client"
 import type { GopayPayment } from "../../../../../shared/utils/gopay"
 
-// Creates a Payment at the mock gateway the way the Checkout will, so the
-// gateway can be walked — by hand or by a flow test — before, or without, an
-// Order. It goes through the same `getGopayClient(event)` seam as everything
-// else, so what it exercises is the real code path.
+// Creates a Payment the way the Checkout would, through the same
+// `getGopayClient(event)` seam, so the gateway can be walked without an Order.
 const DemoPaymentSchema = z.object({
   orderId: z.number().int().default(0),
   priceCzk: z.number().int().nonnegative(),

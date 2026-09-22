@@ -58,7 +58,6 @@ const route = useRoute()
 const { logIn } = useAuthActions()
 const { pending, errorMessage, submit } = useAuthForm()
 
-// Both /overeni-emailu and /obnova-hesla send the Account here and say why.
 const notice = computed(() => {
   if (route.query[EMAIL_VERIFIED_QUERY] !== undefined) {
     return authMessages.emailVerified
@@ -75,10 +74,9 @@ const password = ref("")
 async function onSubmit() {
   await submit(async () => {
     await logIn({ email: email.value, password: password.value })
-    // The verification link brings a Student back without `?redirect=`, so
-    // the pending-checkout cookie is the fallback target, and reading it here
-    // clears it. An explicit `?redirect=` wins and leaves the cookie alone:
-    // the Checkout it names is still waiting, and it expires a day later.
+    // The verification link brings a Student back without `?redirect=`, so the
+    // pending-checkout cookie is the fallback and reading it here clears it. An
+    // explicit `?redirect=` wins and leaves the cookie alone.
     const rawRedirect = route.query.redirect
     const hasRedirect = typeof rawRedirect === "string" && rawRedirect !== ""
     await navigateTo(

@@ -7,11 +7,9 @@ export interface AccountSession {
   refresh: () => Promise<void>
 }
 
-// The single seam onto nuxt-auth-utils' client API. Identical on SSR and
-// client because the answer comes from the sealed cookie's payload, not a
-// round-trip. Pages speak Account (GLOSSARY.md), never `useUserSession()`.
-// It is `useAccount`, not `useStudent`: an Author previewing a draft holds
-// the same session.
+// The app's only seam onto nuxt-auth-utils: pages speak Account (GLOSSARY.md),
+// never `useUserSession()`. The answer comes from the session cookie's payload,
+// so SSR and client agree without a round-trip.
 export function useAccount(): AccountSession {
   const { user, loggedIn, fetch } = useUserSession()
   return { account: user, loggedIn, refresh: fetch }

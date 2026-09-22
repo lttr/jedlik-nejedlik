@@ -1,10 +1,6 @@
 /**
  * Loads Microsoft Clarity, gated on the same cookie consent as the Meta Pixel.
- *
- * `useScriptTriggerConsent` is a load gate: until it resolves not even the tag
- * request is made, so Clarity's own `defaultConsent` is not used. The project
- * id is set only in production (nuxt.config), and masking is configured in the
- * Clarity project itself.
+ * See docs/analytics.md, „Microsoft Clarity".
  */
 export default defineNuxtPlugin(() => {
   if (import.meta.dev || IGNORED_HOSTNAMES.includes(window.location.hostname)) {

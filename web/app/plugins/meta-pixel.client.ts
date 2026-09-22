@@ -23,13 +23,9 @@ type TrackMetaPixelEvent = (
 const ignoreEvent: TrackMetaPixelEvent = () => {}
 
 /**
- * Claims the one slot this event has in the current session, returning whether
- * it was still free. Kept beside the sending code so no caller invents a key
- * format of its own.
- *
- * `sessionStorage` throws outright where the browser refuses storage, and an
- * unguarded throw would take the whole event down. Such a visitor gets no slot
- * bookkeeping: the sale is still measured, and a reload may double-count it.
+ * Claims this event's one slot for the session. Where the browser refuses
+ * `sessionStorage` the catch lets the event through: a possible double count
+ * costs less than a lost sale.
  */
 function claimOncePerSession(event: MetaPixelEvent, contentName: string | undefined): boolean {
   const key = `meta-pixel:${event}:${contentName ?? ""}`
@@ -45,18 +41,8 @@ function claimOncePerSession(event: MetaPixelEvent, contentName: string | undefi
 }
 
 /**
- * Loads the Meta Pixel only once the visitor accepted cookies, and provides the
- * one way to send an event.
- *
- * `useScriptTriggerConsent` is a load gate: until it resolves, `fbevents.js` is
- * not even requested. Meta's own `defaultConsent: 'denied'` would fetch the SDK
- * anyway, so it is not used.
- *
- * The pixel id (`scripts.registry.metaPixel` in nuxt.config) is set only in
- * production, so outside a production build there is nothing to load. A second
- * `useScriptMetaPixel()` call would load the script without the consent trigger,
- * so it is called here and nowhere else and everything else sends through
- * `$trackMetaPixelEvent`.
+ * Loads the Meta Pixel once the visitor accepted cookies, and is the only place
+ * that may call `useScriptMetaPixel()`. See docs/analytics.md, „Meta Pixel".
  */
 export default defineNuxtPlugin(() => {
   if (import.meta.dev || IGNORED_HOSTNAMES.includes(window.location.hostname)) {
@@ -68,12 +54,9 @@ export default defineNuxtPlugin(() => {
     scriptOptions: { trigger: useScriptTriggerConsent({ consent: isGranted }) },
   })
 
-  // A visitor who withdraws mid-visit has to reach the pixel that is already
-  // loaded. `@nuxt/scripts` cannot unload a script, and silencing `track` below
-  // would stop only our own events while the pixel kept sending for the rest of
-  // the SPA session, so Meta's own consent call is what has to stop it.
-  // `hasRevoked` keeps the first acceptance clean: a `grant` undoes a revoke and
-  // is never sent before Meta's `init`.
+  // A loaded script cannot be unloaded, so a mid-visit withdrawal has to reach
+  // the pixel through Meta's own consent call. `hasRevoked` keeps `grant` from
+  // ever preceding Meta's `init`.
   let hasRevoked = false
   watch(isGranted, (granted) => {
     if (!granted) {

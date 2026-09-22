@@ -4,9 +4,7 @@
       <h1 class="p-heading-3">{{ HEADINGS[view.state] }}</h1>
 
       <!-- The title is empty for a Course the Student may no longer read, and
-           both sentences are written to stand without it: the surrounding
-           whitespace collapses, so „Kurz máte od teď k dispozici" is what is
-           left rather than a gap. -->
+           both sentences are written to stand without it. -->
       <ShopNotice v-if="view.state === 'paid'" tone="success">
         Platba dorazila. Kurz <strong>{{ view.courseTitle }}</strong> máte od&nbsp;teď
         k&nbsp;dispozici.
@@ -62,7 +60,6 @@ if (error.value !== undefined) {
   throwPageError(error.value, route.path)
 }
 
-// Written once, by the limit below.
 const waiting = ref(view.value?.state === "pending")
 
 const pendingMessage = computed(() =>
@@ -82,10 +79,8 @@ const onward = computed(() =>
     : { to: checkoutPath(retrySlug.value), label: "Zkusit znovu" },
 )
 
-// Two timers, both VueUse's, so there is one answer to „when does this stop
-// polling": the poll stops itself the moment the Payment is no longer pending,
-// and the limit stops it for good half a minute in. Both are started on mount,
-// because neither belongs on the server.
+// Two timers: the poll stops itself once the Payment is no longer pending,
+// and the limit stops it for good. See docs/shop.md, „Return page".
 const { pause: stopPolling, resume: startPolling } = useIntervalFn(
   async () => {
     await refresh()

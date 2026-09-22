@@ -45,12 +45,9 @@ if (error.value !== undefined) {
   throwPageError(error.value, route.path)
 }
 
-// Head and structured data derive from the Course itself (spec, "Metadata
-// and structured data"): no SEO fields on `course`. The site's title template
-// and canonical link come from nuxt-seo-utils' defaults, so only what is
-// specific to this Course is set here. The og:image is the cover at 1200×630;
-// without a cover the site-wide one from `app.vue` stays. Getters, so a
-// refetched Course updates the tags too.
+// Head and structured data derive from the Course itself; there are no SEO
+// fields on it. Without a cover the site-wide og:image from `app.vue` stays.
+// Getters, so a refetched Course updates the tags too.
 const siteConfig = useSiteConfig()
 const directusUrl = useRuntimeConfig().public.directusUrl
 // Absolute on purpose: the Course resolver leaves `url` as given, unlike the

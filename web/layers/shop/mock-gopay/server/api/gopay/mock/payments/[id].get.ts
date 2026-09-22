@@ -1,6 +1,5 @@
-// This layer is in the build only in mock mode, so Nuxt's auto-imports are
-// not generated for it on a machine that talks to the real GoPay. Everything
-// it uses it imports, and the file stays readable to the linter either way.
+// This layer is in the build only in mock mode, so Nuxt generates no
+// auto-imports for it elsewhere: everything it uses, it imports.
 import { createError, defineEventHandler, getRouterParam } from "h3"
 
 import { readMockPayment } from "../../../../../../server/utils/gopay-mock-client"

@@ -86,10 +86,9 @@ export type OrderCollection = z.input<typeof OrderSchema> & {
 
 export type OrderConsentCollection = z.input<typeof OrderConsentSchema>
 
-// The fields the client sends when creating a Consent. The rest is Directus's
-// to fill in: the id, the parent Order (the record is created nested under
-// it), and `granted_at`, a preset on the Student policy so the moment of
-// consent is the server's clock rather than the browser's.
+// The fields the client sends when creating a Consent. Directus fills in the
+// id, the parent Order and `granted_at` — a preset on the Student policy, so the
+// moment of consent is the server's clock, not the browser's.
 export type NewOrderConsent = Pick<OrderConsentCollection, "document" | "document_version">
 
 export type EntitlementCollection = Omit<z.input<typeof EntitlementSchema>, "course"> & {
@@ -98,10 +97,9 @@ export type EntitlementCollection = Omit<z.input<typeof EntitlementSchema>, "cou
   course: number | CourseCollection
 }
 
-// Listing `directus_users` in the Schema overrides the SDK's built-in system
-// shape. That is the only way to get the Billing Details typed, because they
-// are custom columns the SDK cannot know about. The cost is that every other
-// column the app reads or writes on a user has to be listed here as well.
+// Overrides the SDK's built-in `directus_users` shape, the only way to type the
+// Billing Details. The cost: every other column the app reads or writes on a
+// user has to be listed here too.
 export interface AccountUserCollection {
   id: string
   email: string

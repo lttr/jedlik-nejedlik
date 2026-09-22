@@ -94,8 +94,7 @@ textarea {
   --success-alert-bg-color: var(--positive-alert-bg-color);
 
   /* A refusal that is neither a failure nor good news — „this Course is not on
-     sale yet". Red would read as a fault the visitor caused, green as a
-     confirmation; Puleo has no neutral alert pair, so it is built from grays. */
+     sale yet". Puleo has no neutral alert pair, so it is built from grays. */
   --info-alert-color: var(--gray-11);
   --info-alert-bg-color: var(--gray-2);
 }

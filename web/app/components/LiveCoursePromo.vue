@@ -236,21 +236,13 @@ const {
   capacity,
   courseId,
 } = defineProps<{
-  /** e.g. "6.–9. třída" */
   gradeRange: string
-  /** e.g. "6." — used in the "od X do Y třídy" sentence */
   gradeFrom: string
-  /** e.g. "9." — used in the "od X do Y třídy" sentence */
   gradeTo: string
-  /** e.g. "22. 9. 2026 – 23. 2. 2027" */
   term: string
-  /** e.g. "Úterý 17:05–18:20" */
   dayAndTime: string
-  /** e.g. "17:05 do 18:20" */
   timeRange: string
-  /** Dates of lessons 1–5 */
   lessonsPart1: string
-  /** Dates of lessons 6–10 */
   lessonsPart2: string
   capacity: number
   courseId: LiveCourseId

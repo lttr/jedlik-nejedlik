@@ -2,9 +2,6 @@ import { z } from "zod"
 
 import type { Course, Order } from "../../../directus/shared/utils/schemas"
 
-// The Checkout's vocabulary, kept pure so the page, the Nitro routes and the
-// tests all agree on it.
-
 // Billing Details carry the Directus column names on purpose. They are the
 // same six columns on `directus_users` (the Account) and on `order` (the
 // snapshot), so one name per thing means no mapping table to keep honest.
@@ -36,11 +33,9 @@ export const BILLING_FIELD_MAX_LENGTH = 200
 
 const BillingFieldSchema = z.string().trim().max(BILLING_FIELD_MAX_LENGTH)
 
-// What a browser may send as Billing Details, from the Checkout or from the
-// Account's „Fakturační údaje" save. Every field is required but may be empty,
-// because a missing one would keep the old value on one route and clear it on
-// the other. Spelled out rather than derived from `BILLING_FIELDS` so the
-// routes keep a field-by-field inferred type; a column added above goes here.
+// Every field is required but may be empty: a missing one would keep the old
+// value on one route and clear it on the other. Spelled out rather than
+// derived, so the routes keep a field-by-field inferred type.
 export const BillingRequestSchema = z.object({
   billing_name: BillingFieldSchema,
   billing_company: BillingFieldSchema,
@@ -114,21 +109,17 @@ export function checkoutConsents(): { document: "terms"; document_version: strin
   return [{ document: "terms", document_version: TERMS_VERSION }]
 }
 
-// An Order of this Student for this Course that still has a Payment to go
-// back to. Only the newest candidate is offered, because an older one can only
-// exist if it was already passed over — every Checkout either reuses the
-// newest live Payment or starts a fresh Order (spec, „Order flow").
+// Only the newest candidate is offered, because an older one can only exist
+// if it was already passed over (spec, „Order flow").
 export function reusableOrder(orders: Order[]): Order | undefined {
   return orders
     .filter((order) => order.status === "created" && order.gopay_payment_id !== undefined)
     .toSorted((a, b) => b.id - a.id)[0]
 }
 
-// A refusal a page can render itself, dug out of whatever `$fetch` threw.
-// A route's `createError({ statusMessage, message })` arrives in the error's
-// `data`; the error's own `message` is ofetch's technical „[GET] …: 409", so
-// only the body is worth showing a Student. The caller passes the status code
-// it can handle, because anything else has to stay an error.
+// A route's `createError({ statusMessage, message })` arrives in the thrown
+// error's `data`; the error's own `message` is ofetch's technical
+// „[GET] …: 409", so only the body is worth showing a Student.
 export interface Refusal {
   // `statusMessage` from the route: which refusal this is, for a page that
   // offers a different way onward for each.

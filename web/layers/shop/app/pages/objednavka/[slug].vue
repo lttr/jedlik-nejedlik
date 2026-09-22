@@ -53,13 +53,9 @@
 import { readRefusal } from "../../../shared/utils/checkout"
 import type { CheckoutView } from "../../../shared/utils/checkout"
 
-// Three steps on one page with the Course alongside — variant C of
-// `.aiwork/2026-09-15_checkout-gopay/prototype/index.html`, which the rest of
-// the Checkout components cite by that name too.
-//
-// No `auth` middleware: a visitor without an Account gets the same page and
-// logs in or registers inside step 1, because being sent somewhere else is how
-// a purchase loses sight of what it is buying (spec, user story 2).
+// Three steps on one page, and no `auth` middleware: a visitor logs in or
+// registers inside step 1 rather than being sent away from what they are
+// buying. See docs/shop.md, „Checkout page".
 
 const route = useRoute()
 const slug = String(route.params.slug)
@@ -81,13 +77,8 @@ const {
 const verified = computed(() => route.query[EMAIL_VERIFIED_QUERY] !== undefined)
 
 // A 409 is a Course this Student may not buy, and the page says so in its own
-// words. Any other error goes to the site's error page; an unreadable Course
-// is a 404 worded like Nuxt's own route miss, so a draft cannot be told apart
-// from a slug that never existed (ADR 0004).
-//
-// Computed, because logging in inside step 1 asks the route again and may be
-// refused only then: „Tenhle kurz už máte" belongs to the Account, not to the
-// request that rendered the page.
+// words. Computed, because logging in inside step 1 may be refused only then.
+// See docs/shop.md, „Checkout page".
 const refusal = computed(() => readRefusal(error.value, 409))
 
 // Owning the Course already is good news; a Course that is not on sale yet is
@@ -101,10 +92,8 @@ if (error.value !== undefined && refusal.value === undefined) {
 }
 
 // Step 1 is done: ask the route again, which now answers with the Student's
-// e-mail, their Billing Details and any refusal their session brings with it
-// — all without a page change (spec, user story 2). The refreshed answer is
-// also what mounts step 2 for the first time, so its form reads the Billing
-// Details straight from this data; there is nothing to push into it.
+// e-mail, their Billing Details and any refusal their session brings with it,
+// without a page change. That answer is also what mounts step 2.
 async function onLoggedIn(): Promise<void> {
   await refreshCheckout()
   if (error.value !== undefined && refusal.value === undefined) {

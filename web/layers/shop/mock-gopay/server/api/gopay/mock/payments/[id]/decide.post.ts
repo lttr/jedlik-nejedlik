@@ -14,20 +14,7 @@ import { recordMockPaymentState } from "../../../../../../../server/utils/gopay-
 import type { MockPayment } from "../../../../../../../server/utils/gopay-mock-client"
 import type { GopayPaymentState } from "../../../../../../../shared/utils/gopay"
 
-// „Zaplatit" and „Zrušit" — the only two things a payer can do at this
-// gateway. The page posts a plain form here, and so can any HTTP client
-// (`{"action":"pay"}` as JSON works just as well), which is how a flow test
-// pays without a browser.
-//
-// The order of what happens is GoPay's: record the state, notify the site
-// server-to-server, then send the payer back. The notification is awaited,
-// so by the time the redirect is answered the site has already settled the
-// Order — a flow test can assert straight after this call returns.
-//
-// `choose` is the third, button-less action: it puts the Payment in
-// `PAYMENT_METHOD_CHOSEN` — GoPay's „the payer picked a method, the bank has
-// not answered yet" — which is the state the return page's pending branch and
-// the notification's „writes nothing" case are about (ticket 04, acceptance).
+// See docs/shop.md, „Mock gateway".
 const DecisionSchema = z.object({ action: z.enum(["pay", "cancel", "choose"]) })
 
 const MOCK_DECISION_STATES = {

@@ -21,9 +21,8 @@ defineProps<{
   sections: SalesSection[]
 }>()
 
-// How a video and a text Lesson tell apart in the outline: an icon for the
-// eye, a label for a screen reader. The icon set (`bi`) is one the build
-// bundles, so nothing is fetched from the iconify API at runtime.
+// An icon for the eye, a label for a screen reader. The `bi` set is bundled
+// by the build, so nothing is fetched from the iconify API at runtime.
 const LESSON_TYPES: Record<Lesson["type"], { icon: string; label: string }> = {
   video: { icon: "bi:play-circle-fill", label: "Video" },
   text: { icon: "bi:file-earmark-text", label: "Text" },

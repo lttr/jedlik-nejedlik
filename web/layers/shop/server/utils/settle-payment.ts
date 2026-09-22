@@ -6,14 +6,10 @@ import type { Order } from "../../../directus/shared/utils/schemas"
 import { orderStatusForPaymentState } from "../../shared/utils/gopay"
 import type { GopayPaymentState } from "../../shared/utils/gopay"
 
-// The one place where money turns into access (spec, „Settlement"). Both the
-// public notification route and the Student's return page call this and
-// nothing else, so there is a single answer to „is this Payment settled" and
-// a single write path to get there.
-//
-// Every branch is idempotent by construction: the Order's status decides what
-// is left to do, and the Entitlement's unique index on (student, course) is
-// the last line of defence when two callers arrive at once.
+// The one place where money turns into access. Every branch is idempotent by
+// construction, and the Entitlement's unique index on (student, course) is the
+// last line of defence when two callers arrive at once.
+// See docs/shop.md, „Settlement“.
 
 // GoPay retries a non-200 answer up to twenty times and the Student's return
 // page settles the same Payment again, so the budget only has to stop a flood
@@ -80,11 +76,8 @@ async function applyPaymentState(
     return order
   }
   if (target === "paid") {
-    // The § 1824a confirmation e-mail (spec, user story 34) belongs to the
-    // legal-documents area (`.aiwork/2026-06-09_kurzy-platforma/areas.md`,
-    // area 10) and goes here, before the grant and awaited: that way it runs
-    // exactly once per Order, and a failure in it stops the settlement rather
-    // than half-finishing it.
+    // The § 1824a confirmation e-mail (spec, user story 34) goes here, before
+    // the grant and awaited, so it runs exactly once per Order.
     await grantEntitlement(client, order)
   }
   // Last, so a crash anywhere above leaves the Order unsettled and the next
@@ -98,9 +91,8 @@ export interface Settlement {
 }
 
 // `undefined` means no Order carries this Payment id: a forged notification,
-// or one meant for another instance. The Order is looked up before GoPay is
-// asked anything, so a forged id costs one Directus read and never reaches
-// GoPay's API (spec, user story 32).
+// or one meant for another instance. The lookup comes before GoPay is asked
+// anything, so a forged id never reaches GoPay's API (spec, user story 32).
 export async function settlePayment(
   event: H3Event,
   paymentId: string,
@@ -115,11 +107,9 @@ export async function settlePayment(
 export async function settleOrder(event: H3Event, order: Order): Promise<Settlement> {
   const paymentId = order.gopay_payment_id
   if (paymentId === undefined || order.status === "paid") {
-    // Nothing to inquire about, or nothing an inquiry could change: for an
-    // Order already `paid`, `applyPaymentState` discards every answer GoPay
-    // can give (`paid` is a no-op, `cancelled` is refused for a paid Order).
-    // GoPay sends more than one notification per Payment and retries a failed
-    // one up to twenty times, so the call saved here is on the retry path.
+    // Nothing to inquire about, or nothing an inquiry could change: for a
+    // `paid` Order, `applyPaymentState` discards every answer GoPay can give.
+    // The call saved here is on GoPay's retry path.
     return { order }
   }
 

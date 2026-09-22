@@ -1,13 +1,10 @@
 import { emptyBillingDetails } from "../../../shared/utils/checkout"
 import type { CheckoutView } from "../../../shared/utils/checkout"
 
-// What the Checkout page needs to render itself for whoever asked. Every
-// refusal is the page's refusal too: 404 has no readable Course, 409 is a
-// Course that cannot be bought — and the page then never shows the form.
-//
-// A visitor without an Account is answered as well, because step 1 is where
-// they log in or register (ADR 0005): they get the Course and no identity.
-// What they may read is Directus's decision either way (ADR 0004).
+// Every refusal is the Checkout page's refusal too: 404 has no readable
+// Course, 409 a Course that cannot be bought. A visitor without an Account is
+// answered as well, minus the identity (ADR 0005).
+// See docs/shop.md, „Checkout".
 export default defineEventHandler(async (event): Promise<CheckoutView> => {
   const slug = getRouterParam(event, "slug") ?? ""
   const { account } = await readAccountSession(event)

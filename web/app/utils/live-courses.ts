@@ -1,13 +1,6 @@
 /**
- * The Live Courses that are actively sold and measured.
- *
- * Five hardcoded facts per course, read by the buy link and the thank-you page,
- * so they live here rather than in Directus. Not in the `shop` layer either:
- * this table gets deleted, not extended, once the checkout moves in-house.
- *
- * The keys are the ids Meta sees as the event's content name and SimpleShop
- * passes back in the `kurz` query parameter. They are anchored on the start
- * date, not the sales season, so they diverge on purpose from route slugs.
+ * The Live Courses that are actively sold and measured; the keys are the ids
+ * Meta and SimpleShop see. See docs/analytics.md, „Live Course tracking table".
  */
 export const LIVE_COURSES = {
   "online-3-7-2027-01": {

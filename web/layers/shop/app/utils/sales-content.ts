@@ -1,17 +1,9 @@
 import { defineAsyncComponent } from "vue"
 import type { Component } from "vue"
 
-// Which Courses carry hand-built sales copy (spec, "Where content lives"):
-// the slug of a Course maps to the component the Sales Page mounts between
-// the hero and the outline. A Course absent here is the normal state and
-// renders complete without the block; nothing checks this list at build time.
-//
-// Every entry is an async component, for two reasons: each Course's copy
-// stays in its own chunk instead of every bespoke block riding along with
-// the page, and this module stays importable without SFC compilation, so
-// the unit test runs it in plain vitest.
-//
-// Keys are Course slugs exactly as Directus holds them.
+// Course slug (exactly as Directus holds it) to the component the Sales Page
+// mounts between the hero and the outline. A Course absent here is the normal
+// state. See docs/shop.md, „Sales content".
 const SALES_CONTENT: Record<string, Component> = {
   "test-kurz-publikovany": defineAsyncComponent(
     async () => import("../components/sales/content/TestKurzPublikovany.vue"),

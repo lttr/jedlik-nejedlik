@@ -4,11 +4,9 @@ import { createGopayApiClient } from "./gopay-api-client"
 import { createGopayMockClient } from "./gopay-mock-client"
 import type { GopayClient } from "../../shared/utils/gopay"
 
-// The one place that decides which GoPay the site talks to. Everything else
-// — the Checkout, the settlement — takes a `GopayClient` and never learns
-// which one it got (spec, „GoPay client"). Sandbox and production differ
-// only in base URL; `mock` is refused outside development by the
-// runtime-config schema.
+// The one place that decides which GoPay the site talks to: everything else
+// takes a `GopayClient` and never learns which one it got. `mock` is refused
+// outside development by the runtime-config schema.
 
 const SANDBOX_BASE_URL = "https://gw.sandbox.gopay.com"
 const PRODUCTION_BASE_URL = "https://gate.gopay.cz"

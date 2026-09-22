@@ -2,9 +2,9 @@ import * as Sentry from "@sentry/nuxt"
 import { z } from "zod"
 
 // GoPay's server-to-server notification: a bare GET carrying only the Payment
-// id (spec, „Further Notes"). Nothing in it is trusted — the id is a lookup
-// key and the state always comes from an inquiry — so the route is public,
-// with no IP allow-list and a per-IP budget instead (spec, user story 32).
+// id. Nothing in it is trusted, so the route is public with a per-IP budget
+// rather than an IP allow-list (spec, user story 32).
+// See docs/shop.md, „Payment and GoPay“.
 const NotificationSchema = z.object({ id: z.string().min(1).max(64) })
 
 export default defineEventHandler(async (event): Promise<{ status: string }> => {

@@ -1,15 +1,9 @@
 import { checkoutSlugFromPath } from "../../shared/utils/pending-checkout"
 
 // Remembers which Checkout a visitor without an Account is on, so the
-// verification link in their inbox can bring them back to it (ADR 0005).
-//
-// Middleware rather than the Checkout route itself, because a Checkout opens
-// in two ways and the cookie has to survive both. A first load renders on the
-// server, where the route runs inside SSR's internal `$fetch` and its
-// `Set-Cookie` never reaches the browser (the same reason `account-session.ts`
-// skips `/api/`). A client-side navigation only ever hits
-// `/api/checkout/<slug>`. Middleware runs on the outer request either way —
-// the one whose response the browser actually gets.
+// verification link can bring them back to it (ADR 0005). Middleware rather
+// than the route: only the outer request's `Set-Cookie` reaches the browser.
+// See docs/shop.md, „Pending checkout“.
 export default defineEventHandler(async (event) => {
   const slug = checkoutSlugFromPath(event.path)
   if (slug === null) {

@@ -1,10 +1,7 @@
-// Per-IP guard for the unauthenticated auth routes. Directus's own
-// `auth_login_attempts` is per user, so it does nothing against credential
-// stuffing spread across accounts. A captcha was deliberately left out of v1.
-//
-// Accepted for the single-instance deploy: the budget is in-process memory
-// (resets on deploy, doubles with a second instance) and trusts
-// `X-Forwarded-For`.
+// Per-IP guard for the unauthenticated auth routes; Directus's own
+// `auth_login_attempts` is per user and does nothing against credential stuffing
+// spread across accounts. The budget is in-process memory and trusts
+// `X-Forwarded-For` — accepted for the single-instance deploy.
 import type { H3Event } from "h3"
 
 const WINDOW_MS = 15 * 60 * 1000

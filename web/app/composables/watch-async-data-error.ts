@@ -2,11 +2,9 @@ import * as Sentry from "@sentry/nuxt"
 import type { NuxtError } from "nuxt/app"
 import type { Ref } from "vue"
 
-// `useAsyncData` catches handler/transform errors into `.error.value` and
-// resolves normally, so a call site that only reads `.data` renders as if the
-// data were missing. Attach this watcher to surface those silent failures:
-// logs in dev, captures in Sentry in prod. (`vue:error` / `app:error` cover
-// thrown errors, not these caught ones.)
+// `useAsyncData` resolves normally on a handler error, so a call site reading
+// only `.data` renders as if the data were missing. This watcher surfaces those
+// silent failures; `vue:error` and `app:error` do not see them.
 export function watchAsyncDataError(key: string, error: Ref<NuxtError | undefined>): void {
   watch(
     error,

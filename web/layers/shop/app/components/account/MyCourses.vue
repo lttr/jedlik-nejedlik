@@ -20,8 +20,6 @@
         />
         <div class="body">
           <strong>{{ owned.course.title }}</strong>
-          <!-- The Course player is not built yet, so there is nowhere to send
-               them: the card says so rather than offering a dead link. -->
           <p class="muted">Kurz se připravuje</p>
         </div>
       </li>
@@ -33,22 +31,13 @@
 import { MY_COURSES_ANCHOR } from "../../../shared/utils/owned-courses"
 import type { OwnedCourse } from "../../../shared/utils/owned-courses"
 
-// „Moje kurzy" on the Account page (spec, user story 19). A shop-layer
-// component that the auth layer's `/muj-ucet` includes, because the list and
-// its route are shop code and the page is not.
-//
 // Through Nitro, never Directus from the browser (ADR 0004). No `error`
-// branch for a missing session: the page is behind the auth middleware, so an
-// anonymous visitor is at the login page long before this runs.
+// branch for a missing session: the page is behind the auth middleware.
 const { data: courses, error } = await useFetch<OwnedCourse[]>("/api/account/courses", {
   key: "account:courses",
-  // A failure is its own branch below; the list itself is never null, so the
-  // template never has to ask.
   default: () => [],
 })
 
-// One sentence for every failure: nothing here is the Student's doing and
-// there is nothing for them to correct.
 const errorMessage = computed(() =>
   error.value === undefined
     ? ""

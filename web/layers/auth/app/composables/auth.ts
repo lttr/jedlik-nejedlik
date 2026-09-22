@@ -10,8 +10,8 @@ export interface AuthActions {
   changePassword: (change: PasswordChange) => Promise<void>
 }
 
-// The only way the app talks to the auth routes. Credentials go out, a sealed
-// cookie comes back; no Directus token ever touches the browser (ADR 0002).
+// The only way the app talks to the auth routes: credentials go out, a session
+// cookie comes back, and no Directus token ever reaches the browser (ADR 0002).
 export function useAuthActions(): AuthActions {
   const { refresh } = useAccount()
 
@@ -46,8 +46,8 @@ export function useAuthActions(): AuthActions {
       await $fetch("/api/auth/password-reset", { method: "POST", body: { token, password } })
     },
 
-    // Re-seals this session and ends every other; the payload's identity is
-    // unchanged, so there is nothing to re-read.
+    // Issues a fresh session cookie and ends every other session; the identity
+    // in it is unchanged, so there is nothing to re-read.
     async changePassword(change) {
       await $fetch("/api/auth/change-password", { method: "POST", body: change })
     },

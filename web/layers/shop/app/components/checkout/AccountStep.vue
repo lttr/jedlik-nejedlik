@@ -41,8 +41,6 @@ const { email, verified = false } = defineProps<{
 
 const emit = defineEmits<{ loggedIn: [] }>()
 
-// „Zkontrolujte e-mail", for as long as this tab stays open. A reload is a
-// fresh start on purpose: the panel is a message, not a wall, and somebody who
-// comes back here with an account of their own gets the tabs again.
+// Not persisted on purpose: a reload is a fresh start.
 const registeredEmail = ref("")
 </script>

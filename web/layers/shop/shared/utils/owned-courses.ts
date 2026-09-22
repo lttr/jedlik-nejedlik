@@ -20,21 +20,17 @@ export interface OwnedCourse {
   course: Course
 }
 
-// The Entitlement rows as the route asks for them, with the Course expanded.
 // `course` is nullable on the wire even though the column is not: a Student
-// may hold an Entitlement for a Course that is no longer readable to them (a
-// draft again, or archived), and Directus answers that with `null` rather
-// than with a refusal.
+// may hold an Entitlement for a Course no longer readable to them, and
+// Directus answers that with `null` rather than with a refusal.
 const OwnedRowSchema = z.object({
   id: z.number(),
   course: CourseSchema.nullable(),
 })
 
-// Rows in, a renderable list out. An Entitlement whose Course is unreadable
-// is dropped rather than rendered as a blank card — the Student has nothing
-// to do about it and a placeholder with no title is worse than one line less.
-// The order is the Catalog's own `sort`-free fallback: newest Entitlement
-// first, so a Course just bought is at the top.
+// An Entitlement whose Course is unreadable is dropped rather than rendered
+// as a blank card. Newest Entitlement first, so a Course just bought is at
+// the top.
 export function parseOwnedCourses(rows: unknown): OwnedCourse[] {
   return z
     .array(OwnedRowSchema)

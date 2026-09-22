@@ -37,9 +37,6 @@
 </template>
 
 <script lang="ts" setup>
-// „Mám účet": the login page's form, inside step 1 of the Checkout. Same
-// action, same messages; only the way onward differs, because there is nowhere
-// to navigate to — the page the Student is already on is the destination.
 const { verified = false } = defineProps<{
   // Back from the verification link: the address is known and the button says
   // „Pokračovat", because this is the end of an interruption (ADR 0005).

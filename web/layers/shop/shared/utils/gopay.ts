@@ -31,10 +31,7 @@ export function toHalere(priceCzk: number): number {
   return priceCzk * HALERE_PER_KORUNA
 }
 
-// What a Payment in this state means for the Order that owns it.
-// `undefined` is „nothing changes" — the state is not an outcome yet, or it
-// is one this area does not act on (a refund is done by hand in GoPay's
-// admin, and a paid Order stays paid).
+// `undefined` is „nothing changes". See docs/shop.md, „Payment and GoPay".
 export function orderStatusForPaymentState(state: GopayPaymentState): Order["status"] | undefined {
   if (state === "PAID") {
     return "paid"
@@ -60,11 +57,9 @@ export interface GopayPayment {
   gwUrl: string
 }
 
-// Everything a Payment needs that this area's code knows and the gateway
-// does not. The amount is `priceCzk` — re-read from the Course by the caller,
-// never taken from the browser — and converted to haléře here, so no caller
-// has to. Both callback URLs are absolute and built from the site config, not
-// from the request Host (`authPageUrl`).
+// The amount is `priceCzk` — re-read from the Course by the caller, never
+// taken from the browser — and converted to haléře here. Both callback URLs
+// are absolute and built from the site config, not from the request Host.
 export interface CreateGopayPaymentInput {
   orderId: number
   priceCzk: number

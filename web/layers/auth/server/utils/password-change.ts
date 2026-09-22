@@ -23,11 +23,9 @@ export async function readPasswordChange(event: H3Event): Promise<PasswordChange
   return change
 }
 
-// Directus deletes every session of a user whose password changed, sparing
-// only the one named in the access token's `session` claim, which only
-// cookie-mode logins carry. Ours are `mode: "json"`, so the change signs the
-// Account out everywhere, this browser included; the re-login below keeps it
-// signed in. Asserted by the probe.
+// Directus spares only the session named in the access token's `session` claim,
+// which `mode: "json"` logins like ours do not carry, so a password change signs
+// the Account out everywhere; the re-login below keeps this browser signed in.
 export async function changeAccountPassword(event: H3Event, change: PasswordChange): Promise<void> {
   const { account, client } = await requireAccountDirectusClient(event)
 
@@ -45,10 +43,9 @@ export async function changeAccountPassword(event: H3Event, change: PasswordChan
   // this proof session must not survive.
   await revokeRefreshToken(event, proof.refreshToken)
 
-  // `PATCH /users/<id>`, not `/users/me`: `/users/me` works only while the
-  // Student policy may read its own row, because Directus reads the row back
-  // before replying. The by-id form does not need that read rule, so
-  // narrowing the rule again cannot break a password change.
+  // `/users/me` works only while the Student policy may read its own row,
+  // because Directus reads the row back before replying. The by-id form does not
+  // need that rule, so narrowing it again cannot break a password change.
   try {
     const { id } = await client.request(readMe({ fields: ["id"] }))
     await client.request(updateUser(id, { password: change.newPassword }))

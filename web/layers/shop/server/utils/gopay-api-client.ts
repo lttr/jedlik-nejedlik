@@ -43,10 +43,9 @@ const PaymentSchema = z
 
 function createTokenSource(config: GopayApiConfig): () => Promise<string> {
   let token: { value: string; expiresAt: number } | undefined
-  // The fetch itself, not its result: at a cold start, and again at every
-  // renewal, several calls want the token at once, and each of them asking
-  // GoPay for its own would be the same request three times over. The auth
-  // layer's `refreshesInFlight` does this for refresh tokens.
+  // The fetch itself, not its result: at a cold start and at every renewal
+  // several calls want the token at once, and each asking GoPay for its own
+  // would be the same request three times over.
   let inFlight: Promise<string> | undefined
 
   async function requestToken(): Promise<string> {

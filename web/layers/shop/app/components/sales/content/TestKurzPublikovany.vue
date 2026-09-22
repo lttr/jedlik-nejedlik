@@ -47,10 +47,9 @@
 </template>
 
 <script lang="ts" setup>
-// Hand-built sales copy for the `[TEST]` fixture Course, mounted by the
-// registry in `utils/sales-content.ts`. Only persuasion lives here: the
-// Sales Page skeleton owns the cover, title, teaser, price, outline and
-// button, and a price typed into this copy is a defect (spec, "Price").
+// Only persuasion lives here: the Sales Page skeleton owns the cover, title,
+// teaser, price, outline and button, and a price typed into this copy is a
+// defect.
 </script>
 
 <style scoped>
