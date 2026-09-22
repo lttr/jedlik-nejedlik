@@ -10,8 +10,9 @@
  * subject can be substituted.
  *
  * Keyed on `template.name`, not on the English subject text: the template name
- * is the stable identifier, the default subject is copy upstream changes (the
- * registration one is marked TODO there).
+ * is the stable identifier, the default subject is copy upstream changes — and
+ * upstream carries its own TODO on the registration subject, in the same
+ * api/src/services/users.ts, so that one is the likeliest to move.
  *
  * The brand is not repeated here — MailService puts the project name in the
  * From display name.

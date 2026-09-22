@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Deterministic scan for the dependency-update skill.
 //
-// Runs `pnpm outdated --format=json -r`, tags each row against its package.json
-// and pnpm-workspace.yaml (exact pin, `catalog:`/`npm:` alias, override
-// workaround) so out-of-scope rows never surface as phantom "outdated" entries,
-// resolves every package to its GitHub repo, and reports hoist skew. Everything
-// else — release notes, impact, batching, DELETE-WHEN conditions — is the
-// skill's job, read straight from the files.
+// It answers only what a machine can answer without judgement: what `pnpm
+// outdated -r` reports, which of those rows are off-limits anyway (exact pin,
+// `catalog:`/`npm:` alias, override workaround) so they never surface as
+// phantom work, where each package lives on GitHub, and which packages are
+// hoist-skewed. Release notes, impact, batching and DELETE-WHEN conditions
+// need judgement, so they stay with the skill.
 //
 // Usage: node .claude/skills/dependency-update/scripts/dep-scan.mjs [--no-net]
 // Output: one JSON blob on stdout.
@@ -40,14 +40,12 @@ function pnpm(...args) {
   }
 }
 
-/** Package names under `overrides:` in pnpm-workspace.yaml. */
 function overriddenNames() {
   const yaml = readFileSync(join(repoRoot, "pnpm-workspace.yaml"), "utf8")
   const block = yaml.match(/^overrides:\n((?:[ \t#].*\n|\n)*)/m)?.[1] ?? ""
   return [...block.matchAll(/^[ \t]+["']?(@?[^"'#:\s]+)["']?[ \t]*:/gm)].map((m) => m[1])
 }
 
-/** Why a row is report-only, or null when it may be bumped. */
 function outOfScopeReason(name, spec, overrides) {
   if (!spec) {
     return "not a direct dependency — report only"
@@ -89,7 +87,6 @@ function githubRepo(field) {
   if (typeof url !== "string") {
     return null
   }
-  // npm shorthands: "owner/repo" and "github:owner/repo".
   const shorthand = url.replace(/^github:/, "")
   if (/^[\w.-]+\/[\w.-]+$/.test(shorthand)) {
     return shorthand.replace(/\.git$/, "")
@@ -125,16 +122,13 @@ async function resolveRepo(name, workspaceDir) {
   }
 }
 
-// Packages installed at more than one major, that Nuxt also maps in its
-// generated tsconfig `paths`. Under `shamefullyHoist` exactly one copy reaches
-// the repo root, Nuxt points bare imports at whichever that is, and which one
-// wins is decided at install time — not by the lockfile. So a regen can flip it
-// with no diff to show for it, and `import type { X } from "<pkg>"` silently
-// starts resolving against the wrong major. That is what h3 did on 2026-09-03:
-// h3 v2 rode in transitively with @nuxt/eslint, outranked nitro's v1 at the
-// root, and broke typecheck in every server file (fixed by the exact `h3` pin
-// in web/package.json). Reported, never auto-fixed — the cure is a pin naming
-// the copy the framework resolves, and that is a judgement call.
+// Under `shamefullyHoist` exactly one copy of a duplicated package reaches the
+// root, Nuxt's generated tsconfig `paths` point bare imports at that copy, and
+// which copy wins is decided at install time rather than by the lockfile — so a
+// regen can silently flip a type import onto the wrong major. Reporting the
+// candidates is all this script does: the cure is a pin naming the copy the
+// framework resolves, and that is a judgement call. See SKILL.md §6, "Type
+// errors naming two copies of one package", for the h3 worked example.
 function hoistSkew() {
   const paths = readJson(join(repoRoot, "web/.nuxt/tsconfig.server.json"))?.compilerOptions?.paths ?? {}
   if (Object.keys(paths).length === 0) {
@@ -176,7 +170,6 @@ const overrides = overriddenNames()
 const manifests = new Map()
 const rows = []
 for (const [name, info] of Object.entries(JSON.parse(pnpm("outdated", "--format=json", "-r") || "{}"))) {
-  // One row per dependent workspace; `location` is absolute.
   for (const { location } of info.dependentPackages ?? []) {
     if (!manifests.has(location)) {
       manifests.set(location, readJson(join(location, "package.json")) ?? {})
