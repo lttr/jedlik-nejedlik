@@ -13,7 +13,6 @@ import type {
   SectionSchema,
 } from "../utils/schemas"
 
-// Wire shape of `articles` collection in Directus.
 export interface ArticleCollection {
   id: number
   title: string
@@ -87,9 +86,10 @@ export type OrderCollection = z.input<typeof OrderSchema> & {
 
 export type OrderConsentCollection = z.input<typeof OrderConsentSchema>
 
-// A Consent as it is created: the id and the parent are Directus's to fill in
-// (the parent because it is nested under its Order), `granted_at` the Student
-// policy's preset, so that the moment of consent is the server's clock.
+// The fields the client sends when creating a Consent. The rest is Directus's
+// to fill in: the id, the parent Order (the record is created nested under
+// it), and `granted_at`, a preset on the Student policy so the moment of
+// consent is the server's clock rather than the browser's.
 export type NewOrderConsent = Pick<OrderConsentCollection, "document" | "document_version">
 
 export type EntitlementCollection = Omit<z.input<typeof EntitlementSchema>, "course"> & {
@@ -98,11 +98,10 @@ export type EntitlementCollection = Omit<z.input<typeof EntitlementSchema>, "cou
   course: number | CourseCollection
 }
 
-// The `directus_users` columns this app touches. Naming the collection in the
-// Schema replaces the SDK's built-in system shape, which is the only way the
-// Billing Details — custom columns Directus knows nothing about — become
-// typed; the price is that anything else the app reads or writes on a user has
-// to be listed here too.
+// Listing `directus_users` in the Schema overrides the SDK's built-in system
+// shape. That is the only way to get the Billing Details typed, because they
+// are custom columns the SDK cannot know about. The cost is that every other
+// column the app reads or writes on a user has to be listed here as well.
 export interface AccountUserCollection {
   id: string
   email: string

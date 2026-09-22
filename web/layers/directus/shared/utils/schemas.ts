@@ -5,8 +5,6 @@ import { z } from "zod"
 // truth for the collection shapes — wire types in ../types/directus.ts
 // derive from their inputs, consumer contracts from their outputs.
 
-// Subset of the `directus_files` columns the app actually consumes. `id` is
-// mandatory; the rest are NULLable in the database.
 export const ImageSchema = z
   .object({
     id: z.string(),
@@ -23,7 +21,6 @@ export const ImageSchema = z
 
 export type Image = z.output<typeof ImageSchema>
 
-// Consumer contract: optional keys (omitted when null on the wire).
 export interface BiographyExpert {
   name: string
   description?: string
@@ -58,7 +55,6 @@ export const CourseStatusSchema = z.enum(["published", "draft"])
 
 export type CourseStatus = z.output<typeof CourseStatusSchema>
 
-// Consumer contract: the public catalog shape of a published Course.
 export interface Course {
   id: number
   title: string
@@ -89,7 +85,6 @@ export const CourseSchema = z
     sort: o.sort ?? undefined,
   }))
 
-// Consumer contract: Section outline. `course` is the parent's id.
 export interface Section {
   id: number
   course: number
@@ -140,8 +135,6 @@ export const LessonSchema = z
 
 // --- Kurzy transactional collections (order, consents, entitlement) --------
 
-// Consumer contract: an Order as its owning Student (or the server flows)
-// read it. `student` is the user's uuid, `course` the course id.
 export interface Order {
   id: number
   student: string
@@ -172,8 +165,6 @@ export const OrderSchema = z
     fakturoid_invoice_id: o.fakturoid_invoice_id ?? undefined,
   }))
 
-// Consumer contract: one consent record of an Order. `order` is the parent's
-// id; `granted_at` is an ISO timestamp.
 export interface OrderConsent {
   id: number
   order: number
