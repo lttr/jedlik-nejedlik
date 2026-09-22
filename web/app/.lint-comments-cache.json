@@ -1,0 +1,1584 @@
+{
+  "b4d3c4c896abf74af74f7c2b790a03f3b92b5173": {
+    "kind": "marker",
+    "kindConfidence": 0.46,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.14,
+      "what": 0.3,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.56
+    },
+    "needed": 0.5,
+    "concise": 0.14
+  },
+  "18150bfbe94092f44753a03a25caff9be4636ffd": {
+    "kind": "marker",
+    "kindConfidence": 0.59,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.04,
+      "what": 0.3,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.66
+    },
+    "needed": 0.57,
+    "concise": 0.12
+  },
+  "d69df4e2f13a3b91c47d5edb54a78d0e69cae529": {
+    "kind": "marker",
+    "kindConfidence": 0.58,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.04,
+      "what": 0.31,
+      "marker": 0.65,
+      "narration": 0,
+      "how": 0
+    },
+    "needed": 0.73,
+    "concise": 0.13
+  },
+  "76e737e629cfaf6f4a0799289fc64e5930a883d6": {
+    "kind": "marker",
+    "kindConfidence": 0.56,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.02,
+      "what": 0.34,
+      "marker": 0.64,
+      "narration": 0,
+      "how": 0
+    },
+    "needed": 0.72,
+    "concise": 0.12
+  },
+  "4c5ea6384fb1800e83a6aad2e5800f9b4ff336b6": {
+    "kind": "marker",
+    "kindConfidence": 0.67,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.02,
+      "what": 0.25,
+      "how": 0,
+      "marker": 0.73,
+      "narration": 0
+    },
+    "needed": 0.66,
+    "concise": 0.12
+  },
+  "90de55ee8997d71bfcc4b87384f0ecaac2283357": {
+    "kind": "marker",
+    "kindConfidence": 0.71,
+    "kindProbabilities": {
+      "dead_code": 0.03,
+      "why": 0,
+      "what": 0.22,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.75
+    },
+    "needed": 0.71,
+    "concise": 0.11
+  },
+  "db524cf1961bda28a1f99ff6245259a4b1d094d3": {
+    "kind": "marker",
+    "kindConfidence": 0.58,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.01,
+      "what": 0.34,
+      "how": 0,
+      "marker": 0.65,
+      "narration": 0
+    },
+    "needed": 0.79,
+    "concise": 0.12
+  },
+  "f5281797f4c5765774528fc131efb87a7547dceb": {
+    "kind": "marker",
+    "kindConfidence": 0.56,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.01,
+      "what": 0.35,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.64
+    },
+    "needed": 0.87,
+    "concise": 0.16
+  },
+  "cb47234112cd27cd8905e709cc8fe400a63b4f7e": {
+    "kind": "marker",
+    "kindConfidence": 0.69,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0.06,
+      "what": 0.2,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.74
+    },
+    "needed": 0.82,
+    "concise": 0.17
+  },
+  "3054d9c760e52b0d9bb1f50ea7faa7cd9d3c8423": {
+    "kind": "why",
+    "kindConfidence": 0.95,
+    "kindProbabilities": {
+      "why": 0.96,
+      "dead_code": 0,
+      "what": 0.03,
+      "marker": 0,
+      "narration": 0,
+      "how": 0.01
+    },
+    "needed": 1.95,
+    "concise": 0.62
+  },
+  "fccc4e684f3bdc6e423435a6722fc2805d001f63": {
+    "kind": "what",
+    "kindConfidence": 0.41,
+    "kindProbabilities": {
+      "why": 0.48,
+      "dead_code": 0,
+      "what": 0.51,
+      "how": 0,
+      "marker": 0.01,
+      "narration": 0
+    },
+    "needed": 1.49,
+    "concise": 0.5
+  },
+  "9bbb33fd7299b9f11cef433bed347407c422b716": {
+    "kind": "why",
+    "kindConfidence": 0.95,
+    "kindProbabilities": {
+      "why": 0.96,
+      "dead_code": 0,
+      "what": 0.03,
+      "marker": 0,
+      "narration": 0,
+      "how": 0.01
+    },
+    "needed": 1.44,
+    "concise": 0.55
+  },
+  "d4a2bd90f37234d3b3b7a23587ece1b001794a18": {
+    "kind": "what",
+    "kindConfidence": 0.44,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.53,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.47
+    },
+    "needed": 0.96,
+    "concise": 0.3
+  },
+  "d5d35552e917d0c46f752b109c59e5d36201d3e8": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "why": 0.01,
+      "dead_code": 0,
+      "what": 0.61,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.38
+    },
+    "needed": 0.75,
+    "concise": 0.24
+  },
+  "81af16d206b76ab468f6d56eec7238ed16e5ef88": {
+    "kind": "what",
+    "kindConfidence": 0.49,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.58,
+      "how": 0,
+      "marker": 0.42,
+      "narration": 0
+    },
+    "needed": 0.68,
+    "concise": 0.2
+  },
+  "8d2e25b7a9b2e90f6e6bed7abc1d212f4b183be3": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.61,
+      "how": 0,
+      "marker": 0.39,
+      "narration": 0
+    },
+    "needed": 0.78,
+    "concise": 0.23
+  },
+  "f30e3e2fc06bcb2ccf25c829663f65b2615281c7": {
+    "kind": "marker",
+    "kindConfidence": 0.74,
+    "kindProbabilities": {
+      "dead_code": 0.04,
+      "why": 0,
+      "what": 0.17,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.79
+    },
+    "needed": 0.85,
+    "concise": 0.15
+  },
+  "bd7e0e3f023053d9de688165101e363fbf58648a": {
+    "kind": "what",
+    "kindConfidence": 0.49,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.58,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.42
+    },
+    "needed": 0.78,
+    "concise": 0.19
+  },
+  "5a05b296037c92cea1ef87e78cc435c10b323d85": {
+    "kind": "what",
+    "kindConfidence": 0.44,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.54,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.46
+    },
+    "needed": 0.83,
+    "concise": 0.16
+  },
+  "1df105400871ed48ac9035abf6be3b94ab2983bb": {
+    "kind": "what",
+    "kindConfidence": 0.46,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.55,
+      "how": 0,
+      "marker": 0.45,
+      "narration": 0
+    },
+    "needed": 0.81,
+    "concise": 0.3
+  },
+  "0830d97ebbe1a65be70f568af139cc28557312b3": {
+    "kind": "what",
+    "kindConfidence": 0.4,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.51,
+      "marker": 0.49,
+      "narration": 0,
+      "how": 0
+    },
+    "needed": 0.8,
+    "concise": 0.25
+  },
+  "418cd42ca3c09e2d528d452a915bcaf3f390bf87": {
+    "kind": "what",
+    "kindConfidence": 0.51,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.59,
+      "how": 0,
+      "marker": 0.41,
+      "narration": 0
+    },
+    "needed": 0.68,
+    "concise": 0.14
+  },
+  "26c0a9ae25c2ed412dedf67a6a38c407f4996607": {
+    "kind": "what",
+    "kindConfidence": 0.6,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.67,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.33
+    },
+    "needed": 0.76,
+    "concise": 0.16
+  },
+  "ed44826ea21d83005c523d6437db0e7608795a31": {
+    "kind": "what",
+    "kindConfidence": 0.54,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.62,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.38
+    },
+    "needed": 0.91,
+    "concise": 0.25
+  },
+  "31d8bbe09ad76b0b393607c54baaff6ad458d65c": {
+    "kind": "what",
+    "kindConfidence": 0.42,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.52,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.48
+    },
+    "needed": 0.92,
+    "concise": 0.22
+  },
+  "8915d00f5fb36e0c86080f96cd2d708cf20213e3": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.61,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.39
+    },
+    "needed": 0.9,
+    "concise": 0.16
+  },
+  "fb0a639a8c06742d7cf58ffbde69f9d196a7c90c": {
+    "kind": "marker",
+    "kindConfidence": 0.41,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.49,
+      "marker": 0.51,
+      "narration": 0,
+      "how": 0
+    },
+    "needed": 0.9,
+    "concise": 0.17
+  },
+  "82bac20712a7c5a69b788c514320d9c5e8a81d05": {
+    "kind": "what",
+    "kindConfidence": 0.4,
+    "kindProbabilities": {
+      "why": 0.01,
+      "dead_code": 0,
+      "what": 0.5,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.49
+    },
+    "needed": 0.92,
+    "concise": 0.19
+  },
+  "90aec8536652a97f5c008f2859d3ca962ea2d642": {
+    "kind": "marker",
+    "kindConfidence": 0.46,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.44,
+      "narration": 0,
+      "how": 0,
+      "marker": 0.56
+    },
+    "needed": 0.86,
+    "concise": 0.16
+  },
+  "c9ac2c6e91f53facb2f81197959bdc97fa82721a": {
+    "kind": "what",
+    "kindConfidence": 0.5,
+    "kindProbabilities": {
+      "why": 0,
+      "dead_code": 0,
+      "what": 0.59,
+      "how": 0,
+      "marker": 0.41,
+      "narration": 0
+    },
+    "needed": 0.89,
+    "concise": 0.17
+  },
+  "00c485f3f0696e1ec44c06a5612aaf86c853901e": {
+    "kind": "what",
+    "kindConfidence": 0.44,
+    "kindProbabilities": {
+      "marker": 0.47,
+      "dead_code": 0,
+      "what": 0.53,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.83,
+    "concise": 0.23
+  },
+  "6bfe488485e4def2718dccc776dd6e6f06ce540f": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "marker": 0.39,
+      "narration": 0,
+      "what": 0.61,
+      "why": 0,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.84,
+    "concise": 0.2
+  },
+  "042a5c3f869c9ad99beee11bff5ffcd118754fa3": {
+    "kind": "what",
+    "kindConfidence": 0.58,
+    "kindProbabilities": {
+      "marker": 0.34,
+      "dead_code": 0,
+      "what": 0.66,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.89,
+    "concise": 0.18
+  },
+  "4ebb1af3ca1737955338b17a8d606ce80bdf20e7": {
+    "kind": "what",
+    "kindConfidence": 0.64,
+    "kindProbabilities": {
+      "marker": 0.3,
+      "dead_code": 0,
+      "what": 0.7,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.85,
+    "concise": 0.18
+  },
+  "ac5893b337119416dc526c81cfe998f23e6e5859": {
+    "kind": "what",
+    "kindConfidence": 0.64,
+    "kindProbabilities": {
+      "marker": 0.3,
+      "dead_code": 0,
+      "what": 0.7,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.81,
+    "concise": 0.17
+  },
+  "d6344c25b58761a7a3954819c654c29890e710b9": {
+    "kind": "what",
+    "kindConfidence": 0.54,
+    "kindProbabilities": {
+      "marker": 0.38,
+      "dead_code": 0,
+      "what": 0.62,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.9,
+    "concise": 0.19
+  },
+  "0c84cb8c1851f30d0eacdc39d3af98d06c771a2d": {
+    "kind": "what",
+    "kindConfidence": 0.83,
+    "kindProbabilities": {
+      "marker": 0.13,
+      "dead_code": 0,
+      "what": 0.86,
+      "why": 0.01,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.89,
+    "concise": 0.23
+  },
+  "fbd1647f6fe2e0906ad5562efb72bd9e7a207040": {
+    "kind": "what",
+    "kindConfidence": 0.66,
+    "kindProbabilities": {
+      "marker": 0.28,
+      "dead_code": 0,
+      "what": 0.72,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.85,
+    "concise": 0.19
+  },
+  "3a1076433b46b52b5f5aebac15f41a97c97fa438": {
+    "kind": "what",
+    "kindConfidence": 0.59,
+    "kindProbabilities": {
+      "marker": 0.33,
+      "dead_code": 0,
+      "what": 0.67,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.88,
+    "concise": 0.18
+  },
+  "db6c9da2cb98c209dd75cfe4a1a569d6843369ea": {
+    "kind": "what",
+    "kindConfidence": 0.65,
+    "kindProbabilities": {
+      "marker": 0.28,
+      "narration": 0,
+      "what": 0.72,
+      "why": 0,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.87,
+    "concise": 0.24
+  },
+  "426fb7e3d19ccbb28fafe47548334e6ae03cf10a": {
+    "kind": "what",
+    "kindConfidence": 0.69,
+    "kindProbabilities": {
+      "marker": 0.25,
+      "dead_code": 0,
+      "what": 0.75,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.78,
+    "concise": 0.35
+  },
+  "e54d03d4f10c3e9cb2536a0ffe710a940a435cbd": {
+    "kind": "what",
+    "kindConfidence": 0.43,
+    "kindProbabilities": {
+      "marker": 0.47,
+      "dead_code": 0,
+      "what": 0.53,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.8,
+    "concise": 0.19
+  },
+  "523d11d64e50f67e16d726a0677fa30c0cdfbc5c": {
+    "kind": "what",
+    "kindConfidence": 0.72,
+    "kindProbabilities": {
+      "marker": 0.23,
+      "dead_code": 0,
+      "what": 0.77,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.76,
+    "concise": 0.23
+  },
+  "6ea067b5e66afbb71d324310021f553dcda3ba5f": {
+    "kind": "what",
+    "kindConfidence": 0.77,
+    "kindProbabilities": {
+      "what": 0.81,
+      "marker": 0.18,
+      "dead_code": 0.01,
+      "how": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.69,
+    "concise": 0.4
+  },
+  "53ad11ccb7f8a22a132e1fef2efd16e622fcd4ed": {
+    "kind": "what",
+    "kindConfidence": 0.67,
+    "kindProbabilities": {
+      "marker": 0.27,
+      "narration": 0,
+      "what": 0.73,
+      "why": 0,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.89,
+    "concise": 0.18
+  },
+  "fbdc9def548356b3cd5d108677ad95316cd4428e": {
+    "kind": "what",
+    "kindConfidence": 0.65,
+    "kindProbabilities": {
+      "marker": 0.28,
+      "dead_code": 0,
+      "what": 0.72,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.86,
+    "concise": 0.2
+  },
+  "a7fb29c4ff57ebd5837032c453a864c364dbb8b2": {
+    "kind": "what",
+    "kindConfidence": 0.68,
+    "kindProbabilities": {
+      "marker": 0.27,
+      "dead_code": 0,
+      "what": 0.73,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.77,
+    "concise": 0.32
+  },
+  "cec05579c1d65e86618ef341bcb0e9255557a0e1": {
+    "kind": "what",
+    "kindConfidence": 0.63,
+    "kindProbabilities": {
+      "marker": 0.29,
+      "narration": 0,
+      "what": 0.71,
+      "why": 0,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.71,
+    "concise": 0.35
+  },
+  "9dc7e9dba85859d38d189dc83fe10a449ceb902f": {
+    "kind": "what",
+    "kindConfidence": 0.63,
+    "kindProbabilities": {
+      "marker": 0.3,
+      "dead_code": 0,
+      "what": 0.69,
+      "why": 0.01,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.7,
+    "concise": 0.33
+  },
+  "63f27f6748da100ed23797c249a893162e4f46db": {
+    "kind": "what",
+    "kindConfidence": 0.57,
+    "kindProbabilities": {
+      "marker": 0.36,
+      "dead_code": 0,
+      "what": 0.64,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.62,
+    "concise": 0.26
+  },
+  "48dff5f7f4bc102f098b9e1f67d7c830f0e51ca6": {
+    "kind": "what",
+    "kindConfidence": 0.57,
+    "kindProbabilities": {
+      "marker": 0.35,
+      "narration": 0,
+      "what": 0.64,
+      "why": 0,
+      "how": 0.01,
+      "dead_code": 0
+    },
+    "needed": 0.69,
+    "concise": 0.3
+  },
+  "7fdb5f463924ac30a12e212e5b999dfbef5d2c25": {
+    "kind": "what",
+    "kindConfidence": 0.63,
+    "kindProbabilities": {
+      "marker": 0.3,
+      "dead_code": 0,
+      "what": 0.7,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.78,
+    "concise": 0.36
+  },
+  "79dff9fe5f09dab0dcfed094817f35cfe89a37a5": {
+    "kind": "what",
+    "kindConfidence": 0.66,
+    "kindProbabilities": {
+      "marker": 0.27,
+      "dead_code": 0,
+      "what": 0.72,
+      "why": 0,
+      "how": 0.01,
+      "narration": 0
+    },
+    "needed": 0.71,
+    "concise": 0.38
+  },
+  "3a2ac0f3c0ff70095259239a7c416d377eda0acb": {
+    "kind": "what",
+    "kindConfidence": 0.83,
+    "kindProbabilities": {
+      "marker": 0.14,
+      "dead_code": 0,
+      "what": 0.86,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.73,
+    "concise": 0.29
+  },
+  "8ee6fda64d787c04567f7bc26d40c133a96de502": {
+    "kind": "what",
+    "kindConfidence": 0.57,
+    "kindProbabilities": {
+      "marker": 0.35,
+      "dead_code": 0,
+      "what": 0.65,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.92,
+    "concise": 0.25
+  },
+  "a786feb9ef2c378c1f74f22f35dac859adfc0a07": {
+    "kind": "what",
+    "kindConfidence": 0.74,
+    "kindProbabilities": {
+      "marker": 0.2,
+      "dead_code": 0.01,
+      "what": 0.79,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.85,
+    "concise": 0.28
+  },
+  "b1346dedeb2d413cecae7d8063a95ba0ce37bc0a": {
+    "kind": "what",
+    "kindConfidence": 0.72,
+    "kindProbabilities": {
+      "marker": 0.22,
+      "dead_code": 0.01,
+      "what": 0.77,
+      "why": 0,
+      "how": 0,
+      "narration": 0
+    },
+    "needed": 0.84,
+    "concise": 0.24
+  },
+  "96d807fa1b27d1a742afa3454cb51ee30f6f6d50": {
+    "kind": "what",
+    "kindConfidence": 0.89,
+    "kindProbabilities": {
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.91,
+      "marker": 0.09,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.82,
+    "concise": 0.25
+  },
+  "65b724585b26b9879bd9647471b95d889227d1cb": {
+    "kind": "what",
+    "kindConfidence": 0.83,
+    "kindProbabilities": {
+      "marker": 0.13,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.87,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.83,
+    "concise": 0.22
+  },
+  "4d11f3682491ca8851b5e5f1dd1b37089640c93c": {
+    "kind": "marker",
+    "kindConfidence": 0.41,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.49,
+      "marker": 0.51,
+      "dead_code": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.85,
+    "concise": 0.22
+  },
+  "e93401b6613648913bfefdea8cab1174db7e7dae": {
+    "kind": "what",
+    "kindConfidence": 0.52,
+    "kindProbabilities": {
+      "marker": 0.39,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.61,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.87,
+    "concise": 0.17
+  },
+  "624e376bdeddc2f04ae19db3ebff21a5cf2589f7": {
+    "kind": "what",
+    "kindConfidence": 0.81,
+    "kindProbabilities": {
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.84,
+      "marker": 0.16,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.84,
+    "concise": 0.18
+  },
+  "f721703b29a7095ea49a3dc869f8d4ea4144c9bd": {
+    "kind": "what",
+    "kindConfidence": 0.67,
+    "kindProbabilities": {
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.73,
+      "marker": 0.27,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.8,
+    "concise": 0.32
+  },
+  "19d3f68537ff11b1e96301a17b11f268bb4992c7": {
+    "kind": "what",
+    "kindConfidence": 0.74,
+    "kindProbabilities": {
+      "marker": 0.2,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.79,
+      "narration": 0,
+      "why": 0.01
+    },
+    "needed": 0.84,
+    "concise": 0.44
+  },
+  "aa17c9043816a3d7de14d1976ad3035fb0b85cf4": {
+    "kind": "what",
+    "kindConfidence": 0.64,
+    "kindProbabilities": {
+      "marker": 0.29000000000000004,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.71,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.84,
+    "concise": 0.37
+  },
+  "b6746f190be52ed2aaf769d2fe1998c50e303578": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.61,
+      "marker": 0.36,
+      "dead_code": 0,
+      "narration": 0.02,
+      "why": 0.01
+    },
+    "needed": 0.88,
+    "concise": 0.43
+  },
+  "fa7df3da0b3b4f2060d74ce29e9132adc6688b63": {
+    "kind": "what",
+    "kindConfidence": 0.93,
+    "kindProbabilities": {
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.94,
+      "marker": 0.06,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.61,
+    "concise": 0.28
+  },
+  "7f76857759d4342e97cb73571e26abcc8b7daa03": {
+    "kind": "what",
+    "kindConfidence": 0.9,
+    "kindProbabilities": {
+      "marker": 0.08,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.92,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.74,
+    "concise": 0.27
+  },
+  "7ebe8f46da35bfa8c250b9eb5670df1aaee536dd": {
+    "kind": "what",
+    "kindConfidence": 0.85,
+    "kindProbabilities": {
+      "marker": 0.12,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.88,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.77,
+    "concise": 0.24
+  },
+  "45ce2029e12e30299c203e3ee8aa0795d0c8eb91": {
+    "kind": "what",
+    "kindConfidence": 0.75,
+    "kindProbabilities": {
+      "what": 0.8,
+      "marker": 0.2,
+      "dead_code": 0,
+      "how": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.66,
+    "concise": 0.19
+  },
+  "7ab1e499170e75e080ffeb5511e3bfef7df162f3": {
+    "kind": "what",
+    "kindConfidence": 0.83,
+    "kindProbabilities": {
+      "what": 0.86,
+      "marker": 0.14,
+      "dead_code": 0,
+      "how": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.56,
+    "concise": 0.27
+  },
+  "2e63014211c85252536586a5a0d908f5da424f3d": {
+    "kind": "what",
+    "kindConfidence": 0.95,
+    "kindProbabilities": {
+      "marker": 0.04,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.96,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.65,
+    "concise": 0.25
+  },
+  "323f54d8d3dc0a0ceb889387ac8b139147b6e788": {
+    "kind": "what",
+    "kindConfidence": 0.91,
+    "kindProbabilities": {
+      "dead_code": 0.01,
+      "how": 0,
+      "what": 0.93,
+      "marker": 0.06,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.87,
+    "concise": 0.25
+  },
+  "9c80d136a5bc34d475dccdbed27d3127c0d343b0": {
+    "kind": "what",
+    "kindConfidence": 0.91,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.9400000000000001,
+      "marker": 0.06,
+      "dead_code": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.83,
+    "concise": 0.2
+  },
+  "9f235824894e087791cf0c171411da846900b059": {
+    "kind": "what",
+    "kindConfidence": 0.87,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.9,
+      "marker": 0.1,
+      "dead_code": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.86,
+    "concise": 0.23
+  },
+  "1fd923cdefcbb27e6dc8cfc2fbdf0919e956c0bc": {
+    "kind": "what",
+    "kindConfidence": 0.87,
+    "kindProbabilities": {
+      "marker": 0.1,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.9,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.79,
+    "concise": 0.2
+  },
+  "c63ed9b33098fcee8a2d8e582f76d9a28e6575c0": {
+    "kind": "what",
+    "kindConfidence": 0.81,
+    "kindProbabilities": {
+      "marker": 0.15,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.85,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.85,
+    "concise": 0.24
+  },
+  "4bab09f8993b99066e40092300fba7dd03bcb155": {
+    "kind": "what",
+    "kindConfidence": 0.71,
+    "kindProbabilities": {
+      "marker": 0.21,
+      "dead_code": 0.03,
+      "how": 0,
+      "what": 0.76,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.78,
+    "concise": 0.29
+  },
+  "1c9079281661e496e89630522816afde8df1753d": {
+    "kind": "what",
+    "kindConfidence": 0.74,
+    "kindProbabilities": {
+      "marker": 0.2,
+      "dead_code": 0.01,
+      "how": 0,
+      "what": 0.79,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.81,
+    "concise": 0.23
+  },
+  "8f48361f797d686c893a137d5b47654b59a86fe1": {
+    "kind": "what",
+    "kindConfidence": 0.82,
+    "kindProbabilities": {
+      "marker": 0.14,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.86,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.77,
+    "concise": 0.26
+  },
+  "3df84774c4d68e9cdd9ea9c3753f3a2ca4b3deee": {
+    "kind": "what",
+    "kindConfidence": 0.8,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.84,
+      "marker": 0.16,
+      "dead_code": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.57,
+    "concise": 0.39
+  },
+  "a9cf484b8131fffe0612a08e38ea1c3e02f1d0a1": {
+    "kind": "what",
+    "kindConfidence": 0.87,
+    "kindProbabilities": {
+      "what": 0.9,
+      "marker": 0.1,
+      "dead_code": 0,
+      "how": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.73,
+    "concise": 0.29
+  },
+  "9c6a6329f0916eab931d0dc436fd26fcef69930b": {
+    "kind": "what",
+    "kindConfidence": 0.87,
+    "kindProbabilities": {
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.89,
+      "marker": 0.11,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.57,
+    "concise": 0.3
+  },
+  "8b5c3e1ead0d52000ef48ad1cb0549bef1103574": {
+    "kind": "what",
+    "kindConfidence": 0.85,
+    "kindProbabilities": {
+      "how": 0,
+      "what": 0.87,
+      "marker": 0.13,
+      "dead_code": 0,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.64,
+    "concise": 0.39
+  },
+  "b00edf89cf771c3295eae8d7b32cb7a1a94c561b": {
+    "kind": "what",
+    "kindConfidence": 0.85,
+    "kindProbabilities": {
+      "marker": 0.12,
+      "dead_code": 0,
+      "how": 0,
+      "what": 0.88,
+      "narration": 0,
+      "why": 0
+    },
+    "needed": 0.81,
+    "concise": 0.29
+  },
+  "a87d2c7a3ff5ddfe2234533f0a2d4383b820c5e1": {
+    "kind": "marker",
+    "kindConfidence": 0.51,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.59,
+      "why": 0,
+      "what": 0.41,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.89,
+    "concise": 0.26
+  },
+  "49f6949dbe195b2ec20b222133438fed6cc2a769": {
+    "kind": "what",
+    "kindConfidence": 0.67,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.27,
+      "why": 0,
+      "what": 0.73,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.88,
+    "concise": 0.21
+  },
+  "e6e84d69b33079f1151ec6ccc31d4d5f123501f0": {
+    "kind": "marker",
+    "kindConfidence": 0.41,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.51,
+      "why": 0,
+      "what": 0.49,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.76,
+    "concise": 0.19
+  },
+  "9c7e1f9de6bea43c587ed9628c72eb4bdfc05a26": {
+    "kind": "marker",
+    "kindConfidence": 0.84,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.87,
+      "why": 0,
+      "what": 0.09,
+      "how": 0,
+      "dead_code": 0.04
+    },
+    "needed": 0.92,
+    "concise": 0.13
+  },
+  "2ec74a75fd958b4db06d567c2126d07b19b6cca5": {
+    "kind": "what",
+    "kindConfidence": 0.73,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.22,
+      "why": 0,
+      "what": 0.78,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.72,
+    "concise": 0.25
+  },
+  "58efa67d95d9b2ec14921dda5747316a29aa2db0": {
+    "kind": "what",
+    "kindConfidence": 0.46,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.44,
+      "why": 0,
+      "what": 0.56,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.76,
+    "concise": 0.17
+  },
+  "4bb8b700896649241ae16031108ea70cededc5df": {
+    "kind": "what",
+    "kindConfidence": 0.36,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.34,
+      "why": 0.18,
+      "what": 0.48,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.88,
+    "concise": 0.25
+  },
+  "3c9824ac7f95be7515c91003b9188a0e6659698f": {
+    "kind": "what",
+    "kindConfidence": 0.44,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.46,
+      "why": 0,
+      "what": 0.54,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.88,
+    "concise": 0.21
+  },
+  "777536b54b6fa46a7cad3d4f2d336af0de2a99b7": {
+    "kind": "what",
+    "kindConfidence": 0.51,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.41,
+      "why": 0,
+      "what": 0.59,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.75,
+    "concise": 0.27
+  },
+  "c07581b5491719fbe0d4babee20266ba7b2cb4c0": {
+    "kind": "what",
+    "kindConfidence": 0.5,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.41,
+      "why": 0,
+      "what": 0.59,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.75,
+    "concise": 0.18
+  },
+  "74c0740c13eeb9226c0baa1e29842fae75e3513e": {
+    "kind": "what",
+    "kindConfidence": 0.69,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.25,
+      "why": 0,
+      "what": 0.75,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.78,
+    "concise": 0.32
+  },
+  "dc443fcc7565633dcea07d8008b802a6228e77ff": {
+    "kind": "what",
+    "kindConfidence": 0.65,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.29,
+      "why": 0,
+      "what": 0.71,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.52,
+    "concise": 0.24
+  },
+  "d0c6a0398a0303101a68d77ea44f1218b9dcb403": {
+    "kind": "what",
+    "kindConfidence": 0.6,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.33,
+      "why": 0,
+      "what": 0.67,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.68,
+    "concise": 0.19
+  },
+  "20d4baf9929fe72440d1bea50bf73bcc994484f2": {
+    "kind": "what",
+    "kindConfidence": 0.49,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.42,
+      "why": 0,
+      "what": 0.58,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.74,
+    "concise": 0.21
+  },
+  "6b57850ff63eea70cd30471fc6d3431a45a22194": {
+    "kind": "what",
+    "kindConfidence": 0.63,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.31,
+      "why": 0,
+      "what": 0.69,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.68,
+    "concise": 0.31
+  },
+  "1c80082415b51e14660a963155adb400f11fb96d": {
+    "kind": "what",
+    "kindConfidence": 0.51,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.4,
+      "why": 0,
+      "what": 0.6,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.88,
+    "concise": 0.28
+  },
+  "179d3fe77f599c9f7bbeb260c01d5bde3417bc6c": {
+    "kind": "what",
+    "kindConfidence": 0.79,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.17,
+      "why": 0,
+      "what": 0.83,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.87,
+    "concise": 0.2
+  },
+  "02d5c8b648aff4488561de8e3fd77d165a41f7dc": {
+    "kind": "what",
+    "kindConfidence": 0.75,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.2,
+      "why": 0,
+      "what": 0.8,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.82,
+    "concise": 0.29
+  },
+  "6f0d717856ebde82be8dc6764a6249137b3b36fb": {
+    "kind": "what",
+    "kindConfidence": 0.71,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.23,
+      "why": 0,
+      "what": 0.77,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.83,
+    "concise": 0.26
+  },
+  "7d2c9a0aff6d3e3051cb3178dee205043355f67b": {
+    "kind": "what",
+    "kindConfidence": 0.68,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.26,
+      "why": 0,
+      "what": 0.74,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.8,
+    "concise": 0.27
+  },
+  "c361c8d0c5fa8f22232026fa08d04690ba2db090": {
+    "kind": "what",
+    "kindConfidence": 0.68,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.26,
+      "why": 0,
+      "what": 0.74,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.86,
+    "concise": 0.29
+  },
+  "395741fefb457faa7776f6b63be03fe1b31d5e7f": {
+    "kind": "what",
+    "kindConfidence": 0.65,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.28,
+      "why": 0,
+      "what": 0.72,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.87,
+    "concise": 0.2
+  },
+  "7c19ec7920b2753c9141de0a9fcf818109736b46": {
+    "kind": "what",
+    "kindConfidence": 0.56,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.36,
+      "why": 0,
+      "what": 0.64,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.84,
+    "concise": 0.25
+  },
+  "68edcd4b5bcecbfacdb4131460412b3899f2c5fc": {
+    "kind": "what",
+    "kindConfidence": 0.69,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.25,
+      "why": 0,
+      "what": 0.75,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.85,
+    "concise": 0.22
+  },
+  "03995cbb2496aa07e057958bed46f657958f41c3": {
+    "kind": "what",
+    "kindConfidence": 0.53,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.38,
+      "why": 0,
+      "what": 0.62,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.77,
+    "concise": 0.21
+  },
+  "64d10142b1c5eacbaff75ad62bb7a4382c2dbcc6": {
+    "kind": "what",
+    "kindConfidence": 0.59,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.33,
+      "why": 0,
+      "what": 0.67,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.85,
+    "concise": 0.23
+  },
+  "4aa068cd5c5f0bde1b2948dcdc3838c196f99ca4": {
+    "kind": "what",
+    "kindConfidence": 0.59,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.33,
+      "why": 0,
+      "what": 0.67,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.83,
+    "concise": 0.25
+  },
+  "811badf3801376a4c2f95b405c1bd87b11822d42": {
+    "kind": "what",
+    "kindConfidence": 0.88,
+    "kindProbabilities": {
+      "narration": 0,
+      "marker": 0.08,
+      "why": 0.01,
+      "what": 0.91,
+      "how": 0,
+      "dead_code": 0
+    },
+    "needed": 0.91,
+    "concise": 0.27
+  }
+}
