@@ -1,5 +1,5 @@
 ---
-status: not-started
+status: done
 references:
   - "Findings inventory: findings.md (graded at f043976)"
   - "Skill: ../../.claude/skills/lint-comments/SKILL.md"
