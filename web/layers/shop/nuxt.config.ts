@@ -10,11 +10,14 @@ import { fileURLToPath } from "node:url"
 const coursesPublic = process.env.NUXT_PUBLIC_COURSES_PUBLIC === "true"
 
 // The mock gateway exists only in mock mode (spec, „Mock gateway"), so a
-// sandbox or production build does not contain its page or its routes. The
-// second guard is the runtime-config schema, which refuses `mock` outside
-// development. Nested here rather than in `layers/`, where discovery is
-// automatic and this decision could not be made; the path must be absolute,
-// a relative one resolves against the root, not the layer.
+// sandbox or production build contains neither its page nor its routes. The
+// runtime-config schema is the second guard: it refuses `mock` outside
+// development.
+//
+// The layer is nested here rather than in `layers/`, where discovery is
+// automatic and this decision could not be made — and because it is nested,
+// the path has to be absolute: a relative one resolves against the project
+// root, not the layer.
 const mockGateway =
   process.env.NUXT_GOPAY_ENV === "mock"
     ? [fileURLToPath(new URL("mock-gopay", import.meta.url))]

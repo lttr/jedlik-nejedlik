@@ -20,8 +20,8 @@
         />
         <div class="body">
           <strong>{{ owned.course.title }}</strong>
-          <!-- Until area 06 ships the player there is nowhere to send them,
-               so the card says so rather than offering a dead link. -->
+          <!-- The Course player is not built yet, so there is nowhere to send
+               them: the card says so rather than offering a dead link. -->
           <p class="muted">Kurz se připravuje</p>
         </div>
       </li>
@@ -57,8 +57,6 @@ const errorMessage = computed(() =>
 </script>
 
 <style scoped>
-/* The panel's own flow does not reach inside a section, so the heading and
-   the list space themselves. */
 .my-courses {
   display: grid;
   gap: var(--space-4);

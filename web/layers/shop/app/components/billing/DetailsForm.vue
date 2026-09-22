@@ -114,8 +114,9 @@ const companyOpen = hasBillingCompanyDetails(details.value)
   gap: var(--space-4);
 }
 
-/* Puleo gives every `details` a surface and the site's pill radius, which
-   around a block of inputs reads as a stray blob rather than a panel. */
+/* Puleo (`@lttr/puleo`, the site's CSS library) gives every `details` a
+   surface and the site's pill radius, which around a block of inputs reads as
+   a stray blob rather than a panel. */
 .company,
 .company summary {
   margin: 0;

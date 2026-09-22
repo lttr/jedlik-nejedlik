@@ -45,9 +45,9 @@ const TABS = [
   { tab: "register", label: "Jsem tu poprvé" },
 ] as const
 
-// Back from the verification link there is a password to type and an account
-// to type it into, so „Mám účet" is the tab that is wanted (ADR 0005) — and it
-// is the right default for everyone else too.
+// Back from the verification link the Account already exists and only the
+// password is left to type, so „Mám účet" is the tab that is wanted (ADR
+// 0005) — and it is the right default for everyone else too.
 const tab = ref<"login" | "register">("login")
 
 const tabButtons = useTemplateRef<HTMLButtonElement[]>("tabButtons")

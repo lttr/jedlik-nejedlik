@@ -6,7 +6,6 @@ import { createError, defineEventHandler, getRouterParam } from "h3"
 import { readMockPayment } from "../../../../../../server/utils/gopay-mock-client"
 import type { MockPayment } from "../../../../../../server/utils/gopay-mock-client"
 
-// What the mock gateway page shows: the Payment as the mock recorded it.
 export default defineEventHandler((event): MockPayment => {
   const payment = readMockPayment(getRouterParam(event, "id") ?? "")
   if (payment === undefined) {

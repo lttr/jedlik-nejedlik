@@ -14,15 +14,14 @@
 
     <AuthPasswordField id="checkout-register-password" v-model="password" />
 
-    <!-- ADR 0005: the second password prompt is a wart, so it is at least
-         never a surprise. -->
+    <!-- No session until the e-mail is verified (ADR 0005), so the password
+         has to be typed a second time at login. That is a wart; saying so up
+         front at least makes it never a surprise. -->
     <p class="hint">
       Pošleme vám e-mail s&nbsp;odkazem pro ověření. Po&nbsp;ověření se stejným heslem přihlásíte
       a&nbsp;objednávku dokončíte.
     </p>
 
-    <!-- Wrapped: the design system lays every `form` out as a grid, and a bare
-         button is a grid item stretched to the full column. -->
     <div>
       <AuthSubmit :pending>Vytvořit účet</AuthSubmit>
     </div>
@@ -48,13 +47,11 @@ const rememberedEmail = useRememberedCheckoutEmail()
 async function onSubmit(): Promise<void> {
   await submit(
     async () => {
-      // Normalised here too, so the confirmation names what Directus was given.
       const address = normaliseEmail(email.value)
       await register({ email: address, password: password.value })
       rememberedEmail.value = address
       emit("registered", address)
     },
-    // Saves a round-trip; the route enforces it again.
     () => validatePassword(password.value),
   )
 }

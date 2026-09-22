@@ -61,8 +61,6 @@ async function onSave() {
 </script>
 
 <style scoped>
-/* The panel's own flow does not reach inside a section, so the heading, the
-   intro line and the form space themselves. */
 .account-billing,
 .account-billing form {
   display: grid;

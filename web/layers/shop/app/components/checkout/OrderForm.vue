@@ -52,7 +52,6 @@ import type { BillingDetails, SellableCourse } from "../../../shared/utils/check
 const { course, slug, billing } = defineProps<{
   course: SellableCourse
   slug: string
-  // Pre-filled from the Account, so a returning Student only checks them.
   billing: BillingDetails
 }>()
 
@@ -65,8 +64,6 @@ const PRIVACY_PATH = "/zasady-zpracovani-osobnich-udaju"
 
 const consent = ref(false)
 
-// The same pending/error pair every form on this site uses, error messages
-// mapped the same way.
 const { pending, errorMessage, submit } = useAuthForm()
 
 async function onSubmit(): Promise<void> {
@@ -98,10 +95,10 @@ form {
 }
 
 .consent input {
-  /* Not a sizing workaround — the design system sizes the box itself. The
-     sentence beside it is wider than the row at phone width, so without this
-     the flex line shrinks both items and the box loses its square. Puleo does
-     the same for a checkbox inside `.p-form-group`; this one is not in one. */
+  /* The consent sentence is wider than the row at phone width, so without
+     this the flex line shrinks the checkbox with it and the box stops being
+     square. Puleo (`@lttr/puleo`) does the same for a checkbox inside
+     `.p-form-group`; this one is not in one. */
   flex-shrink: 0;
 }
 

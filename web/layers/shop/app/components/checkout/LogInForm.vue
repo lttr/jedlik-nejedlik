@@ -24,8 +24,6 @@
       />
     </div>
 
-    <!-- Wrapped: the design system lays every `form` out as a grid, and a bare
-         button is a grid item stretched to the full column. -->
     <div>
       <AuthSubmit :pending>{{ verified ? "Pokračovat" : "Přihlásit se" }}</AuthSubmit>
     </div>

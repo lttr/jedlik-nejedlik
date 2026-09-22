@@ -72,8 +72,6 @@ useSeoMeta({ title: "Testovací platební brána", robots: "noindex, nofollow" }
 
 .summary dt,
 .summary dd {
-  /* The browser's own `dd` indent and the stylesheet's vertical rhythm both
-     break the two columns apart. */
   margin: 0;
 }
 

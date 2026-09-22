@@ -53,7 +53,10 @@
 import { readRefusal } from "../../../shared/utils/checkout"
 import type { CheckoutView } from "../../../shared/utils/checkout"
 
-// Three steps on one page with the Course alongside (prototype, variant C).
+// Three steps on one page with the Course alongside — variant C of
+// `.aiwork/2026-09-15_checkout-gopay/prototype/index.html`, which the rest of
+// the Checkout components cite by that name too.
+//
 // No `auth` middleware: a visitor without an Account gets the same page and
 // logs in or registers inside step 1, because being sent somewhere else is how
 // a purchase loses sight of what it is buying (spec, user story 2).
@@ -72,18 +75,19 @@ const {
   key: `checkout:${slug}`,
 })
 
-// The verification landing sends the Account back here with the same flag it
-// puts on the login page, and step 1 says the e-mail is verified (ADR 0005).
+// The verification landing (`/overeni-emailu`) sends the Account back here
+// with the same query flag it puts on the login page, and step 1 says the
+// e-mail is verified (ADR 0005).
 const verified = computed(() => route.query[EMAIL_VERIFIED_QUERY] !== undefined)
 
-// A 409 is a Course this Student may not buy, which the page says in its own
-// words. Everything else is the site's error page: no readable Course is a
-// 404, worded like Nuxt's own route miss, because a draft must not be
-// distinguishable from a slug that never existed (ADR 0004).
+// A 409 is a Course this Student may not buy, and the page says so in its own
+// words. Any other error goes to the site's error page; an unreadable Course
+// is a 404 worded like Nuxt's own route miss, so a draft cannot be told apart
+// from a slug that never existed (ADR 0004).
 //
-// Computed, because a visitor who logs in inside step 1 asks the route again
-// and may be refused only then: „Tenhle kurz už máte" belongs to the Account,
-// not to the request that rendered the page.
+// Computed, because logging in inside step 1 asks the route again and may be
+// refused only then: „Tenhle kurz už máte" belongs to the Account, not to the
+// request that rendered the page.
 const refusal = computed(() => readRefusal(error.value, 409))
 
 // Owning the Course already is good news; a Course that is not on sale yet is

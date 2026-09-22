@@ -3,9 +3,9 @@
 // the shop layer's config), so it imports what it uses.
 import { defineNuxtConfig } from "nuxt/config"
 
-// The mock payment gateway, a layer of its own so that whether it exists at
-// all is one line in the shop layer's config: outside mock mode it is not
-// extended, and its page and routes are not in the build (spec, „Mock
-// gateway"). It sits inside `layers/shop`, not next to it, precisely so that
-// Nuxt's `layers/*` auto-discovery does not register it unconditionally.
+// The mock payment gateway as a Nuxt layer of its own. The shop layer extends
+// it only in mock mode, so outside mock mode neither its page nor its routes
+// are in the build at all (spec, „Mock gateway"). It sits inside
+// `layers/shop` rather than beside it, because Nuxt auto-discovers `layers/*`
+// and would otherwise register it unconditionally.
 export default defineNuxtConfig({})

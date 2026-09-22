@@ -62,12 +62,9 @@ if (error.value !== undefined) {
   throwPageError(error.value, route.path)
 }
 
-// True while the page is still re-asking; false once it has given up and
-// tells the Student where the Course will turn up instead. Written once, by
-// the limit below.
+// Written once, by the limit below.
 const waiting = ref(view.value?.state === "pending")
 
-// Non-breaking spaces as characters, not entities: this is text, not markup.
 const pendingMessage = computed(() =>
   waiting.value
     ? "Jakmile banka platbu potvrdí, kurz se otevře. Chvilku to může trvat, stránka se sama obnoví."
