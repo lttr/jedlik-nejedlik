@@ -99,7 +99,7 @@ scope). Renames the auth layer's session concept Student → Account.
 
 ## 04a — Checkout: order + consent + GoPay redirect (FP-3, TO-5)
 
-**Status:** specced → `../2026-09-15_checkout-gopay/` (04a and 04b merged
+**Status:** done → `../2026-09-15_checkout-gopay/` (04a and 04b merged
 into one area; Billing Details moved here from 05; no § 1837 waiver is asked
 for, the buyer keeps the withdrawal right; guest flow settled by prototype,
 ADR 0005)
@@ -113,7 +113,7 @@ only — no granting happens here.
 
 ## 04b — GoPay notification + entitlement grant (BP-6, TO-5)
 
-**Status:** specced → `../2026-09-15_checkout-gopay/` (merged with 04a).
+**Status:** done → `../2026-09-15_checkout-gopay/` (merged with 04a).
 Go-live steps needing GoPay credentials: `../2026-09-15_gopay-go-live/`
 **Server notification endpoint in Nitro** as the sole trigger for granting
 the entitlement (idempotent per GoPay payment ID). Abandoned payment =
