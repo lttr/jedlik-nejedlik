@@ -41,7 +41,6 @@ const jar = new CookieJar()
 let studentId = ""
 let studentBilling: Record<string, unknown> = {}
 
-// Everything the run creates, so it can be taken off the instance again.
 const createdOrders: number[] = []
 
 async function site(
@@ -69,8 +68,7 @@ async function logIn(): Promise<void> {
   }
 }
 
-// „Objednávka zavazující k platbě": the gateway URL, and the mock Payment
-// behind it with the Order it was created for.
+// The server side of the „Objednávka zavazující k platbě" button.
 async function placeOrder(): Promise<{ gwUrl: string; paymentId: string; orderId: number }> {
   const response = await site(`/api/checkout/${PUBLISHED_SLUG}`, {
     method: "POST",
@@ -123,7 +121,6 @@ async function returnView(orderId: number): Promise<{ state: string; courseSlug:
 const ready = STUDENT_EMAIL !== "" && STUDENT_PASSWORD !== "" && SHOP_TOKEN !== ""
 
 describe.skipIf(!ready)("checkout flow through the mock gateway", () => {
-  // A cold `nuxi dev` plus the first SSR compile.
   beforeAll(async () => {
     const fields = `id,${BILLING_FIELDS.join(",")}`
     const rows = items(

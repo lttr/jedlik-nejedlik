@@ -280,9 +280,10 @@ describe("entitlement-gated lesson content", () => {
   })
 
   it("nulls paid lesson fields for the non-entitled student", async () => {
-    // Directus 11 case/when permissions: the field is in the granted union
-    // (via the entitlement-scoped rule), so the response is 200 — but for
-    // rows outside that rule the values are nulled, never leaked.
+    // Directus 11 decides field permissions per row: the entitlement-scoped
+    // rule grants these fields somewhere, so the read is answered rather than
+    // refused — but on a lesson the Student has no Entitlement for, the values
+    // come back null instead of leaking.
     const response = await probe(
       "/items/lesson?fields=id,body,video_uid,materials&limit=-1",
       UNENTITLED,

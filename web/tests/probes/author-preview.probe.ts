@@ -11,12 +11,12 @@ import {
   roleToken,
 } from "./support"
 
-// Draft preview (spec, user stories 19, 20, 30): the shop pages read Directus
-// with the caller's own session and add no status logic of their own
-// (ADR 0004), so this is where "who sees a draft" is decided. An Author
-// reads a draft Course and its outline; a Student and an anonymous visitor
-// get the same answer as for a slug that never existed. Relies on the
-// [TEST]-marked draft fixture course (one section, one text lesson).
+// Draft preview (spec, user stories 19, 20, 30). Who sees a draft is decided
+// in Directus alone: the shop pages read with the caller's own session and add
+// no status logic of their own (ADR 0004). An Author reads a draft Course and
+// its outline; a Student and an anonymous visitor get the same answer as for a
+// slug that never existed. Fixture: the [TEST]-marked draft course (one
+// section, one text lesson).
 //
 // Required environment: DIRECTUS_PROBE_AUTHOR_TOKEN,
 // DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN and DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN,
@@ -26,8 +26,6 @@ const AUTHOR = roleToken("DIRECTUS_PROBE_AUTHOR_TOKEN")
 const ENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_ENTITLED_TOKEN")
 const UNENTITLED = roleToken("DIRECTUS_PROBE_STUDENT_UNENTITLED_TOKEN")
 
-// The three reads the Sales Page needs for a draft: the Course by slug and
-// its Sections and Lessons through the Course relation.
 function ofDraft(collection: string, slugPath: string, fields: string): string {
   return `/items/${collection}?filter${slugPath}[_eq]=${DRAFT_SLUG}&fields=${fields}`
 }
@@ -77,9 +75,10 @@ describe.each([
   })
 })
 
-// The Public policy does not apply to a session, so Student and Autor each
-// carry their own copy of its file rule. Without it Directus refuses the
-// `description` field and both shop routes 500 (user story 25).
+// A logged-in session never falls back to the Public policy, so the Student
+// and Autor policies each repeat Public's read rule on `directus_files`.
+// Without that copy Directus refuses the cover's `description` field and both
+// shop routes 500 (user story 25).
 const COVER_FIELDS = "id,width,height,description"
 const PUBLISHED_COVER =
   `/items/course?filter[slug][_eq]=${PUBLISHED_SLUG}` +

@@ -2,9 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import type { GopayClient } from "../../layers/shop/shared/utils/gopay"
 
-// The client calls `$fetch`, a Nuxt auto-import — a free identifier that
-// resolves against `globalThis` — so stubbing the global runs the real
-// module (prior art: rate-limit.test.ts).
+// `$fetch` is a Nuxt auto-import: inside the client module it is a free
+// identifier that resolves against `globalThis` at call time. So these tests
+// stub `globalThis.$fetch` and exercise the real module, rather than mocking
+// the module itself (same approach as rate-limit.test.ts).
 
 interface StubCall {
   url: string

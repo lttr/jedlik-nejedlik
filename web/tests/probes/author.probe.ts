@@ -267,9 +267,10 @@ describe("author content management", () => {
 
   it("refuses an upload naming a folder outside the materials folder", async () => {
     // Explicitly picking a foreign folder fails the create permission's
-    // validation. Directus inserts the row before it writes to disk, so the
-    // rejection leaves neither a file nor an orphaned row behind — the trap
-    // this probe used to document (an invisible, undeletable upload).
+    // validation. That validation runs on the insert, before anything reaches
+    // disk, so the rejection leaves neither a file nor an orphaned row behind.
+    // This probe used to document the opposite: an invisible, undeletable
+    // upload left over from a half-finished write.
     const strayName = "test-autor-probe-stray.txt"
     const stray = await probeUpload(
       AUTHOR,

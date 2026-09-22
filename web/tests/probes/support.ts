@@ -41,7 +41,7 @@ export interface ProbeResponse {
   }
 }
 
-// GET an API path; without a token the request is anonymous (public role).
+// Without a token the request is anonymous, i.e. the public role.
 export async function probe(path: string, token?: string): Promise<ProbeResponse> {
   const response = await fetch(`${DIRECTUS_URL}${path}`, {
     headers: token === undefined ? {} : { Authorization: `Bearer ${token}` },
@@ -49,7 +49,6 @@ export async function probe(path: string, token?: string): Promise<ProbeResponse
   return { status: response.status, body: (await response.json()) as ProbeResponse["body"] }
 }
 
-// Mutating request (POST/PATCH/DELETE) with a JSON payload.
 export async function probeSend(
   method: "POST" | "PATCH" | "DELETE",
   path: string,
@@ -97,7 +96,6 @@ export async function probeUpload(
   }
 }
 
-// Raw GET (e.g. /assets file downloads) where only the status matters.
 export async function probeStatus(path: string, token?: string): Promise<number> {
   const response = await fetch(`${DIRECTUS_URL}${path}`, {
     headers: token === undefined ? {} : { Authorization: `Bearer ${token}` },
@@ -117,13 +115,11 @@ export function roleToken(envVar: string): string {
   return value
 }
 
-// Assert a list response and return its rows.
 export function items(response: ProbeResponse): Record<string, unknown>[] {
   expect(Array.isArray(response.body.data)).toBe(true)
   return response.body.data as Record<string, unknown>[]
 }
 
-// Assert 200 with at least one row — the shape of every positive read probe.
 export function nonEmptyItems(response: ProbeResponse): Record<string, unknown>[] {
   expect(response.status).toBe(200)
   const rows = items(response)

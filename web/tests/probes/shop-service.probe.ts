@@ -40,8 +40,6 @@ let orderId: number
 let otherStudentId: string
 let otherOrderId: number
 
-// Which Student an Order in a read belongs to, or undefined if the read did
-// not return it at all.
 function studentOfOrder(rows: Record<string, unknown>[], order: number): unknown {
   return rows.find((row) => row.id === order)?.student
 }
@@ -51,7 +49,6 @@ function studentOfOrder(rows: Record<string, unknown>[], order: number): unknown
 // instance and in the committed dump.
 // See .aiwork/2026-09-15_checkout-gopay/tickets/01_billing-details-service-account.md.
 describe.skipIf(SHOP === "")("shop service account", () => {
-  // A throwaway Student and an Order of theirs, created with the admin token.
   async function seedStudentWithOrder(
     studentRole: string,
   ): Promise<{ student: string; order: number }> {

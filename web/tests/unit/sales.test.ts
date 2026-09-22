@@ -4,9 +4,9 @@ import { parseSalesCourse } from "../../layers/shop/shared/utils/sales"
 
 // A course row as Directus returns it for the Sales Page query: the public
 // Course columns and the expanded outline. `status` rides along because the
-// query filters on it; the codec drops it, the Sales Page shows no draft
-// marker. Rows arrive in whatever order the database chose; the codec owns
-// the outline order.
+// query filters on it, but the codec drops it again — the Sales Page shows no
+// draft marker. Sections and lessons arrive in whatever order the database
+// chose, so ordering the outline is the codec's job.
 function row(overrides: Record<string, unknown> = {}): unknown {
   return {
     id: 1,

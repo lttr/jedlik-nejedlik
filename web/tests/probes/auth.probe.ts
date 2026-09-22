@@ -86,8 +86,9 @@ async function postWithBackoff(path: string, payload: unknown): Promise<ProbeRes
   return response
 }
 
-// `verification_url` is omitted except where the test is about it, so the
-// rest of the contract does not depend on USER_REGISTER_URL_ALLOW_LIST.
+// `verification_url` is omitted except where the test is about it: sending one
+// makes Directus check it against its USER_REGISTER_URL_ALLOW_LIST environment
+// variable, and the rest of the contract should not depend on that setting.
 async function register(
   email: string,
   password: string,
@@ -302,11 +303,11 @@ describe("password change from the account page", () => {
     return { student, accessToken }
   }
 
-  // Both spellings of the write behave the same now that a Student reads
-  // their own row: Directus answers the PATCH with the updated row, 200. While
-  // the Student policy had no `read` on `directus_users`, `/users/me` answered
-  // 403 over a password it had already written — a lie the route avoided by
-  // writing by id, which it still does (see the password-change util).
+  // `/users/{id}` and `/users/me` behave the same now that the Student policy
+  // grants `read` on `directus_users`: the PATCH answers 200 with the updated
+  // row. Before that read rule, `/users/me` answered 403 over a password it had
+  // already written, so the route writes by id — and still does (see the
+  // password-change util).
   it.each([
     ["by id", (student: Fixture) => `/users/${student.id}`],
     ["through /users/me", () => "/users/me"],
@@ -325,9 +326,10 @@ describe("password change from the account page", () => {
   })
 
   it("signs the Student out of every session, the changing one included", async () => {
-    // Directus spares only the session in the access token's `session` claim,
-    // which json-mode logins lack, so the route has to log the Student back
-    // in. If this goes red, that re-login may have become unnecessary.
+    // A password change signs out every session except the one named in the
+    // access token's `session` claim. A json-mode login has no such claim, so
+    // nothing is spared and the route logs the Student back in itself. If this
+    // goes red, that re-login may have become unnecessary.
     const student = await createStudent("active")
     const here = tokens(await login(student.email, student.password))
     const elsewhere = tokens(await login(student.email, student.password))
