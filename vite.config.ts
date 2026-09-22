@@ -17,10 +17,11 @@ const ignorePatterns = [
   "pnpm-lock.yaml",
 ]
 
-// Generated artifacts excluded from cache-input tracking. The bare `.nuxt` /
-// `.output` entries are needed next to their `/**` forms: the glob matches the
-// contents, not the directory itself, so the first run after a build otherwise
-// counts as "'.output' added in 'web'" and cold-runs every task.
+// Generated artifacts, excluded from cache-input tracking. Each of `.nuxt` and
+// `.output` is listed twice on purpose: the `/**` form excludes what is inside
+// the directory but not the directory entry itself, so without the bare form
+// the first run after a build sees "'.output' added in 'web'" and cold-runs
+// every task.
 const generatedInput = [
   "!**/.nuxt",
   "!**/.nuxt/**",
@@ -40,11 +41,11 @@ const generatedInput = [
 // notes continuously, and none of these tools read a markdown file.
 const srcInput = [{ auto: true }, "!**/.aiwork/**", "!**/*.md", ...generatedInput]
 
-// `vp check` is the one task that reads markdown — it formats it — so unlike
-// `srcInput` it tracks md. Agent notes under `.aiwork/**` are the exception:
-// still formatted, but by the pre-commit `vp check --fix` on staged files,
-// not by this task. Tracking them here only meant a note append cold-ran the
-// whole check (and failed it, on a note nothing was about to commit).
+// `vp check` formats markdown, so unlike `srcInput` this input keeps `*.md`.
+// It still drops `.aiwork/**`: agent notes are appended continuously, and
+// tracking them meant every append cold-ran the whole check — and failed it on
+// a note nothing was about to commit. Those notes are formatted at commit time
+// instead, by the pre-commit `vp check --fix` on staged files.
 const checkInput = [{ auto: true }, "!**/.aiwork/**", ...generatedInput]
 
 export default defineConfig({
@@ -88,9 +89,9 @@ export default defineConfig({
         cwd: "web",
         input: srcInput,
       },
-      // Network-facing Directus config-as-code commands — never cache, a
-      // replayed result would mask drift on the live instance. The wrapper
-      // resolves the admin token from web/.env so neither needs a hand-typed
+      // Both tasks below talk to the live Directus, so neither caches: a
+      // replayed result would mask drift on the instance. The wrapper script
+      // reads the admin token from web/.env, so neither needs a hand-typed env
       // prefix, and it errors out rather than falling back to directus-sync's
       // interactive email/password auth.
       "directus:pull": { command: "scripts/directus-sync.sh pull", cache: false },
@@ -242,11 +243,12 @@ export default defineConfig({
         },
       },
       {
-        // Directus API probes read role tokens from the environment at
-        // runtime (see web/tests/probes/support.ts) and assert on dynamic
-        // API JSON, where narrowing assertions are the test idiom. Probes
-        // run sequentially on purpose (deletion order, dependent state),
-        // and describe() blocks routinely exceed the function-length cap.
+        // Why the four rules below are off, in order: the Directus API probes
+        // read role tokens from the environment at runtime (see
+        // web/tests/probes/support.ts); they assert on dynamic API JSON, where
+        // narrowing assertions are the test idiom; they run sequentially on
+        // purpose (deletion order, dependent state); and their describe()
+        // blocks routinely exceed the function-length cap.
         files: ["web/tests/**"],
         rules: {
           "node/no-process-env": "off",

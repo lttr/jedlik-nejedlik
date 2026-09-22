@@ -57,7 +57,6 @@ export default [
       },
     },
 
-    // Extract <style> blocks from Vue SFCs for CSS linting
     {
       files: ["**/*.vue"],
       processor: mergeProcessors([

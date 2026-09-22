@@ -1,6 +1,4 @@
-// Runtime config schema for the @lttr/nuxt-validated-runtime-config module. See
-// that module's README for the authoring conventions and the why behind each
-// piece.
+// Authoring conventions: see the @lttr/nuxt-validated-runtime-config README.
 import { z } from "zod"
 
 import { definePublicSchema, url } from "@lttr/nuxt-validated-runtime-config/schema"
