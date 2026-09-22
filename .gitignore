@@ -22,3 +22,6 @@ design/images/generated*
 
 # fallow
 .fallow
+
+# my lint-comments tool
+.lint-comments-cache.json
