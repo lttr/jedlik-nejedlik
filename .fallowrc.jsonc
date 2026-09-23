@@ -5,13 +5,16 @@
   // (Knip listed the same file as a `.` workspace entry.)
   "entry": [
     "certificate/app.js",
-    // Nuxt layers under web/layers/ are auto-registered (pages routed,
-    // utils/shared auto-imported) — fallow's Nuxt detection only covers
-    // the root app dir, so layer files look unreachable without this.
+    // Nuxt layers under web/layers/ register their routes, middleware and
+    // plugins by directory, and fallow's Nuxt detection covers only the root
+    // app dir. Everything else in a layer is imported explicitly, so it must be
+    // reachable from these.
     "web/layers/*/nuxt.config.ts",
-    "web/layers/*/app/**",
-    "web/layers/*/shared/**",
-    "web/layers/*/server/**",
+    "web/layers/*/app/{pages,layouts,middleware,plugins}/**",
+    "web/layers/*/server/{api,routes,middleware,plugins}/**",
+    "web/layers/shop/mock-gopay/nuxt.config.ts",
+    "web/layers/shop/mock-gopay/app/pages/**",
+    "web/layers/shop/mock-gopay/server/api/**",
     // Test-runner configs invoked by their own task, never imported.
     "web/vitest.*.config.ts",
     "web/tests/probes/**",

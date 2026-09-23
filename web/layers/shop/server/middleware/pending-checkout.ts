@@ -1,4 +1,4 @@
-import { checkoutSlugFromPath } from "#layers/shop/shared/utils/pending-checkout"
+import { checkoutSlugFromPath } from "#layers/base/shared/utils/pending-checkout"
 import { clearPendingCheckout, setPendingCheckout } from "../utils/pending-checkout"
 import { readAccountSession } from "#layers/auth/server/utils/session-store"
 

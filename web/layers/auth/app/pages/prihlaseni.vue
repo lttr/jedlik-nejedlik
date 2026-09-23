@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { authRedirectTarget } from "#layers/shop/shared/utils/pending-checkout"
 import AuthFormError from "../components/auth/FormError.vue"
 import AuthPanel from "../components/auth/Panel.vue"
 import AuthSubmit from "../components/auth/Submit.vue"
@@ -56,12 +55,13 @@ import { useAuthActions } from "../composables/auth"
 import { useAuthForm } from "../composables/auth-form"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 import {
+  authRedirectTarget,
   EMAIL_VERIFIED_QUERY,
   PASSWORD_CHANGED_QUERY,
   RESET_PASSWORD_PATH,
 } from "#layers/auth/shared/utils/redirects"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
-import { takePendingCheckoutSlug } from "#layers/shop/app/utils/pending-checkout"
+import { takePendingCheckoutSlug } from "../utils/pending-checkout"
 
 definePageMeta({ middleware: "guest" })
 

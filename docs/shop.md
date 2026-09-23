@@ -136,8 +136,9 @@ dropped out of the tab order.
 A visitor without an Account who opens a Checkout gets its slug in a cookie.
 Registering and following the verification link then brings them back to the
 Course (ADR 0005). The cookie carries the slug and nothing else, since it is
-set on an unauthenticated request, and `shared/utils/pending-checkout.ts`
-validates every use.
+set on an unauthenticated request, and the base layer's
+`shared/utils/pending-checkout.ts` validates every use. It sits in `base`
+because the auth pages read it too, and auth may not import from the shop.
 
 A server middleware (`server/middleware/pending-checkout.ts`) sets it rather
 than the Checkout route. A first load runs the route inside SSR's internal
