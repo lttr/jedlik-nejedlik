@@ -80,7 +80,7 @@
   },
 
   "rules": {
-    "boundary-violation": "warn",
+    "boundary-violation": "error",
     // catalog `vite` is consumed via pnpm-workspace.yaml `overrides`, not a
     // `catalog:` specifier — the only form these checks trace.
     "unused-catalog-entries": "off",
