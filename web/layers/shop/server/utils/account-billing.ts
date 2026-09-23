@@ -1,7 +1,10 @@
 import { readMe } from "@directus/sdk"
 
-import { BILLING_FIELDS, toBillingDetails } from "../../shared/utils/checkout"
-import type { BillingDetails } from "../../shared/utils/checkout"
+import { BILLING_FIELDS, toBillingDetails } from "#layers/shop/shared/utils/checkout"
+import type { BillingDetails } from "#layers/shop/shared/utils/checkout"
+import { shopMessages } from "./shop-errors"
+import type { RateLimit } from "#layers/auth/server/utils/rate-limit"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // Always `/users/me` on the caller's own session, so no user id appears in
 // shop code at all.

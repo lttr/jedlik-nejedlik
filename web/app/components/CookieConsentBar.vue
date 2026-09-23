@@ -15,6 +15,7 @@
 
 <script lang="ts" setup>
 import { useElementSize } from "@vueuse/core"
+import { useCookieConsent } from "../composables/cookie-consent"
 
 const { isBarOpen, decide } = useCookieConsent()
 

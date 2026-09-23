@@ -3,6 +3,8 @@
 // spread across accounts. The budget is in-process memory and trusts
 // `X-Forwarded-For` — accepted for the single-instance deploy.
 import type { H3Event } from "h3"
+import { authError } from "./auth-errors"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
 const WINDOW_MS = 15 * 60 * 1000
 

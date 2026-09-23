@@ -4,7 +4,14 @@ import type { AuthenticationData } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import type { Credentials, Account, AccountSecrets } from "../../shared/types/account"
+import type { Credentials, Account, AccountSecrets } from "#layers/auth/shared/types/account"
+import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
+import { AccountEmail, readAuthBody } from "./auth-input"
+import { dropAccountSession, readAccountSession, writeAccountSession } from "./session-store"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
+import { createDirectusTokenClient } from "#layers/directus/shared/utils/directus"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // Refresh before the access token actually dies, so a request that starts
 // valid cannot finish expired.

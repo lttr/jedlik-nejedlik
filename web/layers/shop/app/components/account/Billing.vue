@@ -22,8 +22,12 @@
 </template>
 
 <script lang="ts" setup>
-import { emptyBillingDetails } from "../../../shared/utils/checkout"
-import type { BillingDetails } from "../../../shared/utils/checkout"
+import { emptyBillingDetails } from "#layers/shop/shared/utils/checkout"
+import type { BillingDetails } from "#layers/shop/shared/utils/checkout"
+import BillingDetailsForm from "../billing/DetailsForm.vue"
+import ShopNotice from "../ShopNotice.vue"
+import AuthSubmit from "#layers/auth/app/components/auth/Submit.vue"
+import { useAuthForm } from "#layers/auth/app/composables/auth-form"
 
 // The same fields the Checkout's step 2 shows, with this page's own copy and
 // save button around them. Through Nitro, never Directus from the browser

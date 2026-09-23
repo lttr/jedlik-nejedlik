@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/nuxt"
 import { z } from "zod"
+import { enforceRateLimit } from "#layers/auth/server/utils/rate-limit"
+import { GOPAY_NOTIFY_RATE_LIMIT, settlePayment } from "#layers/shop/server/utils/settle-payment"
 
 // GoPay's server-to-server notification: a bare GET carrying only the Payment
 // id. Nothing in it is trusted, so the route is public with a per-IP budget

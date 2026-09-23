@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-import { CourseSchema, LessonSchema, SectionSchema } from "../../../directus/shared/utils/schemas"
-import type { Course, Lesson, Section } from "../../../directus/shared/utils/schemas"
+import { CourseSchema, LessonSchema, SectionSchema } from "#layers/directus/shared/utils/schemas"
+import type { Course, Lesson, Section } from "#layers/directus/shared/utils/schemas"
 import { compareCatalogOrder } from "./catalog-order"
 
 // The outline a visitor may read before buying: no Lesson bodies or videos,

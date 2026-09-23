@@ -31,6 +31,15 @@
 </template>
 
 <script lang="ts" setup>
+import ShopNotice from "../ShopNotice.vue"
+import AuthPasswordField from "#layers/auth/app/components/auth/PasswordField.vue"
+import AuthSubmit from "#layers/auth/app/components/auth/Submit.vue"
+import { useAuthActions } from "#layers/auth/app/composables/auth"
+import { useAuthForm } from "#layers/auth/app/composables/auth-form"
+import { normaliseEmail } from "#layers/auth/shared/utils/email"
+import { validatePassword } from "#layers/auth/shared/utils/password"
+import { useRememberedCheckoutEmail } from "#layers/shop/app/composables/checkout-email"
+
 // „Jsem tu poprvé": the registration page's form, inside step 1 of the
 // Checkout. Nobody is logged in afterwards — the account is Unverified until
 // the e-mailed link is followed (ADR 0005) — so the step says so instead.

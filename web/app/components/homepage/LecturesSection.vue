@@ -21,6 +21,10 @@
 </template>
 
 <script lang="ts" setup>
+import LectureCard from "./LectureCard.vue"
+import PageSection from "./PageSection.vue"
+import type { Card } from "#shared/types/cards"
+
 const exampleCard: Card = {
   id: 1,
   image: "/child-placeholder.webp",

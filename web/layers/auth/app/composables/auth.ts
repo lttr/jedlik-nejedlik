@@ -1,4 +1,5 @@
-import type { Credentials, PasswordChange } from "../../shared/types/account"
+import type { Credentials, PasswordChange } from "#layers/auth/shared/types/account"
+import { useAccount } from "./account"
 
 export interface AuthActions {
   logIn: (credentials: Credentials) => Promise<void>

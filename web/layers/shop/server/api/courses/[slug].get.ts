@@ -1,3 +1,14 @@
+import { getAccountDirectusClient } from "#layers/auth/server/utils/account-session"
+import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
+import {
+  COURSE_OUTLINE_FIELDS,
+  COURSE_PUBLIC_FIELDS,
+  readCourseBySlug,
+} from "#layers/shop/server/utils/course-query"
+import { holdsEntitlement } from "#layers/shop/server/utils/entitlements"
+import { parseSalesCourse } from "#layers/shop/shared/utils/sales"
+import type { SalesView } from "#layers/shop/shared/utils/sales"
+
 // The Sales Page. The caller's own session decides both what Directus returns
 // — a draft is readable by its Author, absent for everyone else — and whether
 // the Student is entitled (ADR 0004).

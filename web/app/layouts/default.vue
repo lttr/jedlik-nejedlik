@@ -9,6 +9,9 @@
 </template>
 
 <script lang="ts" setup>
+import Footer from "../components/layout/Footer.vue"
+import Header from "../components/layout/Header.vue"
+
 useHead({
   htmlAttrs: {
     class: "is-light",

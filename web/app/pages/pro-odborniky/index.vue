@@ -173,6 +173,14 @@
 </template>
 
 <script lang="ts" setup>
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import BiographyExpert from "~/components/BiographyExpert.vue"
+import ContentImg from "~/components/ContentImg.vue"
+import CooperationForm from "~/components/CooperationForm.vue"
+import NewsletterExpertsForm from "~/components/NewsletterExpertsForm.vue"
+import { useBiographyExpert } from "~/composables/biography-expert"
+import { useDirectusImage } from "~/composables/images"
+
 const { data: image } = await useDirectusImage("212768cd-d1c1-4dc6-a1c8-a121a69efb2c")
 
 const { data: biographies } = await useBiographyExpert()

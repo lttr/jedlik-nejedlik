@@ -8,7 +8,10 @@
   </header>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import MainNav from "./MainNav.vue"
+import SocialLinks from "./SocialLinks.vue"
+</script>
 
 <style scoped>
 .top-line {

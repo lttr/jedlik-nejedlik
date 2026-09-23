@@ -116,6 +116,11 @@
 </template>
 
 <script lang="ts" setup>
+import ContactsCard from "../components/homepage/ContactsCard.vue"
+import LectureCard from "../components/homepage/LectureCard.vue"
+import TagLink from "../components/TagLink.vue"
+import type { Card } from "#shared/types/cards"
+
 const colors1 = [
   "color-navy",
   "color-peach",

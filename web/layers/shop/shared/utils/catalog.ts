@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-import { CourseSchema, CourseStatusSchema } from "../../../directus/shared/utils/schemas"
-import type { Course, CourseStatus } from "../../../directus/shared/utils/schemas"
+import { CourseSchema, CourseStatusSchema } from "#layers/directus/shared/utils/schemas"
+import type { Course, CourseStatus } from "#layers/directus/shared/utils/schemas"
 
 // What the Catalog route returns per Course: the public Course shape plus
 // its status (an Author's own token returns drafts, ADR 0004, and the card

@@ -19,6 +19,11 @@
 </template>
 
 <script lang="ts" setup>
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import { watchAsyncDataError } from "#layers/base/app/composables/watch-async-data-error"
+import CatalogCourseCard from "#layers/shop/app/components/catalog/CourseCard.vue"
+import { orphanSalesContentSlugs } from "#layers/shop/app/utils/sales-content"
+
 useSeoMeta({
   title: "Kurzy",
   description: "Nabídka videokurzů Jedlík-nejedlík o výživě a výchově dětí.",

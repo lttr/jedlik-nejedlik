@@ -5,7 +5,13 @@ import { registerUser, registerUserVerify } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import type { Credentials } from "../../shared/types/account"
+import type { Credentials } from "#layers/auth/shared/types/account"
+import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
+import { AccountEmail, assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { authPageUrl } from "./auth-urls"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+import { VERIFY_EMAIL_PATH } from "#layers/auth/shared/utils/redirects"
+import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
 
 const RegistrationSchema = z.object({
   email: AccountEmail,

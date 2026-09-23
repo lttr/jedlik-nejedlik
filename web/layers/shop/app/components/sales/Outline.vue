@@ -17,6 +17,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { Lesson } from "#layers/directus/shared/utils/schemas"
+import type { SalesSection } from "#layers/shop/shared/utils/sales"
+
 defineProps<{
   sections: SalesSection[]
 }>()

@@ -437,6 +437,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { LiveCourseId } from "../utils/live-courses"
+import LiveCourseBuyLink from "./LiveCourseBuyLink.vue"
+import PaymentLogos from "./PaymentLogos.vue"
+
 const courseId = "online-3-7-2027-01" satisfies LiveCourseId
 </script>
 

@@ -1,4 +1,4 @@
-import type { Order } from "../../../directus/shared/utils/schemas"
+import type { Order } from "#layers/directus/shared/utils/schemas"
 
 // The return page's vocabulary. The Order's status is the whole truth — money
 // turns into access in `settlePayment` and nowhere else — so the page only

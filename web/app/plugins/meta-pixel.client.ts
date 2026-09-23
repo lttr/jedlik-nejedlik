@@ -1,3 +1,6 @@
+import { useCookieConsent } from "../composables/cookie-consent"
+import { IGNORED_HOSTNAMES } from "#shared/utils/ignored-hostnames"
+
 type MetaPixelEvent = "PageView" | "InitiateCheckout" | "Purchase"
 
 interface TrackOptions {

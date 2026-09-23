@@ -26,6 +26,8 @@
 </template>
 
 <script lang="ts" setup>
+import ThankYouPage from "../components/ThankYouPage.vue"
+
 const PDF_MAP: Record<string, { fileId: string; label: string }> = {
   "nejedlici-checklist": {
     fileId: "a50cceb7-1ca5-4f16-bcdf-10515cae0ff7",

@@ -1,3 +1,5 @@
+import { createDirectusClient } from "#layers/directus/shared/utils/directus"
+
 let client: ReturnType<typeof createDirectusClient> | null = null
 
 export function getDirectusClient(): ReturnType<typeof createDirectusClient> {

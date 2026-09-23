@@ -384,6 +384,8 @@
 </template>
 
 <script lang="ts" setup>
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 useSeoMeta({
   title: "Školy",
 })

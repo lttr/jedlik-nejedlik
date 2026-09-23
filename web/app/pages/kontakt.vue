@@ -60,6 +60,11 @@
 </template>
 
 <script lang="ts" setup>
+import SocialLinks from "../components/layout/SocialLinks.vue"
+import ProfileImg from "../components/ProfileImg.vue"
+import { useDirectusImage } from "../composables/images"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64f3854e93d0")
 </script>
 

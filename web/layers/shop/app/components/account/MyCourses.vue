@@ -28,8 +28,10 @@
 </template>
 
 <script lang="ts" setup>
-import { MY_COURSES_ANCHOR } from "../../../shared/utils/owned-courses"
-import type { OwnedCourse } from "../../../shared/utils/owned-courses"
+import { MY_COURSES_ANCHOR } from "#layers/shop/shared/utils/owned-courses"
+import type { OwnedCourse } from "#layers/shop/shared/utils/owned-courses"
+import CourseCover from "../CourseCover.vue"
+import ShopNotice from "../ShopNotice.vue"
 
 // Through Nitro, never Directus from the browser (ADR 0004). No `error`
 // branch for a missing session: the page is behind the auth middleware.

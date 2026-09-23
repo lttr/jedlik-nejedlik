@@ -66,6 +66,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useNewsletterParentsForm } from "../composables/forms"
+
 const {
   title = "Newsletter pro rodiče",
   description = "Nechte si posílat ty nejlepší tipy, novinky a inspiraci ze světa dětské výživy přímo do své e-mailové schránky.",

@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-import { CourseSchema } from "../../../directus/shared/utils/schemas"
-import type { Course } from "../../../directus/shared/utils/schemas"
+import { CourseSchema } from "#layers/directus/shared/utils/schemas"
+import type { Course } from "#layers/directus/shared/utils/schemas"
 
 // „Moje kurzy": the Courses a Student holds an Entitlement for. Shared,
 // because the Nitro route produces it and the Account page's component renders

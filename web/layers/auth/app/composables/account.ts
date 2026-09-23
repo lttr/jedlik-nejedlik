@@ -1,4 +1,4 @@
-import type { Account } from "../../shared/types/account"
+import type { Account } from "#layers/auth/shared/types/account"
 
 export interface AccountSession {
   account: ComputedRef<Account | null>

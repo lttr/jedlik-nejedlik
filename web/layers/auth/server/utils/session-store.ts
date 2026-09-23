@@ -2,7 +2,7 @@
 // names stop here. Keep new uses of the module in this file: the lint
 // exemption in vite.config.ts is scoped to it.
 import type { H3Event } from "h3"
-import type { Account, AccountSecrets } from "../../shared/types/account"
+import type { Account, AccountSecrets } from "#layers/auth/shared/types/account"
 
 export interface StoredAccountSession {
   account: Account | undefined

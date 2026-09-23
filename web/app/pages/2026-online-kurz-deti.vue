@@ -5,6 +5,9 @@
 </template>
 
 <script lang="ts" setup>
+import ObesityCoursePromo from "../components/ObesityCoursePromo.vue"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 useSeoMeta({
   title: "Online kurz pro rodiče dětí s nadváhou",
   description:

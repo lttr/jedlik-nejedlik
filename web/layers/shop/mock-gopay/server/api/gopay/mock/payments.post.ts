@@ -2,8 +2,8 @@
 import { createError, defineEventHandler, readBody } from "h3"
 import { z } from "zod"
 
-import { getGopayClient } from "../../../../../server/utils/gopay-client"
-import type { GopayPayment } from "../../../../../shared/utils/gopay"
+import { getGopayClient } from "#layers/shop/server/utils/gopay-client"
+import type { GopayPayment } from "#layers/shop/shared/utils/gopay"
 
 // Creates a Payment the way the Checkout would, through the same
 // `getGopayClient(event)` seam, so the gateway can be walked without an Order.

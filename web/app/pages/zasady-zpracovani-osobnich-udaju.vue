@@ -250,3 +250,7 @@
     </div>
   </PageWrapper>
 </template>
+<script lang="ts" setup>
+import CookieConsentButton from "../components/CookieConsentButton.vue"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+</script>

@@ -1,3 +1,5 @@
+import { resolveAccountAccessToken } from "../utils/account-session"
+
 // Keeps a live session's Directus tokens and the cookie's 30-day window
 // rolling. `/api/**` and `/_` are excluded: a refresh on nuxt-auth-utils' own
 // session request would rotate the token onto a `Set-Cookie` the browser never

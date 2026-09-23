@@ -47,7 +47,19 @@
 </template>
 
 <script lang="ts" setup>
-import { emptyBillingDetails } from "../../../shop/shared/utils/checkout"
+import { emptyBillingDetails } from "#layers/shop/shared/utils/checkout"
+import AuthFormError from "../components/auth/FormError.vue"
+import AuthPanel from "../components/auth/Panel.vue"
+import AuthPasswordField from "../components/auth/PasswordField.vue"
+import AuthSubmit from "../components/auth/Submit.vue"
+import { useAccount } from "../composables/account"
+import { useAuthActions } from "../composables/auth"
+import { useAuthForm } from "../composables/auth-form"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+import { validatePassword } from "#layers/auth/shared/utils/password"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import AccountBilling from "#layers/shop/app/components/account/Billing.vue"
+import AccountMyCourses from "#layers/shop/app/components/account/MyCourses.vue"
 
 definePageMeta({ middleware: "auth" })
 

@@ -123,6 +123,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useDirectusImage } from "../composables/images"
+import ContentImg from "./ContentImg.vue"
+
 const { data: media1 } = await useDirectusImage("a2842731-4919-4631-baa7-dd90ad521912")
 
 const { data: media2 } = await useDirectusImage("aa119fda-080e-4ed9-90dc-f58939299541")

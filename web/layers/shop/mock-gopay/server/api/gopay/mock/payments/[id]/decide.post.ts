@@ -10,9 +10,9 @@ import {
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import { recordMockPaymentState } from "../../../../../../../server/utils/gopay-mock-client"
-import type { MockPayment } from "../../../../../../../server/utils/gopay-mock-client"
-import type { GopayPaymentState } from "../../../../../../../shared/utils/gopay"
+import { recordMockPaymentState } from "#layers/shop/server/utils/gopay-mock-client"
+import type { MockPayment } from "#layers/shop/server/utils/gopay-mock-client"
+import type { GopayPaymentState } from "#layers/shop/shared/utils/gopay"
 
 // See docs/shop.md, „Mock gateway".
 const DecisionSchema = z.object({ action: z.enum(["pay", "cancel", "choose"]) })

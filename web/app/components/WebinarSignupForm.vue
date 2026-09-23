@@ -54,6 +54,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useWebinarSignupForm } from "../composables/forms"
+
 const props = withDefaults(
   defineProps<{
     webinarId: string

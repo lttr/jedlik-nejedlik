@@ -81,6 +81,11 @@
 </template>
 
 <script lang="ts" setup>
+import ProfileImg from "../components/ProfileImg.vue"
+import WebinarSignupForm from "../components/WebinarSignupForm.vue"
+import { useDirectusImage } from "../composables/images"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64f3854e93d0")
 const { data: alenaPhoto } = await useDirectusImage("588336e3-2a93-4bbd-b40c-aa8e3fa0f25a")
 

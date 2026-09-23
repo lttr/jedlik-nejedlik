@@ -3,7 +3,7 @@ import type { H3Event } from "h3"
 import {
   PENDING_CHECKOUT_COOKIE,
   PENDING_CHECKOUT_MAX_AGE,
-} from "../../shared/utils/pending-checkout"
+} from "#layers/shop/shared/utils/pending-checkout"
 
 // The pending-checkout cookie's three moves. `httpOnly`, because nothing in
 // the browser has any business reading or writing it; `lax`, because the

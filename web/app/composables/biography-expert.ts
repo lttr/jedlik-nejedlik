@@ -1,6 +1,10 @@
 import { readItems } from "@directus/sdk"
 import type { AsyncData, NuxtError } from "nuxt/app"
 import { z } from "zod"
+import { watchAsyncDataError } from "#layers/base/app/composables/watch-async-data-error"
+import { getDirectusClient } from "#layers/directus/app/utils/directus"
+import { BiographyExpertSchema } from "#layers/directus/shared/utils/schemas"
+import type { BiographyExpert } from "#layers/directus/shared/utils/schemas"
 
 const biographyExpertRequest = async () =>
   getDirectusClient().request(

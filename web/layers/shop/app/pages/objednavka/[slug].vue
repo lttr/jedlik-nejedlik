@@ -50,8 +50,16 @@
 </template>
 
 <script lang="ts" setup>
-import { readRefusal } from "../../../shared/utils/checkout"
-import type { CheckoutView } from "../../../shared/utils/checkout"
+import { readRefusal } from "#layers/shop/shared/utils/checkout"
+import type { CheckoutView } from "#layers/shop/shared/utils/checkout"
+import { EMAIL_VERIFIED_QUERY } from "#layers/auth/shared/utils/redirects"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import CheckoutAccountStep from "#layers/shop/app/components/checkout/AccountStep.vue"
+import CheckoutOrderForm from "#layers/shop/app/components/checkout/OrderForm.vue"
+import CheckoutRecap from "#layers/shop/app/components/checkout/Recap.vue"
+import CheckoutStep from "#layers/shop/app/components/checkout/Step.vue"
+import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
+import { throwPageError } from "#layers/shop/app/utils/page-error"
 
 // Three steps on one page, and no `auth` middleware: a visitor logs in or
 // registers inside step 1 rather than being sent away from what they are

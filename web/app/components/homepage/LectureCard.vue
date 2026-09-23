@@ -23,6 +23,9 @@
 </template>
 
 <script lang="ts" setup>
+import TagLink from "../TagLink.vue"
+import type { Tag } from "#shared/types/cards"
+
 defineProps<{
   id: number
   image: string

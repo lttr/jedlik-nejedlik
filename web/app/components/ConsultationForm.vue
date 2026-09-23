@@ -49,6 +49,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useConsultationForm } from "../composables/forms"
+
 const { execute, error, isSuccess, isPendingOrSuccess } = useConsultationForm()
 
 async function onSubmit(event: Event) {

@@ -15,7 +15,9 @@
   </section>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ContactsCard from "./ContactsCard.vue"
+</script>
 
 <style scoped>
 .contacts-section {

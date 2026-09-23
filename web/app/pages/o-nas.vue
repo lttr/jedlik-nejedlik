@@ -60,6 +60,11 @@
 </template>
 
 <script lang="ts" setup>
+import ContentImg from "../components/ContentImg.vue"
+import MediaSection from "../components/MediaSection.vue"
+import { useDirectusImage } from "../composables/images"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 const { data: presentation1 } = await useDirectusImage("658ad6bf-386d-4d5c-bb6c-1f0206930f5a")
 
 const { data: presentation2 } = await useDirectusImage("48abd94b-5c30-471d-859d-a2bd43f462a1")

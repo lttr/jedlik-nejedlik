@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { Course, Order } from "../../../directus/shared/utils/schemas"
+import type { Course, Order } from "#layers/directus/shared/utils/schemas"
 
 // Billing Details carry the Directus column names on purpose. They are the
 // same six columns on `directus_users` (the Account) and on `order` (the

@@ -10,6 +10,9 @@
 </template>
 
 <script lang="ts" setup>
+import PageSection from "./PageSection.vue"
+import Testimonial from "./Testimonial.vue"
+
 const exampleTestimonial = {
   stars: 5,
   text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam id dolor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Aliquam erat volutpat.",

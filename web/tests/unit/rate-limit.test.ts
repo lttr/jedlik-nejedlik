@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-// `enforceRateLimit` calls `getRequestIP` and `authError` as Nuxt
-// auto-imports, plain free identifiers that resolve against `globalThis`, so
-// stubbing them is enough to run the real module.
+// `getRequestIP` and `createError` are h3 auto-imports, plain free
+// identifiers that resolve against `globalThis`, so stubbing them is enough to
+// run the real module.
 const IP = "203.0.113.7"
 
 interface RateLimitModule {
@@ -14,13 +14,7 @@ interface RateLimitModule {
 
 async function loadModule(): Promise<RateLimitModule> {
   vi.stubGlobal("getRequestIP", () => IP)
-  vi.stubGlobal("authError", (status: number, code: string, message: string) => {
-    const error = new Error(message) as Error & { statusCode: number; code: string }
-    error.statusCode = status
-    error.code = code
-    return error
-  })
-  vi.stubGlobal("authMessages", new Proxy({}, { get: (_t, key) => String(key) }))
+  vi.stubGlobal("createError", ({ message }: { message: string }) => new Error(message))
   vi.resetModules()
   return (await import("../../layers/auth/server/utils/rate-limit")) as unknown as RateLimitModule
 }

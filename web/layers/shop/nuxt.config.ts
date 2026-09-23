@@ -21,6 +21,8 @@ const mockGateway =
 export default defineNuxtConfig({
   extends: mockGateway,
 
+  components: false,
+
   routeRules: coursesPublic
     ? {}
     : {

@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useNewsletterExpertsForm } from "../composables/forms"
+
 const { execute, error, isSuccess, isPendingOrSuccess } = useNewsletterExpertsForm()
 
 async function onSubmit(event: Event) {
