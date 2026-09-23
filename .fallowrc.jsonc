@@ -50,7 +50,34 @@
     "directus-sync",
   ],
 
+  // Layers form a stack and imports only point down it:
+  // app (root) → mock-gopay → shop → auth → directus → base.
+  // A layer never imports from one above it, from a sibling, or from the root.
+  "boundaries": {
+    "zones": [
+      { "name": "app", "patterns": ["web/app/**"] },
+      // Before `layers`: the first match wins, so this carves the nested layer
+      // out of `layers/shop`.
+      { "name": "mock-gopay", "patterns": ["web/layers/shop/mock-gopay/**"] },
+      // No `patterns` on the parent: every file lands in a child, and a parent
+      // pattern that matches 0 files warns on every run.
+      { "name": "layers", "autoDiscover": ["web/layers"] },
+    ],
+    "rules": [
+      { "from": "app", "allow": ["layers"] },
+      { "from": "layers/base", "allow": [] },
+      { "from": "layers/directus", "allow": ["layers/base"] },
+      { "from": "layers/auth", "allow": ["layers/base", "layers/directus"] },
+      { "from": "layers/shop", "allow": ["layers/base", "layers/directus", "layers/auth"] },
+      {
+        "from": "mock-gopay",
+        "allow": ["layers/base", "layers/directus", "layers/auth", "layers/shop"],
+      },
+    ],
+  },
+
   "rules": {
+    "boundary-violation": "warn",
     // catalog `vite` is consumed via pnpm-workspace.yaml `overrides`, not a
     // `catalog:` specifier — the only form these checks trace.
     "unused-catalog-entries": "off",
