@@ -236,6 +236,55 @@ export default defineConfig({
     },
     overrides: [
       {
+        // Inside a layer `~/` and `@/` resolve against the consuming app, not
+        // the layer, so beyond one level up the layer's own alias is the only
+        // correct spelling. `*` does not cross `/`, hence every pattern twice.
+        files: ["web/layers/**"],
+        rules: {
+          "no-restricted-imports": [
+            "error",
+            {
+              patterns: [
+                {
+                  group: ["~/*", "~/**", "@/*", "@/**", "~~/*", "~~/**", "@@/*", "@@/**"],
+                  message: "Aliases resolve against the app, not the layer. Use #layers/<name>/.",
+                },
+                {
+                  group: ["../../*", "../../**"],
+                  message: "Use #layers/<name>/ beyond one level up.",
+                },
+                {
+                  group: ["#imports"],
+                  message: "Import from 'vue', '#app' or the source file.",
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        // The root app is a layer too, just spelled `~/`. Same rule, minus the
+        // alias ban.
+        files: ["web/app/**", "web/shared/**", "web/server/**"],
+        rules: {
+          "no-restricted-imports": [
+            "error",
+            {
+              patterns: [
+                {
+                  group: ["../../*", "../../**"],
+                  message: "Use ~/, #shared/ or #layers/<name>/ beyond one level up.",
+                },
+                {
+                  group: ["#imports"],
+                  message: "Import from 'vue', '#app' or the source file.",
+                },
+              ],
+            },
+          ],
+        },
+      },
+      {
         // Build config files legitimately read process.env at build time.
         files: ["**/*.config.{ts,js,mjs,cjs}"],
         rules: {
