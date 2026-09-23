@@ -1,5 +1,5 @@
 ---
-status: not-started
+status: done
 references:
   - "Intent: intent.md"
   - "Source: Claude doc „Selective explicit imports in Nuxt layers" (2026-09-22)"

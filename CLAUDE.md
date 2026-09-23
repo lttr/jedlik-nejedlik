@@ -22,6 +22,13 @@ Where it goes next depends on the branch. A branch that lives only on this machi
 
 The push to `master` is what triggers the Coolify deploy. Watch it with the `monitor-deploy` skill and report the outcome.
 
+## Imports and layers
+
+- Our own composables, utils, `shared/`, `server/utils` and components are imported explicitly. Only Vue, Nuxt, h3, Nitro and module APIs are auto-imported. Siblings and one level up are relative; beyond that use `#layers/<name>/...` inside a layer (never `~/` there) and `~/`, `#shared/` or `#layers/<name>/` in the root.
+- Layers import only down the stack `app → mock-gopay → shop → auth → directus → base` (fallow boundaries, an error). Run `fallow guard <file>` before an edit that crosses layers; code two layers share moves down, it does not get an allow-rule.
+- After a fresh checkout run `vp run nuxt:prepare`: the `#layers/*` aliases and the remaining auto-import types live in `.nuxt/`.
+- No component auto-import means no `<Lazy*>` prefix: lazy-load with `defineAsyncComponent(() => import("./Foo.vue"))`.
+
 ## Non-obvious
 
 - Before writing or editing Czech copy in `web/app/`, call the Skill tool with `writing:czech-typography` (dashes, quotes, non-breaking spaces, units).
