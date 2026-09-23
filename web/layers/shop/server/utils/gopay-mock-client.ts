@@ -22,7 +22,7 @@ export interface MockPayment {
 
 const payments = new Map<string, MockPayment>()
 
-export function mockGatewayPath(paymentId: string): string {
+function mockGatewayPath(paymentId: string): string {
   return `/platba-mock/${paymentId}`
 }
 

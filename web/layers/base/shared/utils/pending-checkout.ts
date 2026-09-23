@@ -1,7 +1,7 @@
-import { safeRedirectPath } from "#layers/auth/shared/utils/redirects"
-
 // The cookie carries a Course slug and nothing else, and every use of it is
-// checked here. See docs/shop.md, „Pending checkout".
+// checked here. It lives in the base layer because both sides need it: the
+// shop sets the cookie, and the auth pages send the Account back to it.
+// See docs/shop.md, „Pending checkout".
 
 export const PENDING_CHECKOUT_COOKIE = "pending-checkout"
 
@@ -30,14 +30,4 @@ const CHECKOUT_REQUEST = /^\/(?:objednavka|api\/checkout)\/([^/?#]+)\/?(?:[?#].*
 export function checkoutSlugFromPath(path: string): string | null {
   const slug = CHECKOUT_REQUEST.exec(path)?.[1]
   return slug !== undefined && SLUG.test(slug) ? slug : null
-}
-
-// An explicit `?redirect=` first, then the Checkout they were on, then the
-// Account page. Both candidates go through the auth layer's own rules, so a
-// foreign target is refused here exactly as on the login page.
-export function authRedirectTarget(rawRedirect: unknown, pendingSlug: unknown): string {
-  if (typeof rawRedirect === "string" && rawRedirect !== "") {
-    return safeRedirectPath(rawRedirect)
-  }
-  return safeRedirectPath(pendingCheckoutPath(pendingSlug))
 }

@@ -1,3 +1,5 @@
+import { pendingCheckoutPath } from "#layers/base/shared/utils/pending-checkout"
+
 export const DEFAULT_AUTH_REDIRECT = "/muj-ucet"
 
 // Landing page of the verification e-mail. Shared because the server builds
@@ -32,4 +34,14 @@ export function safeRedirectPath(raw: unknown): string {
   } catch {
     return DEFAULT_AUTH_REDIRECT
   }
+}
+
+// An explicit `?redirect=` first, then the Checkout they were on, then the
+// Account page. Both candidates go through `safeRedirectPath`, so a foreign
+// target is refused exactly as on the login page.
+export function authRedirectTarget(rawRedirect: unknown, pendingSlug: unknown): string {
+  if (typeof rawRedirect === "string" && rawRedirect !== "") {
+    return safeRedirectPath(rawRedirect)
+  }
+  return safeRedirectPath(pendingCheckoutPath(pendingSlug))
 }

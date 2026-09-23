@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { pendingCheckoutPath } from "#layers/shop/shared/utils/pending-checkout"
+import { pendingCheckoutPath } from "#layers/base/shared/utils/pending-checkout"
 import AuthFormError from "../components/auth/FormError.vue"
 import AuthPanel from "../components/auth/Panel.vue"
 import { useAuthActions } from "../composables/auth"
@@ -32,7 +32,7 @@ import { useAuthForm } from "../composables/auth-form"
 import { useEmailedToken } from "../composables/emailed-token"
 import { EMAIL_VERIFIED_QUERY } from "#layers/auth/shared/utils/redirects"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
-import { takePendingCheckoutSlug } from "#layers/shop/app/utils/pending-checkout"
+import { takePendingCheckoutSlug } from "../utils/pending-checkout"
 
 useHead({ title: "Ověření e-mailu" })
 

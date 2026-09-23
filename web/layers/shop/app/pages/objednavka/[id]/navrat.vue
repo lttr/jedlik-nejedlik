@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { checkoutPath } from "#layers/shop/shared/utils/pending-checkout"
+import { checkoutPath } from "#layers/base/shared/utils/pending-checkout"
 import type { SettlementState, SettlementView } from "#layers/shop/shared/utils/settlement"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"

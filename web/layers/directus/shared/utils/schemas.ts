@@ -160,7 +160,7 @@ export const OrderSchema = z
     fakturoid_invoice_id: o.fakturoid_invoice_id ?? undefined,
   }))
 
-export interface OrderConsent {
+interface OrderConsent {
   id: number
   order: number
   document: "terms" | "withdrawal_1837" | "gdpr"
@@ -180,7 +180,7 @@ export const OrderConsentSchema = z
 
 // Consumer contract: an Entitlement (Oprávnění ke kurzu). `order` is absent
 // for manual grants; `granted_at` is an ISO timestamp.
-export interface Entitlement {
+interface Entitlement {
   id: number
   student: string
   course: number

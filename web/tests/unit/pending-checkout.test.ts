@@ -1,11 +1,10 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_AUTH_REDIRECT } from "../../layers/auth/shared/utils/redirects"
+import { authRedirectTarget, DEFAULT_AUTH_REDIRECT } from "../../layers/auth/shared/utils/redirects"
 import {
-  authRedirectTarget,
   checkoutSlugFromPath,
   pendingCheckoutPath,
-} from "../../layers/shop/shared/utils/pending-checkout"
+} from "../../layers/base/shared/utils/pending-checkout"
 
 // The cookie is set on an unauthenticated request and read back on another
 // one, so everything it can do is decided by these three functions.

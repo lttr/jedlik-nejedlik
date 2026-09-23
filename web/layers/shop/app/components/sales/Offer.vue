@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import type { Course } from "#layers/directus/shared/utils/schemas"
 import { MY_COURSES_ANCHOR, MY_COURSES_PATH } from "#layers/shop/shared/utils/owned-courses"
-import { checkoutPath } from "#layers/shop/shared/utils/pending-checkout"
+import { checkoutPath } from "#layers/base/shared/utils/pending-checkout"
 import { formatPriceCzk } from "#layers/shop/shared/utils/price"
 
 // The Sales Page's one call to action, in three states. `entitled` is the

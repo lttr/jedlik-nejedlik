@@ -23,7 +23,7 @@ export type BillingDetails = Record<BillingField, string>
 
 // The block the form keeps collapsed unless something in it is filled in:
 // everything but the name, derived so a seventh column joins it by itself.
-export const BILLING_COMPANY_FIELDS: readonly BillingField[] = BILLING_FIELDS.filter(
+const BILLING_COMPANY_FIELDS: readonly BillingField[] = BILLING_FIELDS.filter(
   (field) => field !== "billing_name",
 )
 
