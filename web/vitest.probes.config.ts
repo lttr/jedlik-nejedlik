@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url"
 
 import { defineConfig } from "vitest/config"
 
+import { aliases } from "./vitest.aliases"
+
 // Vitest does not read web/.env, so load the probe tokens (DIRECTUS_PROBE_*)
 // here when that file exists. Shell variables take precedence either way.
 const envFile = fileURLToPath(new URL(".env", import.meta.url))
@@ -15,6 +17,7 @@ if (existsSync(envFile)) {
 // test run (probe files use a `.probe.ts` suffix that default vitest
 // includes never match, and only this config includes them).
 export default defineConfig({
+  resolve: { alias: aliases },
   test: {
     include: ["tests/probes/**/*.probe.ts"],
     testTimeout: 30_000,

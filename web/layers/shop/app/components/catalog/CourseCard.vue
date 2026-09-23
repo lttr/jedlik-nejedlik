@@ -18,6 +18,11 @@
 </template>
 
 <script lang="ts" setup>
+import CourseCover from "../CourseCover.vue"
+import type { CatalogCourse } from "#layers/shop/shared/utils/catalog"
+import { formatLessonCount } from "#layers/shop/shared/utils/lesson-count"
+import { formatPriceCzk } from "#layers/shop/shared/utils/price"
+
 defineProps<{
   course: CatalogCourse
 }>()

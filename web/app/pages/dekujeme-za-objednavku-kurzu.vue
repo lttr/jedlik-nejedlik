@@ -17,6 +17,9 @@
 </template>
 
 <script lang="ts" setup>
+import ThankYouPage from "../components/ThankYouPage.vue"
+import { LIVE_COURSES, isLiveCourseId } from "../utils/live-courses"
+
 /**
  * Where SimpleShop sends a Live Course buyer after payment („URL po uhrazení"),
  * one page for all three products: `kurz` says which one was bought. It replaces

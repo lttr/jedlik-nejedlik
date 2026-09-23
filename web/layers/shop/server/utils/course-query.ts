@@ -1,8 +1,10 @@
 import { readItems } from "@directus/sdk"
 import type { QueryFields } from "@directus/sdk"
 
-import type { CourseCollection, Schema } from "../../../directus/shared/types/directus"
-import { CourseStatusSchema } from "../../../directus/shared/utils/schemas"
+import type { CourseCollection, Schema } from "#layers/directus/shared/types/directus"
+import { CourseStatusSchema } from "#layers/directus/shared/utils/schemas"
+import { readOnlyRow } from "./read-row"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // What the two shop routes ask Directus for. Server-only: this is Directus
 // query syntax, of no use to the Vue app, so it lives next to the routes

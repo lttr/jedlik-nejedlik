@@ -50,6 +50,17 @@
 </template>
 
 <script lang="ts" setup>
+import AuthFormError from "../components/auth/FormError.vue"
+import AuthPanel from "../components/auth/Panel.vue"
+import AuthPasswordField from "../components/auth/PasswordField.vue"
+import AuthSubmit from "../components/auth/Submit.vue"
+import { useAuthActions } from "../composables/auth"
+import { useAuthForm } from "../composables/auth-form"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+import { normaliseEmail } from "#layers/auth/shared/utils/email"
+import { validatePassword } from "#layers/auth/shared/utils/password"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 definePageMeta({ middleware: "guest" })
 
 useHead({ title: "Registrace" })

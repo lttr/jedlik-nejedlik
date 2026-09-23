@@ -224,6 +224,10 @@
 </template>
 
 <script lang="ts" setup>
+import ProfileImg from "../components/ProfileImg.vue"
+import { useDirectusImage } from "../composables/images"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 const registrationUrl = "https://form.simpleshop.cz/n05o4/buy/"
 
 const { data: zdenkaPhoto } = await useDirectusImage("a64de3ab-044d-46c7-9e4c-64f3854e93d0")

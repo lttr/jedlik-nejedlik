@@ -28,6 +28,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useWaitlistObesityCourseForm } from "../composables/forms"
+
 const { execute, error, isSuccess, isPendingOrSuccess } = useWaitlistObesityCourseForm()
 
 async function onSubmit(event: Event) {

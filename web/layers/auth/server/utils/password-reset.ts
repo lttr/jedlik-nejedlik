@@ -4,6 +4,12 @@
 import { passwordRequest, passwordReset } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
+import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
+import { AccountEmail, assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { authPageUrl } from "./auth-urls"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+import { RESET_PASSWORD_PATH } from "#layers/auth/shared/utils/redirects"
+import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
 
 const ResetRequestSchema = z.object({ email: AccountEmail })
 

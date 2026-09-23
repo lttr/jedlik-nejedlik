@@ -28,6 +28,11 @@
 </template>
 
 <script lang="ts" setup>
+import ShopNotice from "../ShopNotice.vue"
+import CheckoutGuestPanel from "./GuestPanel.vue"
+import CheckoutStep from "./Step.vue"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
+
 // Step 1 of the Checkout: for a Student the collapsed line with their e-mail,
 // which is all the step ever was; for a visitor without an Account the way to
 // become one without leaving the page (prototype, variant C).

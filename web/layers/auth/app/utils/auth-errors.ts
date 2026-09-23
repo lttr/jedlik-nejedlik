@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 // Explicit import so the unit suite can load this as a plain module.
-import { authMessages } from "../../shared/utils/auth-messages"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
 // Nitro sends `createError`'s Czech `message` and, as `statusMessage`, the
 // code passed to `authError`. Anything else (network failure, unexpected 500)

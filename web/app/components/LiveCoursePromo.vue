@@ -224,6 +224,9 @@
 </template>
 
 <script setup lang="ts">
+import type { LiveCourseId } from "../utils/live-courses"
+import LiveCourseBuyLink from "./LiveCourseBuyLink.vue"
+
 const {
   gradeRange,
   gradeFrom,

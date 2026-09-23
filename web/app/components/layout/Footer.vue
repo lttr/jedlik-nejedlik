@@ -43,7 +43,11 @@
   </footer>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import CookieConsentButton from "../CookieConsentButton.vue"
+import SiteLogo from "./SiteLogo.vue"
+import SocialLinks from "./SocialLinks.vue"
+</script>
 
 <style scoped>
 .footer {

@@ -2,7 +2,7 @@ import type { H3Event } from "h3"
 
 import { createGopayApiClient } from "./gopay-api-client"
 import { createGopayMockClient } from "./gopay-mock-client"
-import type { GopayClient } from "../../shared/utils/gopay"
+import type { GopayClient } from "#layers/shop/shared/utils/gopay"
 
 // The one place that decides which GoPay the site talks to: everything else
 // takes a `GopayClient` and never learns which one it got. `mock` is refused

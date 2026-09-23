@@ -23,8 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import { checkoutPath } from "../../../../shared/utils/pending-checkout"
-import type { SettlementState, SettlementView } from "../../../../shared/utils/settlement"
+import { checkoutPath } from "#layers/shop/shared/utils/pending-checkout"
+import type { SettlementState, SettlementView } from "#layers/shop/shared/utils/settlement"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
+import { throwPageError } from "#layers/shop/app/utils/page-error"
 
 // Where GoPay sends the Student back. The route settles the Payment on the
 // way, so this page only reports an outcome — it never grants anything itself

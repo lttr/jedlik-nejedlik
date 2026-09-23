@@ -1,7 +1,9 @@
 import { readItems } from "@directus/sdk"
 
-import { parseOwnedCourses } from "../../shared/utils/owned-courses"
-import type { OwnedCourse } from "../../shared/utils/owned-courses"
+import { parseOwnedCourses } from "#layers/shop/shared/utils/owned-courses"
+import type { OwnedCourse } from "#layers/shop/shared/utils/owned-courses"
+import { COURSE_PUBLIC_FIELDS } from "./course-query"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // Every read of „what does this caller own", always on the caller's own
 // session (ADR 0004): the Student policy filters `entitlement` to

@@ -9,6 +9,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Image } from "#layers/directus/shared/utils/schemas"
+
 // The cover's own `description` is the alt text, empty when it has none:
 // beside the Course's title a cover carries nothing a screen reader needs
 // twice.

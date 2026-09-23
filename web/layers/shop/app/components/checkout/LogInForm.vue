@@ -37,6 +37,13 @@
 </template>
 
 <script lang="ts" setup>
+import ShopNotice from "../ShopNotice.vue"
+import AuthSubmit from "#layers/auth/app/components/auth/Submit.vue"
+import { useAuthActions } from "#layers/auth/app/composables/auth"
+import { useAuthForm } from "#layers/auth/app/composables/auth-form"
+import { RESET_PASSWORD_PATH } from "#layers/auth/shared/utils/redirects"
+import { useRememberedCheckoutEmail } from "#layers/shop/app/composables/checkout-email"
+
 const { verified = false } = defineProps<{
   // Back from the verification link: the address is known and the button says
   // „Pokračovat", because this is the end of an interruption (ADR 0005).

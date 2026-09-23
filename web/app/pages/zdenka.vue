@@ -32,6 +32,9 @@
   </PageWrapper>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ContentImg from "../components/ContentImg.vue"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+</script>
 
 <style scoped></style>

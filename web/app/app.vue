@@ -11,6 +11,8 @@
 </template>
 
 <script lang="ts" setup>
+import CookieConsentBar from "./components/CookieConsentBar.vue"
+
 // nuxt-og-image is off (nuxt.config) and it was what made og:image absolute.
 // nuxt-seo-utils emits the static `public/og-image.png` relative, which
 // crawlers reject, so set the absolute one here.

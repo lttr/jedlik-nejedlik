@@ -27,6 +27,18 @@
 </template>
 
 <script lang="ts" setup>
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import CourseCover from "#layers/shop/app/components/CourseCover.vue"
+import SalesBespoke from "#layers/shop/app/components/sales/Bespoke.vue"
+import SalesOffer from "#layers/shop/app/components/sales/Offer.vue"
+import SalesOutline from "#layers/shop/app/components/sales/Outline.vue"
+import { throwPageError } from "#layers/shop/app/utils/page-error"
+import {
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
+  courseOgImageUrl,
+} from "#layers/shop/shared/utils/og-image"
+
 const route = useRoute()
 const slug = String(route.params.slug)
 

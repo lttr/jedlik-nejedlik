@@ -5,4 +5,10 @@ import { defineNuxtConfig } from "nuxt/config"
 
 // The mock payment gateway, extended by the shop layer only in mock mode.
 // See docs/shop.md, „Mock gateway".
-export default defineNuxtConfig({})
+export default defineNuxtConfig({
+  // Gives the nested layer its `#layers/mock-gopay` alias; only `layers/*`
+  // directories get one automatically.
+  $meta: { name: "mock-gopay" },
+
+  components: false,
+})

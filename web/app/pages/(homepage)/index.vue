@@ -5,6 +5,8 @@
 </template>
 
 <script setup lang="ts">
+import AboutProjectSection from "~/components/homepage/AboutProjectSection.vue"
+
 definePageMeta({
   layout: "homepage",
 })

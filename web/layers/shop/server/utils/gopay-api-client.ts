@@ -1,7 +1,15 @@
 import { z } from "zod"
 
-import { GopayPaymentStateSchema, assertCallbackUrl, toHalere } from "../../shared/utils/gopay"
-import type { CreateGopayPaymentInput, GopayClient, GopayPayment } from "../../shared/utils/gopay"
+import {
+  GopayPaymentStateSchema,
+  assertCallbackUrl,
+  toHalere,
+} from "#layers/shop/shared/utils/gopay"
+import type {
+  CreateGopayPaymentInput,
+  GopayClient,
+  GopayPayment,
+} from "#layers/shop/shared/utils/gopay"
 
 // The real GoPay, over raw `$fetch`. GoPay ships no Node SDK and the
 // third-party packages are years stale (spec, „GoPay client"), so the four

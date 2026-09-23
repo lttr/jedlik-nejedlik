@@ -31,6 +31,10 @@
 </template>
 
 <script lang="ts" setup>
+import ShopNotice from "../ShopNotice.vue"
+import CheckoutLogInForm from "./LogInForm.vue"
+import CheckoutRegisterForm from "./RegisterForm.vue"
+
 // The two ways into an Account, side by side inside step 1 (prototype, variant
 // C): „Mám účet" and „Jsem tu poprvé". Tabs rather than one long form, because
 // a visitor knows which of the two they are.

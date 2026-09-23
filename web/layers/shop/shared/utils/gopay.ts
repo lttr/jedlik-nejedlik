@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { Order } from "../../../directus/shared/utils/schemas"
+import type { Order } from "#layers/directus/shared/utils/schemas"
 
 // The vocabulary of the payment gateway, in one place and pure, so the mock
 // and the real client agree on it by construction.

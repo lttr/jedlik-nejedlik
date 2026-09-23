@@ -1,11 +1,23 @@
 import { createItem, readItems, updateItem, updateMe } from "@directus/sdk"
 import type { H3Event } from "h3"
 
-import { CourseSchema, OrderSchema } from "../../../directus/shared/utils/schemas"
-import type { Order } from "../../../directus/shared/utils/schemas"
-import { checkoutConsents, reusableOrder, toBillingPayload } from "../../shared/utils/checkout"
-import type { BillingDetails, SellableCourse } from "../../shared/utils/checkout"
-import { isPaymentLive } from "../../shared/utils/gopay"
+import { CourseSchema, OrderSchema } from "#layers/directus/shared/utils/schemas"
+import type { Order } from "#layers/directus/shared/utils/schemas"
+import {
+  checkoutConsents,
+  reusableOrder,
+  toBillingPayload,
+} from "#layers/shop/shared/utils/checkout"
+import type { BillingDetails, SellableCourse } from "#layers/shop/shared/utils/checkout"
+import { isPaymentLive } from "#layers/shop/shared/utils/gopay"
+import { COURSE_PUBLIC_FIELDS, readCourseBySlug } from "./course-query"
+import { holdsEntitlement } from "./entitlements"
+import { getGopayClient } from "./gopay-client"
+import { shopError, shopMessages, unexpectedShopError } from "./shop-errors"
+import { getShopServiceDirectusClient } from "./shop-service-client"
+import { authPageUrl } from "#layers/auth/server/utils/auth-urls"
+import type { RateLimit } from "#layers/auth/server/utils/rate-limit"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // Everything the Checkout writes to Directus and to GoPay: the Student's own
 // session, except the Payment id stamped by the Shop Service Account (ADR

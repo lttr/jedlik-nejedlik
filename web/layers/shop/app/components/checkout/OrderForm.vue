@@ -41,7 +41,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { BillingDetails, SellableCourse } from "../../../shared/utils/checkout"
+import type { BillingDetails, SellableCourse } from "#layers/shop/shared/utils/checkout"
+import BillingDetailsForm from "../billing/DetailsForm.vue"
+import ShopNotice from "../ShopNotice.vue"
+import CheckoutStep from "./Step.vue"
+import { useAuthForm } from "#layers/auth/app/composables/auth-form"
+import { formatPriceCzk } from "#layers/shop/shared/utils/price"
 
 const { course, slug, billing } = defineProps<{
   course: SellableCourse

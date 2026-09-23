@@ -49,7 +49,11 @@
   </PageWrapper>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import NewsletterForm from "../components/NewsletterForm.vue"
+import WebinarCard from "../components/WebinarCard.vue"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+</script>
 
 <style scoped>
 /* Page Header */

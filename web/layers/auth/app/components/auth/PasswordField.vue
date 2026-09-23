@@ -16,6 +16,8 @@
 </template>
 
 <script lang="ts" setup>
+import { PASSWORD_MIN_LENGTH } from "#layers/auth/shared/utils/password"
+
 // Every form that sets a password uses this field, so the autocomplete hint,
 // the policy hint and the `aria-describedby` wiring cannot drift between them.
 const {

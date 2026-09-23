@@ -1,4 +1,9 @@
 import { readItems } from "@directus/sdk"
+import { COURSE_PUBLIC_FIELDS, SHOP_COURSE_STATUSES } from "../utils/course-query"
+import { getCallerDirectusClient } from "#layers/auth/server/utils/caller-client"
+import { parseCatalogCourse } from "#layers/shop/shared/utils/catalog"
+import type { CatalogCourse } from "#layers/shop/shared/utils/catalog"
+import { compareCatalogOrder } from "#layers/shop/shared/utils/catalog-order"
 
 export default defineEventHandler(async (event): Promise<CatalogCourse[]> => {
   const client = await getCallerDirectusClient(event)

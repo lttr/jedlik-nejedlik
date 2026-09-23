@@ -5,7 +5,17 @@ import { readMe, updateUser } from "@directus/sdk"
 import type { H3Event } from "h3"
 import { z } from "zod"
 
-import type { PasswordChange } from "../../shared/types/account"
+import type { PasswordChange } from "#layers/auth/shared/types/account"
+import {
+  authenticateAccount,
+  logInAccount,
+  requireAccountDirectusClient,
+  revokeRefreshToken,
+} from "./account-session"
+import { authError, unexpectedAuthError } from "./auth-errors"
+import { assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { dropAccountSession } from "./session-store"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
 const PasswordChangeSchema = z.object({
   currentPassword: z.string().min(1),

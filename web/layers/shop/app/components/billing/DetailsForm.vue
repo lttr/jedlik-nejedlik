@@ -84,8 +84,11 @@
 </template>
 
 <script lang="ts" setup>
-import { BILLING_FIELD_MAX_LENGTH, hasBillingCompanyDetails } from "../../../shared/utils/checkout"
-import type { BillingDetails } from "../../../shared/utils/checkout"
+import {
+  BILLING_FIELD_MAX_LENGTH,
+  hasBillingCompanyDetails,
+} from "#layers/shop/shared/utils/checkout"
+import type { BillingDetails } from "#layers/shop/shared/utils/checkout"
 
 // Fields only — no heading, no submit, no saving — so each page puts its own
 // copy around it. Every field is optional on purpose: a name is never a wall

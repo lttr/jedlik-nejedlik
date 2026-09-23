@@ -2,8 +2,8 @@
 // auto-imports for it elsewhere: everything it uses, it imports.
 import { createError, defineEventHandler, getRouterParam } from "h3"
 
-import { readMockPayment } from "../../../../../../server/utils/gopay-mock-client"
-import type { MockPayment } from "../../../../../../server/utils/gopay-mock-client"
+import { readMockPayment } from "#layers/shop/server/utils/gopay-mock-client"
+import type { MockPayment } from "#layers/shop/server/utils/gopay-mock-client"
 
 export default defineEventHandler((event): MockPayment => {
   const payment = readMockPayment(getRouterParam(event, "id") ?? "")

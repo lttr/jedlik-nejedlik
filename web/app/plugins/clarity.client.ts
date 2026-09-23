@@ -1,3 +1,6 @@
+import { useCookieConsent } from "../composables/cookie-consent"
+import { IGNORED_HOSTNAMES } from "#shared/utils/ignored-hostnames"
+
 /**
  * Loads Microsoft Clarity, gated on the same cookie consent as the Meta Pixel.
  * See docs/analytics.md, „Microsoft Clarity".

@@ -16,6 +16,10 @@
 </template>
 
 <script lang="ts" setup>
+import ProfileImg from "./ProfileImg.vue"
+import type { BiographyExpert } from "#layers/directus/shared/utils/schemas"
+import { displayUrl } from "#shared/utils/urls"
+
 defineProps<{
   bio: BiographyExpert
 }>()

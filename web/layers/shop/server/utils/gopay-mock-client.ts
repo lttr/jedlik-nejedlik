@@ -3,7 +3,7 @@ import type {
   CreateGopayPaymentInput,
   GopayClient,
   GopayPayment,
-} from "../../shared/utils/gopay"
+} from "#layers/shop/shared/utils/gopay"
 
 // A GoPay stand-in that never leaves the machine, so the payment flow can be
 // walked in dev without credentials. State lives in process memory — a dev

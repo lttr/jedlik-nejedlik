@@ -1,3 +1,5 @@
+import { authFailure } from "../utils/auth-errors"
+
 export interface AuthForm {
   pending: Ref<boolean>
   errorMessage: Ref<string>

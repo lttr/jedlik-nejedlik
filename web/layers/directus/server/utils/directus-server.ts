@@ -1,6 +1,6 @@
 import type { H3Event } from "h3"
-import { createDirectusClient } from "../../shared/utils/directus"
-import type { DirectusRestClient } from "../../shared/utils/directus"
+import { createDirectusClient } from "#layers/directus/shared/utils/directus"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 let client: DirectusRestClient | null = null
 

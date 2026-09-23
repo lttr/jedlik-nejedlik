@@ -41,7 +41,10 @@
 </template>
 
 <script lang="ts" setup>
-import { isPaymentLive } from "../../../../shared/utils/gopay"
+import { isPaymentLive } from "#layers/shop/shared/utils/gopay"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
+import { formatPriceCzk } from "#layers/shop/shared/utils/price"
 
 // The developer's stand-in for GoPay's payment page (spec, „Mock gateway").
 // The buttons post a plain form, so the flow works with JavaScript off and

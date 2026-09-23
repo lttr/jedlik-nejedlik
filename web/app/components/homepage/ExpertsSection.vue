@@ -13,7 +13,9 @@
   </PageSection>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import PageSection from "./PageSection.vue"
+</script>
 
 <style scoped>
 .experts {

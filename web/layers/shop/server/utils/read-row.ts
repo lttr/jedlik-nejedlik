@@ -1,6 +1,8 @@
 import type { RestCommand } from "@directus/sdk"
 
-import type { Schema } from "../../../directus/shared/types/directus"
+import type { Schema } from "#layers/directus/shared/types/directus"
+import { notFound } from "./shop-errors"
+import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // The `limit: 1` read every shop query makes, with its `rows[0]` unwrapping in
 // one place. Two functions, because the one difference that matters between

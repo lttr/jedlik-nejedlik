@@ -13,7 +13,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { SellableCourse } from "../../../shared/utils/checkout"
+import type { SellableCourse } from "#layers/shop/shared/utils/checkout"
+import CourseCover from "../CourseCover.vue"
+import { formatPriceCzk } from "#layers/shop/shared/utils/price"
 
 const { course } = defineProps<{ course: SellableCourse }>()
 </script>

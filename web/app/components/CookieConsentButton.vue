@@ -3,6 +3,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useCookieConsent } from "../composables/cookie-consent"
+
 // Reopening the bar clears the stored decision, so the visitor is asked again
 // and consent is withdrawn until they answer.
 const { reopen } = useCookieConsent()

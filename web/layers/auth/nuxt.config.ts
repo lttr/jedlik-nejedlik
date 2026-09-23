@@ -6,6 +6,8 @@
 export default defineNuxtConfig({
   modules: ["nuxt-auth-utils"],
 
+  components: false,
+
   routeRules: {
     // Identity pages must never be indexed: `robots: false` sets noindex and
     // drops the route from the sitemap.

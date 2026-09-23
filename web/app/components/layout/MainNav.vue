@@ -36,6 +36,9 @@
 </template>
 
 <script lang="ts" setup>
+import SiteLogo from "./SiteLogo.vue"
+import { useAccount } from "#layers/auth/app/composables/account"
+
 const { loggedIn } = useAccount()
 
 const { coursesPublic } = useRuntimeConfig().public

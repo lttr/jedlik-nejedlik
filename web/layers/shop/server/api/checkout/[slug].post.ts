@@ -1,6 +1,15 @@
 import { z } from "zod"
 
-import { BillingRequestSchema } from "../../../shared/utils/checkout"
+import { BillingRequestSchema } from "#layers/shop/shared/utils/checkout"
+import { requireAccountDirectusClient } from "#layers/auth/server/utils/account-session"
+import { enforceRateLimit } from "#layers/auth/server/utils/rate-limit"
+import {
+  CHECKOUT_RATE_LIMIT,
+  assertNotEntitled,
+  loadCheckoutCourse,
+  placeCheckoutOrder,
+} from "#layers/shop/server/utils/checkout-order"
+import { shopError, shopMessages } from "#layers/shop/server/utils/shop-errors"
 
 // The body carries no price: the amount is re-read from the Course, so a
 // tampered request buys nothing cheaper (spec, user story 27).

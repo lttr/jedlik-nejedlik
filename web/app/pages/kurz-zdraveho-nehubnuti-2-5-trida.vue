@@ -16,6 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+import LiveCoursePromo from "../components/LiveCoursePromo.vue"
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 useSeoMeta({
   title: "Kurz zdravého (ne)hubnutí pro děti 2.–5. třída, Hradec Králové",
   description:

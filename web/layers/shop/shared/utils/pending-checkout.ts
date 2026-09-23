@@ -1,4 +1,4 @@
-import { safeRedirectPath } from "../../../auth/shared/utils/redirects"
+import { safeRedirectPath } from "#layers/auth/shared/utils/redirects"
 
 // The cookie carries a Course slug and nothing else, and every use of it is
 // checked here. See docs/shop.md, „Pending checkout".

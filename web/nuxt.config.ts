@@ -57,12 +57,11 @@ export default defineNuxtConfig({
     "@sentry/nuxt/module",
   ],
 
-  components: [
-    {
-      path: "~/components",
-      pathPrefix: false,
-    },
-  ],
+  // Our own components, composables and utils are imported explicitly, so
+  // the source shows where each one comes from. Vue, Nuxt and module-provided
+  // APIs stay auto-imported. `components` is normalized per layer, so every
+  // layer config repeats `components: false`.
+  components: false,
 
   devtools: {
     enabled: true,
@@ -135,9 +134,36 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2025-12-01",
 
+  nitro: {
+    modules: [
+      // Nitro appends every layer's `server/utils` to the scanned dirs while it
+      // resolves its options, after config merging, so `imports.dirs: []` has
+      // no effect. Modules run after that and before the scan: this drops our
+      // own dirs and keeps h3, Nitro core and module-provided server imports.
+      (nitro) => {
+        if (nitro.options.imports !== false) {
+          nitro.options.imports.dirs = nitro.options.imports.dirs?.filter((dir) =>
+            (typeof dir === "string" ? dir : dir.glob).includes("/node_modules/"),
+          )
+        }
+      },
+    ],
+  },
+
   vite: {
     optimizeDeps: {
       include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
+    },
+  },
+
+  hooks: {
+    // Not `imports.scan: false`: that also drops module composables added by
+    // `addImportsDir` (`useSiteConfig`). This keeps only the dirs that modules
+    // contribute from node_modules, and drops every layer's own `composables/`,
+    // `utils/` and `shared/`.
+    "imports:dirs"(dirs) {
+      const moduleDirs = dirs.filter((dir) => dir.includes("/node_modules/"))
+      dirs.splice(0, dirs.length, ...moduleDirs)
     },
   },
 

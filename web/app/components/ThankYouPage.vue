@@ -11,6 +11,8 @@
 </template>
 
 <script lang="ts" setup>
+import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+
 const { title } = defineProps<{ title: string }>()
 </script>
 

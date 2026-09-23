@@ -1,3 +1,5 @@
+import { useAccount } from "../composables/account"
+
 // Opt-in via `definePageMeta({ middleware: "auth" })`. UX only: what an
 // Account may read stays enforced by Directus permissions and the Nitro
 // routes, never by this redirect.
