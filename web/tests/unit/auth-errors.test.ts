@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 
-import { authFailure } from "../../layers/auth/app/utils/auth-errors"
-import { authMessages } from "../../layers/auth/shared/utils/auth-messages"
+import { authFailure } from "#layers/auth/app/utils/auth-errors"
+import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
 function nitroRejection(message: string, statusMessage?: string) {
   return { data: { url: "/api/auth/password-reset", statusCode: 400, message, statusMessage } }

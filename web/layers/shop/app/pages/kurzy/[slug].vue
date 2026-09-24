@@ -28,6 +28,7 @@
 
 <script lang="ts" setup>
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
+import { SITE_NAME, SITE_URL } from "#layers/base/shared/utils/site"
 import CourseCover from "#layers/shop/app/components/CourseCover.vue"
 import SalesBespoke from "#layers/shop/app/components/sales/Bespoke.vue"
 import SalesOffer from "#layers/shop/app/components/sales/Offer.vue"
@@ -60,11 +61,10 @@ if (error.value !== undefined) {
 // Head and structured data derive from the Course itself; there are no SEO
 // fields on it. Without a cover the site-wide og:image from `app.vue` stays.
 // Getters, so a refetched Course updates the tags too.
-const siteConfig = useSiteConfig()
 const directusUrl = useRuntimeConfig().public.directusUrl
 // Absolute on purpose: the Course resolver leaves `url` as given, unlike the
 // breadcrumb and offer ones, and a crawler wants the canonical form.
-const courseUrl = new URL(`/kurzy/${slug}`, siteConfig.url).href
+const courseUrl = new URL(`/kurzy/${slug}`, SITE_URL).href
 // Computed, not a function: the same URL is asked for six times per head
 // evaluation (og, twitter, both dimensions, the schema.org image), and it is
 // only rebuilt when the Course itself changes.
@@ -114,7 +114,7 @@ useSchemaOrg(
         description: current.description ?? "",
         url: courseUrl,
         image,
-        provider: { name: siteConfig.name, url: siteConfig.url },
+        provider: { name: SITE_NAME, url: SITE_URL },
         offers,
       }),
       defineBreadcrumb({

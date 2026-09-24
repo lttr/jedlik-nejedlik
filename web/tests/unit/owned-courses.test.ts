@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { parseOwnedCourses } from "../../layers/shop/shared/utils/owned-courses"
+import { parseOwnedCourses } from "#layers/shop/shared/utils/owned-courses"
 
 // An entitlement row as Directus returns it for „Moje kurzy": the
 // Entitlement's id and the Course expanded to the public columns. `course` is

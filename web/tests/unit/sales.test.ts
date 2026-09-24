@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { parseSalesCourse } from "../../layers/shop/shared/utils/sales"
+import { parseSalesCourse } from "#layers/shop/shared/utils/sales"
 
 // A course row as Directus returns it for the Sales Page query: the public
 // Course columns and the expanded outline. `status` rides along because the

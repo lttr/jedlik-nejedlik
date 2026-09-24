@@ -1,3 +1,4 @@
+import { SITE_NAME, SITE_URL } from "./layers/base/shared/utils/site"
 import { IGNORED_HOSTNAMES } from "./shared/utils/ignored-hostnames"
 
 // @nuxt/image provider config is build-time. Runtime URL flows separately into
@@ -63,6 +64,10 @@ export default defineNuxtConfig({
   // layer config repeats `components: false`.
   components: false,
 
+  imports: {
+    scan: false,
+  },
+
   devtools: {
     enabled: true,
   },
@@ -70,8 +75,8 @@ export default defineNuxtConfig({
   css: ["@lttr/puleo", "~/assets/css/main.css"],
 
   site: {
-    url: "https://www.jedlik-nejedlik.cz",
-    name: "Jedlík-nejedlík",
+    url: SITE_URL,
+    name: SITE_NAME,
     description: "Výživa a výchova v propojení",
     defaultLocale: "cs",
   },
@@ -135,35 +140,15 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-12-01",
 
   nitro: {
-    modules: [
-      // Nitro appends every layer's `server/utils` to the scanned dirs while it
-      // resolves its options, after config merging, so `imports.dirs: []` has
-      // no effect. Modules run after that and before the scan: this drops our
-      // own dirs and keeps h3, Nitro core and module-provided server imports.
-      (nitro) => {
-        if (nitro.options.imports !== false) {
-          nitro.options.imports.dirs = nitro.options.imports.dirs?.filter((dir) =>
-            (typeof dir === "string" ? dir : dir.glob).includes("/node_modules/"),
-          )
-        }
-      },
-    ],
+    // Nitro has no `scan: false`; this keeps our own utils out of server auto-imports.
+    imports: {
+      dirsScanOptions: { fileFilter: (file) => file.includes("/node_modules/") },
+    },
   },
 
   vite: {
     optimizeDeps: {
       include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
-    },
-  },
-
-  hooks: {
-    // Not `imports.scan: false`: that also drops module composables added by
-    // `addImportsDir` (`useSiteConfig`). This keeps only the dirs that modules
-    // contribute from node_modules, and drops every layer's own `composables/`,
-    // `utils/` and `shared/`.
-    "imports:dirs"(dirs) {
-      const moduleDirs = dirs.filter((dir) => dir.includes("/node_modules/"))
-      dirs.splice(0, dirs.length, ...moduleDirs)
     },
   },
 

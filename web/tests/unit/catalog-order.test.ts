@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { compareCatalogOrder } from "../../layers/shop/shared/utils/catalog-order"
+import { compareCatalogOrder } from "#layers/shop/shared/utils/catalog-order"
 
 // Only the keys the comparator reads; a course carries more.
 interface Row {

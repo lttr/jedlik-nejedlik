@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { objectFromFormData } from "../../app/utils/forms"
+import { objectFromFormData } from "~/utils/forms"
 
 describe("objectFromFormData", () => {
   it("converts string entries to a plain object", () => {

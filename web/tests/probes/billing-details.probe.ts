@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
-import { BILLING_FIELDS } from "../../layers/shop/shared/utils/checkout"
+import { BILLING_FIELDS } from "#layers/shop/shared/utils/checkout"
 import {
   ENTITLED_ID,
   PUBLISHED_COURSE_ID,

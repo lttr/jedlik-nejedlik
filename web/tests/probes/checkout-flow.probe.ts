@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
-import { BILLING_FIELDS } from "../../layers/shop/shared/utils/checkout"
+import { BILLING_FIELDS } from "#layers/shop/shared/utils/checkout"
 import { CookieJar, startAppServer } from "./app-server"
 import type { AppServer } from "./app-server"
 import { PUBLISHED_SLUG, cleanUpItems, item, items, probe, probeSend, roleToken } from "./support"

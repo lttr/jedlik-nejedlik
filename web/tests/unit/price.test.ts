@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { formatPriceCzk } from "../../layers/shop/shared/utils/price"
+import { formatPriceCzk } from "#layers/shop/shared/utils/price"
 
 const NBSP = " "
 

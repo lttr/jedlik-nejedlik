@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import {
-  orphanSalesContentSlugs,
-  resolveSalesContent,
-} from "../../layers/shop/app/utils/sales-content"
+import { orphanSalesContentSlugs, resolveSalesContent } from "#layers/shop/app/utils/sales-content"
 
 // The lookup takes the registry as an argument so the test owns its map:
 // what a component is does not matter here, only whether a slug resolves.
