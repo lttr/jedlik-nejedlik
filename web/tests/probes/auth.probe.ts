@@ -15,7 +15,7 @@ import {
 } from "./support"
 
 // The app's own constant, so the probe proves it still matches the instance.
-import { PASSWORD_MIN_LENGTH } from "../../layers/auth/shared/utils/password"
+import { PASSWORD_MIN_LENGTH } from "#layers/auth/shared/utils/password"
 
 // The Directus auth contract the Nitro session routes are built on (area 02).
 // Throwaway users are created and deleted with the admin token.

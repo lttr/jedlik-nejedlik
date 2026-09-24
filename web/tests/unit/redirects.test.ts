@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_AUTH_REDIRECT, safeRedirectPath } from "../../layers/auth/shared/utils/redirects"
+import { DEFAULT_AUTH_REDIRECT, safeRedirectPath } from "#layers/auth/shared/utils/redirects"
 
 describe("safeRedirectPath", () => {
   it("keeps a same-origin path with its query and hash", () => {

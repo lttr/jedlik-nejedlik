@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { PASSWORD_MIN_LENGTH, validatePassword } from "../../layers/auth/shared/utils/password"
+import { PASSWORD_MIN_LENGTH, validatePassword } from "#layers/auth/shared/utils/password"
 
 describe("validatePassword", () => {
   // The instance policy is a length and nothing else: the character mix must

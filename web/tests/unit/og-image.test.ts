@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { courseOgImageUrl } from "../../layers/shop/shared/utils/og-image"
+import { courseOgImageUrl } from "#layers/shop/shared/utils/og-image"
 
 describe("courseOgImageUrl", () => {
   it("builds an absolute 1200×630 cover transform on the Directus origin", () => {

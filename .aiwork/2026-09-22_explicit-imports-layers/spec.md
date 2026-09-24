@@ -85,6 +85,14 @@ and opt-in.
 
 ## Config
 
+> **Amended 2026-09-24.** As built: `imports: { scan: false }` with the site
+> URL and name as constants in `layers/base` (they replace `useSiteConfig`),
+> and on the server `nitro.imports.dirsScanOptions.fileFilter` keeping only
+> `node_modules/` files: `dirs: []` does not stick and `imports: false` breaks
+> module runtimes. Specifiers: one oxlint override banning `../../` chains;
+> the `~/`-in-a-layer case is already caught by fallow or typecheck. See
+> implementation notes.
+
 `web/nuxt.config.ts`:
 
 ```ts

@@ -7,21 +7,30 @@ a place where the spec turned out to be wrong. The diff shows what was built.
 
 - **`imports: { scan: false }` also drops module composables.** Modules that
   register a dir through `addImportsDir` lose their auto-imports too:
-  `useSiteConfig` from nuxt-site-config broke `app.vue` and `kurzy/[slug].vue`
-  in typecheck. The spec's claim that "modules register via `addImports`" holds
-  for some modules, not all. We use an `imports:dirs` hook in the root
-  `nuxt.config.ts` instead, which keeps only dirs under `node_modules/`.
+  `useSiteConfig` from nuxt-site-config broke `app.vue` and `kurzy/[slug].vue`.
+  Both only read the site URL and name, so those moved to constants in
+  `layers/base/shared/utils/site.ts` (also read by the `site` config), and
+  `scan: false` stays. A first version kept `useSiteConfig` with an
+  `imports:dirs` hook instead; it was replaced as too clever.
 - **`nitro: { imports: { dirs: [] } }` does not stick.** Nitro's
   `resolveImportsOptions` appends `<scanDir>/utils/**/*` for every layer after
-  config merging (nitropack 2.13.4, `core/index.mjs`). An inline Nitro module
-  runs after that and before `createUnimport`. It filters the dirs the same
-  way. h3 and Nitro core stay auto-imported (`defineEventHandler`, `readBody`,
-  `useRuntimeConfig`), and so does `useUserSession` from nuxt-auth-utils.
-  Proven by the regenerated `.nuxt/types/nitro-imports.d.ts` and by a smoke
-  run of the production build: `/api/auth/logout` returns 204, and
-  `/api/courses` fails only when it fetches the dummy Directus.
-- **Both filters test for `/node_modules/` in the path.** A layer installed
-  from npm would therefore keep its auto-imports. We have none.
+  config merging (nitropack 2.13.4, `core/index.mjs`), and `imports: false`
+  empties `#imports`, which module runtimes (nuxt-auth-utils: 56 files) import
+  from. What works is unimport's
+  `nitro.imports.dirsScanOptions.fileFilter`, keeping only files under
+  `node_modules/`. h3, Nitro core and `getUserSession` stay auto-imported. A
+  server route that calls one of our utils without importing it fails
+  `nuxi typecheck` (TS2304), so fallow sees every cross-layer server edge.
+  Smoke-tested on the production build: home 200, `/api/auth/logout` 204,
+  `/api/courses` 200.
+- **The filter tests for `/node_modules/` in the path.** A layer installed
+  from npm would therefore keep its server auto-imports. We have none.
+- **The specifier rule shrank to `../../`.** The `~/`-in-a-layer ban was
+  redundant: if the target is in the root, fallow reports a layer → app
+  boundary violation, and otherwise typecheck fails. `@/`, `~~`, `@@` were
+  unused, and `#imports` offers only core APIs once scanning is off. The rule
+  covers `web/tests/` too: tests import through the same aliases
+  (`vitest.aliases.ts`), and type-aware oxlint resolves them there.
 
 ## Tooling decisions
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { parseCatalogCourse } from "../../layers/shop/shared/utils/catalog"
+import { parseCatalogCourse } from "#layers/shop/shared/utils/catalog"
 
 // A course row as Directus returns it for the Catalog query: the public
 // Course columns, `status`, and the outline collapsed to bare lesson ids.

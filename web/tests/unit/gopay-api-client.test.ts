@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import type { GopayClient } from "../../layers/shop/shared/utils/gopay"
+import type { GopayClient } from "#layers/shop/shared/utils/gopay"
 
 // `$fetch` is a Nuxt auto-import: inside the client module it is a free
 // identifier that resolves against `globalThis` at call time. So these tests
@@ -53,7 +53,7 @@ function paymentResponse(state = "CREATED"): unknown {
 async function loadClient(): Promise<GopayClient> {
   stubFetch()
   vi.resetModules()
-  const module = await import("../../layers/shop/server/utils/gopay-api-client")
+  const module = await import("#layers/shop/server/utils/gopay-api-client")
   return module.createGopayApiClient(CONFIG)
 }
 

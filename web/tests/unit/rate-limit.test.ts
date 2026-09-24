@@ -16,7 +16,7 @@ async function loadModule(): Promise<RateLimitModule> {
   vi.stubGlobal("getRequestIP", () => IP)
   vi.stubGlobal("createError", ({ message }: { message: string }) => new Error(message))
   vi.resetModules()
-  return (await import("../../layers/auth/server/utils/rate-limit")) as unknown as RateLimitModule
+  return (await import("#layers/auth/server/utils/rate-limit")) as unknown as RateLimitModule
 }
 
 const WINDOW_MS = 15 * 60 * 1000

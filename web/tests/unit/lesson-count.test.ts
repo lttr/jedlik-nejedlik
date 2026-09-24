@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { formatLessonCount } from "../../layers/shop/shared/utils/lesson-count"
+import { formatLessonCount } from "#layers/shop/shared/utils/lesson-count"
 
 const NBSP = " "
 

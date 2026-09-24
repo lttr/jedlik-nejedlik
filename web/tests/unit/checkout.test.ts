@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import type { Order } from "../../layers/directus/shared/utils/schemas"
+import type { Order } from "#layers/directus/shared/utils/schemas"
 import {
   BILLING_FIELDS,
   TERMS_VERSION,
@@ -11,7 +11,7 @@ import {
   reusableOrder,
   toBillingDetails,
   toBillingPayload,
-} from "../../layers/shop/shared/utils/checkout"
+} from "#layers/shop/shared/utils/checkout"
 
 function order(overrides: Partial<Order>): Order {
   return { id: 1, student: "s", course: 1, status: "created", price_czk: 1490, ...overrides }

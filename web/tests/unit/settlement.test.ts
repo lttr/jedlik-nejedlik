@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import { settlementStateForOrder } from "../../layers/shop/shared/utils/settlement"
+import { settlementStateForOrder } from "#layers/shop/shared/utils/settlement"
 
 describe("settlementStateForOrder", () => {
   it("reports a paid Order as paid", () => {

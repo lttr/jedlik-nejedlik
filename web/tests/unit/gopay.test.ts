@@ -5,7 +5,7 @@ import {
   isPaymentLive,
   orderStatusForPaymentState,
   toHalere,
-} from "../../layers/shop/shared/utils/gopay"
+} from "#layers/shop/shared/utils/gopay"
 
 describe("toHalere", () => {
   it("converts whole koruny to haléře", () => {
