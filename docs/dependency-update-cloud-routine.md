@@ -17,8 +17,8 @@ Claude Code cloud routine invokes it weekly on Monday with a one-line prompt
 - Setup script installs Node 24.15.0, pins pnpm 11.2.2 via corepack and runs
   `pnpm fetch`. The install itself is left to `session-bootstrap.sh` so the
   lockfile this run is about to change stays authoritative.
-- The `maintenance` plugin must be installed in the routine's environment —
-  `nuxt-deps-update` carries only this repo's rules and defers the procedure to
-  its `dependency-update` skill.
+- The `maintenance` plugin is enabled in `.claude/settings.json` so the cloud
+  checkout has it — `nuxt-deps-update` carries only this repo's rules and defers
+  the procedure to its `dependency-update` skill.
 - Pausing the process means disabling the routine's schedule: nothing in the
   repo needs changing, and the skill stays invocable by hand.
