@@ -1,9 +1,13 @@
 # Run under `sh -e`: the first failure aborts the commit.
 
-# Advises: grades staged comments and prints findings. Runs before the gate so
-# its output is seen even when the gate fails. Never blocks.
+# Advises: grades staged comments. Never blocks. Graded before `vp staged`
+# rewrites the index, but printed on exit, pass or fail, so the findings are
+# the last thing in the output: a truncated log still carries them. The file
+# keeps them for reading after the commit.
 if command -v lint-comments >/dev/null 2>&1; then
-  lint-comments --staged --format text || true
+  findings="$(git rev-parse --git-dir)/lint-comments.txt"
+  lint-comments --staged --format text >"$findings" 2>&1 || true
+  trap 'echo "--- lint-comments ($findings) ---"; cat "$findings"' EXIT
 fi
 
 # Writes: formats and --fixes staged files, then re-stages them. Scoped to
