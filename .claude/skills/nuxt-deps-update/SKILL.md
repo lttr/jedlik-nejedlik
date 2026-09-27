@@ -1,6 +1,6 @@
 ---
 name: nuxt-deps-update
-description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the four-row vite-plus toolchain set, auto-import usage search, and hoist skew. Use when the user says "dependency update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
+description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the four-row vite-plus toolchain set, usage search for module auto-imports, and hoist skew. Use when the user says "dependency update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
 disable-model-invocation: true
 argument-hint: "[dry-run]"
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch
@@ -93,13 +93,16 @@ rather than trusting this summary. The short form:
 Bump all four together to whatever a new `vite-plus` release bundles, or bump
 none of them.
 
-## Auto-imports have no import statement
+## Module auto-imports have no import statement
 
-Nuxt auto-imports composables, components and utils. "Find all usages" means
-`rg '\bmyComposable\b' web/app web/server web/layers` or LSP references — never
-an import graph, and never the conclusion "no import found, so it is unused".
-That conclusion feels certain and is wrong. Search the bare name, because a
-symbol can also arrive through `#imports`, `#app` or a `~/` alias.
+Our own composables, components and utils are imported explicitly (since
+2026-09-23, `components: false` and `imports.scan: false` in `web/nuxt.config.ts`),
+so for them the import graph is the usage list. What a Nuxt module provides is
+still auto-imported — `useScriptMetaPixel`, `useSeoMeta`, the `Svgo*`
+components, `defineEventHandler` — so for a package's API "find all usages"
+means `rg '\buseScriptMetaPixel\b' web/app web/server web/layers` or LSP
+references, never the conclusion "no import found, so it is unused". Search the
+bare name, because a symbol can also arrive through `#imports` or `#app`.
 
 ## Hoist skew
 
