@@ -193,8 +193,8 @@ The mock gateway is a Nuxt layer of its own, `mock-gopay/`, extended only when
 `NUXT_GOPAY_ENV` is `mock`, so other builds contain none of it. It sits inside
 `layers/shop` because Nuxt auto-discovers `layers/*` and would register a
 sibling unconditionally. Consequences of the nesting: the `extends` path must
-be absolute, and because the layer is absent from most builds it gets no
-auto-imports, so its files import everything explicitly.
+be absolute, and the layer names itself (`$meta.name`) to get the
+`#layers/mock-gopay` alias that only `layers/*` directories get for free.
 
 `gopay-mock-client.ts` is the stand-in. `createPayment` returns a `gw_url` to
 the dev-only gateway page, the buttons there record the state and

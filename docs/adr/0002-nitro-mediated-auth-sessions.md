@@ -62,6 +62,8 @@ it must re-issue the session.
 
 Registration is the one flow that is _not_ Nitro-mediated in the sense of
 holding a credential: it proxies Directus's native public-registration
-endpoint (2026-08-28), so the app holds no service token at all. The
+endpoint (2026-08-28), so registration needs no service token. The only
+service token the app holds is the shop's, for the payment flow's writes
+(ADR 0006). The
 verification e-mail stays Directus-native for the same reason the reset
 e-mail does — Directus never exposes the token.

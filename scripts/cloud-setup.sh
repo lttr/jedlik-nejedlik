@@ -25,3 +25,4 @@ claude plugin marketplace add lttr/claude-marketplace
 claude plugin install aiwork@lttr-claude-marketplace
 claude plugin install browser@lttr-claude-marketplace
 claude plugin install writing@lttr-claude-marketplace
+claude plugin install maintenance@lttr-claude-marketplace

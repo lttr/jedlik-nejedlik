@@ -3,7 +3,8 @@
 Educational website **Jedlík-nejedlík** about nutrition and parenting ("výživa a
 výchova v propojení") for parents and professionals. Czech-language content site
 with a CMS-driven article workflow, landing pages, webinars, and lead-capture
-forms.
+forms, plus the course shop (`Kurzy`): Accounts, a Catalog, Sales Pages and a
+GoPay Checkout for On-demand Courses.
 
 - **Production:** <https://www.jedlik-nejedlik.cz>
 - **CMS (Directus):** `NUXT_PUBLIC_DIRECTUS_URL` in `web/.env`; the admin app is at `/admin` on it
@@ -40,6 +41,13 @@ cp web/.env.example web/.env      # seed local env
 vp run dev                        # start the Nuxt dev server
 ```
 
+The example file is a template, not a working config: the app validates its
+runtime config at boot (`web/server/runtime-config.schema.ts`) and refuses to
+start without a real `NUXT_PUBLIC_DIRECTUS_URL`, a `NUXT_SESSION_PASSWORD` of
+at least 32 characters and a `NUXT_SHOP_DIRECTUS_TOKEN`. `NUXT_GOPAY_ENV=mock`
+needs no GoPay credentials and runs the payment flow against the dev-only mock
+gateway.
+
 ## Code quality
 
 Linting is intentionally strict — a large pedantic Oxlint rule set (see the
@@ -74,10 +82,32 @@ vp run directus:diff   # detect drift against the dump
 Both need `DIRECTUS_PROBE_ADMIN_TOKEN` in `web/.env`, the same admin token the
 permission probes use. The task says so and stops when it is missing.
 
+What the repo does push are the Czech e-mail templates and the hook
+extension under `directus/`, with `vp run directus:push` (needs the `coolify`
+CLI).
+
 **[docs/directus.md](docs/directus.md)** covers the rest: the MCP endpoint,
 where a permission rule lives in the admin app and in the dump, the role and
 file-folder scoping, and the permission probe suite with its tokens and
 fixtures.
+
+## Code layout and docs
+
+`web/` is a Nuxt app split into layers under `web/layers/` (`base`, `directus`,
+`auth`, `shop` with its nested `mock-gopay`); imports only point down that
+stack. The rules, and everything else an agent or contributor needs before
+touching code, are in [CLAUDE.md](CLAUDE.md).
+
+- [GLOSSARY.md](GLOSSARY.md): the domain terms (Course, Order, Entitlement, …)
+  as the code and the copy use them
+- [docs/shop.md](docs/shop.md): how the shop layer sells a Course, from the
+  Catalog to GoPay settlement
+- [docs/analytics.md](docs/analytics.md): cookie consent and the Meta Pixel and
+  Clarity gates
+- [docs/directus.md](docs/directus.md): operating the CMS
+- [docs/adr/](docs/adr/): the architecture decisions behind all of the above
+- [docs/dependency-update-cloud-routine.md](docs/dependency-update-cloud-routine.md):
+  the weekly dependency update
 
 ## Deployment
 

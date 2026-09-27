@@ -88,7 +88,9 @@ Two behaviours worth knowing before you rely on them:
 ## Roles and file scoping
 
 Policies: Administrator, Redaktor, **Autor** (course authoring), **Student**
-(paid content), and Public.
+(paid content), **Shop service** (the payment flow's three writes, held by the
+„Shop service" user in the „Služby" role, ADR 0006), MCP (the Claude Code
+connector) and Public.
 
 The Public policy reads any file in the **Public** folder tree (that folder or
 a direct child, matched by name). A session never gets that policy, so the

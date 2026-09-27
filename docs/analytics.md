@@ -63,8 +63,9 @@ otherwise send real events.
 
 `LIVE_COURSES` (`web/app/utils/live-courses.ts`) holds the hardcoded facts per
 Live Course that the buy link and the thank-you page read. Nothing edits them,
-so they are not in Directus, and the table is deleted rather than extended once
-the checkout moves in-house, so it is not in the `shop` layer either.
+so they are not in Directus. Live Courses still sell through SimpleShop, not
+through the shop layer's Checkout, and the table is deleted rather than
+extended once they do, so it is not in the `shop` layer either.
 
 The keys are the ids Meta sees as content name and SimpleShop passes back in the
 `kurz` query parameter. They are anchored on the course's start date, so they
