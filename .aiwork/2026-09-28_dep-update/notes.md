@@ -138,7 +138,32 @@ one of the checks — it runs on deploy — and a dependency bump can break it w
 `check:all` stays clean, so it is worth running on a deps PR. The Nitro output
 builds completely on these versions.
 
-The Coolify preview deployment for the PR was still in progress at the end of
-the run; this session has no Coolify CLI or credentials, so its outcome was not
-read. There is also no `web/.env` here, so nothing in this run reached the live
-Directus CMS.
+✅ The Coolify preview deployment went green and published a preview URL
+(`https://test-29.jedlik-nejedlik.cz`), which made the two gaps this skill
+normally has to report as unverifiable actually testable. Both were closed
+against that deployment, which runs the dependency-bump code with real env vars
+against the real CMS:
+
+- **Runtime against live Directus.** `/api/courses` returns a real course
+  record through `@directus/sdk` 26.0.0 with its nested `cover` relation
+  intact, and `/api/courses/<slug>` resolves the three-level nested query
+  (course → sections → lessons, sorted). `/kurzy` and `/kurzy/<slug>` render
+  that data in the SSR HTML — section and lesson headings included. All of
+  `/`, `/o-nas`, `/kurzy`, `/pro-rodice`, `/podcast` return 200 with no error
+  markers.
+- **Visual rendering.** Screenshotted `/kurzy` and the course detail page at
+  375px and `/kurzy` at 1366px with the pre-installed Chromium, and looked at
+  the images. Layout is correct at both widths: no horizontal overflow at
+  375px, the nav wraps as intended, the course card and cover render, the
+  consent banner sits correctly, and Czech typography (the `jedlík–nejedlík`
+  en dash, diacritics) is intact.
+
+Getting a browser onto the preview needed the agent proxy's interception CA in
+the NSS trust store — `~/.pki/nssdb` and `certutil` are both absent from this
+image, so Chromium failed every load with `ERR_CERT_AUTHORITY_INVALID` until
+`libnss3-tools` was installed and both certs from `/root/.ccr/agent-proxy-ca.crt`
+were imported. Worth writing down: the environment claims the browser NSS store
+is pre-configured, and here it was not. TLS verification was never disabled.
+
+Still not reached: no `web/.env` exists in this session, so nothing ran against
+Directus _locally_ — the CMS evidence above is all from the deployed preview.
