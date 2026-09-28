@@ -10,7 +10,7 @@
     "preview": "nuxi preview"
   },
   "dependencies": {
-    "@directus/sdk": "^25.0.1",
+    "@directus/sdk": "^26.0.0",
     "@lttr/puleo": "^0.8.1",
     "@sentry/nuxt": "^10.75.0",
     "nuxt-auth-utils": "^0.5.30",
@@ -35,12 +35,12 @@
     "@nuxtjs/plausible": "^4.0.0",
     "@nuxtjs/seo": "^5.3.16",
     "@total-typescript/ts-reset": "^0.6.1",
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.3",
     "@vueuse/core": "^15.0.0",
     "@vueuse/nuxt": "^15.0.0",
     "eslint": "^10.11.0",
     "eslint-merge-processors": "^2.0.0",
-    "eslint-plugin-baseline-js": "^0.7.1",
+    "eslint-plugin-baseline-js": "^0.7.2",
     "eslint-processor-vue-blocks": "^2.0.0",
     "h3": "1.15.11",
     "nuxt": "^4.5.2",
