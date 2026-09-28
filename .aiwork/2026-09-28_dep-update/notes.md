@@ -132,3 +132,13 @@ peer-resolution key inside `vite-plus`'s lockfile entry, with no importer on it.
 ✅ `vp run check:all` green (18 test files, 145 tests; 392 files formatted; no
 warnings, lint errors or type errors in 246 files). Batch bump only, no
 migration PR this run.
+
+✅ `vp run build` green as well, run after the PR was opened. The build is not
+one of the checks — it runs on deploy — and a dependency bump can break it while
+`check:all` stays clean, so it is worth running on a deps PR. The Nitro output
+builds completely on these versions.
+
+The Coolify preview deployment for the PR was still in progress at the end of
+the run; this session has no Coolify CLI or credentials, so its outcome was not
+read. There is also no `web/.env` here, so nothing in this run reached the live
+Directus CMS.
