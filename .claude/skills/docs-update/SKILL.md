@@ -9,7 +9,8 @@ argument-hint: "[since, default 8 days ago]"
 
 Run `/maintenance:docs-checker` over `README.md`, `GLOSSARY.md` and `docs/`,
 then fix what it finds instead of only reporting. Start from what changed on
-`master` since `$ARGUMENTS` (default: 8 days ago), but older mistakes count too.
+`master` since `$ARGUMENTS` (default: 8 days ago, a week for the weekly
+routine plus a day so a late run leaves no gap), but older mistakes count too.
 
 ## The bar
 
