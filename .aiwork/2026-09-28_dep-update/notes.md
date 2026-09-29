@@ -167,3 +167,12 @@ is pre-configured, and here it was not. TLS verification was never disabled.
 
 Still not reached: no `web/.env` exists in this session, so nothing ran against
 Directus _locally_ — the CMS evidence above is all from the deployed preview.
+
+## Follow-up: `@sentry/nuxt` 11 (2026-09-29, on `master`)
+
+Bumped `@sentry/nuxt` to 11.0.0 and dropped `enableLogs: true` from both
+Sentry configs, as planned above. 11.1.0 is already out but still inside
+`minimumReleaseAge`: pnpm offered to add 14 `minimumReleaseAgeExclude` rows,
+so it was left for the next run. `check:all` and `vp run build` are green; the
+dev server renders `/`, `/kurzy`, `/o-nas` and `/api/courses`, and the browser
+client reports `sentry.javascript.nuxt/11.0.0` with no console errors.

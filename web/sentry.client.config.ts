@@ -13,8 +13,6 @@ Sentry.init({
 
   tracesSampleRate: 1.0,
 
-  enableLogs: true,
-
   // Enable sending of user PII (Personally Identifiable Information).
   // Replaces the deprecated `sendDefaultPii: true` flag with its equivalent
   // granular config (see @sentry/core's `defaultPiiToCollectionOptions`).

@@ -5,8 +5,6 @@ Sentry.init({
 
   tracesSampleRate: 1.0,
 
-  enableLogs: true,
-
   // Why `dataCollection` and not `sendDefaultPii`: see sentry.client.config.ts.
   dataCollection: {
     userInfo: true,
