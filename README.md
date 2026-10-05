@@ -106,8 +106,8 @@ touching code, are in [CLAUDE.md](CLAUDE.md).
   Clarity gates
 - [docs/directus.md](docs/directus.md): operating the CMS
 - [docs/adr/](docs/adr/): the architecture decisions behind all of the above
-- [docs/dependency-update-cloud-routine.md](docs/dependency-update-cloud-routine.md):
-  the weekly dependency update
+- [docs/cloud-routines.md](docs/cloud-routines.md): the weekly dependency and
+  docs routines
 
 ## Deployment
 

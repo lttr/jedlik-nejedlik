@@ -139,4 +139,4 @@ Runtime behaviour against the live Directus CMS and visual rendering are never
 verified by `check:all`. They belong in **Not verified** every time.
 
 The weekly cloud routine that runs this file is documented in
-`docs/dependency-update-cloud-routine.md`.
+`docs/cloud-routines.md`.
