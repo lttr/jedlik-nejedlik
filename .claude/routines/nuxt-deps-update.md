@@ -1,9 +1,6 @@
 ---
 name: nuxt-deps-update
-description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the four-row vite-plus toolchain set, usage search for module auto-imports, and hoist skew. Use when the user says "dependency update", "update deps", "dry run the dep update", or when the weekly cloud routine fires.
-disable-model-invocation: true
-argument-hint: "[dry-run]"
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch
+description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the four-row vite-plus toolchain set, usage search for module auto-imports, and hoist skew.
 ---
 
 # Dependency update (this repo)
@@ -141,5 +138,5 @@ tsconfig currently points at.
 Runtime behaviour against the live Directus CMS and visual rendering are never
 verified by `check:all`. They belong in **Not verified** every time.
 
-The weekly cloud routine that triggers this skill is documented in
+The weekly cloud routine that runs this file is documented in
 `docs/dependency-update-cloud-routine.md`.

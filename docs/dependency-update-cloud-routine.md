@@ -1,8 +1,9 @@
 # Dependency update: weekly cloud routine
 
-The `/nuxt-deps-update` skill runs the same way however it is triggered. The
-Claude Code cloud routine invokes it weekly on Monday with a one-line prompt
-("Run the `/nuxt-deps-update` skill.") in a dedicated environment:
+`.claude/routines/nuxt-deps-update.md` runs the same way however it is
+triggered. The Claude Code cloud routine runs it weekly on Monday with a
+one-line prompt ("Follow `.claude/routines/nuxt-deps-update.md`.") in a
+dedicated environment:
 
 - Environment variables: `NUXT_PUBLIC_DIRECTUS_URL` only. Cloud environments
   have no secrets store and their values are readable by anyone using the
@@ -17,8 +18,8 @@ Claude Code cloud routine invokes it weekly on Monday with a one-line prompt
 - Setup script installs Node 24.15.0, pins pnpm 11.2.2 via corepack and runs
   `pnpm fetch`. The install itself is left to `session-bootstrap.sh` so the
   lockfile this run is about to change stays authoritative.
-- The `maintenance` plugin is enabled in `.claude/settings.json` so the cloud
-  checkout has it — `nuxt-deps-update` carries only this repo's rules and defers
-  the procedure to its `dependency-update` skill.
+- `scripts/cloud-setup.sh` installs the `maintenance` plugin, which is not
+  enabled for local sessions — `nuxt-deps-update.md` carries only this repo's
+  rules and defers the procedure to its `dependency-update` skill.
 - Pausing the process means disabling the routine's schedule: nothing in the
-  repo needs changing, and the skill stays invocable by hand.
+  repo needs changing, and the file can still be run by hand.
