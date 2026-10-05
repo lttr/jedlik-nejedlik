@@ -22,6 +22,8 @@ playwright-cli install-browser chromium
 
 # Claude Code plugins enabled in .claude/settings.json.
 claude plugin marketplace add lttr/claude-marketplace
+claude plugin marketplace update
+
 claude plugin install aiwork@lttr-claude-marketplace
 claude plugin install browser@lttr-claude-marketplace
 claude plugin install writing@lttr-claude-marketplace
