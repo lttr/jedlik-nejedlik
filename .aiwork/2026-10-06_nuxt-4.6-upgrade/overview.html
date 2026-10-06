@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nuxt 4.6 upgrade: overview</title>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --fg: #1f2328;
+        --muted: #646b73;
+        --line: #e4e1da;
+        --card: #fff;
+        --green: #0f7b45;
+        --green-bg: #e8f5ee;
+        --red: #b42318;
+        --red-bg: #fdecea;
+        --accent: #00804f;
+        --code-bg: #f4f2ee;
+        --warn-bg: #fff6e0;
+        --warn: #8a5a00;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #15171a;
+          --fg: #e6e6e3;
+          --muted: #9aa0a6;
+          --line: #2c3036;
+          --card: #1c1f23;
+          --green: #5bd497;
+          --green-bg: #15301f;
+          --red: #ff8a80;
+          --red-bg: #3a1c1a;
+          --accent: #5bd497;
+          --code-bg: #23272c;
+          --warn-bg: #33290f;
+          --warn: #f0c46a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.6 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      main {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+      }
+      h1 {
+        font-size: 2.1rem;
+        line-height: 1.2;
+        margin: 0 0 8px;
+      }
+      h2 {
+        font-size: 1.45rem;
+        margin: 64px 0 8px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin: 0 0 6px;
+      }
+      p {
+        margin: 8px 0;
+      }
+      .lede {
+        font-size: 1.15rem;
+        color: var(--muted);
+        max-width: 760px;
+      }
+      .meta {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      code {
+        font:
+          0.88em/1.5 ui-monospace,
+          "JetBrains Mono",
+          Menlo,
+          monospace;
+        background: var(--code-bg);
+        padding: 1px 5px;
+        border-radius: 4px;
+      }
+      pre {
+        margin: 0;
+        padding: 14px 16px;
+        overflow-x: auto;
+        background: var(--code-bg);
+        border-radius: 0 0 8px 8px;
+        font:
+          13px/1.55 ui-monospace,
+          "JetBrains Mono",
+          Menlo,
+          monospace;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+        font-size: inherit;
+      }
+      .tldr {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin: 28px 0;
+      }
+      .tldr div {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px 16px;
+      }
+      .tldr b {
+        display: block;
+        font-size: 1.6rem;
+        color: var(--accent);
+        line-height: 1.1;
+      }
+      .tldr span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 16px 0 8px;
+      }
+      @media (max-width: 760px) {
+        .compare {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pane {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        min-width: 0;
+      }
+      .pane .label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 6px 12px;
+        border-radius: 8px 8px 0 0;
+      }
+      .before .label {
+        background: var(--red-bg);
+        color: var(--red);
+      }
+      .after .label {
+        background: var(--green-bg);
+        color: var(--green);
+      }
+      .del {
+        color: var(--red);
+      }
+      .add {
+        color: var(--green);
+      }
+      .cm {
+        color: var(--muted);
+        font-style: italic;
+      }
+      .why {
+        border-left: 3px solid var(--accent);
+        padding: 4px 0 4px 14px;
+        margin: 10px 0;
+        color: var(--fg);
+      }
+      ul.clean {
+        padding-left: 20px;
+      }
+      ul.clean li {
+        margin: 4px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0;
+        font-size: 0.95rem;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+      .steps {
+        counter-reset: s;
+        list-style: none;
+        padding: 0;
+      }
+      .steps li {
+        counter-increment: s;
+        position: relative;
+        padding: 8px 0 8px 44px;
+        border-bottom: 1px dashed var(--line);
+      }
+      .steps li::before {
+        content: counter(s);
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--green-bg);
+        color: var(--green);
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+      }
+      .callout {
+        background: var(--warn-bg);
+        color: var(--fg);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin: 16px 0;
+      }
+      .callout b {
+        color: var(--warn);
+      }
+      .diagram {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin: 14px 0;
+        font-size: 0.92rem;
+      }
+      .diagram .box {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 12px;
+      }
+      .diagram .box.new {
+        border-color: var(--green);
+        background: var(--green-bg);
+      }
+      .diagram .box.gone {
+        border-color: var(--red);
+        background: var(--red-bg);
+        text-decoration: line-through;
+      }
+      .diagram .arrow {
+        color: var(--muted);
+      }
+      nav.toc {
+        font-size: 0.92rem;
+        columns: 2;
+        margin: 18px 0;
+      }
+      nav.toc a {
+        color: var(--accent);
+        text-decoration: none;
+        display: block;
+        padding: 2px 0;
+      }
+      .note {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="meta">
+        .aiwork/2026-10-06_nuxt-4.6-upgrade · summary of <code>spec.md</code> · 2026-10-06
+      </p>
+      <h1>Nuxt 4.6 upgrade: what it is and why</h1>
+      <p class="lede">
+        We move to Nuxt 4.6, the release that bridges to Nuxt 5, and use it to clean up the server
+        code. The API becomes type-checked from the server handler to the page. Several workarounds
+        go away. After this, moving to Nuxt 5 should be just a version bump.
+      </p>
+
+      <div class="tldr">
+        <div>
+          <b>1 → 0</b><span>auth modules (nuxt-auth-utils replaced by Nuxt's own sessions)</span>
+        </div>
+        <div>
+          <b>~20 → 0</b><span>files importing from <code>h3</code></span>
+        </div>
+        <div><b>7 → 1</b><span>copies of the "parse request body" pattern</span></div>
+        <div><b>6 → 0</b><span>hand-written response types in client calls</span></div>
+        <div><b>3 → all</b><span>data fetches that report errors to Sentry</span></div>
+        <div><b>Nuxt 5</b><span>compatibility mode switched on now</span></div>
+      </div>
+
+      <nav class="toc">
+        <a href="#why">Why now</a>
+        <a href="#typed">1 · Type-checked API calls</a>
+        <a href="#server">2 · Server code on <code>nuxt/server</code></a>
+        <a href="#session">3 · Sessions without nuxt-auth-utils</a>
+        <a href="#input">4 · One input-validation helper</a>
+        <a href="#errors">5 · Error reporting by default</a>
+        <a href="#nuxt5">6 · Nuxt 5 mode and removed workarounds</a>
+        <a href="#toolchain">7 · Toolchain</a>
+        <a href="#order">Order of work</a>
+        <a href="#you">What you need to do</a>
+        <a href="#risks">Risks</a>
+      </nav>
+
+      <!-- ============================================================ -->
+      <h2 id="why">Why now</h2>
+      <ul class="clean">
+        <li>
+          <b>Nuxt 4.6</b> came out on 2026-10-06. Nuxt 3 has been end-of-life since July, so 4.x is
+          the only maintained line, and 4.6 lets you switch on every Nuxt 5 default ahead of time.
+        </li>
+        <li>
+          It adds <b><code>nuxt/server</code></b
+          >, a set of server helpers that work the same on Nitro v2 (today) and Nitro v3 (Nuxt 5).
+        </li>
+        <li>
+          It rebuilds <b>typed <code>$fetch</code></b
+          >: the client knows each route's path, method, body and response, without the "type
+          instantiation is excessively deep" errors.
+        </li>
+        <li>
+          Our blocker was <b>nuxt-auth-utils</b>. It only works with h3 v1, its maintainer said in
+          April it is "not yet ready for Nitro v3", and nothing has moved since. Nobody uses
+          accounts in production yet, so we can simply replace it.
+        </li>
+      </ul>
+
+      <!-- ============================================================ -->
+      <h2 id="typed">1 · Type-checked API calls</h2>
+      <p>
+        Today the client states every response type itself. A generic on
+        <code>useFetch&lt;T&gt;</code> is an <b>unchecked assertion</b>: if the handler changes what
+        it returns, the page still compiles against the old shape.
+      </p>
+
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before · MyCourses.vue</div>
+          <pre><code>import type { OwnedCourse }
+  from "#layers/shop/shared/utils/owned-courses"
+
+const { data: courses } =
+  await useFetch<span class="del">&lt;OwnedCourse[]&gt;</span>(
+    "/api/account/courses",
+    { key: "account:courses", default: () =&gt; [] },
+  )
+
+<span class="cm">// typo in the path? wrong method? → runtime 404</span>
+await $fetch<span class="del">&lt;{ gwUrl: string }&gt;</span>(
+  `/api/checkout/${slug}`, { method: "POST", body })</code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After</div>
+          <pre><code><span class="cm">// no import, no generic: the type comes from
+// the handler's return type</span>
+const { data: courses } = await useApiFetch(
+  "/api/account/courses",
+  { key: "account:courses", default: () =&gt; [] },
+)
+
+<span class="cm">// path, method and body are type-checked</span>
+await $fetch("/api/acount/courses")
+<span class="cm">//           ^ error: unknown route</span>
+await $fetch("/api/checkout/x", { method: "POST",
+  body: { consent: "yes" } })
+<span class="cm">//                ^ error: boolean expected</span></code></pre>
+        </div>
+      </div>
+      <p class="why">
+        The handler's return type becomes the single definition of each route's contract. Types the
+        client no longer needs (<code>OwnedCourse</code>, <code>CheckoutView</code>,
+        <code>SettlementView</code>) move from <code>shared/</code> to the server.
+      </p>
+      <p>
+        The two settings: <code>experimental.routeTypedFetch</code> and
+        <code>strictRouteTypes</code>. Calls to GoPay switch to an explicitly imported
+        <code>ofetch</code>, so a bare <code>$fetch</code> always means one of our own routes.
+      </p>
+
+      <!-- ============================================================ -->
+      <h2 id="server">2 · Server code on <code>nuxt/server</code></h2>
+      <p>
+        All handlers, server middleware and server utils import their helpers explicitly from
+        <code>nuxt/server</code>, not from h3 v1 and not through auto-import. The event is the
+        web-standard <code>RequestEvent</code> (<code>event.req</code> is a regular
+        <code>Request</code>).
+      </p>
+
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before · h3 v1, auto-imported</div>
+          <pre><code><span class="del">import type { H3Event } from "h3"</span>
+
+<span class="cm">// defineEventHandler, readBody, createError,
+// sendNoContent … come from nowhere visible</span>
+export default defineEventHandler(async (event) =&gt; {
+  …
+  throw createError({ <span class="del">statusCode</span>: 400 })
+  sendNoContent(event)
+})
+
+function readCookie(event: <span class="del">H3Event</span>) {
+  return <span class="del">event.node.req.headers.cookie</span>
+}</code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After · explicit, portable to Nuxt 5</div>
+          <pre><code><span class="add">import { createError, defineEventHandler }
+  from "nuxt/server"
+import type { RequestEvent } from "nuxt/schema"</span>
+
+export default defineEventHandler(async (event) =&gt; {
+  …
+  throw createError({ <span class="add">status</span>: 400 })
+  return new Response(null, { status: 204 })
+})
+
+function readCookie(event: <span class="add">RequestEvent</span>) {
+  return <span class="add">event.req.headers.get("cookie")</span>
+}</code></pre>
+        </div>
+      </div>
+      <p class="why">
+        The server follows the same rule as the rest of the codebase: every import is visible. The
+        same code runs unchanged on Nuxt 5 / Nitro v3.
+      </p>
+      <p class="note">
+        Sketch. The exact 204 form and where <code>RequestEvent</code> is imported from get settled
+        during implementation. Watch for the trap: mixing h3's <code>defineEventHandler</code> with
+        <code>nuxt/server</code> helpers in one file gives a <code>NUXT_E8012</code> 500, so each
+        file is converted completely in one go.
+      </p>
+
+      <!-- ============================================================ -->
+      <h2 id="session">3 · Sessions without nuxt-auth-utils</h2>
+      <p>
+        The swap is small because the code already has <b>two places</b> where the session is
+        touched: the server <code>session-store</code> and the client <code>useAccount()</code>.
+        Only those two change. Pages and API handlers still work with <code>Account</code>.
+      </p>
+
+      <div class="diagram">
+        <span class="box">page</span><span class="arrow">→</span>
+        <span class="box">useAccount()</span><span class="arrow">→</span>
+        <span class="box gone">useUserSession()</span><span class="arrow">→</span>
+        <span class="box gone">GET /api/_auth/session (internal fetch)</span>
+      </div>
+      <div class="diagram">
+        <span class="box">page</span><span class="arrow">→</span>
+        <span class="box">useAccount()</span><span class="arrow">→</span>
+        <span class="box new">useState (filled during SSR by the account middleware)</span>
+      </div>
+
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before · session-store.ts</div>
+          <pre><code><span class="cm">// getUserSession etc. only reachable via
+// Nitro auto-import</span>
+export async function readAccountSession(event: H3Event) {
+  const { user, secure } = await <span class="del">getUserSession</span>(event)
+  return { account: user, secrets: secure }
+}
+
+export async function dropAccountSession(event: H3Event) {
+  await <span class="del">clearUserSession</span>(event)
+  <span class="cm">// also strip the cookie from the incoming
+  // request, because the module re-reads the
+  // session through an internal SSR fetch…</span>
+<span class="del">  event.node.req.headers.cookie = cookieHeader
+    .split(";").filter(…).join(";")</span>
+}</code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After</div>
+          <pre><code><span class="add">import { useSession } from "nuxt/server"</span>
+
+interface StoredSession {
+  account?: Account
+  secrets?: AccountSecrets
+}
+
+const config = { maxAge: THIRTY_DAYS,
+  cookie: { httpOnly: true, secure: true,
+            sameSite: "lax" } }
+
+export async function readAccountSession(event) {
+  const s = await useSession&lt;StoredSession&gt;(event, config)
+  return { account: s.data.account,
+           secrets: s.data.secrets }
+}
+
+export async function dropAccountSession(event) {
+  await (await useSession(event, config)).clear()
+  <span class="cm">// no internal fetch → no hack</span>
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before · auth.ts (client)</div>
+          <pre><code>async logIn(credentials) {
+  await $fetch("/api/auth/login",
+    { method: "POST", body: credentials })
+  await <span class="del">refresh()</span>  <span class="cm">// second request to read the session</span>
+}</code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After</div>
+          <pre><code>async logIn(credentials) {
+  account.value = await $fetch("/api/auth/login",
+    { method: "POST", body: credentials })
+  <span class="cm">// login returns the Account, typed</span>
+}</code></pre>
+        </div>
+      </div>
+      <ul class="clean">
+        <li>
+          The cookie is sealed with <code>NUXT_APP_SECRET</code>, the app-wide secret new in 4.6. It
+          replaces <code>NUXT_SESSION_PASSWORD</code>.
+        </li>
+        <li>
+          The Directus tokens stay server-side only, as ADR 0002 requires. The browser only ever
+          gets the <code>Account</code> (e-mail).
+        </li>
+        <li>The 30-day window keeps renewing on use. A unit test covers this.</li>
+        <li>
+          ADR 0002 gets an amendment: the session is sealed by Nuxt itself instead of
+          nuxt-auth-utils. The decision itself doesn't change.
+        </li>
+      </ul>
+
+      <!-- ============================================================ -->
+      <h2 id="input">4 · One input-validation helper</h2>
+      <p>The same pattern appears seven times, in auth, shop and mock-GoPay:</p>
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before · billing.post.ts (and six more)</div>
+          <pre><code>const request = BillingRequestSchema.safeParse(
+  await readBody(event).catch(() =&gt; undefined))
+if (!request.success) {
+  throw shopError(400, "invalid_billing",
+    shopMessages.billingInvalid)
+}
+<span class="cm">// client body is untyped</span></code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After · sketch</div>
+          <pre><code>import { readValidInput }
+  from "#layers/base/server/utils/input"
+
+const billing = await readValidInput(event,
+  BillingRequestSchema,
+  shopError(400, "invalid_billing",
+    shopMessages.billingInvalid))
+<span class="cm">// built on readValidatedBody → the client body
+// is type-checked against BillingRequestSchema</span></code></pre>
+        </div>
+      </div>
+      <p class="why">
+        Written once, the same everywhere, and it makes request bodies type-checked on the client.
+        Error replies stay exactly the same, so a malformed body still reveals nothing extra.
+      </p>
+      <p class="note">
+        The helper's name is illustrative. The first ticket checks whether type inference survives
+        the wrapper. If it doesn't, handlers call <code>readValidatedBody</code> directly and the
+        helper only maps the error.
+      </p>
+
+      <!-- ============================================================ -->
+      <h2 id="errors">5 · Error reporting by default</h2>
+      <p>
+        <code>useAsyncData</code> doesn't throw when a handler fails; it quietly returns empty data.
+        That's why <code>watchAsyncDataError()</code> exists, but only <b>3 call sites</b> remember
+        to call it. Course detail, My Account and checkout don't report anything.
+      </p>
+      <div class="compare">
+        <div class="pane before">
+          <div class="label">Before</div>
+          <pre><code>const { data, error } = await useFetch("/api/courses",
+  { key, default: () =&gt; [] })
+<span class="del">watchAsyncDataError(key, error)</span> <span class="cm">// if you remember</span></code></pre>
+        </div>
+        <div class="pane after">
+          <div class="label">After · 4.6 add-on</div>
+          <pre><code><span class="cm">// base layer, once:</span>
+export const useApiFetch = createUseFetch({
+  addons: [reportErrorsToSentry] })
+
+<span class="cm">// everywhere (raw useFetch is banned by lint):</span>
+const { data } = await useApiFetch("/api/courses",
+  { key, default: () =&gt; [] })</code></pre>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <h2 id="nuxt5">6 · Nuxt 5 mode and removed workarounds</h2>
+      <p>
+        <code>future.compatibilityVersion: 5</code> is switched on as a whole. If a module breaks
+        under one specific Nuxt 5 setting, only that setting is switched off, with a comment saying
+        why and a note in the gap list.
+      </p>
+      <table>
+        <tr>
+          <th>What goes</th>
+          <th>Why it existed</th>
+          <th>Why it can go</th>
+        </tr>
+        <tr>
+          <td>Nitro <code>dirsScanOptions</code> filter in <code>nuxt.config</code></td>
+          <td>
+            To keep our server utils out of auto-import while keeping nuxt-auth-utils' helpers in it
+          </td>
+          <td>Nuxt 5 mode turns Nitro auto-imports off, and nuxt-auth-utils is gone</td>
+        </tr>
+        <tr>
+          <td>Exact <code>h3</code> pin in <code>pnpm-workspace.yaml</code></td>
+          <td>
+            So our <code>import type { H3Event } from "h3"</code> resolves to v1, not the hoisted v2
+            rc
+          </td>
+          <td>Our code no longer imports anything from <code>h3</code></td>
+        </tr>
+        <tr>
+          <td><code>#auth-utils</code> type augmentation and its lint exemption</td>
+          <td>Typing the session for nuxt-auth-utils</td>
+          <td>The session type is an ordinary interface in session-store</td>
+        </tr>
+        <tr>
+          <td><code>runtimeConfig.session</code></td>
+          <td>nuxt-auth-utils required the whole config there</td>
+          <td>The config lives next to the code that uses it</td>
+        </tr>
+      </table>
+      <p>
+        Nuxt 5 defaults to check by hand, not just by a green build: case-sensitive routing,
+        <code>navigateTo</code> returning early in middleware, PostCSS autoprefixer/cssnano off,
+        Options API compiled out, Capo head sorting, and the error page rendered within the same
+        request.
+      </p>
+
+      <!-- ============================================================ -->
+      <h2 id="toolchain">7 · Toolchain</h2>
+      <table>
+        <tr>
+          <th>Package</th>
+          <th>Now</th>
+          <th>After</th>
+        </tr>
+        <tr>
+          <td>nuxt</td>
+          <td>4.5.2</td>
+          <td>4.6.x</td>
+        </tr>
+        <tr>
+          <td>@nuxt/cli</td>
+          <td>3.37</td>
+          <td>4.0 (dev panel, <code>my-bad</code> error pages)</td>
+        </tr>
+        <tr>
+          <td>vite-plus · core (vite)</td>
+          <td>0.3.0 · vite 8.2.2</td>
+          <td>1.0.0 · vite 8.3.1</td>
+        </tr>
+        <tr>
+          <td>rolldown · vitest</td>
+          <td>1.2.5 · 4.1.11</td>
+          <td>1.2.11 · 5.0.1</td>
+        </tr>
+        <tr>
+          <td>nuxt-auth-utils</td>
+          <td>0.5.30</td>
+          <td><b>removed</b></td>
+        </tr>
+      </table>
+      <p class="note">
+        The four pins (vite-plus, the core alias, rolldown, vitest) still move together, as
+        described in <code>pnpm-workspace.yaml</code>.
+      </p>
+
+      <!-- ============================================================ -->
+      <h2 id="order">Order of work (one commit each)</h2>
+      <ol class="steps">
+        <li>Toolchain pins → vite-plus 1.0, vitest 5</li>
+        <li>Nuxt 4.6 + modules</li>
+        <li>Session swap (session-store, useAccount, login returns the Account)</li>
+        <li>Server on <code>nuxt/server</code> + the input-validation helper</li>
+        <li>Typed API: routeTypedFetch, removing the generics, <code>ofetch</code> for GoPay</li>
+        <li><code>useApiFetch</code> with Sentry reporting</li>
+        <li><code>compatibilityVersion: 5</code> + per-setting opt-outs</li>
+        <li>Removing the workarounds (Nitro filter, h3 pin)</li>
+        <li>ADR 0002 amendment, spec <code>status: done</code></li>
+      </ol>
+
+      <h3 style="margin-top: 28px">How it's verified</h3>
+      <ul class="clean">
+        <li>
+          <code>vp run check:all</code>, plus a test that a deliberate wrong path, method and body
+          fail typecheck.
+        </li>
+        <li>
+          Unit tests for session-store (the window renews, tokens never reach the client) and for
+          the input-validation helper.
+        </li>
+        <li>
+          The <code>verify</code> skill: registration → login → My Account → password change →
+          logout → reset, then Catalog → checkout through mock GoPay. At 375px and on desktop.
+        </li>
+        <li>Build, deploy and <code>monitor-deploy</code>, then a smoke test in production.</li>
+      </ul>
+
+      <!-- ============================================================ -->
+      <h2 id="you">What you need to do</h2>
+      <div class="callout">
+        <b>Before the production deploy:</b> set <code>NUXT_APP_SECRET</code> in Coolify (<code
+          >openssl rand -base64 32</code
+        >, as a string). Production never generates one, so without it no session can be created.
+        Remove <code>NUXT_SESSION_PASSWORD</code> only after the deploy is confirmed healthy, so a
+        rollback still has its secret.
+      </div>
+      <p>
+        Start on <b>2026-10-07</b> or later: Nuxt 4.6.0 is younger than the 24-hour
+        <code>minimumReleaseAge</code> (ADR 0003).
+      </p>
+
+      <h2 id="risks">Risks</h2>
+      <ul class="clean">
+        <li>
+          <b>Vite version.</b> <code>@nuxt/vite-builder@4.6.0</code> asks for
+          <code>vite ^8.3.2</code>, but vite-plus 1.0.0 bundles 8.3.1. If dev, build or HMR break on
+          it, we wait for a vite-plus patch.
+        </li>
+        <li>
+          <b>vitest 5</b> is a major version that comes with vite-plus. If it grows, it splits into
+          its own task.
+        </li>
+        <li>
+          <b>Modules under Nuxt 5 mode</b> were audited on 2026-10-06 and none is known to break
+          with our config. <b>Sentry is likely to:</b> its middleware wrapper imports from
+          <code>#imports</code>, which doesn't exist with Nitro auto-imports off. The fallback is
+          the single opt-out <code>experimental.nitroAutoImports: true</code>. Two of our own files
+          (the sitemap handler and <code>auth-urls.ts</code>) need explicit imports through the
+          modules' aliases.
+        </li>
+      </ul>
+
+      <p class="note" style="margin-top: 48px">
+        Details, all user stories and decisions: <code>spec.md</code> in the same folder. The
+        "after" code snippets are illustrative sketches, not final code.
+      </p>
+    </main>
+  </body>
+</html>
