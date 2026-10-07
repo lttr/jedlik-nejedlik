@@ -181,7 +181,7 @@ Simulated by pointing the server client at an unresolvable host:
 
 - A logged-in visitor still renders **logged in** (identity is in the
   cookie), the session is left untouched, and `[auth] Directus refresh
-failed` is logged. Never silently downgraded to a guest.
+  failed` is logged. Never silently downgraded to a guest.
 - `POST /api/auth/login` answers `502 auth_unavailable` with
   "Přihlášení je teď nedostupné. Zkuste to prosím za chvíli." — an outage
   is never reported as wrong credentials.
@@ -379,7 +379,7 @@ committed file is clean.
 
 - **The verification URL is built from the configured site URL**, not the
   request origin (`authPageUrl(event, path)` → `new URL(path,
-getSiteConfig(event).url)`). A forged `Host` header therefore cannot
+  getSiteConfig(event).url)`). A forged `Host` header therefore cannot
   steer where an e-mail points. Consequence worth knowing: in local dev
   the app still sends the _production_ URL, so registration cannot
   succeed locally even once ops lands unless a localhost entry is added
@@ -563,7 +563,7 @@ The password input + policy hint + `aria-describedby` +
   page shows the Czech message plus a button back to the request leg.
 - **`prihlaseni.vue` grew a `notice` computed** covering both
   `EMAIL_VERIFIED_QUERY` and the new `PASSWORD_CHANGED_QUERY =
-"heslo-zmeneno"` (named in `shared/utils/redirects.ts`). Also added the
+  "heslo-zmeneno"` (named in `shared/utils/redirects.ts`). Also added the
   "Zapomněli jste heslo?" link — without it `/obnova-hesla` had no entry
   point anywhere on the site.
 - **`checkSpam` moved into `authMessages`** — both e-mail flows say it,
@@ -580,7 +580,7 @@ The password input + policy hint + `aria-describedby` +
 - **`registration.ts` and `password-reset.ts` have visibly converged** —
   four structurally identical function pairs, one duplicated comment
   paragraph. A `callDirectusAuth(event, request, { context, unavailable,
-codes })` would close it, but it refactors ticket 03's files and one
+  codes })` would close it, but it refactors ticket 03's files and one
   asymmetry must survive it: verify falls through to 502 on an unknown
   code, reset treats any answered code as a dead link. Follow-up.
 - **A generalised notice registry** (`AUTH_NOTICE_QUERY` + a message map).

@@ -18,7 +18,7 @@ without. Per-ticket entries appended by the orchestrator as tickets land.
 - Chromium refuses to start as root with its sandbox on, which is what the
   Playwright preflight failure in a fresh cloud container was. The global
   `~/.playwright/cli.config.json` now needs `launchOptions.chromiumSandbox:
-false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
+  false`; `scripts/cloud-setup.sh` writes it (commit `679cc9f`).
 
 ## 01 — Rename Student → Account
 

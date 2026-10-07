@@ -91,7 +91,7 @@ So Pass 2 is the UX axis restricted to one page's visual state.
    own established pages as the corpus, named explicitly rather than implied.
 3. **Does the copy pass also cover tone/wording**, or only typography? The
    repo already has commits like `copy(auth): clarify the post-registration
-message`, so wording is being judged by hand today.
+   message`, so wording is being judged by hand today.
 
 ## Acceptance criteria
 

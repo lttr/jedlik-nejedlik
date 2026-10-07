@@ -219,7 +219,7 @@ Chronological log. Newest entries at the bottom.
   `docker exec` into the Directus container → node script using the image's
   bundled `sqlite3` driver (no sqlite CLI in the image) →
   `CREATE UNIQUE INDEX entitlement_student_course_unique ON entitlement
-(student, course)`. Duplicate inserts surface as **400 RECORD_NOT_UNIQUE**
+  (student, course)`. Duplicate inserts surface as **400 RECORD_NOT_UNIQUE**
   at the API (Directus translates the driver error), same as the
   `order.gopay_payment_id` single-column unique. **Known limitation**: the
   composite index is NOT representable in the schema snapshot (both columns
@@ -295,7 +295,7 @@ Chronological log. Newest entries at the bottom.
   types + three new `Schema` entries. `vp run typecheck` green.
 - Verification: probes 41/41 green; typecheck green; eslint clean on changed
   files; `vp run directus:pull` + `diff` clean (`[snapshot] No changes to
-apply`, 0/0/0 across all tracked collections); dump diff reviewed — no
+  apply`, 0/0/0 across all tracked collections); dump diff reviewed — no
   secrets (user tokens are not dumped; the new flow row carries none).
 - **Ticket 03 done.**
 - **Ticket 04 started** (author role + dummy course, FP-11).
@@ -340,7 +340,7 @@ apply`, 0/0/0 across all tracked collections); dump diff reviewed — no
   67bf15ab-fa2c-4d33-8961-ea4337cc4446; sync ids a42dc8e2… / d15b2dbf… in
   the dump). Policy `app_access: true`, `admin_access: false` — the admin
   app works, instance administration does not (probe-verified: `POST
-/collections` and `POST /permissions` are 403). 27 permissions:
+  /collections` and `POST /permissions` are 403). 27 permissions:
   - `course` / `section` / `lesson` / `lesson_material`: create + read +
     update + delete, all fields, **no status filter** — authors see drafts
     and config fields (`test_pass_threshold`, `unlock_rule`,

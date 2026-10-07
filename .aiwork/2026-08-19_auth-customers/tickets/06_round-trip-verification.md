@@ -23,7 +23,7 @@ outcome and closes the area.
       real mailbox
 - [x] Full probe suite (area 01's + auth probes) green twice
       consecutively, self-cleaning — 90/90, 2026-08-28, `vp run
-directus:probe` with `DIRECTUS_PROBE_ADMIN_TOKEN`, sandbox disabled;
+  directus:probe` with `DIRECTUS_PROBE_ADMIN_TOKEN`, sandbox disabled;
       no `probe-*` rows left behind
 - [x] Implementation notes written per the aiwork protocol (deviations,
       instance changes actually applied, follow-ups)

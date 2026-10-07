@@ -239,7 +239,7 @@ Mechanical, one or two commits per layer, `vp run check:all` green at each step.
    afterwards — it is experimental and only needed here.
 3. **Flip config.** `imports: { scan: false }`, `components: false` per the
    section above, and `nitro: { imports: { dirs: [] } }` — then `vp run
-check:all`. Anything still riding an auto-import fails here. Confirm in the
+   check:all`. Anything still riding an auto-import fails here. Confirm in the
    same step that h3 core (`defineEventHandler`) still resolves without an
    import; if it does not, the server side is split off as a follow-up.
 4. **Rules at `warn`.** Add the oxlint override and the fallow boundaries. Check

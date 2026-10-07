@@ -91,7 +91,7 @@ and to keep the orchestrator out of worktree isolation so it can still merge.
 - **Deviation from the spec, deliberate.** The spec says the schema rejects
   `mock` when `NODE_ENV=production`; it actually rejects `mock` whenever the
   build is not a dev build (`import.meta.dev`). `nuxi prepare` and `nuxi
-typecheck` both run with `NODE_ENV=production` and would otherwise strip the
+  typecheck` both run with `NODE_ENV=production` and would otherwise strip the
   mock out of the type graph during `check:all`. Same protection, one fewer way
   to get it wrong.
 
@@ -272,7 +272,7 @@ needs GoPay sandbox credentials and belongs to `../2026-09-15_gopay-go-live/`.
   Consent go to Directus in one nested create.
 - **Pre-existing site bug that will bite ticket 06 and any future form.**
   `web/app/assets/css/main.css` has `input, textarea { max-width: none;
-width: 100% }`, which outranks Puleo's zero-specificity
+  width: 100% }`, which outranks Puleo's zero-specificity
   `:where(input[type="checkbox"]) { inline-size: var(--space-4) }` — a bare
   checkbox stretches to the full row width (measured 460 px). The Checkout works
   around it in its own scoped style; the honest fix is one exclusion in
