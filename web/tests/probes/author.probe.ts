@@ -49,8 +49,8 @@ afterAll(async () => {
   }
 })
 
-// Upload into the cover folder and track the row, so a failed assertion
-// still leaves the afterAll sweep something to remove.
+// Uploads a file into Public/kurzy and records it in `leftovers` right away.
+// If a later assertion fails, afterAll still deletes the file.
 async function uploadCover(token: string, name: string, fields: Record<string, string> = {}) {
   const response = await probeUpload(
     token,
@@ -63,8 +63,8 @@ async function uploadCover(token: string, name: string, fields: Record<string, s
   return { response, coverId }
 }
 
-// The author removing the cover again: both the last assertion of a cover
-// test and its cleanup, since a passing delete is what empties the row.
+// Deletes the cover as the author. The delete is the test's last assertion
+// and also its cleanup, so on success the file drops out of `leftovers`.
 async function authorDeletesCover(coverId: string) {
   expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
   forget(leftovers.files, coverId)

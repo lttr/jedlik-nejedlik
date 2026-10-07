@@ -295,7 +295,6 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   })
 })
 
-// The route only ever writes as the logged-in Student.
 async function signedIn(): Promise<{ student: Fixture; accessToken: string }> {
   const student = await createStudent("active")
   const { access_token: accessToken } = tokens(await login(student.email, student.password))
