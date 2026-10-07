@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 
 // `getRequestIP` and `createError` are h3 auto-imports, plain free
 // identifiers that resolve against `globalThis`, so stubbing them is enough to

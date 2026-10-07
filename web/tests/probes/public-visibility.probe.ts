@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vite-plus/test"
 import { DRAFT_SLUG, PUBLISHED_SLUG, errorCode, items, nonEmptyItems, probe } from "./support"
 
 // Anonymous (public role) visibility matrix for the Kurzy collections.

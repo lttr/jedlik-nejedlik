@@ -6,7 +6,7 @@
 
 import { randomUUID } from "node:crypto"
 
-import { expect } from "vitest"
+import { expect } from "vite-plus/test"
 
 // The instance under test is the one the app talks to (web/.env, loaded by
 // vitest.probes.config.ts).

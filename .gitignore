@@ -25,3 +25,6 @@ design/images/generated*
 
 # my lint-comments tool
 .lint-comments-cache.json
+
+# Vitest 5 cache
+.vitest

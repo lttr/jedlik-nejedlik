@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vite-plus/test"
 
 import { authRedirectTarget, DEFAULT_AUTH_REDIRECT } from "#layers/auth/shared/utils/redirects"
 import {

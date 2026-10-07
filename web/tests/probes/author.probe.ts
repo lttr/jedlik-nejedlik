@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "vitest"
+import { afterAll, describe, expect, it } from "vite-plus/test"
 import {
   ENTITLED_ID,
   MATERIALS_FOLDER_ID,
@@ -48,6 +48,27 @@ afterAll(async () => {
     await probeSend("DELETE", `/files/${id}`, undefined, ADMIN)
   }
 })
+
+// Upload into the cover folder and track the row, so a failed assertion
+// still leaves the afterAll sweep something to remove.
+async function uploadCover(token: string, name: string, fields: Record<string, string> = {}) {
+  const response = await probeUpload(
+    token,
+    { name, content: "cover", type: "text/plain" },
+    { folder: PUBLIC_COURSES_FOLDER_ID, ...fields },
+  )
+  expect(response.status).toBe(200)
+  const coverId = item(response).id as string
+  leftovers.files.push(coverId)
+  return { response, coverId }
+}
+
+// The author removing the cover again: both the last assertion of a cover
+// test and its cleanup, since a passing delete is what empties the row.
+async function authorDeletesCover(coverId: string) {
+  expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
+  forget(leftovers.files, coverId)
+}
 
 describe("author content management", () => {
   let courseId: number
@@ -215,27 +236,6 @@ describe("author content management", () => {
     expect((await probeSend("DELETE", `/files/${fileId}`, undefined, AUTHOR)).status).toBe(204)
     forget(leftovers.files, fileId)
   })
-
-  // Upload into the cover folder and track the row, so a failed assertion
-  // still leaves the afterAll sweep something to remove.
-  async function uploadCover(token: string, name: string, fields: Record<string, string> = {}) {
-    const response = await probeUpload(
-      token,
-      { name, content: "cover", type: "text/plain" },
-      { folder: PUBLIC_COURSES_FOLDER_ID, ...fields },
-    )
-    expect(response.status).toBe(200)
-    const coverId = item(response).id as string
-    leftovers.files.push(coverId)
-    return { response, coverId }
-  }
-
-  // The author removing the cover again: both the last assertion of a cover
-  // test and its cleanup, since a passing delete is what empties the row.
-  async function authorDeletesCover(coverId: string) {
-    expect((await probeSend("DELETE", `/files/${coverId}`, undefined, AUTHOR)).status).toBe(204)
-    forget(leftovers.files, coverId)
-  }
 
   it("owns a course cover in Public/kurzy end to end", async () => {
     // The second folder the create validation allows, so an author can finish

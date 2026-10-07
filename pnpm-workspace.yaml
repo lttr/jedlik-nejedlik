@@ -12,13 +12,13 @@ allowBuilds:
   unrs-resolver: true
   vue-demi: false
 
-# Adopt vite-plus: alias `vite` to VoidZero's drop-in build. `vitest` is NOT
-# aliased — see the note under `overrides` below.
+# Adopt vite-plus: alias `vite` to VoidZero's drop-in build. `vitest` is not
+# declared at all — see the note under `overrides` below.
 #
-# FOUR ROWS MOVE AS ONE. Both rows here are EXACT pins — not `latest`, not a
-# range — and so are `rolldown` and `vitest` in `web/package.json`. vite-plus
-# 0.3.0 bundles core 0.3.0, rolldown 1.2.5 and vitest 4.1.11; those are the
-# numbers the other three rows carry.
+# THREE ROWS MOVE AS ONE. Both rows here are EXACT pins — not `latest`, not a
+# range — and so is `rolldown` in `web/package.json`. vite-plus 1.1.0 bundles
+# core 1.1.0 and rolldown 1.2.12; those are the numbers the other two rows
+# carry (`vp --version` lists them).
 #
 # Why exact: rolldown ships a native binary, and a skew between it and the copy
 # the CLI bundles breaks `vp` outright. The core alias is the same hazard from
@@ -28,17 +28,18 @@ allowBuilds:
 # upgrade (.aiwork/2026-08-26_nuxt-4.5-toolchain-upgrade/notes.md, ticket 02).
 #
 # So `latest` or a caret on either row would let `pnpm update` float one member
-# of the set while the pinned three stayed put. Bump all four together, or none.
+# of the set while the pinned two stayed put. Bump all three together, or none;
+# `vp migrate` after the bump applies the release's config changes.
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
-  vite-plus: 0.3.0
+  vite: npm:@voidzero-dev/vite-plus-core@1.1.0
+  vite-plus: 1.1.0
 
 # Nuxt+pnpm need (since `nuxi init`); vp subprocesses also rely on it. Don't
 # enable enableGlobalVirtualStore — breaks resolution the same way.
 shamefullyHoist: true
 
 # =============================================================================
-# Workarounds for running pre-1.0 vite-plus under tooling that doesn't know
+# Workarounds for running vite-plus under tooling that doesn't know
 # about it. Each is tagged with its issue and DELETE-WHEN condition; expect to
 # remove them one by one as the ecosystem matures.
 # =============================================================================
@@ -51,17 +52,15 @@ overrides:
   # DELETE WHEN: Nuxt ships vite-plus compat. NOTE: this does NOT drop the
   #   `rolldown` devDep in web/ — nuxt 4.5.2 peers `rolldown: ~1.2.1` and does
   #   not mark it optional, so it stays required with or without the alias.
-  vite: "catalog:"
+  vite@*: "catalog:"
 
-# NOTE: `vitest` is deliberately NOT aliased. The old
-#   @voidzero-dev/vite-plus-test alias is dead upstream: the vite-plus CLI
-#   dropped that package at 0.3.0 and depends on plain vitest directly, and its
-#   README now says to install plain `vitest` pinned to the version `vp
-#   toolchain` reports (so the project and `vp test` share one Vitest copy).
-#   That is what `web/package.json` does — an EXACT pin that must move together
-#   with the `vite-plus` row above (0.3.0 -> vitest 4.1.11).
+# NOTE: `vitest` is neither aliased nor declared. vite-plus 1.x depends on an
+#   exact vitest (5.0.3 at 1.1.0) and re-exports it as `vite-plus/test`, which
+#   is what our tests and vitest configs import, so a single `vite-plus` install
+#   is the whole test runner. A direct `vitest` pin would only be a second copy
+#   to keep in step.
 
-# ISSUE: vite-plus-core's version string (0.3.0) satisfies no upstream `vite`
+# ISSUE: vite-plus-core's version string (1.1.0) satisfies no upstream `vite`
 #   range, so every package peering on `vite` reports an unmet peer. Under
 #   pnpm 11.2.2 these are WARNINGS,
 #   not install errors — verified 2026-08-27 by removing the rules and
@@ -88,6 +87,3 @@ peerDependencyRules:
 #   rather than an unneeded one.
 # The pin is EXACT and tracks whatever `nitropack` resolves — it exists to be
 # the same copy Nuxt uses, so a range that could drift off it defeats it.
-
-minimumReleaseAgeExclude:
-  - "@lttr/nuxt-validated-runtime-config@0.1.2"

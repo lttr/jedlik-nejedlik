@@ -63,22 +63,37 @@ export default defineConfig({
       "nuxt:prepare": {
         command: "nuxi prepare",
         cwd: "web",
-        input: srcInput,
-        output: ["web/.nuxt/**", "!web/.nuxt/cache/**", "!web/.nuxt/dev/**", "!web/.nuxt/dist/**"],
+        cache: {
+          input: srcInput,
+          output: [
+            "web/.nuxt/**",
+            "!web/.nuxt/cache/**",
+            "!web/.nuxt/dev/**",
+            "!web/.nuxt/dist/**",
+          ],
+        },
       },
       // Tools run directly (not via nested `vp run -r`) so the cached unit is
       // the leaf command and `srcInput` applies to it.
-      "check:lint": { command: "vp check", input: checkInput, dependsOn: ["nuxt:prepare"] },
+      "check:lint": {
+        command: "vp check",
+        cache: { input: checkInput },
+        dependsOn: ["nuxt:prepare"],
+      },
       "check:slowlint": {
         command: "eslint .",
         cwd: "web",
-        input: srcInput,
+        cache: {
+          input: srcInput,
+        },
         dependsOn: ["nuxt:prepare"],
       },
       "check:typecheck": {
         command: "nuxi typecheck",
         cwd: "web",
-        input: srcInput,
+        cache: {
+          input: srcInput,
+        },
         dependsOn: ["nuxt:prepare"],
       },
       // `audit`: scoped to changed files, silent unless it rejects. Uncached
@@ -87,7 +102,9 @@ export default defineConfig({
       "check:test": {
         command: "vp test run --config vitest.unit.config.ts",
         cwd: "web",
-        input: srcInput,
+        cache: {
+          input: srcInput,
+        },
       },
       // Both tasks below talk to the live Directus, so neither caches: a
       // replayed result would mask drift on the instance. The wrapper script

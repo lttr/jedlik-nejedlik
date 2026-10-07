@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vite-plus/test"
 
 import { authFailure } from "#layers/auth/app/utils/auth-errors"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"

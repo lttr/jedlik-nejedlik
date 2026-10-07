@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest"
+import { afterAll, beforeAll, describe, expect, it } from "vite-plus/test"
 
 import type { ProbeResponse } from "./support"
 import {
@@ -295,14 +295,14 @@ describe("public registration", { timeout: EMAIL_ENDPOINT_TIMEOUT_MS }, () => {
   })
 })
 
-describe("password change from the account page", () => {
-  // The route only ever writes as the logged-in Student.
-  async function signedIn(): Promise<{ student: Fixture; accessToken: string }> {
-    const student = await createStudent("active")
-    const { access_token: accessToken } = tokens(await login(student.email, student.password))
-    return { student, accessToken }
-  }
+// The route only ever writes as the logged-in Student.
+async function signedIn(): Promise<{ student: Fixture; accessToken: string }> {
+  const student = await createStudent("active")
+  const { access_token: accessToken } = tokens(await login(student.email, student.password))
+  return { student, accessToken }
+}
 
+describe("password change from the account page", () => {
   // Both forms answer 200 now that the Student policy grants `read` on
   // `directus_users`. Before that rule `/users/me` answered 403 after it had
   // already written the password, which is why the route writes by id (see

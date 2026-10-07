@@ -86,7 +86,7 @@ After this:
 20. As the maintainer, I want external APIs called through an explicitly imported `ofetch` instance, so that the global `$fetch` always means "our own route".
 21. As the maintainer, I want the Nitro auto-import workaround removed from `nuxt.config`, so that the config no longer explains a hack.
 22. As the maintainer, I want the `h3` pin removed once no code of ours imports `h3`, so that `pnpm-workspace.yaml` loses a workaround.
-23. As the maintainer, I want the four coupled pins moved as one to vite-plus 1.0.0, so that the bundled vite is as close as possible to what Nuxt 4.6 declares.
+23. As the maintainer, I want the coupled pins moved as one to vite-plus 1.1.0, so that the bundled vite is as close as possible to what Nuxt 4.6 declares.
 24. As the maintainer, I want the unit suite green under vitest 5, so that the test gate survives the major bump.
 25. As the maintainer, I want every satellite module at its newest 4.6-compatible version, so that no module holds Nuxt back.
 26. As the maintainer, I want any Nuxt 5 default that a module can't cope with switched off individually, with the reason recorded, so that the gap to "pure" Nuxt 5 is a known list.
@@ -108,7 +108,7 @@ After this:
 ### Versions
 
 - `nuxt` → `^4.6.x`. `vue-router` stays on `^5.3.1` and `vue` on 3.5.x.
-- The four coupled pins move as one: `vite-plus` 1.0.0, the core alias `@voidzero-dev/vite-plus-core@1.0.0` (vite 8.3.1, rolldown 1.2.11), `rolldown` 1.2.11 and `vitest` 5.0.1. Update the numbers in the `pnpm-workspace.yaml` comment too. Apply what the vite-plus 1.0 and vitest 5 release notes require.
+- The coupled pins move as one: `vite-plus` 1.1.0, the core alias `@voidzero-dev/vite-plus-core@1.1.0` (vite 8.3.3, rolldown 1.2.12) and `rolldown` 1.2.12. `vitest` (5.0.3) now comes with vite-plus as `vite-plus/test`, so its pin is dropped. Done ahead of the rest via `vp migrate`.
 - Satellite modules move to their newest 4.6-compatible versions, in their own commit.
 - `nuxt-auth-utils` is removed.
 - TypeScript stays on 5.9.x.
@@ -240,7 +240,7 @@ Upcoming, but **not** part of this spec:
 
 - `@sentry/nuxt` will likely fail to build with Nitro auto-imports off (its middleware wrapper imports from `#imports`). The planned fallback is the single `nitroAutoImports: true` opt-out. Whether to also report it upstream to getsentry/sentry-javascript is the maintainer's call.
 
-- `@nuxt/vite-builder@4.6.0` declares `vite: ^8.3.2`, and vite-plus 1.0.0 bundles 8.3.1. The override forces the gap. If dev, build or HMR break on it, the maintainer decides whether to wait for a vite-plus patch.
+- `@nuxt/vite-builder@4.6.0` declares `vite: ^8.3.2`. Resolved: vite-plus 1.1.0 bundles 8.3.3.
 - vitest 4 → 5 rides along with the vite-plus pin. If it turns into its own project, the maintainer decides whether to split it out and do the rest on vite-plus 0.3.x (rolldown 1.2.5 still satisfies Nuxt's `~1.2.1`).
 - Before deploy, the maintainer sets `NUXT_APP_SECRET` in Coolify (production). This spec can't do it, and the session fails closed without it.
 

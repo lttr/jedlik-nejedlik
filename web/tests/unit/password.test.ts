@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vite-plus/test"
 
 import { PASSWORD_MIN_LENGTH, validatePassword } from "#layers/auth/shared/utils/password"
 

@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest"
+import { afterAll, beforeAll, describe, expect, it } from "vite-plus/test"
 import {
   ENTITLED_ID,
   PUBLISHED_COURSE_ID,
@@ -44,46 +44,46 @@ function studentOfOrder(rows: Record<string, unknown>[], order: number): unknown
   return rows.find((row) => row.id === order)?.student
 }
 
+async function seedStudentWithOrder(
+  studentRole: string,
+): Promise<{ student: string; order: number }> {
+  const user = await probeSend(
+    "POST",
+    "/users",
+    {
+      email: throwawayEmail("shop"),
+      password: generatePassword(),
+      role: studentRole,
+      status: "active",
+      provider: "default",
+    },
+    ADMIN,
+  )
+  if (user.status !== 200) {
+    throw new Error(`Probe fixture setup failed: POST /users returned ${user.status}`)
+  }
+  const student = item(user).id as string
+  createdUsers.push(student)
+
+  const created = await probeSend(
+    "POST",
+    "/items/order",
+    { student, course: PUBLISHED_COURSE_ID, price_czk: 1990 },
+    ADMIN,
+  )
+  if (created.status !== 200) {
+    throw new Error(`Probe fixture setup failed: POST /items/order returned ${created.status}`)
+  }
+  const order = item(created).id as number
+  createdOrders.push(order)
+  return { student, order }
+}
+
 // Runs only where the „Shop service" token is in the environment
 // (DIRECTUS_PROBE_SHOP_TOKEN in web/.env); the account itself is on the
 // instance and in the committed dump.
 // See .aiwork/2026-09-15_checkout-gopay/tickets/01_billing-details-service-account.md.
 describe.skipIf(SHOP === "")("shop service account", () => {
-  async function seedStudentWithOrder(
-    studentRole: string,
-  ): Promise<{ student: string; order: number }> {
-    const user = await probeSend(
-      "POST",
-      "/users",
-      {
-        email: throwawayEmail("shop"),
-        password: generatePassword(),
-        role: studentRole,
-        status: "active",
-        provider: "default",
-      },
-      ADMIN,
-    )
-    if (user.status !== 200) {
-      throw new Error(`Probe fixture setup failed: POST /users returned ${user.status}`)
-    }
-    const student = item(user).id as string
-    createdUsers.push(student)
-
-    const created = await probeSend(
-      "POST",
-      "/items/order",
-      { student, course: PUBLISHED_COURSE_ID, price_czk: 1990 },
-      ADMIN,
-    )
-    if (created.status !== 200) {
-      throw new Error(`Probe fixture setup failed: POST /items/order returned ${created.status}`)
-    }
-    const order = item(created).id as number
-    createdOrders.push(order)
-    return { student, order }
-  }
-
   beforeAll(async () => {
     const studentRole = await roleIdByName("Student", ADMIN)
     ;({ student: studentId, order: orderId } = await seedStudentWithOrder(studentRole))

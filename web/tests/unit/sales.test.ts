@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vite-plus/test"
 
 import { parseSalesCourse } from "#layers/shop/shared/utils/sales"
 

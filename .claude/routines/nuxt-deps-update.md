@@ -1,6 +1,6 @@
 ---
 name: nuxt-deps-update
-description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the four-row vite-plus toolchain set, usage search for module auto-imports, and hoist skew.
+description: Dependency update run for this repo. Wraps the generic /maintenance:dependency-update skill with the rules that only hold here — the Nuxt group, the three-row vite-plus toolchain set, usage search for module auto-imports, and hoist skew.
 ---
 
 # Dependency update (this repo)
@@ -55,19 +55,23 @@ every row. Run `vp install` and scan again rather than reporting "no skew".
 ## The Nuxt group is indivisible
 
 `nuxt`, `@nuxt/*`, `@nuxtjs/*`, `vue`, `vue-router`, `nitropack` and the
-vite/vitest catalog entries move together or not at all. Never ship half of it:
+vite/vite-plus catalog entries move together or not at all. Never ship half of it:
 these peer-depend on each other at ranges a partial bump satisfies on paper and
 breaks at build time, and the failure names a package you did not touch.
 
-## The four-row toolchain set
+## The three-row toolchain set
 
 `pnpm-workspace.yaml` documents this at length under `catalog:` — read it there
 rather than trusting this summary. The short form:
 
 - `catalog.vite` (aliased to `@voidzero-dev/vite-plus-core`), `catalog.vite-plus`,
-  and `rolldown` + `vitest` in `web/package.json` are **four exact pins that
-  move as one**. A caret or `latest` on any of them lets `pnpm update` float one
-  member while the other three stay put.
+  and `rolldown` in `web/package.json` are **three exact pins that move as
+  one**. A caret or `latest` on any of them lets `pnpm update` float one member
+  while the other two stay put.
+- **`vitest` is not a row.** vite-plus 1.x depends on an exact vitest and
+  re-exports it as `vite-plus/test`; the project imports that and declares no
+  `vitest` of its own. If a scan reports `vitest` outdated, it is the copy
+  vite-plus owns: it moves only with a `vite-plus` release.
 - **Why rolldown is declared at all:** `nuxt` peers `rolldown: ~1.2.1` and does
   not mark it optional. (`@nuxt/vite-builder` peers it too, but optionally — the
   hard requirement is nuxt's own.) Verify against the installed
@@ -87,8 +91,9 @@ rather than trusting this summary. The short form:
   (`.aiwork/2026-08-26_nuxt-4.5-toolchain-upgrade/notes.md`, ticket 02). Treat
   that as the reason the pins exist, not as something to re-test.
 
-Bump all four together to whatever a new `vite-plus` release bundles, or bump
-none of them.
+Bump all three together to whatever a new `vite-plus` release bundles, or bump
+none of them. Run `vp migrate` after the bump: it applies the release's config
+and import changes.
 
 ## Module auto-imports have no import statement
 
