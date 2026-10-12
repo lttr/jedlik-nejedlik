@@ -120,9 +120,6 @@ importers:
       eslint-processor-vue-blocks:
         specifier: ^2.0.0
         version: 2.0.0(@vue/compiler-sfc@3.5.43)(eslint@10.12.0(jiti@2.7.0))
-      h3:
-        specifier: 1.15.11
-        version: 1.15.11
       nuxt:
         specifier: ^4.6.1
         version: 4.6.1(4aa25660eda2c9bf619e9912fa1f3a0d)
@@ -10842,25 +10839,7 @@ snapshots:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.6(@testing-library/dom@10.4.1)
       '@vitest/browser': 5.0.3(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))(vitest@5.0.3)
-      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-preview@5.0.3)(@vitest/ui@5.0.3(vitest@5.0.3))(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))
-    transitivePeerDependencies:
-      - bufferutil
-      - msw
-      - utf-8-validate
-      - vite
-
-  '@vitest/browser@5.0.3(@voidzero-dev/vite-plus-core@1.1.0(@types/node@26.6.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.2)(jiti@2.7.0)(stylus@0.57.0)(terser@5.50.0)(typescript@5.9.3)(vue-tsc@3.3.13(typescript@5.9.3))(yaml@2.9.0))(vitest@5.0.3)':
-    dependencies:
-      '@blazediff/core': 1.10.0
-      '@vitest/mocker': 5.0.3(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))
-      '@vitest/ui': 5.0.3(vitest@5.0.3)
-      '@vitest/utils': 5.0.3
-      magic-string: 1.4.2
-      pngjs: 7.0.0
-      sirv: 3.0.2
-      tinyrainbow: 3.1.1
       vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-preview@5.0.3)(@vitest/ui@5.0.3)(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))
-      ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -10895,7 +10874,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-preview@5.0.3)(@vitest/ui@5.0.3(vitest@5.0.3))(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))
+      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/browser-preview@5.0.3)(@vitest/ui@5.0.3)(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))
       ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
@@ -15843,7 +15822,7 @@ snapshots:
     dependencies:
       '@oxc-project/types': 0.153.0
       '@oxlint/plugins': 1.79.0
-      '@vitest/browser': 5.0.3(@voidzero-dev/vite-plus-core@1.1.0(@types/node@26.6.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.2)(jiti@2.7.0)(stylus@0.57.0)(terser@5.50.0)(typescript@5.9.3)(vue-tsc@3.3.13(typescript@5.9.3))(yaml@2.9.0))(vitest@5.0.3)
+      '@vitest/browser': 5.0.3(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))(vitest@5.0.3)
       '@vitest/browser-preview': 5.0.3(vite@7.3.2(@types/node@26.6.5)(jiti@2.7.0)(lightningcss@1.33.0)(stylus@0.57.0)(terser@5.50.0)(yaml@2.9.0))(vitest@5.0.3)
       '@vitest/mocker': 5.0.3(@voidzero-dev/vite-plus-core@1.1.0(@types/node@26.6.5)(@volar/typescript@2.4.28)(@vue/language-core@3.3.13)(esbuild@0.28.2)(jiti@2.7.0)(stylus@0.57.0)(terser@5.50.0)(typescript@5.9.3)(vue-tsc@3.3.13(typescript@5.9.3))(yaml@2.9.0))
       '@vitest/pretty-format': 5.0.3

@@ -115,13 +115,14 @@ a regen can flip it with nothing in the diff to explain why.
 
 That is what `h3` did on 2026-09-03: v2 arrived transitively with
 `@nuxt/eslint`, outranked nitro's v1 at the root, and broke typecheck in every
-`web/layers/*/server` file. The fix — an exact `h3` pin in `web/package.json`
-naming the copy nitro resolves — is documented as an `# ISSUE:` / `# DELETE
-WHEN:` pair in `pnpm-workspace.yaml`.
+`web/layers/*/server` file. It was fixed with an exact `h3` pin, which went
+away in the Nuxt 4.6 upgrade: server code now imports from `nuxt/server` and
+names no `h3` type at all, so the hoisted copy no longer matters to typecheck.
 
-`ofetch` is the standing next candidate: also installed at two majors, and
-currently correct only by luck of the hoist. Report both rows in the PR body
-every run, whether or not this run tripped on them.
+`ofetch` is installed at two majors too. `web/` declares `ofetch` itself
+(the GoPay client imports it), so our import resolves to `web/node_modules`
+whatever the hoist does. Report both rows in the PR body every run, whether or
+not this run tripped on them.
 
 ## Known, not yet documented in the workspace file
 

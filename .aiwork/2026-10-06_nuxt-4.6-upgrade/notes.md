@@ -225,3 +225,23 @@ Temporarily in `auth/app/composables/auth.ts`, then reverted:
 - `nuxt.config.ts` imports its two helpers with `.ts` extensions. Without
   them, 4.6's native config loader logged `NUXT_B5023` and fell back to jiti.
 - `typecheck` wall time after the upgrade: 6.7 s (before: 6.8 s).
+
+## Step 8: workarounds
+
+- **`h3` pin removed** from `web/package.json` along with its ISSUE block in
+  `pnpm-workspace.yaml`. No code of ours imports `h3` (the only grep hits are
+  `"h3"` heading levels in `LectureCard.vue`/`style.vue`). `pnpm why h3`
+  still finds 1.15.11 and 2.0.1-rc.29, and the root hoist is 1.15.11, but
+  typecheck is green either way because nothing names an h3 type.
+- **Nitro `dirsScanOptions` filter: kept** while the `nitroAutoImports`
+  opt-out stands (step 7). Its comment now says so.
+- `vite@*` override: the comment is refreshed. `@nuxt/vite-builder` 4.6.1 still
+  declares `vite: ^8.3.2` as a direct dependency, and nuxt 4.6.1 still peers
+  `rolldown: ~1.2.1` (not optional).
+- `peerDependencyRules`: **not re-verified.** Re-resolving without the rules
+  needs a scratch copy of `pnpm-lock.yaml`, which the local damage-control
+  hook blocks. The comment still cites the 2026-08-27 check.
+- `CLAUDE.md`'s import rule no longer lists h3/Nitro as auto-imported; server
+  code imports from `nuxt/server`. `.claude/routines/nuxt-deps-update.md`'s
+  hoist-skew section says the h3 pin is gone and that `web/` now declares
+  `ofetch` itself.
