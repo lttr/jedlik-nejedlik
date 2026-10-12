@@ -28,6 +28,7 @@ import type { SettlementState } from "#layers/shop/shared/utils/settlement"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
 import { throwPageError } from "#layers/shop/app/utils/page-error"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 // Where GoPay sends the Student back. The route settles the Payment on the
 // way, so this page only reports an outcome — it never grants anything itself
@@ -53,7 +54,7 @@ const {
   data: view,
   error,
   refresh,
-} = await useFetch(`/api/orders/${orderId}/settlement`, {
+} = await useReportedFetch(`/api/orders/${orderId}/settlement`, {
   key: `settlement:${orderId}`,
 })
 

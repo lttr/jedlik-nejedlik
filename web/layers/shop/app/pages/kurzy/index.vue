@@ -20,9 +20,9 @@
 
 <script lang="ts" setup>
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
-import { watchAsyncDataError } from "#layers/base/app/composables/watch-async-data-error"
 import CatalogCourseCard from "#layers/shop/app/components/catalog/CourseCard.vue"
 import { orphanSalesContentSlugs } from "#layers/shop/app/utils/sales-content"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 useSeoMeta({
   title: "Kurzy",
@@ -32,8 +32,7 @@ useSeoMeta({
 // Through Nitro, never Directus from the browser (ADR 0004): the route reads
 // with the caller's own session, so an Author sees their drafts here.
 const key = "catalog"
-const { data: courses, error } = await useFetch("/api/courses", { key, default: () => [] })
-watchAsyncDataError(key, error)
+const { data: courses, error } = await useReportedFetch("/api/courses", { key, default: () => [] })
 
 // Breadcrumbs and an item list of what the page shows (spec, "Metadata and
 // structured data"). An Author's own drafts ride along in their session

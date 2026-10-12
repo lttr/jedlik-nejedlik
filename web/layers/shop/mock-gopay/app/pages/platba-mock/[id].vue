@@ -45,13 +45,14 @@ import { isPaymentLive } from "#layers/shop/shared/utils/gopay"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
 import { formatPriceCzk } from "#layers/shop/shared/utils/price"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 // The developer's stand-in for GoPay's payment page (spec, „Mock gateway").
 // The buttons post a plain form, so the flow works with JavaScript off and
 // the same route can be called by a test.
 const paymentId = String(useRoute().params.id)
 
-const { data: payment } = await useFetch(`/api/gopay/mock/payments/${paymentId}`, {
+const { data: payment } = await useReportedFetch(`/api/gopay/mock/payments/${paymentId}`, {
   key: `gopay-mock:${paymentId}`,
   default: () => null,
 })

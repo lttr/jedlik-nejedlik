@@ -19,9 +19,6 @@ import { authPageUrl } from "#layers/auth/server/utils/auth-urls"
 import type { RateLimit } from "#layers/auth/server/utils/rate-limit"
 import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
-// What the Checkout route answers: the Course being bought, who is buying it,
-// and the Billing Details their Account already holds. The page takes its
-// type from the route.
 export interface CheckoutView {
   course: SellableCourse
   // `null` for a visitor without a session: they see what they are buying and

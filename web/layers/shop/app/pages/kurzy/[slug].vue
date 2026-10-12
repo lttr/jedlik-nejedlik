@@ -27,6 +27,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import { SITE_NAME, SITE_URL } from "#layers/base/shared/utils/site"
 import CourseCover from "#layers/shop/app/components/CourseCover.vue"
@@ -46,7 +47,7 @@ const slug = String(route.params.slug)
 // Through Nitro, never Directus from the browser (ADR 0004): the route reads
 // with the caller's own session, so an Author sees their draft here and a
 // Student is told whether this Course is already theirs.
-const { data, error } = await useFetch(`/api/courses/${slug}`, { key: `course:${slug}` })
+const { data, error } = await useReportedFetch(`/api/courses/${slug}`, { key: `course:${slug}` })
 
 const course = computed(() => data.value?.course)
 const entitled = computed(() => data.value?.entitled === true)

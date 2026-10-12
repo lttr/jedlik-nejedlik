@@ -156,3 +156,28 @@ Temporarily in `auth/app/composables/auth.ts`, then reverted:
 | `$fetch("/api/auth/registr", { method: "POST" … })`                            | `TS2769 … "fetchdts: no POST route matches '/api/auth/registr'"`                                    |
 | `$fetch("/api/auth/verify-email", { method: "GET" })`                          | `TS2345 … "fetchdts: no GET route matches '/api/auth/verify-email'"`                                |
 | `$fetch("/api/auth/password-request", { method: "POST", body: { mail: 42 } })` | **no error.** As predicted in step 4b, `nuxt/server` handlers carry no request type on nitropack 2. |
+
+## Step 6: async-data errors reported by default
+
+- `base/app/composables/reported-fetch.ts`: `useReportedFetch = createUseFetch({ addons })`
+  and `useReportedAsyncData = createUseAsyncData({ addons })`. Each add-on
+  pushes an async-data **middleware** that reports a rejection and rethrows. So
+  a failure is reported once, where the fetch ran (server or browser). The old
+  watcher reported again on hydration.
+- **What is reported:** no status (network, crash) or ≥ 500. A 4xx is the
+  page's own answer (draft Course 404, Checkout 409, expired session 401) and
+  isn't reported. Aborts aren't reported either.
+- **Key:** the fetch add-on tags `asyncDataKey` with the call's `key`, or the
+  request URL when there is none. **An add-on never sees `useAsyncData`'s
+  positional key** (only `{ signal }` reaches middleware, and the key isn't merged
+  into the options), so the two `useReportedAsyncData` callers tag
+  `useAsyncData`. Stack and route still place them.
+- Route typing survives the factory: typecheck stayed green on every call
+  site, so no fallback to raw `useFetch` was needed.
+- `watchAsyncDataError` and its three uses are deleted. All 10 call sites moved.
+- Lint: `no-restricted-globals` bans `useFetch`, `useLazyFetch`,
+  `useAsyncData` and `useLazyAsyncData` in `web/app/**` and `web/layers/**/app/**`.
+  Proved on a `.ts` and a `.vue` probe.
+- Live: a forced throw in `/api/courses` → `/kurzy` still 200 (its empty
+  state) and the dev log shows `[async-data:catalog] [GET] "/api/courses": 500`.
+  `/kurzy/neexistuje` 404 → not reported.

@@ -31,8 +31,6 @@ export async function readOwnedCourses(client: DirectusRestClient): Promise<Owne
   return parseOwnedCourses(rows)
 }
 
-// „Moje kurzy": the Courses a Student holds an Entitlement for, as the
-// Account route answers them.
 export interface OwnedCourse {
   // The Entitlement's id, not the Course's: it is what the list is keyed by,
   // and a Student holds at most one Entitlement per Course anyway.

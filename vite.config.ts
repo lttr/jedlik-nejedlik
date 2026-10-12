@@ -271,6 +271,21 @@ export default defineConfig({
         },
       },
       {
+        // Data fetches go through `useReportedFetch`/`useReportedAsyncData`
+        // (base layer), so a failure reaches Sentry instead of rendering as
+        // missing data.
+        files: ["web/app/**", "web/layers/**/app/**"],
+        rules: {
+          "no-restricted-globals": [
+            "error",
+            ...["useFetch", "useLazyFetch", "useAsyncData", "useLazyAsyncData"].map((name) => ({
+              name,
+              message: "Use useReportedFetch / useReportedAsyncData from the base layer.",
+            })),
+          ],
+        },
+      },
+      {
         // Build config files legitimately read process.env at build time.
         files: ["**/*.config.{ts,js,mjs,cjs}"],
         rules: {

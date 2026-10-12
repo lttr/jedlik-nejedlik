@@ -59,6 +59,7 @@ import CheckoutRecap from "#layers/shop/app/components/checkout/Recap.vue"
 import CheckoutStep from "#layers/shop/app/components/checkout/Step.vue"
 import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
 import { throwPageError } from "#layers/shop/app/utils/page-error"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 // Three steps on one page, and no `auth` middleware: a visitor logs in or
 // registers inside step 1 rather than being sent away from what they are
@@ -74,7 +75,7 @@ const {
   data: checkout,
   error,
   refresh: refreshCheckout,
-} = await useFetch(`/api/checkout/${slug}`, {
+} = await useReportedFetch(`/api/checkout/${slug}`, {
   key: `checkout:${slug}`,
 })
 

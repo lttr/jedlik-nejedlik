@@ -60,6 +60,7 @@ import { validatePassword } from "#layers/auth/shared/utils/password"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import AccountBilling from "#layers/shop/app/components/account/Billing.vue"
 import AccountMyCourses from "#layers/shop/app/components/account/MyCourses.vue"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 definePageMeta({ middleware: "auth" })
 
@@ -67,8 +68,11 @@ definePageMeta({ middleware: "auth" })
 // Directus round-trip for „Moje kurzy". Both requests start here instead, under
 // the keys and defaults each section's own `useFetch` then resolves from.
 await Promise.all([
-  useFetch("/api/account/courses", { key: "account:courses", default: () => [] }),
-  useFetch("/api/account/billing", { key: "account:billing", default: emptyBillingDetails }),
+  useReportedFetch("/api/account/courses", { key: "account:courses", default: () => [] }),
+  useReportedFetch("/api/account/billing", {
+    key: "account:billing",
+    default: emptyBillingDetails,
+  }),
 ])
 
 useHead({ title: "Můj účet" })

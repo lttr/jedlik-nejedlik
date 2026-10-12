@@ -28,11 +28,12 @@ import BillingDetailsForm from "../billing/DetailsForm.vue"
 import ShopNotice from "../ShopNotice.vue"
 import AuthSubmit from "#layers/auth/app/components/auth/Submit.vue"
 import { useAuthForm } from "#layers/auth/app/composables/auth-form"
+import { useReportedFetch } from "#layers/base/app/composables/reported-fetch"
 
 // The same fields the Checkout's step 2 shows, with this page's own copy and
 // save button around them. Through Nitro, never Directus from the browser
 // (ADR 0004).
-const { data, error } = await useFetch("/api/account/billing", {
+const { data, error } = await useReportedFetch("/api/account/billing", {
   key: "account:billing",
   default: emptyBillingDetails,
 })
