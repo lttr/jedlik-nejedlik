@@ -1,5 +1,5 @@
 ---
-status: draft
+status: done
 references:
   - https://nuxt.com/blog/v4-6
   - https://nuxt.com/docs/4.x/getting-started/upgrade
