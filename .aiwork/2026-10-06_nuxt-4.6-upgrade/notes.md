@@ -245,3 +245,27 @@ Temporarily in `auth/app/composables/auth.ts`, then reverted:
   code imports from `nuxt/server`. `.claude/routines/nuxt-deps-update.md`'s
   hoist-skew section says the h3 pin is gone and that `web/` now declares
   `ofetch` itself.
+
+## Step 9: verify (dev server, probe-student-entitled)
+
+**Behaviour: PASS** for every flow that was driven. **Appearance: PASS.**
+
+| Criterion                                           | Observed                                                                                                                                              |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Guest checkout keeps the pending order across login | `pending-checkout` cookie set; after login, back on `/objednavka/test-kurz-publikovany` with "Tenhle kurz už máte…"; the cookie was consumed          |
+| Wrong login                                         | "Neplatný e-mail nebo heslo."                                                                                                                         |
+| Session cookie                                      | `nuxt-session`, `httpOnly`, `Secure`, `SameSite=Lax`; absent from `document.cookie`; no token in the HTML or payload                                  |
+| Account page from the session                       | `/muj-ucet` shows the e-mail, owned course, billing and password forms                                                                                |
+| Billing save                                        | "Fakturační údaje jsou uložené." (existing values re-saved; the click was in a command that was then rejected, but it had already reached the server) |
+| Logout                                              | lands on `/`, no cookies left; `/muj-ucet` → `/prihlaseni?redirect=/muj-ucet`                                                                         |
+| 404                                                 | `/neexistuje` 404, Nuxt's default error page (no `error.vue`; same as production)                                                                     |
+| Case-sensitive routes                               | `/KURZY` 404, `/kurzy` 200 (production: `/KURZY` 200)                                                                                                 |
+
+Not driven: a wrong-password change, registration and reset error paths (they write to production Directus); a full mock-GoPay purchase (it would grant a course or create production orders).
+
+Screenshots (`screenshots/`):
+
+- `account-desktop.png`: the account card is centred, its sections are evenly spaced, and nothing overlaps.
+- `account-375.png`: single column, the long e-mail wraps cleanly, the success notice is legible, and the buttons are full width.
+- `login-desktop.png` and `login-375.png`: the form fits the viewport and the focus ring on the e-mail field is visible.
+- `404-desktop.png`: Nuxt's default 404, centred.

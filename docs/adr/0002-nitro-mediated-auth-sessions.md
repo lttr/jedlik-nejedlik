@@ -40,10 +40,12 @@ overridden instead.
 
 ## Consequences
 
-The session cookie is sealed by `nuxt-auth-utils` and carries the
-Student's e-mail in its client-readable payload; the Directus access and
-refresh tokens live in the cookie's server-only `secure` area. **The
-e-mail in that payload is a cache, not a second store of identity, and so
+The session cookie is sealed by Nuxt's `useSession` with a key derived
+from `NUXT_APP_SECRET` (2026-10-12; `nuxt-auth-utils` until then). Its
+whole content is opaque to the browser: the Directus access and refresh
+tokens and the Student's e-mail. The e-mail reaches the page through the
+SSR payload, not through the cookie. **The e-mail in that payload is a
+cache, not a second store of identity, and so
 does not conflict with ADR 0001** (decided 2026-08-28). ADR 0001's clause
 concerns the Nitro layer owning data — its enumerated stores are
 students, orders, entitlements, progress and test attempts — whereas this
