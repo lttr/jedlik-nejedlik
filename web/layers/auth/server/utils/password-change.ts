@@ -13,7 +13,8 @@ import {
   revokeRefreshToken,
 } from "./account-session"
 import { authError, unexpectedAuthError } from "./auth-errors"
-import { assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { assertPasswordPolicy } from "./auth-input"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 import { dropAccountSession } from "./session-store"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
@@ -23,7 +24,7 @@ const PasswordChangeSchema = z.object({
 })
 
 export async function readPasswordChange(event: RequestEvent): Promise<PasswordChange> {
-  const change = await readAuthBody(
+  const change = await readValidBody(
     event,
     PasswordChangeSchema,
     // A malformed body answers exactly like a wrong current password.

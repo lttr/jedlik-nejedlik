@@ -3,7 +3,6 @@ import {
   defineEventHandler,
   getRequestURL,
   getRouterParam,
-  readBody,
   sendRedirect,
 } from "nuxt/server"
 import type { RequestEvent } from "nuxt/server"
@@ -12,6 +11,7 @@ import { z } from "zod"
 import { recordMockPaymentState } from "#layers/shop/server/utils/gopay-mock-client"
 import type { MockPayment } from "#layers/shop/server/utils/gopay-mock-client"
 import type { GopayPaymentState } from "#layers/shop/shared/utils/gopay"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 
 // See docs/shop.md, „Mock gateway".
 const DecisionSchema = z.object({ action: z.enum(["pay", "cancel", "choose"]) })
@@ -24,12 +24,13 @@ const MOCK_DECISION_STATES = {
 
 export default defineEventHandler(async (event) => {
   const paymentId = getRouterParam(event, "id") ?? ""
-  const decision = DecisionSchema.safeParse(await readBody(event))
-  if (!decision.success) {
-    throw createError({ status: 400, statusText: "action must be pay or cancel" })
-  }
+  const { action } = await readValidBody(
+    event,
+    DecisionSchema,
+    createError({ status: 400, statusText: "action must be pay or cancel" }),
+  )
 
-  const payment = recordMockPaymentState(paymentId, MOCK_DECISION_STATES[decision.data.action])
+  const payment = recordMockPaymentState(paymentId, MOCK_DECISION_STATES[action])
   if (payment === undefined) {
     throw createError({ status: 404, statusText: "Payment not found" })
   }

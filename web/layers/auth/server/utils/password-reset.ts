@@ -5,7 +5,8 @@ import { passwordRequest, passwordReset } from "@directus/sdk"
 import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
-import { AccountEmail, assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { AccountEmail, assertPasswordPolicy } from "./auth-input"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 import { authPageUrl } from "./auth-urls"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 import { RESET_PASSWORD_PATH } from "#layers/auth/shared/utils/redirects"
@@ -18,7 +19,7 @@ const ResetSchema = z.object({ token: z.string().min(1), password: z.string() })
 export type PasswordReset = z.infer<typeof ResetSchema>
 
 export async function readResetRequest(event: RequestEvent): Promise<string> {
-  const { email } = await readAuthBody(
+  const { email } = await readValidBody(
     event,
     ResetRequestSchema,
     authError(400, "invalid_email", authMessages.invalidEmail),
@@ -27,7 +28,7 @@ export async function readResetRequest(event: RequestEvent): Promise<string> {
 }
 
 export async function readPasswordReset(event: RequestEvent): Promise<PasswordReset> {
-  const reset = await readAuthBody(
+  const reset = await readValidBody(
     event,
     ResetSchema,
     authError(400, "invalid_token", authMessages.resetFailed),

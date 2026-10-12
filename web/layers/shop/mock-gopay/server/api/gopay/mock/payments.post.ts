@@ -1,8 +1,9 @@
-import { createError, defineEventHandler, readBody } from "nuxt/server"
+import { createError, defineEventHandler } from "nuxt/server"
 import { z } from "zod"
 
 import { getGopayClient } from "#layers/shop/server/utils/gopay-client"
 import type { GopayPayment } from "#layers/shop/shared/utils/gopay"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 
 // Creates a Payment the way the Checkout would, through the same
 // `getGopayClient(event)` seam, so the gateway can be walked without an Order.
@@ -16,13 +17,8 @@ const DemoPaymentSchema = z.object({
 })
 
 export default defineEventHandler(async (event): Promise<GopayPayment> => {
-  const input = DemoPaymentSchema.safeParse(await readBody(event))
-  if (!input.success) {
-    throw createError({
-      status: 400,
-      statusText: "Invalid payment",
-      message: z.prettifyError(input.error),
-    })
-  }
-  return getGopayClient(event).createPayment(input.data)
+  const input = await readValidBody(event, DemoPaymentSchema, (error) =>
+    createError({ status: 400, statusText: "Invalid payment", message: z.prettifyError(error) }),
+  )
+  return getGopayClient(event).createPayment(input)
 })

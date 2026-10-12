@@ -95,3 +95,34 @@
 - **Not changed, worth knowing:** most of the auth utils keep an `event`
   parameter that now goes unused (it only fed the anonymous client). Left in
   place to keep this commit's diff to the migration.
+
+## Step 4b: one validated-input helper
+
+- **Spike result: body inference doesn't survive, with or without a wrapper.**
+  `routeTypedFetch` types a route's `body` as `RequestBodyOf<typeof handler>`
+  (`@nuxt/nitro-server/dist/request-types.d.mts`). That reads the request shape
+  from an **h3-typed** handler, `(event: H3Event<{ body }>) => …`. A
+  `nuxt/server` handler is `(event: RequestEvent) => R` and carries no request
+  type, so `body` is `never` (permissive) for every route of ours. Calling
+  `readValidatedBody` directly in the handler changes nothing: the type comes
+  from the handler's signature, not from what it calls. Getting it back on 4.6
+  would mean typing handlers against h3 v1 again, which undoes step 4. User
+  story 14 is **not met on Nuxt 4.6**. Expect it from Nitro v3 / Nuxt 5, where
+  the event type is h3 v2's.
+- So the helper isn't built on `readValidatedBody`. That function's `onError`
+  must return error _details_, while our routes already own a constructed
+  error (and checkout picks one from the failing field). The helper is
+  `readValidBody(event, schema, invalid)` in
+  `base/server/utils/valid-body.ts`: `readBody` + `safeParse`. `invalid` is the
+  route's `Error`, or a function from the `ZodError` to one.
+- It replaces `readAuthBody` (6 auth readers) and the inline blocks in
+  billing, checkout, mock `payments` and mock `decide`.
+- **No query variant.** The only query read, GoPay notify, answers an invalid
+  query with `200 {"status":"ignored"}` on purpose (GoPay must not retry), not
+  with an error. A throwing query helper would have no caller.
+- Tests: `valid-body.test.ts` (valid passes; missing field, wrong type, empty,
+  non-JSON and truncated JSON all reject with the same error instance; the
+  function form sees the failing path).
+- Live: mock `payments` with a bad body → 400 `Invalid payment` and the
+  prettified issues; `decide` with non-JSON → 400; `password-request` with
+  non-JSON → 400 `invalid_email`.

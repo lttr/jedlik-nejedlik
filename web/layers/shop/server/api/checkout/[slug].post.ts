@@ -1,4 +1,4 @@
-import { defineEventHandler, getRouterParam, readBody } from "nuxt/server"
+import { defineEventHandler, getRouterParam } from "nuxt/server"
 import { z } from "zod"
 
 import { BillingRequestSchema } from "#layers/shop/shared/utils/checkout"
@@ -11,6 +11,7 @@ import {
   placeCheckoutOrder,
 } from "#layers/shop/server/utils/checkout-order"
 import { shopError, shopMessages } from "#layers/shop/server/utils/shop-errors"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 
 // The body carries no price: the amount is re-read from the Course, so a
 // tampered request buys nothing cheaper (spec, user story 27).
@@ -26,15 +27,13 @@ export default defineEventHandler(async (event): Promise<{ gwUrl: string }> => {
   const slug = getRouterParam(event, "slug") ?? ""
   const { account, client } = await requireAccountDirectusClient(event)
 
-  const request = CheckoutRequestSchema.safeParse(await readBody(event).catch(() => undefined))
-  if (!request.success) {
-    // Told apart on purpose: „Tick the box" over a box the Student already
-    // ticked is a refusal they cannot act on.
-    const billingAtFault = request.error.issues.some((issue) => issue.path[0] === "billing")
-    throw billingAtFault
+  // Told apart on purpose: „Tick the box" over a box the Student already
+  // ticked is a refusal they cannot act on.
+  const request = await readValidBody(event, CheckoutRequestSchema, (error) =>
+    error.issues.some((issue) => issue.path[0] === "billing")
       ? shopError(400, "invalid_billing", shopMessages.billingInvalid)
-      : shopError(400, "consent_required", shopMessages.consentRequired)
-  }
+      : shopError(400, "consent_required", shopMessages.consentRequired),
+  )
 
   const course = await loadCheckoutCourse(client, slug)
   await assertNotEntitled(client, course.id)
@@ -42,7 +41,7 @@ export default defineEventHandler(async (event): Promise<{ gwUrl: string }> => {
   const gwUrl = await placeCheckoutOrder(event, {
     client,
     course,
-    billing: request.data.billing,
+    billing: request.billing,
     email: account.email,
   })
   return { gwUrl }

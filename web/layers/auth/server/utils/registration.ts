@@ -7,7 +7,8 @@ import { z } from "zod"
 
 import type { Credentials } from "#layers/auth/shared/types/account"
 import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
-import { AccountEmail, assertPasswordPolicy, readAuthBody } from "./auth-input"
+import { AccountEmail, assertPasswordPolicy } from "./auth-input"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 import { authPageUrl } from "./auth-urls"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 import { VERIFY_EMAIL_PATH } from "#layers/auth/shared/utils/redirects"
@@ -21,7 +22,7 @@ const RegistrationSchema = z.object({
 const VerificationSchema = z.object({ token: z.string().min(1) })
 
 export async function readRegistration(event: RequestEvent): Promise<Credentials> {
-  const registration = await readAuthBody(
+  const registration = await readValidBody(
     event,
     RegistrationSchema,
     authError(400, "invalid_email", authMessages.invalidEmail),
@@ -31,7 +32,7 @@ export async function readRegistration(event: RequestEvent): Promise<Credentials
 }
 
 export async function readVerificationToken(event: RequestEvent): Promise<string> {
-  const { token } = await readAuthBody(
+  const { token } = await readValidBody(
     event,
     VerificationSchema,
     authError(400, "invalid_token", authMessages.verificationFailed),

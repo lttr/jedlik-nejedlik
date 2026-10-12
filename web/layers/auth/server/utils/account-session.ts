@@ -7,7 +7,8 @@ import { z } from "zod"
 
 import type { Credentials, Account, AccountSecrets } from "#layers/auth/shared/types/account"
 import { authError, directusErrorCode, unexpectedAuthError } from "./auth-errors"
-import { AccountEmail, readAuthBody } from "./auth-input"
+import { AccountEmail } from "./auth-input"
+import { readValidBody } from "#layers/base/server/utils/valid-body"
 import { dropAccountSession, readAccountSession, writeAccountSession } from "./session-store"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
@@ -26,7 +27,7 @@ const CredentialsSchema = z.object({
 // A malformed payload answers exactly like a wrong password: telling the two
 // apart is the first step of enumerating accounts.
 export async function readCredentials(event: RequestEvent): Promise<Credentials> {
-  return readAuthBody(
+  return readValidBody(
     event,
     CredentialsSchema,
     authError(401, "invalid_credentials", authMessages.invalidCredentials),
