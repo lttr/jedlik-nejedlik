@@ -1,4 +1,5 @@
-import type { H3Event } from "h3"
+import { deleteCookie, getCookie, setCookie } from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 
 import {
   PENDING_CHECKOUT_COOKIE,
@@ -9,7 +10,7 @@ import {
 // the browser has any business reading or writing it; `lax`, because the
 // verification link arrives as a top-level navigation from a mail client.
 
-export function setPendingCheckout(event: H3Event, slug: string): void {
+export function setPendingCheckout(event: RequestEvent, slug: string): void {
   setCookie(event, PENDING_CHECKOUT_COOKIE, slug, {
     maxAge: PENDING_CHECKOUT_MAX_AGE,
     httpOnly: true,
@@ -21,7 +22,7 @@ export function setPendingCheckout(event: H3Event, slug: string): void {
 
 // Only ever cleared when there is something to clear: a `Set-Cookie` on every
 // Checkout request of every logged-in Student would be noise.
-export function clearPendingCheckout(event: H3Event): void {
+export function clearPendingCheckout(event: RequestEvent): void {
   if (getCookie(event, PENDING_CHECKOUT_COOKIE) !== undefined) {
     deleteCookie(event, PENDING_CHECKOUT_COOKIE, { path: "/" })
   }
@@ -30,7 +31,7 @@ export function clearPendingCheckout(event: H3Event): void {
 // Read and clear in one move: the cookie exists to survive exactly one trip
 // to the inbox, and leaving it behind would send the next login to a Checkout
 // nobody asked for.
-export function takePendingCheckout(event: H3Event): string | null {
+export function takePendingCheckout(event: RequestEvent): string | null {
   const slug = getCookie(event, PENDING_CHECKOUT_COOKIE) ?? null
   clearPendingCheckout(event)
   return slug

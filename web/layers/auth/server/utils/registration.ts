@@ -2,7 +2,7 @@
 // assigns the role from `public_registration_role`, so no role id appears in
 // source.
 import { registerUser, registerUserVerify } from "@directus/sdk"
-import type { H3Event } from "h3"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 
 import type { Credentials } from "#layers/auth/shared/types/account"
@@ -20,7 +20,7 @@ const RegistrationSchema = z.object({
 
 const VerificationSchema = z.object({ token: z.string().min(1) })
 
-export async function readRegistration(event: H3Event): Promise<Credentials> {
+export async function readRegistration(event: RequestEvent): Promise<Credentials> {
   const registration = await readAuthBody(
     event,
     RegistrationSchema,
@@ -30,7 +30,7 @@ export async function readRegistration(event: H3Event): Promise<Credentials> {
   return registration
 }
 
-export async function readVerificationToken(event: H3Event): Promise<string> {
+export async function readVerificationToken(event: RequestEvent): Promise<string> {
   const { token } = await readAuthBody(
     event,
     VerificationSchema,
@@ -42,12 +42,15 @@ export async function readVerificationToken(event: H3Event): Promise<string> {
 // Directus answers 204 whether the address was free or already taken, so
 // accounts stay unenumerable. Named for the Student because Directus's
 // `public_registration_role` is the Student role.
-export async function registerStudent(event: H3Event, registration: Credentials): Promise<void> {
+export async function registerStudent(
+  event: RequestEvent,
+  registration: Credentials,
+): Promise<void> {
   try {
-    await getDirectusAnonymousServerClient(event).request(
+    await getDirectusAnonymousServerClient().request(
       registerUser(registration.email, registration.password, {
         // Must be on the instance's USER_REGISTER_URL_ALLOW_LIST, else 400.
-        verification_url: authPageUrl(event, VERIFY_EMAIL_PATH),
+        verification_url: authPageUrl(VERIFY_EMAIL_PATH),
       }),
     )
   } catch (error) {
@@ -61,9 +64,9 @@ export async function registerStudent(event: H3Event, registration: Credentials)
 
 // Expired, already used and forged tokens all come back as 403 INVALID_TOKEN
 // (probe), which is one message to the Account.
-export async function verifyAccountEmail(event: H3Event, token: string): Promise<void> {
+export async function verifyAccountEmail(event: RequestEvent, token: string): Promise<void> {
   try {
-    await getDirectusAnonymousServerClient(event).request(registerUserVerify(token))
+    await getDirectusAnonymousServerClient().request(registerUserVerify(token))
   } catch (error) {
     if (directusErrorCode(error) === "INVALID_TOKEN") {
       throw authError(400, "invalid_token", authMessages.verificationFailed)

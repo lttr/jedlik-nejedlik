@@ -2,7 +2,8 @@
 // `auth_login_attempts` is per user and does nothing against credential stuffing
 // spread across accounts. The budget is in-process memory and trusts
 // `X-Forwarded-For` — accepted for the single-instance deploy.
-import type { H3Event } from "h3"
+import { getRequestIP } from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 import { authError } from "./auth-errors"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
@@ -39,7 +40,7 @@ function prune(now: number): void {
   }
 }
 
-export function enforceRateLimit(event: H3Event, { bucket, max, message }: RateLimit): void {
+export function enforceRateLimit(event: RequestEvent, { bucket, max, message }: RateLimit): void {
   const key = `${bucket}:${getRequestIP(event, { xForwardedFor: true }) ?? "unknown"}`
   const now = Date.now()
 

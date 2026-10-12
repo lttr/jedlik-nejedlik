@@ -1,3 +1,5 @@
+import { defineEventHandler, getRouterParam } from "nuxt/server"
+
 import { getAccountDirectusClient } from "#layers/auth/server/utils/account-session"
 import { getDirectusAnonymousServerClient } from "#layers/directus/server/utils/directus-server"
 import {
@@ -19,7 +21,7 @@ export default defineEventHandler(async (event): Promise<SalesView> => {
   // and the public policy grants no `entitlement` read at all, so asking
   // would be a refusal rather than an empty list.
   const session = await getAccountDirectusClient(event)
-  const client = session ?? getDirectusAnonymousServerClient(event)
+  const client = session ?? getDirectusAnonymousServerClient()
 
   const row = await readCourseBySlug(client, slug, [...COURSE_PUBLIC_FIELDS, COURSE_OUTLINE_FIELDS])
   const course = parseSalesCourse(row)

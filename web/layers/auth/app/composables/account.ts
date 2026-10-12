@@ -3,14 +3,20 @@ import type { Account } from "#layers/auth/shared/types/account"
 export interface AccountSession {
   account: ComputedRef<Account | null>
   loggedIn: ComputedRef<boolean>
-  // Re-reads the session after a login or logout changed the cookie.
-  refresh: () => Promise<void>
+  // For the auth actions: login sets the Account it got back, logout clears it.
+  setAccount: (account: Account | null) => void
 }
 
-// The app's only seam onto nuxt-auth-utils: pages speak Account (GLOSSARY.md),
-// never `useUserSession()`. The answer comes from the session cookie's payload,
-// so SSR and client agree without a round-trip.
+// Pages speak Account (GLOSSARY.md), never the session. The state is filled
+// during SSR from the session cookie (`account.server` plugin) and travels in
+// the payload, so SSR and client agree without a round-trip.
 export function useAccount(): AccountSession {
-  const { user, loggedIn, fetch } = useUserSession()
-  return { account: user, loggedIn, refresh: fetch }
+  const state = useState<Account | null>("account", () => null)
+  return {
+    account: computed(() => state.value),
+    loggedIn: computed(() => state.value !== null),
+    setAccount(account) {
+      state.value = account
+    },
+  }
 }

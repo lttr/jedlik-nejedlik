@@ -1,3 +1,4 @@
+import { defineEventHandler } from "nuxt/server"
 import { takePendingCheckout } from "../utils/pending-checkout"
 
 // Hands the pending Checkout's slug to the login page and the verification

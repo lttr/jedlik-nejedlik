@@ -1,7 +1,8 @@
 // No Directus token ever reaches the browser (ADR 0002).
 import { login, logout, refresh } from "@directus/sdk"
 import type { AuthenticationData } from "@directus/sdk"
-import type { H3Event } from "h3"
+import { useRuntimeConfig } from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 
 import type { Credentials, Account, AccountSecrets } from "#layers/auth/shared/types/account"
@@ -24,7 +25,7 @@ const CredentialsSchema = z.object({
 
 // A malformed payload answers exactly like a wrong password: telling the two
 // apart is the first step of enumerating accounts.
-export async function readCredentials(event: H3Event): Promise<Credentials> {
+export async function readCredentials(event: RequestEvent): Promise<Credentials> {
   return readAuthBody(
     event,
     CredentialsSchema,
@@ -48,12 +49,12 @@ function toAccountSecrets(data: AuthenticationData): AccountSecrets {
 // credentials and the caller says what that means; an outage throws instead, so
 // it is never reported as a bad password. This request's session is untouched.
 export async function authenticateAccount(
-  event: H3Event,
+  event: RequestEvent,
   credentials: Credentials,
   unavailable: string = authMessages.unavailable,
 ): Promise<AccountSecrets | null> {
   try {
-    const data = await getDirectusAnonymousServerClient(event).request(
+    const data = await getDirectusAnonymousServerClient().request(
       login({ email: credentials.email, password: credentials.password }, { mode: "json" }),
     )
     return toAccountSecrets(data)
@@ -67,25 +68,32 @@ export async function authenticateAccount(
   }
 }
 
-export async function logInAccount(event: H3Event, credentials: Credentials): Promise<void> {
+// Returns the Account it established, so the browser takes its state from the
+// answer rather than reading the session back.
+export async function logInAccount(
+  event: RequestEvent,
+  credentials: Credentials,
+): Promise<Account> {
   const secrets = await authenticateAccount(event, credentials)
   if (secrets === null) {
     throw authError(401, "invalid_credentials", authMessages.invalidCredentials)
   }
-  await writeAccountSession(event, { email: credentials.email }, secrets)
+  const account: Account = { email: credentials.email }
+  await writeAccountSession(event, account, secrets)
+  return account
 }
 
 // Best effort: every caller has already decided this session must die, and a
 // token Directus has forgotten (expired, rotated, revoked) is not actionable.
-export async function revokeRefreshToken(event: H3Event, refreshToken: string): Promise<void> {
-  await getDirectusAnonymousServerClient(event)
+export async function revokeRefreshToken(event: RequestEvent, refreshToken: string): Promise<void> {
+  await getDirectusAnonymousServerClient()
     .request(logout({ mode: "json", refresh_token: refreshToken }))
     .catch((error: unknown) => {
       console.warn("[auth] Directus logout failed", error)
     })
 }
 
-export async function logOutAccount(event: H3Event): Promise<void> {
+export async function logOutAccount(event: RequestEvent): Promise<void> {
   const { secrets } = await readAccountSession(event)
   // Not on the Account's critical path: the local session goes either way.
   const revoked =
@@ -101,11 +109,11 @@ export async function logOutAccount(event: H3Event): Promise<void> {
 const refreshesInFlight = new Map<string, Promise<AccountSecrets | null>>()
 
 async function requestFreshSecrets(
-  event: H3Event,
+  event: RequestEvent,
   refreshToken: string,
 ): Promise<AccountSecrets | null> {
   try {
-    const data = await getDirectusAnonymousServerClient(event).request(
+    const data = await getDirectusAnonymousServerClient().request(
       refresh({ mode: "json", refresh_token: refreshToken }),
     )
     return toAccountSecrets(data)
@@ -120,7 +128,10 @@ async function requestFreshSecrets(
   }
 }
 
-async function freshSecrets(event: H3Event, refreshToken: string): Promise<AccountSecrets | null> {
+async function freshSecrets(
+  event: RequestEvent,
+  refreshToken: string,
+): Promise<AccountSecrets | null> {
   const shared = refreshesInFlight.get(refreshToken)
   if (shared !== undefined) {
     return shared
@@ -135,7 +146,7 @@ async function freshSecrets(event: H3Event, refreshToken: string): Promise<Accou
 }
 
 async function refreshSession(
-  event: H3Event,
+  event: RequestEvent,
   account: Account,
   secrets: AccountSecrets,
 ): Promise<string | null> {
@@ -150,7 +161,7 @@ async function refreshSession(
 
 // Refreshes transparently, which re-seals the cookie and slides the 30-day
 // window.
-export async function resolveAccountAccessToken(event: H3Event): Promise<string | null> {
+export async function resolveAccountAccessToken(event: RequestEvent): Promise<string | null> {
   const { account, secrets } = await readAccountSession(event)
   if (account === undefined || secrets === undefined) {
     return null
@@ -163,18 +174,20 @@ export async function resolveAccountAccessToken(event: H3Event): Promise<string 
 
 // Bound to the Account's own session, so Directus enforces its permissions on
 // every gated read and write (R-5). Null when nobody is logged in.
-export async function getAccountDirectusClient(event: H3Event): Promise<DirectusRestClient | null> {
+export async function getAccountDirectusClient(
+  event: RequestEvent,
+): Promise<DirectusRestClient | null> {
   const token = await resolveAccountAccessToken(event)
   if (token === null) {
     return null
   }
-  return createDirectusTokenClient(useRuntimeConfig(event).public.directusUrl, token)
+  return createDirectusTokenClient(useRuntimeConfig().public.directusUrl, token)
 }
 
 // One 401 for every gated route, so the next one (a course, an order) does
 // not invent its own.
 export async function requireAccountDirectusClient(
-  event: H3Event,
+  event: RequestEvent,
 ): Promise<{ account: Account; client: DirectusRestClient }> {
   const { account } = await readAccountSession(event)
   const client = await getAccountDirectusClient(event)

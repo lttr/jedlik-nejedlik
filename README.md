@@ -43,8 +43,9 @@ vp run dev                        # start the Nuxt dev server
 
 The example file is a template, not a working config: the app validates its
 runtime config at boot (`web/server/runtime-config.schema.ts`) and refuses to
-start without a real `NUXT_PUBLIC_DIRECTUS_URL`, a `NUXT_SESSION_PASSWORD` of
-at least 32 characters and a `NUXT_SHOP_DIRECTUS_TOKEN`. `NUXT_GOPAY_ENV=mock`
+start without a real `NUXT_PUBLIC_DIRECTUS_URL` and a `NUXT_SHOP_DIRECTUS_TOKEN`.
+Production also needs a `NUXT_APP_SECRET` of at least 32 characters; development
+generates one when it is unset. `NUXT_GOPAY_ENV=mock`
 needs no GoPay credentials and runs the payment flow against the dev-only mock
 gateway.
 

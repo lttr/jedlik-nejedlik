@@ -2,7 +2,7 @@
 // other credential, and the Student policy allows updating only `password` and
 // the billing fields on the own `directus_users` row.
 import { readMe, updateUser } from "@directus/sdk"
-import type { H3Event } from "h3"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 
 import type { PasswordChange } from "#layers/auth/shared/types/account"
@@ -22,7 +22,7 @@ const PasswordChangeSchema = z.object({
   newPassword: z.string(),
 })
 
-export async function readPasswordChange(event: H3Event): Promise<PasswordChange> {
+export async function readPasswordChange(event: RequestEvent): Promise<PasswordChange> {
   const change = await readAuthBody(
     event,
     PasswordChangeSchema,
@@ -36,7 +36,10 @@ export async function readPasswordChange(event: H3Event): Promise<PasswordChange
 // Directus spares only the session named in the access token's `session` claim,
 // which `mode: "json"` logins like ours do not carry, so a password change signs
 // the Account out everywhere; the re-login below keeps this browser signed in.
-export async function changeAccountPassword(event: H3Event, change: PasswordChange): Promise<void> {
+export async function changeAccountPassword(
+  event: RequestEvent,
+  change: PasswordChange,
+): Promise<void> {
   const { account, client } = await requireAccountDirectusClient(event)
 
   // Directus has no "verify password" endpoint, so the check is a real login.

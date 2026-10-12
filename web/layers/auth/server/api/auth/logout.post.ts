@@ -1,6 +1,9 @@
-import { logOutAccount } from "#layers/auth/server/utils/account-session"
+import { defineEventHandler } from "nuxt/server"
 
-export default defineEventHandler(async (event) => {
+import { logOutAccount } from "#layers/auth/server/utils/account-session"
+import { noContent } from "#layers/base/server/utils/no-content"
+
+export default defineEventHandler(async (event): Promise<null> => {
   await logOutAccount(event)
-  sendNoContent(event)
+  return noContent(event)
 })

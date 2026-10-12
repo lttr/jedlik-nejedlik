@@ -1,3 +1,5 @@
+import { defineEventHandler, getRouterParam } from "nuxt/server"
+
 import { emptyBillingDetails } from "#layers/shop/shared/utils/checkout"
 import type { CheckoutView } from "#layers/shop/shared/utils/checkout"
 import { getCallerDirectusClient } from "#layers/auth/server/utils/caller-client"

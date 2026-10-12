@@ -1,4 +1,5 @@
-import type { H3Event } from "h3"
+import { readBody } from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 import { authError } from "./auth-errors"
 import { normaliseEmail } from "#layers/auth/shared/utils/email"
@@ -11,7 +12,7 @@ export const AccountEmail = z.string().transform(normaliseEmail).pipe(z.email())
 // Each route picks its own error for a malformed body, so the reply reveals no
 // more than that route's genuine failure would.
 export async function readAuthBody<T>(
-  event: H3Event,
+  event: RequestEvent,
   schema: z.ZodType<T>,
   invalid: Error,
 ): Promise<T> {

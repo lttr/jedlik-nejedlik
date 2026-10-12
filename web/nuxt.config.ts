@@ -91,21 +91,6 @@ export default defineNuxtConfig({
       clientId: "",
       clientSecret: "",
     },
-    session: {
-      // All session config lives here: nuxt-auth-utils' `SessionConfig`
-      // requires `password`, so a layer cannot contribute a partial one.
-      password: "",
-      // 30 sliding days (spec); the window slides because every token refresh
-      // replaces the session (auth layer, session-store.ts).
-      maxAge: 30 * 24 * 60 * 60,
-      cookie: {
-        // Already the defaults; spelled out because it is the ADR 0002
-        // guarantee, not a happy accident.
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-      },
-    },
     shop: {
       // The Shop Service Account's static Directus token (ADR 0006), from
       // NUXT_SHOP_DIRECTUS_TOKEN. Private: it grants the payment flow's
@@ -132,6 +117,7 @@ export default defineNuxtConfig({
 
   experimental: {
     componentIslands: true,
+    routeTypedFetch: true,
     typedPages: true,
     typescriptPlugin: true,
     viewTransition: true,

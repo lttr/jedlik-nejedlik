@@ -1,4 +1,3 @@
-// Imports rather than auto-imports: see the sibling `[id].get.ts`.
 import {
   createError,
   defineEventHandler,
@@ -6,8 +5,8 @@ import {
   getRouterParam,
   readBody,
   sendRedirect,
-} from "h3"
-import type { H3Event } from "h3"
+} from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 
 import { recordMockPaymentState } from "#layers/shop/server/utils/gopay-mock-client"
@@ -27,12 +26,12 @@ export default defineEventHandler(async (event) => {
   const paymentId = getRouterParam(event, "id") ?? ""
   const decision = DecisionSchema.safeParse(await readBody(event))
   if (!decision.success) {
-    throw createError({ statusCode: 400, statusMessage: "action must be pay or cancel" })
+    throw createError({ status: 400, statusText: "action must be pay or cancel" })
   }
 
   const payment = recordMockPaymentState(paymentId, MOCK_DECISION_STATES[decision.data.action])
   if (payment === undefined) {
-    throw createError({ statusCode: 404, statusMessage: "Payment not found" })
+    throw createError({ status: 404, statusText: "Payment not found" })
   }
 
   await notifySite(event, payment)
@@ -42,12 +41,12 @@ export default defineEventHandler(async (event) => {
 // Both callback URLs are absolute and built from the site config, which in
 // development is the deployed site. The mock must not reach it: it answers
 // on this server, so it calls back to this server.
-function onRequestOrigin(event: H3Event, absoluteUrl: string): string {
+function onRequestOrigin(event: RequestEvent, absoluteUrl: string): string {
   const target = new URL(absoluteUrl)
   return new URL(`${target.pathname}${target.search}`, getRequestURL(event).origin).href
 }
 
-async function notifySite(event: H3Event, payment: MockPayment): Promise<void> {
+async function notifySite(event: RequestEvent, payment: MockPayment): Promise<void> {
   const notification = new URL(onRequestOrigin(event, payment.notificationUrl))
   notification.searchParams.set("id", payment.id)
   const answer = await fetch(notification).catch((error: unknown) => error)

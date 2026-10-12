@@ -1,8 +1,8 @@
-import type { H3Event } from "h3"
+import { SITE_URL } from "#layers/base/shared/utils/site"
 
-// Absolute URL of one of our auth pages, for Directus to put in an e-mail.
-// Built from the configured site URL rather than the request origin, so a
-// forged Host header cannot steer where the e-mail points.
-export function authPageUrl(event: H3Event, path: string): string {
-  return new URL(path, getSiteConfig(event).url).href
+// Absolute URL of one of our pages, for Directus to put in an e-mail or GoPay
+// to call back. Built from the site URL rather than the request origin, so a
+// forged Host header cannot steer where it points.
+export function authPageUrl(path: string): string {
+  return new URL(path, SITE_URL).href
 }

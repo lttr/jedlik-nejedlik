@@ -1,5 +1,4 @@
-// Imports rather than auto-imports: see `payments/[id].get.ts`.
-import { createError, defineEventHandler, readBody } from "h3"
+import { createError, defineEventHandler, readBody } from "nuxt/server"
 import { z } from "zod"
 
 import { getGopayClient } from "#layers/shop/server/utils/gopay-client"
@@ -20,8 +19,8 @@ export default defineEventHandler(async (event): Promise<GopayPayment> => {
   const input = DemoPaymentSchema.safeParse(await readBody(event))
   if (!input.success) {
     throw createError({
-      statusCode: 400,
-      statusMessage: "Invalid payment",
+      status: 400,
+      statusText: "Invalid payment",
       message: z.prettifyError(input.error),
     })
   }

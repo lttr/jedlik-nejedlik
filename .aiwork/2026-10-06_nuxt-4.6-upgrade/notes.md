@@ -29,3 +29,69 @@
 - Pinned `[phases.setup] nixpkgsArchive` to nixos-26.05 `6fcc1603…`
   (`nodejs_24` = 24.21.0; `pnpm_9`, which Nixpacks also asks for, still exists
   there). Pnpm itself still comes from corepack.
+
+## Step 3+4: session swap and `nuxt/server` migration (one commit)
+
+- **Steps 3 and 4 landed together.** `nuxt/server`'s session helpers refuse an
+  h3 event (`NUXT_E8012`), and every caller of the session store is a handler or
+  middleware. So the store can only move once its callers do. Splitting would
+  have meant a throwaway cast over `nuxt-auth-utils`. The input helper stays a
+  commit of its own.
+- **Session store** (`auth/server/utils/session-store.ts`): `getSession`,
+  `updateSession` and `clearSession` from `nuxt/server`, default password
+  (derived from `appSecret`), cookie `nuxt-session`, 30-day `maxAge`, `httpOnly`,
+  `secure`, `sameSite: lax`. One typed object `{ account?, secrets? }`.
+  - `getSession` on a request **without** a cookie mints an empty session and a
+    `Set-Cookie`. The store now guards its own read, so the two middlewares no
+    longer read the cookie name from `runtimeConfig.session`.
+  - Sliding window: every `updateSession` re-seals with a fresh iron TTL and
+    cookie `Max-Age`. Unit-tested (`session-store.test.ts`): rewritten on day
+    20, still alive on day 40; the cookie from login is dead by then.
+- **Client seam:** the `account-session` middleware puts `account` (never the
+  secrets) on `event.context`, typed through a `RequestEventContext`
+  augmentation. `auth/app/plugins/account.server.ts` moves it into
+  `useState("account")`. Login returns the `Account`, logout `null`/204. The
+  `refresh()` and the cookie-header stripping are gone.
+  - The middleware reads the Account **after** the refresh attempt, so a
+    session Directus refused renders logged out. If Directus is unreachable,
+    the stored Account still renders (an outage doesn't log anyone out).
+- **204:** `nuxt/server` has no `sendNoContent`. `base/server/utils/no-content.ts`
+  sets 204 and returns `null`. h3 v1 answers `null` with 204 by itself; h3 v2
+  sends an empty body with the status that was set.
+- **Errors:** `createError({ status, statusText, message })`. On nitropack 2,
+  `nuxt/server`'s `createError` maps them onto h3's `statusCode`/`statusMessage`,
+  so the JSON body is unchanged. Checked live: a wrong password still answers
+  `401 {"statusMessage":"invalid_credentials","message":"Neplatný e-mail nebo heslo."}`.
+- **Event parameters dropped** where only `useRuntimeConfig(event)` used them:
+  `getDirectusAnonymousServerClient()`, `getShopServiceDirectusClient()`.
+- **`authPageUrl(path)`** builds on the base layer's `SITE_URL` instead of
+  `getSiteConfig(event)`. `getSiteConfig` is typed for h3's `H3Event`, and
+  `site.url` is set from that same constant, with no environment override
+  anywhere. This deviates from the spec's "import it through
+  `#site-config/...`".
+- **Sitemap source** uses `nuxt/server`'s `defineEventHandler` (returning
+  `string[]`) instead of the auto-imported `defineSitemapEventHandler`, which
+  is h3's `defineEventHandler` under another name. This deviates from the
+  spec's "import it through `#sitemap/...`". `sitemap.xml` still lists the
+  published Course.
+- **`routeTypedFetch: true` arrived in this commit, not step 5.** With the
+  login response used, oxlint's type-aware pass hit `TS2321 Excessive stack
+  depth` on nitro's legacy `InternalApi` typing for `$fetch("/api/auth/login")`.
+  The rebuilt route typing has no such problem. That in turn rejected GoPay's
+  external `$fetch` (`"GET"` isn't a route method), so the `ofetch` instance
+  came forward too (`ofetch` declared in `web/`, `^1.5.1` like Nuxt's own).
+- **Tests:** `rate-limit.test.ts` now drives a `RequestEvent` built from a web
+  `Request` (`tests/unit/request-event.ts`) instead of stubbing h3 globals.
+  `gopay-api-client.test.ts` mocks `ofetch` instead of `globalThis.$fetch`.
+  The unit config inlines `nuxt/dist/server` so a test can mock
+  `nuxt/internal/server-runtime-config` (outside a Nuxt build it's an empty
+  stub, and Node-resolved modules ignore `vi.mock`).
+- **Live check (dev, curl):** login 200 → `{email}` with
+  `Set-Cookie: nuxt-session=Fe26.2…; Max-Age=2592000; Path=/; HttpOnly; Secure; SameSite=Lax`;
+  `/muj-ucet` SSR 200 shows the e-mail, and no token string appears in the
+  HTML/payload; `/api/account/{courses,billing}` 200; logout 204 with
+  `nuxt-session=; Max-Age=0`; `/muj-ucet` after that 302. Anonymous `/` sets
+  no cookie.
+- **Not changed, worth knowing:** most of the auth utils keep an `event`
+  parameter that now goes unused (it only fed the anonymous client). Left in
+  place to keep this commit's diff to the migration.

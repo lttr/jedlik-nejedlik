@@ -1,5 +1,5 @@
 import { createItem, readItems, updateItem, updateMe } from "@directus/sdk"
-import type { H3Event } from "h3"
+import type { RequestEvent } from "nuxt/server"
 
 import { CourseSchema, OrderSchema } from "#layers/directus/shared/utils/schemas"
 import type { Order } from "#layers/directus/shared/utils/schemas"
@@ -89,7 +89,7 @@ async function readCreatedOrders(client: DirectusRestClient, courseId: number): 
 // second Order (spec, user story 14). An inquiry that fails counts as „no
 // reusable Payment": a fresh Order is always safe.
 async function liveGatewayUrl(
-  event: H3Event,
+  event: RequestEvent,
   client: DirectusRestClient,
   courseId: number,
 ): Promise<string | undefined> {
@@ -140,15 +140,15 @@ async function createOrder(
 // story 27). Both callbacks are absolute and built from the site config, so a
 // forged Host header cannot steer where GoPay reports.
 async function startPayment(
-  event: H3Event,
+  event: RequestEvent,
   orderId: number,
   course: SellableCourse,
   payerEmail: string,
 ): Promise<string> {
   // The cap on both callbacks is GoPay's, so it is the client that checks
   // them — once, for every caller, and where the unit suite can see it.
-  const returnUrl = authPageUrl(event, `/objednavka/${orderId}/navrat`)
-  const notificationUrl = authPageUrl(event, "/api/gopay/notify")
+  const returnUrl = authPageUrl(`/objednavka/${orderId}/navrat`)
+  const notificationUrl = authPageUrl("/api/gopay/notify")
 
   const payment = await getGopayClient(event).createPayment({
     orderId,
@@ -161,7 +161,7 @@ async function startPayment(
 
   // The id is the settlement's idempotency key, so it has to be on the Order
   // before the Student can reach the gateway.
-  await getShopServiceDirectusClient(event).request(
+  await getShopServiceDirectusClient().request(
     updateItem("order", orderId, { gopay_payment_id: payment.id }),
   )
 
@@ -181,7 +181,7 @@ export interface PlaceOrderInput {
 }
 
 export async function placeCheckoutOrder(
-  event: H3Event,
+  event: RequestEvent,
   { client, course, billing, email }: PlaceOrderInput,
 ): Promise<string> {
   try {

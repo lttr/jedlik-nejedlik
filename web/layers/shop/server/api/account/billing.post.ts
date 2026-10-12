@@ -1,3 +1,4 @@
+import { defineEventHandler, readBody } from "nuxt/server"
 import { updateMe } from "@directus/sdk"
 
 import { BillingRequestSchema, toBillingPayload } from "#layers/shop/shared/utils/checkout"
@@ -5,11 +6,12 @@ import { requireAccountDirectusClient } from "#layers/auth/server/utils/account-
 import { enforceRateLimit } from "#layers/auth/server/utils/rate-limit"
 import { BILLING_RATE_LIMIT } from "#layers/shop/server/utils/account-billing"
 import { shopError, shopMessages, unexpectedShopError } from "#layers/shop/server/utils/shop-errors"
+import { noContent } from "#layers/base/server/utils/no-content"
 
 // The write goes through the caller's own session and `/users/me`, so it can
 // only ever land on their own row — no row id comes from the browser. Orders
 // keep their own snapshot (spec, user story 22).
-export default defineEventHandler(async (event): Promise<void> => {
+export default defineEventHandler(async (event): Promise<null> => {
   enforceRateLimit(event, BILLING_RATE_LIMIT)
 
   const { client } = await requireAccountDirectusClient(event)
@@ -25,5 +27,5 @@ export default defineEventHandler(async (event): Promise<void> => {
     throw unexpectedShopError("Saving billing details failed", error, shopMessages.billingUnsaved)
   }
 
-  sendNoContent(event)
+  return noContent(event)
 })

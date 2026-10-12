@@ -4,8 +4,6 @@
 /// <reference path="../../.nuxt/types/nuxt-robots-nitro.d.ts" />
 
 export default defineNuxtConfig({
-  modules: ["nuxt-auth-utils"],
-
   components: false,
 
   routeRules: {

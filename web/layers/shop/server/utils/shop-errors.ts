@@ -1,15 +1,17 @@
+import { createError } from "nuxt/server"
+
 // One error shape for the Checkout, the settlement and the Account's shop
 // sections. `message` carries the Czech text the browser shows;
-// `statusMessage` becomes the HTTP reason phrase and must stay ASCII.
-export function shopError(statusCode: number, code: string, message: string): Error {
-  return createError({ statusCode, statusMessage: code, message })
+// `statusText` becomes the HTTP reason phrase and must stay ASCII.
+export function shopError(status: number, code: string, message: string): Error {
+  return createError({ status, statusText: code, message })
 }
 
 // A draft Course and somebody else's Order have to be indistinguishable from a
 // URL that never existed (ADR 0004), so every shop read that comes up empty
 // answers this 404 and nothing more specific.
 export function notFound(): Error {
-  return createError({ statusCode: 404, statusMessage: "Page not found" })
+  return createError({ status: 404, statusText: "Page not found" })
 }
 
 export const shopMessages = {

@@ -13,7 +13,7 @@
     "@directus/sdk": "^26.0.0",
     "@lttr/puleo": "^0.8.1",
     "@sentry/nuxt": "^11.6.0",
-    "nuxt-auth-utils": "^0.5.30",
+    "ofetch": "^1.5.1",
     "zod": "^4.6.5"
   },
   "devDependencies": {

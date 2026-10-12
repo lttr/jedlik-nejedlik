@@ -1,3 +1,4 @@
+import { createError, defineEventHandler, getQuery } from "nuxt/server"
 import * as Sentry from "@sentry/nuxt"
 import { z } from "zod"
 import { enforceRateLimit } from "#layers/auth/server/utils/rate-limit"
@@ -34,6 +35,6 @@ export default defineEventHandler(async (event): Promise<{ status: string }> => 
     // The 500 is deliberate: it is what makes GoPay retry.
     Sentry.captureException(error, { tags: { gopayPaymentId: paymentId } })
     console.error(`[shop] Settling GoPay payment ${paymentId} failed`, error)
-    throw createError({ statusCode: 500, statusMessage: "Settlement failed" })
+    throw createError({ status: 500, statusText: "Settlement failed" })
   }
 })

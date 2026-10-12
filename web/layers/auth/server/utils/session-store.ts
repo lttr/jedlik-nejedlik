@@ -1,42 +1,50 @@
-// The single seam onto nuxt-auth-utils' server API; its `user`/`secure` key
-// names stop here. Keep new uses of the module in this file: the lint
-// exemption in vite.config.ts is scoped to it.
-import type { H3Event } from "h3"
+// The single seam onto the sealed session cookie. Everything else speaks
+// Account and AccountSecrets and never touches the cookie itself.
+import { clearSession, getCookie, getSession, updateSession } from "nuxt/server"
+import type { RequestEvent, SessionConfig } from "nuxt/server"
 import type { Account, AccountSecrets } from "#layers/auth/shared/types/account"
+
+// A type, not an interface: the session API wants an index signature.
+type AccountSessionData = {
+  account?: Account
+  secrets?: AccountSecrets
+}
 
 export interface StoredAccountSession {
   account: Account | undefined
   secrets: AccountSecrets | undefined
 }
 
-export async function readAccountSession(event: H3Event): Promise<StoredAccountSession> {
-  const { user, secure } = await getUserSession(event)
-  return { account: user, secrets: secure }
+// Sealed with the default password, derived from `appSecret`
+// (NUXT_APP_SECRET), under the default `nuxt-session` cookie name.
+const SESSION = {
+  name: "nuxt-session",
+  // 30 days. Every write re-seals with a fresh lifetime, so the window slides
+  // with each token refresh instead of counting down from login.
+  maxAge: 30 * 24 * 60 * 60,
+  // Already the defaults; spelled out because they are the ADR 0002
+  // guarantee, not a happy accident.
+  cookie: { httpOnly: true, secure: true, sameSite: "lax" },
+} as const satisfies SessionConfig
+
+export async function readAccountSession(event: RequestEvent): Promise<StoredAccountSession> {
+  // Anonymous traffic stops here: reading a request with no session cookie
+  // would mint an empty session and a `Set-Cookie` for it.
+  if (getCookie(event, SESSION.name) === undefined) {
+    return { account: undefined, secrets: undefined }
+  }
+  const { data } = await getSession<AccountSessionData>(event, SESSION)
+  return { account: data.account, secrets: data.secrets }
 }
 
-// `replaceUserSession`, not `setUserSession`: h3 derives the sealed cookie's
-// expiry from the session's creation time, so only replacing on every token
-// refresh makes the 30 days slide instead of counting down from login.
 export async function writeAccountSession(
-  event: H3Event,
+  event: RequestEvent,
   account: Account,
   secrets: AccountSecrets,
 ): Promise<void> {
-  await replaceUserSession(event, { user: account, secure: secrets })
+  await updateSession<AccountSessionData>(event, SESSION, { account, secrets })
 }
 
-export async function dropAccountSession(event: H3Event): Promise<void> {
-  await clearUserSession(event)
-
-  // Also strip the cookie from the incoming request: during SSR the module
-  // re-reads the session through an internal fetch that forwards these
-  // headers, and the page would still render as logged in.
-  const cookieHeader = event.node.req.headers.cookie
-  if (cookieHeader !== undefined) {
-    const name = useRuntimeConfig(event).session.name
-    event.node.req.headers.cookie = cookieHeader
-      .split(";")
-      .filter((part) => !part.trimStart().startsWith(`${name}=`))
-      .join(";")
-  }
+export async function dropAccountSession(event: RequestEvent): Promise<void> {
+  await clearSession(event, SESSION)
 }

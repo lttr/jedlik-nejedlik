@@ -1,5 +1,5 @@
 import { createItem, readItems, updateItem } from "@directus/sdk"
-import type { H3Event } from "h3"
+import type { RequestEvent } from "nuxt/server"
 
 import { OrderSchema } from "#layers/directus/shared/utils/schemas"
 import type { Order } from "#layers/directus/shared/utils/schemas"
@@ -102,17 +102,17 @@ export interface Settlement {
 // or one meant for another instance. The lookup comes before GoPay is asked
 // anything, so a forged id never reaches GoPay's API (spec, user story 32).
 export async function settlePayment(
-  event: H3Event,
+  event: RequestEvent,
   paymentId: string,
 ): Promise<Settlement | undefined> {
-  const order = await readOrderByPayment(getShopServiceDirectusClient(event), paymentId)
+  const order = await readOrderByPayment(getShopServiceDirectusClient(), paymentId)
   return order === undefined ? undefined : settleOrder(event, order)
 }
 
 // The same settlement for a caller that already holds the Order: the return
 // page has just read it with the Student's own session, and looking it up
 // again by Payment id would buy nothing.
-export async function settleOrder(event: H3Event, order: Order): Promise<Settlement> {
+export async function settleOrder(event: RequestEvent, order: Order): Promise<Settlement> {
   const paymentId = order.gopay_payment_id
   if (paymentId === undefined || order.status === "paid") {
     // Nothing to inquire about, or nothing an inquiry could change: for a
@@ -124,6 +124,6 @@ export async function settleOrder(event: H3Event, order: Order): Promise<Settlem
   // Never the notification's word for it: the state always comes from an
   // inquiry, so nothing a caller sends can fake a payment.
   const payment = await getGopayClient(event).inquirePayment(paymentId)
-  const client = getShopServiceDirectusClient(event)
+  const client = getShopServiceDirectusClient()
   return { order: await applyPaymentState(client, order, payment.state) }
 }

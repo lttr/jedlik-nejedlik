@@ -1,3 +1,4 @@
+import { defineEventHandler } from "nuxt/server"
 import { readItems } from "@directus/sdk"
 import { COURSE_PUBLIC_FIELDS, SHOP_COURSE_STATUSES } from "../utils/course-query"
 import { getCallerDirectusClient } from "#layers/auth/server/utils/caller-client"

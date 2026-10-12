@@ -57,9 +57,9 @@ export const privateSchema: z.ZodType | undefined = z.looseObject({
     // an empty one is a boot failure rather than a runtime surprise.
     directusToken: z.string().min(1, { error: "NUXT_SHOP_DIRECTUS_TOKEN is required" }),
   }),
-  session: z.looseObject({
-    password: z.string().min(32, { error: "NUXT_SESSION_PASSWORD must be at least 32 characters" }),
-  }),
+  // Seals the session cookie. Development generates one; a production build
+  // never does, so without it no Account could log in.
+  appSecret: z.string().min(32, { error: "NUXT_APP_SECRET must be at least 32 characters" }),
 })
 
 declare module "nuxt/schema" {

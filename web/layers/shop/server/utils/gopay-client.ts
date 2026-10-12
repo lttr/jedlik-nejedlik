@@ -1,4 +1,5 @@
-import type { H3Event } from "h3"
+import { getRequestURL, useRuntimeConfig } from "nuxt/server"
+import type { RequestEvent } from "nuxt/server"
 
 import { createGopayApiClient } from "./gopay-api-client"
 import { createGopayMockClient } from "./gopay-mock-client"
@@ -25,8 +26,8 @@ function gopayBaseUrl(env: string): string {
 // than fetched for each one.
 let apiClient: GopayClient | undefined
 
-export function getGopayClient(event: H3Event): GopayClient {
-  const { gopay } = useRuntimeConfig(event)
+export function getGopayClient(event: RequestEvent): GopayClient {
+  const { gopay } = useRuntimeConfig()
 
   if (gopay.env === "mock") {
     // Not cached: the mock's gateway URLs are built from the origin the

@@ -2,10 +2,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 
 import type { GopayClient } from "#layers/shop/shared/utils/gopay"
 
-// `$fetch` is a Nuxt auto-import: inside the client module it is a free
-// identifier that resolves against `globalThis` at call time. So these tests
-// stub `globalThis.$fetch` and exercise the real module, rather than mocking
-// the module itself (same approach as rate-limit.test.ts).
+// The client talks to GoPay through `ofetch`, so these tests swap that one
+// import for a recorder and exercise the real module around it.
+vi.mock("ofetch", () => ({
+  ofetch: async (url: string, options: StubCall["options"]) => {
+    calls.push({ url, options })
+    return Promise.resolve(responses.shift() ?? {})
+  },
+}))
 
 interface StubCall {
   url: string
@@ -35,13 +39,6 @@ const PAYMENT_INPUT = {
 const calls: StubCall[] = []
 let responses: unknown[] = []
 
-function stubFetch(): void {
-  vi.stubGlobal("$fetch", async (url: string, options: StubCall["options"]) => {
-    calls.push({ url, options })
-    return Promise.resolve(responses.shift() ?? {})
-  })
-}
-
 function tokenResponse(accessToken = "tok-1", expiresIn = 1800): unknown {
   return { access_token: accessToken, expires_in: expiresIn, token_type: "bearer" }
 }
@@ -51,7 +48,6 @@ function paymentResponse(state = "CREATED"): unknown {
 }
 
 async function loadClient(): Promise<GopayClient> {
-  stubFetch()
   vi.resetModules()
   const module = await import("#layers/shop/server/utils/gopay-api-client")
   return module.createGopayApiClient(CONFIG)
@@ -76,7 +72,6 @@ describe("createGopayApiClient", () => {
   })
 
   afterEach(() => {
-    vi.unstubAllGlobals()
     vi.useRealTimers()
   })
 

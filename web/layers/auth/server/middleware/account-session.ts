@@ -1,16 +1,16 @@
+import { defineEventHandler } from "nuxt/server"
+
 import { resolveAccountAccessToken } from "../utils/account-session"
+import { readAccountSession } from "../utils/session-store"
 
 // Keeps a live session's Directus tokens and the cookie's 30-day window
-// rolling. `/api/**` and `/_` are excluded: a refresh on nuxt-auth-utils' own
-// session request would rotate the token onto a `Set-Cookie` the browser never
-// sees.
+// rolling, and hands the page render its Account (never the secrets) through
+// the request context; the `account.server` plugin takes it from there.
+// `/api/**` and `/_` are not page renders: each API route resolves the
+// session itself, and `/_` is Nuxt's own traffic.
 export default defineEventHandler(async (event) => {
-  if (event.path.startsWith("/api/") || event.path.startsWith("/_")) {
-    return
-  }
-  // Anonymous traffic stops here, before h3 materialises a session and mints
-  // an id for it.
-  if (getCookie(event, useRuntimeConfig(event).session.name) === undefined) {
+  const { pathname } = event.url
+  if (pathname.startsWith("/api/") || pathname.startsWith("/_")) {
     return
   }
 
@@ -20,4 +20,6 @@ export default defineEventHandler(async (event) => {
     // Already logged. A token we could not renew must not take a public page
     // down; the next request tries again.
   }
+  // Read after the refresh: a session Directus refused is gone by now.
+  event.context.account = (await readAccountSession(event)).account
 })

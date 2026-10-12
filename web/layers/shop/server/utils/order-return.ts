@@ -1,5 +1,5 @@
 import { readItems } from "@directus/sdk"
-import type { H3Event } from "h3"
+import type { RequestEvent } from "nuxt/server"
 import { z } from "zod"
 
 import { OrderSchema } from "#layers/directus/shared/utils/schemas"
@@ -59,7 +59,7 @@ async function readOrderCourse(
 // The Student usually arrives before GoPay's notification, so the page settles
 // too — the same function, so the outcome cannot differ. A failed inquiry
 // leaves the Order pending. See docs/shop.md, „Return page“.
-async function settledStatus(event: H3Event, order: Order): Promise<Order["status"]> {
+async function settledStatus(event: RequestEvent, order: Order): Promise<Order["status"]> {
   const settled = await settleOrder(event, order).catch((error: unknown) => {
     console.warn(`[shop] Could not settle order ${order.id} from the return page`, error)
     return undefined
@@ -67,7 +67,10 @@ async function settledStatus(event: H3Event, order: Order): Promise<Order["statu
   return settled?.order.status ?? order.status
 }
 
-export async function loadSettlementView(event: H3Event, orderId: number): Promise<SettlementView> {
+export async function loadSettlementView(
+  event: RequestEvent,
+  orderId: number,
+): Promise<SettlementView> {
   const { client } = await requireAccountDirectusClient(event)
   const order = await readOwnOrder(client, orderId)
   // The Course only ever needs `order.course`, which the read above already

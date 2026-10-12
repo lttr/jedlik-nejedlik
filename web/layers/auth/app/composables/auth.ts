@@ -14,17 +14,16 @@ export interface AuthActions {
 // The only way the app talks to the auth routes: credentials go out, a session
 // cookie comes back, and no Directus token ever reaches the browser (ADR 0002).
 export function useAuthActions(): AuthActions {
-  const { refresh } = useAccount()
+  const { setAccount } = useAccount()
 
   return {
     async logIn(credentials) {
-      await $fetch("/api/auth/login", { method: "POST", body: credentials })
-      await refresh()
+      setAccount(await $fetch("/api/auth/login", { method: "POST", body: credentials }))
     },
 
     async logOut() {
       await $fetch("/api/auth/logout", { method: "POST" })
-      await refresh()
+      setAccount(null)
     },
 
     // Neither ends logged in: registering creates an Unverified Account, and
@@ -48,7 +47,7 @@ export function useAuthActions(): AuthActions {
     },
 
     // Issues a fresh session cookie and ends every other session; the identity
-    // in it is unchanged, so there is nothing to re-read.
+    // in it is unchanged, so the Account state stays as it is.
     async changePassword(change) {
       await $fetch("/api/auth/change-password", { method: "POST", body: change })
     },
