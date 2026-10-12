@@ -9,6 +9,11 @@ providers = ["node"]
 [variables]
 NIXPACKS_NODE_VERSION = '24'
 
+# Nixpacks' default nixpkgs resolves `nodejs_24` to 24.10.0, below Nuxt 4.6's
+# engine range (`^24.15.0`). This nixos-26.05 commit carries 24.21.0.
+[phases.setup]
+nixpkgsArchive = '6fcc160353f63555b560f25588925133c8f61f2a'
+
 [phases.install]
 onlyIncludeFiles = ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml", "./web/package.json"]
 

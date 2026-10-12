@@ -51,6 +51,8 @@
     "@nuxtjs/plausible",
     // CLI-only, invoked by the directus:pull/diff tasks, never imported.
     "directus-sync",
+    // The checker `nuxi typecheck` (check:typecheck) resolves at runtime.
+    "vue-tsc",
   ],
 
   // Layers form a stack and imports only point down it:

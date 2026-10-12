@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "directus-sync": "3.5.1",
-    "fallow": "^3.31.0",
+    "fallow": "^3.33.1",
     "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@11.2.2"
