@@ -1,11 +1,11 @@
 import { defineEventHandler, getRouterParam } from "nuxt/server"
 
 import { emptyBillingDetails } from "#layers/shop/shared/utils/checkout"
-import type { CheckoutView } from "#layers/shop/shared/utils/checkout"
 import { getCallerDirectusClient } from "#layers/auth/server/utils/caller-client"
 import { readAccountSession } from "#layers/auth/server/utils/session-store"
 import { readAccountBilling } from "#layers/shop/server/utils/account-billing"
 import { assertNotEntitled, loadCheckoutCourse } from "#layers/shop/server/utils/checkout-order"
+import type { CheckoutView } from "#layers/shop/server/utils/checkout-order"
 
 // Every refusal is the Checkout page's refusal too: 404 has no readable
 // Course, 409 a Course that cannot be bought. A visitor without an Account is

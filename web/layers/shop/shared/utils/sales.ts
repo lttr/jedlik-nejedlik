@@ -15,14 +15,6 @@ export interface SalesCourse extends Course {
   sections: SalesSection[]
 }
 
-// `entitled` is the caller's own Entitlement, read with their own session
-// (ADR 0004): it decides whether the button reads „Koupit kurz" or „Přejít do
-// kurzu", and is always `false` for a visitor.
-export interface SalesView {
-  course: SalesCourse
-  entitled: boolean
-}
-
 const SalesRowSchema = CourseSchema.and(
   z.object({
     sections: z.array(SectionSchema.and(z.object({ lessons: z.array(LessonSchema) }))),

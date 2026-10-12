@@ -29,13 +29,12 @@
 
 <script lang="ts" setup>
 import { MY_COURSES_ANCHOR } from "#layers/shop/shared/utils/owned-courses"
-import type { OwnedCourse } from "#layers/shop/shared/utils/owned-courses"
 import CourseCover from "../CourseCover.vue"
 import ShopNotice from "../ShopNotice.vue"
 
 // Through Nitro, never Directus from the browser (ADR 0004). No `error`
 // branch for a missing session: the page is behind the auth middleware.
-const { data: courses, error } = await useFetch<OwnedCourse[]>("/api/account/courses", {
+const { data: courses, error } = await useFetch("/api/account/courses", {
   key: "account:courses",
   default: () => [],
 })

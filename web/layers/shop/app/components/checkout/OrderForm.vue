@@ -65,7 +65,7 @@ const { pending, errorMessage, submit } = useAuthForm()
 
 async function onSubmit(): Promise<void> {
   await submit(async () => {
-    const { gwUrl } = await $fetch<{ gwUrl: string }>(`/api/checkout/${slug}`, {
+    const { gwUrl } = await $fetch(`/api/checkout/${slug}`, {
       method: "POST",
       body: { consent: consent.value, billing: draft.value },
     })

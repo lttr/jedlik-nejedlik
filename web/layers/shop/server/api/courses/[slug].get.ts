@@ -7,9 +7,9 @@ import {
   COURSE_PUBLIC_FIELDS,
   readCourseBySlug,
 } from "#layers/shop/server/utils/course-query"
+import type { SalesView } from "#layers/shop/server/utils/course-query"
 import { holdsEntitlement } from "#layers/shop/server/utils/entitlements"
 import { parseSalesCourse } from "#layers/shop/shared/utils/sales"
-import type { SalesView } from "#layers/shop/shared/utils/sales"
 
 // The Sales Page. The caller's own session decides both what Directus returns
 // — a draft is readable by its Author, absent for everyone else — and whether

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test"
 
-import { parseOwnedCourses } from "#layers/shop/shared/utils/owned-courses"
+import { parseOwnedCourses } from "#layers/shop/server/utils/entitlements"
 
 // An entitlement row as Directus returns it for „Moje kurzy": the
 // Entitlement's id and the Course expanded to the public columns. `course` is

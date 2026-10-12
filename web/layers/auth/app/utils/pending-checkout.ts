@@ -3,7 +3,7 @@
 // ask after the irreversible step has already succeeded.
 // See docs/shop.md, „Pending checkout".
 export async function takePendingCheckoutSlug(): Promise<string | null> {
-  const answer = await $fetch<{ slug: string | null }>("/api/pending-checkout", {
+  const answer = await $fetch("/api/pending-checkout", {
     method: "POST",
   }).catch((error: unknown) => {
     console.warn("[shop] Could not read the pending checkout", error)

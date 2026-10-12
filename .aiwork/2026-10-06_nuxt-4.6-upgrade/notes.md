@@ -126,3 +126,33 @@
 - Live: mock `payments` with a bad body → 400 `Invalid payment` and the
   prettified issues; `decide` with non-JSON → 400; `password-request` with
   non-JSON → 400 `invalid_email`.
+
+## Step 5: typed API
+
+- `experimental.strictRouteTypes: true` next to `routeTypedFetch: true`
+  (in since step 3+4), both commented as "comes with compatibility 5, set for
+  intent". `typedPages` stays.
+- **`isomorphic`: no.** Nothing `$fetch`es a page path, so typing pages as
+  `GET → string` routes would constrain nothing.
+- All six explicit response generics are gone (`Billing`, `MyCourses`,
+  `OrderForm`, the Checkout page, the return page, `takePendingCheckoutSlug`).
+  Typecheck stayed green without them, so there was no drift to fix, and no
+  page parses a date.
+- Moved out of `shared/` (now server-only): `CheckoutView` →
+  `server/utils/checkout-order.ts`, `SettlementView` → `order-return.ts`,
+  `SalesView` → `course-query.ts`, `OwnedCourse` + `parseOwnedCourses` →
+  `entitlements.ts`. Fallow can't tell which side imports a type, so this was
+  decided with grep: no importer under `app/` remained. `CatalogCourse`,
+  `BillingDetails`, `SalesCourse`/`SalesSection` and `SettlementState` stay
+  shared because components use them.
+- `typecheck` wall time after (warm, `nuxi typecheck`): see Step 7.
+
+### Negative check (Seam 1)
+
+Temporarily in `auth/app/composables/auth.ts`, then reverted:
+
+| Change                                                                         | Result                                                                                              |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `$fetch("/api/auth/registr", { method: "POST" … })`                            | `TS2769 … "fetchdts: no POST route matches '/api/auth/registr'"`                                    |
+| `$fetch("/api/auth/verify-email", { method: "GET" })`                          | `TS2345 … "fetchdts: no GET route matches '/api/auth/verify-email'"`                                |
+| `$fetch("/api/auth/password-request", { method: "POST", body: { mail: 42 } })` | **no error.** As predicted in step 4b, `nuxt/server` handlers carry no request type on nitropack 2. |

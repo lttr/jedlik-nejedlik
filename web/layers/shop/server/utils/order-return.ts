@@ -5,7 +5,7 @@ import { z } from "zod"
 import { OrderSchema } from "#layers/directus/shared/utils/schemas"
 import type { Order } from "#layers/directus/shared/utils/schemas"
 import { settlementStateForOrder } from "#layers/shop/shared/utils/settlement"
-import type { SettlementView } from "#layers/shop/shared/utils/settlement"
+import type { SettlementState } from "#layers/shop/shared/utils/settlement"
 import { ORDER_FIELDS } from "./checkout-order"
 import { readFirstRow, readOnlyRow } from "./read-row"
 import { settleOrder } from "./settle-payment"
@@ -13,6 +13,14 @@ import { shopMessages } from "./shop-errors"
 import { requireAccountDirectusClient } from "#layers/auth/server/utils/account-session"
 import type { RateLimit } from "#layers/auth/server/utils/rate-limit"
 import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
+
+// What the return route answers. The Course fields are empty when it stopped
+// being readable in the meantime. See docs/shop.md, „Settlement".
+export interface SettlementView {
+  state: SettlementState
+  courseTitle: string
+  courseSlug: string
+}
 
 // What the Student sees when GoPay sends them back. The Order is read with
 // their own session, so another Student's Order answers the same 404 as an id

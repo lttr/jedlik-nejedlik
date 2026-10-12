@@ -51,7 +51,6 @@
 
 <script lang="ts" setup>
 import { readRefusal } from "#layers/shop/shared/utils/checkout"
-import type { CheckoutView } from "#layers/shop/shared/utils/checkout"
 import { EMAIL_VERIFIED_QUERY } from "#layers/auth/shared/utils/redirects"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import CheckoutAccountStep from "#layers/shop/app/components/checkout/AccountStep.vue"
@@ -75,7 +74,7 @@ const {
   data: checkout,
   error,
   refresh: refreshCheckout,
-} = await useFetch<CheckoutView>(`/api/checkout/${slug}`, {
+} = await useFetch(`/api/checkout/${slug}`, {
   key: `checkout:${slug}`,
 })
 

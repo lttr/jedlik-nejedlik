@@ -32,7 +32,7 @@ import { useAuthForm } from "#layers/auth/app/composables/auth-form"
 // The same fields the Checkout's step 2 shows, with this page's own copy and
 // save button around them. Through Nitro, never Directus from the browser
 // (ADR 0004).
-const { data, error } = await useFetch<BillingDetails>("/api/account/billing", {
+const { data, error } = await useFetch("/api/account/billing", {
   key: "account:billing",
   default: emptyBillingDetails,
 })

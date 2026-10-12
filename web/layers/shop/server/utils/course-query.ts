@@ -4,6 +4,7 @@ import type { QueryFields } from "@directus/sdk"
 import type { CourseCollection, Schema } from "#layers/directus/shared/types/directus"
 import { CourseStatusSchema } from "#layers/directus/shared/utils/schemas"
 import { readOnlyRow } from "./read-row"
+import type { SalesCourse } from "#layers/shop/shared/utils/sales"
 import type { DirectusRestClient } from "#layers/directus/shared/utils/directus"
 
 // What the two shop routes ask Directus for. Server-only: this is Directus
@@ -56,4 +57,13 @@ export async function readCourseBySlug(
       limit: 1,
     }),
   )
+}
+
+// What the Sales Page route answers. `entitled` is the caller's own
+// Entitlement, read with their own session (ADR 0004): it decides whether the
+// button reads „Koupit kurz" or „Přejít do kurzu", and is always `false` for a
+// visitor.
+export interface SalesView {
+  course: SalesCourse
+  entitled: boolean
 }

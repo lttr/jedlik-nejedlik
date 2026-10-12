@@ -83,19 +83,6 @@ export function hasBillingCompanyDetails(details: BillingDetails): boolean {
 // Checkout route's price check ever sees one.
 export type SellableCourse = Course & { price_czk: number }
 
-// What the Checkout route answers and the Checkout page renders: the Course
-// being bought, who is buying it, and the Billing Details their Account
-// already holds. Shared, because the page is the only consumer and it is not
-// Nitro code.
-export interface CheckoutView {
-  course: SellableCourse
-  // `null` for a visitor without a session: they see what they are buying and
-  // step 1's „Mám účet" / „Jsem tu poprvé" tabs, and nothing else (spec,
-  // „Checkout page", step 1).
-  email: string | null
-  billing: BillingDetails
-}
-
 // The terms' effective date, recorded on the Order as the version the Student
 // agreed to. Must match the date at the foot of `app/pages/obchodni-podminky.vue`.
 // A constant until the legal-documents area (area 10 in

@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 import { checkoutPath } from "#layers/base/shared/utils/pending-checkout"
-import type { SettlementState, SettlementView } from "#layers/shop/shared/utils/settlement"
+import type { SettlementState } from "#layers/shop/shared/utils/settlement"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 import ShopNotice from "#layers/shop/app/components/ShopNotice.vue"
 import { throwPageError } from "#layers/shop/app/utils/page-error"
@@ -53,7 +53,7 @@ const {
   data: view,
   error,
   refresh,
-} = await useFetch<SettlementView>(`/api/orders/${orderId}/settlement`, {
+} = await useFetch(`/api/orders/${orderId}/settlement`, {
   key: `settlement:${orderId}`,
 })
 

@@ -14,11 +14,3 @@ export function settlementStateForOrder(status: Order["status"]): SettlementStat
   }
   return status === "cancelled" ? "failed" : "pending"
 }
-
-// The Course fields are empty when it stopped being readable in the meantime.
-// See docs/shop.md, „Settlement".
-export interface SettlementView {
-  state: SettlementState
-  courseTitle: string
-  courseSlug: string
-}

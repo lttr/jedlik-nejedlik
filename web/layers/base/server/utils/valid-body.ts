@@ -2,8 +2,7 @@ import { readBody } from "nuxt/server"
 import type { RequestEvent } from "nuxt/server"
 import type { z } from "zod"
 
-// The route's own refusal, or one built from what failed when the route
-// answers differently depending on the field.
+// A fixed error, or a function that picks one from the failed fields.
 export type InvalidBody = Error | ((error: z.ZodError) => Error)
 
 // Each route picks its own error for a malformed body, so the reply reveals no

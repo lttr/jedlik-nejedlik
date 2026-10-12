@@ -117,7 +117,11 @@ export default defineNuxtConfig({
 
   experimental: {
     componentIslands: true,
+    // `$fetch`/`useFetch` are typed from the server routes, and a path or
+    // method no route answers is a type error. Both come with
+    // compatibilityVersion 5; set here so the intent is on record.
     routeTypedFetch: true,
+    strictRouteTypes: true,
     typedPages: true,
     typescriptPlugin: true,
     viewTransition: true,
