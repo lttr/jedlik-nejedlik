@@ -1,5 +1,5 @@
-import { SITE_NAME, SITE_URL } from "./layers/base/shared/utils/site"
-import { IGNORED_HOSTNAMES } from "./shared/utils/ignored-hostnames"
+import { SITE_NAME, SITE_URL } from "./layers/base/shared/utils/site.ts"
+import { IGNORED_HOSTNAMES } from "./shared/utils/ignored-hostnames.ts"
 
 // @nuxt/image provider config is build-time. Runtime URL flows separately into
 // runtimeConfig.public.directusUrl via NUXT_PUBLIC_DIRECTUS_URL env override.
@@ -115,6 +115,10 @@ export default defineNuxtConfig({
     client: "hidden",
   },
 
+  future: {
+    compatibilityVersion: 5,
+  },
+
   experimental: {
     componentIslands: true,
     // `$fetch`/`useFetch` are typed from the server routes, and a path or
@@ -123,6 +127,12 @@ export default defineNuxtConfig({
     routeTypedFetch: true,
     strictRouteTypes: true,
     typedPages: true,
+    // Nuxt 5 opt-out. @sentry/nuxt wraps every server middleware with an
+    // import from `#imports`, which only exists while Nitro auto-imports are
+    // on (build error "wrapMiddlewareHandlerWithSentry is not exported by
+    // virtual:#imports"). DELETE WHEN @sentry/nuxt emits `#imports/server` or
+    // explicit imports on Nitro 2, together with the `nitro.imports` filter.
+    nitroAutoImports: true,
     typescriptPlugin: true,
     viewTransition: true,
   },
@@ -130,7 +140,9 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-12-01",
 
   nitro: {
-    // Nitro has no `scan: false`; this keeps our own utils out of server auto-imports.
+    // Nitro has no `scan: false`; this keeps our own utils out of server
+    // auto-imports while `nitroAutoImports` is on. Our server code imports
+    // everything explicitly.
     imports: {
       dirsScanOptions: { fileFilter: (file) => file.includes("/node_modules/") },
     },

@@ -181,3 +181,47 @@ Temporarily in `auth/app/composables/auth.ts`, then reverted:
 - Live: a forced throw in `/api/courses` → `/kurzy` still 200 (its empty
   state) and the dev log shows `[async-data:catalog] [GET] "/api/courses": 500`.
   `/kurzy/neexistuje` 404 → not reported.
+
+## Step 7: compatibility 5
+
+- `future.compatibilityVersion: 5` is on. Resolved flags (loaded with `@nuxt/kit`):
+  `viteEnvironmentApi: true`, `payloadExtraction: "client"`,
+  `inlineErrorRendering: true`, `vue.optionsApi: false`, `routeTypedFetch`
+  and `strictRouteTypes: true`.
+- **`@nuxt/kit`'s `addServerImports` silently undoes `nitroAutoImports: false`.**
+  It runs `config.imports ||= {}` in `nitro:config`, which turns Nitro's
+  `imports: false` back into `{}`. `@nuxt/image` calls it (server
+  `useImage`), so on compatibility 5 Nitro auto-imports, including the scan of
+  our own `server/utils`, were back on. The first "green" compatibility-5
+  build proved nothing about Sentry for that reason.
+- **Sentry does break with auto-imports truly off.** Forcing `imports = false`
+  from a module registered last:
+  `RollupError: "wrapMiddlewareHandlerWithSentry" is not exported by "virtual:#imports", imported by "layers/shop/server/middleware/pending-checkout.ts"`.
+- **Gap list (Nuxt 5 opt-outs):**
+  1. `experimental.nitroAutoImports: true`. DELETE WHEN `@sentry/nuxt`
+     emits `#imports/server` or explicit imports on Nitro 2. Even then,
+     `@nuxt/image` (via kit's `addServerImports`) turns them back on until kit
+     respects `imports: false`.
+  2. The `nitro.imports.dirsScanOptions` filter stays as long as (1) does.
+  3. `@lttr/nuxt-validated-runtime-config` needs a Nuxt 5 / Nitro v3 release
+     (from the spec's audit).
+- No other opt-out was needed.
+- **Checks:**
+  - **Case-sensitive routing:** `/KURZY` and `/Kurzy` were 200 on production
+    and are 404 now. No internal link in code uses uppercase, there are no
+    redirects, and a scan of every non-system Directus collection found no
+    stored link to an uppercase path.
+  - **`navigateTo` early return:** every call (2 middlewares, 6 pages and
+    composables) is the last statement of its branch, so nothing runs after it.
+  - **Head:** tag-by-tag comparison of `/` and `/kurzy` between production
+    (`master`) and the local compatibility-5 build. Identical sequence (meta,
+    og/twitter, title, canonical, Sentry meta).
+  - **Production build:** boots with `NUXT_APP_SECRET` set. Without it, boot
+    fails: `appSecret: NUXT_APP_SECRET must be at least 32 characters`. On the
+    built server: login 200, `/muj-ucet` with the session 200 (e-mail present,
+    no tokens), Checkout 200, `sitemap.xml`/`robots.txt` 200, 404 page 404.
+  - **Dev:** all public and auth pages 200, devtools client 200, no
+    `NUXT_E*` diagnostics.
+- `nuxt.config.ts` imports its two helpers with `.ts` extensions. Without
+  them, 4.6's native config loader logged `NUXT_B5023` and fell back to jiti.
+- `typecheck` wall time after the upgrade: 6.7 s (before: 6.8 s).

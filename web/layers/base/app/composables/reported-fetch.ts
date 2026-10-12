@@ -1,9 +1,8 @@
 import * as Sentry from "@sentry/nuxt"
 
-// `useFetch` and `useAsyncData` resolve normally when their handler fails, so
-// a page reading only `data` renders as if the data were simply missing, and
-// neither `vue:error` nor `app:error` sees it. These variants report the
-// failure where it happens, on the server or in the browser.
+// A failed `useFetch`/`useAsyncData` resolves normally, so a page reading only
+// `data` shows it as missing data and no error hook fires. These variants
+// report it where it happened.
 
 // Ours to fix: no answer at all, or a 5xx. A 4xx is the page's own answer (a
 // draft Course's 404, a Checkout's 409) and is rendered, not reported. An
@@ -45,7 +44,6 @@ function reportingMiddleware<T>(key: () => string): (next: () => Promise<T>) => 
   }
 }
 
-// Tagged with the call's `key`, or with the URL when the call has none.
 const reportFetchErrors = defineUseFetchAddon({
   setup(options) {
     let url = ""
