@@ -1,7 +1,5 @@
 import type { RequestEvent } from "nuxt/server"
 
-// A `RequestEvent` as every server runtime hands it to a `nuxt/server`
-// handler: a web `Request`, its URL, response headers and a context.
 export function requestEvent(
   path = "/",
   init: RequestInit & { headers?: Record<string, string> } = {},

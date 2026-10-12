@@ -46,8 +46,8 @@ export function useAuthActions(): AuthActions {
       await $fetch("/api/auth/password-reset", { method: "POST", body: { token, password } })
     },
 
-    // Issues a fresh session cookie and ends every other session; the identity
-    // in it is unchanged, so the Account state stays as it is.
+    // The route signs every other browser out and logs this one back in as the
+    // same Account, so the state stays as it is.
     async changePassword(change) {
       await $fetch("/api/auth/change-password", { method: "POST", body: change })
     },

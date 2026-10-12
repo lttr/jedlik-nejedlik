@@ -12,11 +12,9 @@ import type {
   GopayPayment,
 } from "#layers/shop/shared/utils/gopay"
 
-// The real GoPay, over plain `ofetch` (the global `$fetch` is for our own
-// routes). GoPay ships no Node SDK and the
-// third-party packages are years stale (spec, „GoPay client"), so the four
-// calls are written out here: token, create, inquire, refund. Sandbox and
-// production differ only in `baseUrl`.
+// The real GoPay. No usable Node SDK exists (spec, „GoPay client"), so token,
+// create, inquire and refund are four `ofetch` calls. Sandbox and production
+// differ only in `baseUrl`.
 
 // The credentials are `string | number` because that is how they arrive:
 // Nuxt reads every env override through `destr`, so an all-digits GoID or

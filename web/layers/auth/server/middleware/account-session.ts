@@ -3,11 +3,9 @@ import { defineEventHandler } from "nuxt/server"
 import { resolveAccountAccessToken } from "../utils/account-session"
 import { readAccountSession } from "../utils/session-store"
 
-// Keeps a live session's Directus tokens and the cookie's 30-day window
-// rolling, and hands the page render its Account (never the secrets) through
-// the request context; the `account.server` plugin takes it from there.
-// `/api/**` and `/_` are not page renders: each API route resolves the
-// session itself, and `/_` is Nuxt's own traffic.
+// Per page render: renew due Directus tokens (sliding the cookie's 30 days)
+// and hand the Account, never the secrets, to the `account.server` plugin.
+// API routes resolve the session themselves; `/_` is Nuxt's own traffic.
 export default defineEventHandler(async (event) => {
   const { pathname } = event.url
   if (pathname.startsWith("/api/") || pathname.startsWith("/_")) {

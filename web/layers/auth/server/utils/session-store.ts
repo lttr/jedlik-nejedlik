@@ -22,8 +22,8 @@ const SESSION = {
   // 30 days. Every write re-seals with a fresh lifetime, so the window slides
   // with each token refresh instead of counting down from login.
   maxAge: 30 * 24 * 60 * 60,
-  // Already the defaults; spelled out because they are the ADR 0002
-  // guarantee, not a happy accident.
+  // The cookie stays out of page scripts and plain HTTP (ADR 0002), so this
+  // is stated here rather than left to the defaults.
   cookie: { httpOnly: true, secure: true, sameSite: "lax" },
 } as const satisfies SessionConfig
 

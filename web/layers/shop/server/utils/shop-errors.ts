@@ -1,8 +1,6 @@
 import { createError } from "nuxt/server"
 
-// One error shape for the Checkout, the settlement and the Account's shop
-// sections. `message` carries the Czech text the browser shows;
-// `statusText` becomes the HTTP reason phrase and must stay ASCII.
+// The same shape as `authError`, so the browser reads both alike.
 export function shopError(status: number, code: string, message: string): Error {
   return createError({ status, statusText: code, message })
 }

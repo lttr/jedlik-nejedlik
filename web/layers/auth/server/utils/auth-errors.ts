@@ -2,8 +2,8 @@ import { createError } from "nuxt/server"
 import { z } from "zod"
 import { authMessages } from "#layers/auth/shared/utils/auth-messages"
 
-// `message` carries the Czech text the browser shows; `statusText` becomes
-// the HTTP reason phrase and must stay ASCII.
+// `message` is the Czech text the browser shows; `code` becomes the HTTP
+// reason phrase, so it must stay ASCII.
 export function authError(status: number, code: string, message: string): Error {
   return createError({ status, statusText: code, message })
 }

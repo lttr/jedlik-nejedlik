@@ -3,13 +3,13 @@ import type { Account } from "#layers/auth/shared/types/account"
 export interface AccountSession {
   account: ComputedRef<Account | null>
   loggedIn: ComputedRef<boolean>
-  // For the auth actions: login sets the Account it got back, logout clears it.
   setAccount: (account: Account | null) => void
 }
 
-// Pages speak Account (GLOSSARY.md), never the session. The state is filled
-// during SSR from the session cookie (`account.server` plugin) and travels in
-// the payload, so SSR and client agree without a round-trip.
+// The logged-in Account, as pages see it; nothing outside the server touches
+// the session itself. The `account.server` plugin fills the state during SSR
+// and the payload carries it to the browser, so SSR and client agree without
+// a request.
 export function useAccount(): AccountSession {
   const state = useState<Account | null>("account", () => null)
   return {
