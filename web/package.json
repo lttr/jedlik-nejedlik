@@ -12,16 +12,16 @@
   "dependencies": {
     "@directus/sdk": "^26.0.0",
     "@lttr/puleo": "^0.8.1",
-    "@sentry/nuxt": "^11.6.0",
+    "@sentry/nuxt": "^11.8.0",
     "ofetch": "^1.5.1",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@dxup/nuxt": "^0.5.10",
     "@dxup/unimport": "^0.1.2",
-    "@eslint/css": "^2.0.0",
+    "@eslint/css": "^2.0.1",
     "@iconify-json/bi": "^1.2.7",
-    "@iconify-json/logos": "^1.2.15",
+    "@iconify-json/logos": "^1.2.16",
     "@iconify-json/uil": "^1.2.3",
     "@lttr/nuxt-config-eslint": "^0.4.2",
     "@lttr/nuxt-config-postcss": "^0.0.8",
@@ -38,9 +38,9 @@
     "@types/node": "^26.6.5",
     "@vueuse/core": "^15.0.0",
     "@vueuse/nuxt": "^15.0.0",
-    "eslint": "^10.12.0",
+    "eslint": "^10.13.0",
     "eslint-merge-processors": "^2.0.0",
-    "eslint-plugin-baseline-js": "^0.7.4",
+    "eslint-plugin-baseline-js": "^0.7.5",
     "eslint-processor-vue-blocks": "^2.0.0",
     "nuxt": "^4.6.1",
     "nuxt-svgo": "^5.3.0",
