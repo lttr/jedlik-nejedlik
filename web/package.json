@@ -12,7 +12,7 @@
   "dependencies": {
     "@directus/sdk": "^26.0.0",
     "@lttr/puleo": "^0.8.1",
-    "@sentry/nuxt": "^11.8.0",
+    "@sentry/nuxt": "^11.9.0",
     "ofetch": "^1.5.1",
     "zod": "^4.6.7"
   },
@@ -21,7 +21,7 @@
     "@dxup/unimport": "^0.1.2",
     "@eslint/css": "^2.0.1",
     "@iconify-json/bi": "^1.2.7",
-    "@iconify-json/logos": "^1.2.16",
+    "@iconify-json/logos": "^1.2.17",
     "@iconify-json/uil": "^1.2.3",
     "@lttr/nuxt-config-eslint": "^0.4.2",
     "@lttr/nuxt-config-postcss": "^0.0.8",
