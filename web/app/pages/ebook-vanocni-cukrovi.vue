@@ -1,5 +1,5 @@
 <template>
-  <div class="ebook-page">
+  <div class="ebook-page landing-page">
     <HeroSection />
 
     <section class="section p-full-bg">
@@ -178,21 +178,9 @@ useSeoMeta({
 <!-- Unscoped: the section components on this page share these. -->
 <style>
 .ebook-page {
-  --section-padding: var(--space-9);
-  --cream: color-mix(in srgb, var(--color-peach) 45%, white);
-  --muted: color-mix(in srgb, var(--color-navy) 72%, white);
-  --on-dark-muted: color-mix(in srgb, var(--color-pale-blue) 55%, white);
-  --card-shadow: 0 1px 0 rgb(10 26 87 / 6%), 0 10px 30px rgb(10 26 87 / 7%);
-
+  /* Room for the sticky buy bar. */
   @media (--md-n-below) {
-    --section-padding: var(--space-8);
-
-    /* Room for the sticky buy bar. */
     padding-bottom: 4.5rem;
-  }
-
-  .section {
-    padding-block: var(--section-padding);
   }
 
   .dark {
@@ -206,72 +194,6 @@ useSeoMeta({
 
   .cream {
     background-color: var(--cream);
-  }
-
-  .section-title {
-    font-size: clamp(var(--font-size-3), 3.4vw, var(--font-size-4));
-    font-weight: var(--font-weight-7);
-    line-height: 1.12;
-    text-wrap: balance;
-  }
-
-  .sub-title {
-    font-size: var(--font-size-3);
-    font-weight: var(--font-weight-7);
-    line-height: 1.2;
-  }
-
-  .lead {
-    margin-top: var(--space-3);
-    font-size: var(--font-size-0);
-    line-height: 1.6;
-    color: var(--muted);
-    text-wrap: pretty;
-  }
-
-  .muted {
-    margin-top: var(--space-3);
-    color: var(--muted);
-  }
-
-  .eyebrow {
-    font-size: var(--font-size--1);
-    font-weight: var(--font-weight-6);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .pill {
-    display: inline-block;
-    padding: 3px 14px;
-    border: 1.5px solid currentcolor;
-    border-radius: var(--radius-round);
-    font-size: var(--font-size--1);
-    color: var(--color-brick-red);
-  }
-
-  blockquote {
-    padding: 0;
-    border: 0;
-    font-style: normal;
-  }
-
-  figcaption {
-    text-align: start;
-  }
-
-  .avatar {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-round);
-    object-fit: cover;
-  }
-
-  .avatar.large {
-    width: 80px;
-    height: 80px;
   }
 
   .check {
@@ -536,28 +458,8 @@ useSeoMeta({
   }
 }
 
-.pill.green {
-  color: var(--color-forest-green);
-}
-
 .author-name {
   margin-top: var(--space-4);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-5);
-  padding: 0;
-  list-style: none;
-
-  li {
-    padding: 6px 16px;
-    border-radius: var(--radius-round);
-    background-color: var(--cream);
-    font-size: var(--font-size--1);
-  }
 }
 
 /* FAQ */

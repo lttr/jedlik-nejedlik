@@ -14,9 +14,6 @@ export const PRICE = "290 Kč"
 // CLAIM: page count and the three cover badges
 export const COVER_BADGES = ["61 stran", "Tipy podle věku", "Tisknutelné listy"]
 
-// CLAIM: media list
-export const MEDIA = ["ČT24", "iDNES.cz", "Český rozhlas", "Deník N"]
-
 export const PAIN_POINTS = [
   {
     icon: "bi:people",

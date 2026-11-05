@@ -120,7 +120,7 @@ newsletter block. Reuses the newsletter form plumbing
 
 ## 05 — Homepage
 
-**Status:** not-started
+**Status:** in-progress → `../2026-11-05_homepage/`
 Rebuild `(homepage)/index.vue` after `docs/prototype-homepage.txt` (source in `/tmp/jedlik-nejedlik-prototypes/`): hero with
 Zdeňka's photo and two CTAs, „Znáte nás z" media strip, current-offer band,
 problem router (3 cards → topic pages), offer grid, testimonials with
