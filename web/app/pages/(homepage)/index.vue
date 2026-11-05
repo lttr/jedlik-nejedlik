@@ -149,7 +149,7 @@
         <div>
           <span class="pill green">O&nbsp;nás</span>
           <h2 class="section-title about-title">Víme, jaké to je. Zdeňka to zažila sama.</h2>
-          <!-- CLAIM: same bio claims as the e-book landing -->
+          <!-- CLAIM: bio -->
           <p class="lead">
             Zakladatelka Zdeňka Trummová od dětství bojovala s&nbsp;obezitou. Jako učitelka pak
             viděla, kolik rodin řeší totéž – a&nbsp;z&nbsp;pedagožky se stala nutriční poradkyní.
@@ -214,7 +214,6 @@ definePageMeta({
   layout: "homepage",
 })
 
-/** Pull-quotes, word for word from the full reviews on the e-book landing. */
 const PULL_QUOTES: Record<string, string> = {
   "Alena Rejfková":
     "E-book od Zdeňky je nabitý informacemi, napsáno polopaticky i pro laika. Laskavá forma a plno praktických tipů.",

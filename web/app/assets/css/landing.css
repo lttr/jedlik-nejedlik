@@ -1,5 +1,3 @@
-/* Shared by the persuasive pages built after the 2026 prototype: the homepage
- * and the e-book landing. Scoped to `.landing-page` on the page root. */
 .landing-page {
   --section-padding: var(--space-9);
   --cream: color-mix(in srgb, var(--color-peach) 45%, white);
@@ -101,7 +99,6 @@
     height: 80px;
   }
 
-  /* Hero: a decorative circle behind a two-column grid. */
   .hero {
     position: relative;
     overflow: hidden;

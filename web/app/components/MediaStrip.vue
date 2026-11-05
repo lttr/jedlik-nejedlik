@@ -14,7 +14,7 @@
 <script setup lang="ts">
 const { label } = defineProps<{ label: string }>()
 
-// CLAIM: media list (e-book spec, „Claims to confirm"). Articles as on /o-nas.
+// CLAIM: waits for Zdeňka to confirm the outlets.
 const OUTLETS = [
   {
     name: "ČT24",
