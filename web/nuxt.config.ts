@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  css: ["@lttr/puleo", "~/assets/css/main.css"],
+  css: ["@lttr/puleo", "~/assets/css/main.css", "~/assets/css/landing.css"],
 
   site: {
     url: SITE_URL,
