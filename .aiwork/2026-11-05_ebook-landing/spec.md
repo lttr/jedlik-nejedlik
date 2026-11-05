@@ -1,5 +1,6 @@
 ---
-status: not-started
+status: agent-done
+verified: [checks, behaviour, ux, review]
 deadline: 2026-11-09
 references:
   - "Epic: ../2026-10-20_web-redesign/areas.md (area 01)"
@@ -86,10 +87,10 @@ preview pages if they differ from last year's (8).
 
 ## Acceptance
 
-- [ ] All sections above render at 1440 and 375 px; sections 4 and 14
+- [x] All sections above render at 1440 and 375 px; sections 4 and 14
       absent, no placeholder text anywhere.
-- [ ] Every buy button opens SimpleShop `gN5Qq` and fires
+- [x] Every buy button opens SimpleShop `gN5Qq` and fires
       `InitiateCheckout` once.
-- [ ] Czech copy through `writing:czech-typography`.
-- [ ] Tabs and FAQ keyboard-operable.
-- [ ] `vp run check:all` green; `verify` skill passed.
+- [x] Czech copy through `writing:czech-typography`.
+- [x] Tabs and FAQ keyboard-operable.
+- [x] `vp run check:all` green; `verify` skill passed.

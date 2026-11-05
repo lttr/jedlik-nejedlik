@@ -12,9 +12,9 @@ interface TrackOptions {
 }
 
 /**
- * `contentName` is the Live Course id. It is optional because a `Purchase` from
- * a thank-you page with an unknown or missing `kurz` still counts as a sale,
- * just without saying which course it was.
+ * `contentName` is the Live Course id, or `ebook-cukrovi` for the e-book. It
+ * is optional because a `Purchase` from a thank-you page with an unknown or
+ * missing `kurz` still counts as a sale, just without saying which course it was.
  */
 type TrackMetaPixelEvent = (
   event: MetaPixelEvent,
