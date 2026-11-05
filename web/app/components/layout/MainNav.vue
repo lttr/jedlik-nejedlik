@@ -49,7 +49,8 @@ const { loggedIn } = useAccount()
 
 const { coursesPublic } = useRuntimeConfig().public
 
-// The season's featured offer, hardcoded until area 08 moves it to Directus.
+// The season's featured offer. Swap or remove it once the Christmas e-book
+// stops selling.
 const FEATURED_PATH = "/ebook-vanocni-cukrovi"
 const route = useRoute()
 const featuredTarget = computed(() =>

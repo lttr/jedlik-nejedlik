@@ -198,7 +198,6 @@ export const AUTHOR_ROLES = [
 ]
 
 // CLAIM: page count, quick start, printable sheets, free updates
-/** `strong` is the phrase set in bold, `before` and `after` the plain text around it. */
 export const PACKAGE_ITEMS = [
   { before: "E-book v PDF, 61 stran, ", strong: "hned do e‑mailu", after: "" },
   { before: "", strong: "Rychlý start na 2 strany", after: " a tipy podle věku dítěte" },
