@@ -33,8 +33,9 @@ gets persuaded below it. Live **Monday 9. 11. 2026**.
 - **Content in code**, as last year. Nothing new in Directus.
 - **Missing assets do not block launch.** A section whose asset is
   missing does not render; adding it later is one path/id change.
-- **Claims go in as written** while Lukas confirms them with Zdeňka;
-  whatever she rejects is removed (list below).
+- **Claims go in as written** and are confirmed with Zdeňka after
+  launch; whatever she rejects is corrected or removed then (list below).
+  Keep each claim easy to find and edit in the page source.
 
 ## Sections, in prototype order
 
@@ -64,7 +65,7 @@ je" (covered by tips by age + FAQ), „Co v e-booku nenajdete?" (FAQ
 Out of scope for this spec: the top bar and menu link (area 02, ship
 alongside if time allows), the prototype's header/footer/nav (06).
 
-## Claims to confirm with Zdeňka (Lukas)
+## Claims to confirm with Zdeňka (after launch)
 
 - „61 stran" (last year's page says?) and the three cover badges
 - Mikuláš bonus: buy by 6. 12., live Q&A on 9. 12.
