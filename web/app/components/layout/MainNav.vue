@@ -30,6 +30,12 @@
         <li v-else-if="coursesPublic">
           <NuxtLink class="link" to="/prihlaseni">Přihlásit se</NuxtLink>
         </li>
+        <li>
+          <NuxtLink class="featured" :to="featuredTarget">
+            <Icon name="bi:star" aria-hidden="true" />
+            Cukroví s dětmi
+          </NuxtLink>
+        </li>
       </ul>
     </div>
   </nav>
@@ -42,6 +48,13 @@ import { useAccount } from "#layers/auth/app/composables/account"
 const { loggedIn } = useAccount()
 
 const { coursesPublic } = useRuntimeConfig().public
+
+// The season's featured offer, hardcoded until area 08 moves it to Directus.
+const FEATURED_PATH = "/ebook-vanocni-cukrovi"
+const route = useRoute()
+const featuredTarget = computed(() =>
+  route.path === FEATURED_PATH ? { hash: "#koupit" } : FEATURED_PATH,
+)
 </script>
 
 <style scoped>
@@ -86,5 +99,31 @@ const { coursesPublic } = useRuntimeConfig().public
 .link {
   color: var(--brand-color);
   text-decoration: none;
+}
+
+.featured {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-height: 2.75rem;
+  margin-inline-start: var(--space-2);
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-round);
+  background-color: var(--color-brick-red);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-6);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--color-brick-red-dark);
+  }
+
+  &.router-link-active {
+    box-shadow:
+      0 0 0 3px var(--color-peach),
+      0 0 0 5px var(--color-brick-red);
+  }
 }
 </style>

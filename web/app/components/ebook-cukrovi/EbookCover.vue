@@ -21,7 +21,7 @@ const { small = false } = defineProps<{ small?: boolean }>()
   aspect-ratio: 3 / 4;
   padding: 9% 8% 8% 13%;
   border-radius: 8px 18px 18px 8px;
-  background-color: var(--color-burgundy-red);
+  background-color: var(--color-brick-red);
   color: var(--color-peach);
   box-shadow:
     0 28px 50px rgb(10 26 87 / 28%),
@@ -54,7 +54,8 @@ const { small = false } = defineProps<{ small?: boolean }>()
 }
 
 .cover-art {
-  width: 100%;
+  align-self: center;
+  width: 80%;
   height: auto;
   margin-top: auto;
 }
@@ -66,6 +67,7 @@ const { small = false } = defineProps<{ small?: boolean }>()
 
 .small {
   padding: 12% 10% 10% 15%;
+  background-color: var(--color-brick-red-dark);
 
   .cover-title {
     font-size: var(--font-size-0);

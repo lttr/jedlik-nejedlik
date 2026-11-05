@@ -27,15 +27,16 @@ const { size = "default", cream = false } = defineProps<{
   min-height: 3.5rem;
   padding-inline: var(--space-6);
   border-radius: var(--radius-round);
-  background-color: var(--color-burgundy-red);
+  background-color: var(--color-brick-red);
   color: white;
+  font-size: 1rem;
   font-weight: var(--font-weight-6);
   text-align: center;
   text-decoration: none;
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: color-mix(in srgb, var(--color-burgundy-red) 82%, black);
+    background-color: var(--color-brick-red-dark);
     color: white;
   }
 
@@ -48,17 +49,16 @@ const { size = "default", cream = false } = defineProps<{
 .small {
   min-height: 3rem;
   padding-inline: var(--space-4);
-  font-size: var(--font-size--1);
+  font-size: 0.9375rem;
 }
 
 .big {
   min-height: 3.75rem;
   padding-inline: var(--space-7);
-  font-size: var(--font-size-1);
+  font-size: 1.125rem;
 
   @media (--sm-n-below) {
     padding-inline: var(--space-5);
-    font-size: var(--font-size-0);
   }
 }
 

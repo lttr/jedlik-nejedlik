@@ -1,6 +1,6 @@
 ---
-status: agent-done
-verified: [checks, behaviour, ux, review]
+status: done
+verified: [checks, behaviour, ux, review, human]
 deadline: 2026-11-09
 references:
   - "Epic: ../2026-10-20_web-redesign/areas.md (area 01)"
@@ -55,7 +55,7 @@ gets persuaded below it. Live **Monday 9. 11. 2026**.
 | 11  | Pricing: 290 Kč, „Co přesně dostanete", Mikuláš bonus, gifting line, CTA                                                                                                                          | prototype                                                                                   |
 | 12  | FAQ (7)                                                                                                                                                                                           | prototype `faqData` in the source; merge with last year's 5 answers                         |
 | 13  | Final CTA „Ať jsou letošní Vánoce hlavně o pohodě."                                                                                                                                               | prototype                                                                                   |
-| 14  | „Ještě váháte? Desatero zdarma"                                                                                                                                                                   | **asset missing (desatero, area 04) → not rendered**                                        |
+| 14  | „Ještě váháte? Desatero zdarma"                                                                                                                                                                   | **rendered** (review): newsletter sign-up at `/cukrovickove-desatero`, last year's PDF      |
 
 Plus: a sticky mobile buy button once the hero CTA scrolls out of view.
 
@@ -87,7 +87,7 @@ preview pages if they differ from last year's (8).
 
 ## Acceptance
 
-- [x] All sections above render at 1440 and 375 px; sections 4 and 14
+- [x] All sections above render at 1440 and 375 px; section 4
       absent, no placeholder text anywhere.
 - [x] Every buy button opens SimpleShop `gN5Qq` and fires
       `InitiateCheckout` once.

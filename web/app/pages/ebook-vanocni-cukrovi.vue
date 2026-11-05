@@ -34,8 +34,8 @@
       <div class="outcomes">
         <h2 class="section-title">Co se u&nbsp;vás změní</h2>
         <p class="lead">
-          Jasnost, klid a&nbsp;konkrétní postupy. Nástroje z&nbsp;oblasti výživy, psychologie
-          i&nbsp;rodičovství.
+          Jasnost, klid a&nbsp;konkrétní postupy. Nástroje z&nbsp;oblasti
+          <strong>výživy, psychologie i&nbsp;rodičovství</strong>.
         </p>
         <ol class="outcome-list">
           <li v-for="outcome of OUTCOMES" :key="outcome.title">
@@ -62,9 +62,9 @@
           </li>
         </ol>
         <p class="tools-theory">
-          A&nbsp;k&nbsp;tomu teorie bez strašení: jak děti na cukroví reagují z&nbsp;pohledu výživy,
-          proč rozhozený režim o&nbsp;svátcích všechno zhoršuje a&nbsp;jak nastavit laskavé
-          a&nbsp;realistické hranice, které dítěti dávají jistotu.
+          A&nbsp;k&nbsp;tomu <strong>teorie bez strašení</strong>: jak děti na cukroví reagují
+          z&nbsp;pohledu výživy, proč rozhozený režim o&nbsp;svátcích všechno zhoršuje a&nbsp;jak
+          nastavit laskavé a&nbsp;realistické hranice, které dítěti dávají jistotu.
         </p>
 
         <div class="age-box">
@@ -72,7 +72,7 @@
             <span class="eyebrow on-dark">To obecný článek nenabídne</span>
             <h3 class="age-title">Tipy podle věku vašeho dítěte</h3>
             <p>
-              Roční miminko potřebuje něco jiného než čtyřleták. Vyberte věk a&nbsp;podívejte se, co
+              Roční miminko potřebuje něco jiného než čtyřleťák. Vyberte věk a&nbsp;podívejte se, co
               pro vás v&nbsp;e-booku je.
             </p>
           </div>
@@ -83,8 +83,8 @@
           <div>
             <h3 class="sub-title">Nahlédněte dovnitř</h3>
             <p class="muted">
-              Přehledné infobloky, shrnutí „Co si odnést“ na konci každé kapitoly a&nbsp;rychlý
-              start na dvě strany pro dny, kdy nemáte čas číst.
+              Přehledné infobloky, shrnutí <strong>„Co si odnést“</strong> na konci každé kapitoly
+              a&nbsp;<strong>rychlý start na dvě strany</strong> pro dny, kdy nemáte čas číst.
             </p>
           </div>
           <PreviewGallery />
@@ -130,6 +130,13 @@
         <h2 class="section-title">Ať jsou letošní Vánoce hlavně o&nbsp;pohodě.</h2>
         <p class="lead">Stačí si e-book přečíst před prvním pečením. Zbytek už zvládnete.</p>
         <BuyLink size="big" cream class="final-buy" />
+        <div class="desatero">
+          <div>
+            <p class="desatero-title">Ještě váháte?</p>
+            <p>Stáhněte si zdarma Cukrovíčkové desatero.</p>
+          </div>
+          <NuxtLink :to="DESATERO_PATH" class="desatero-link">Chci desatero zdarma</NuxtLink>
+        </div>
       </div>
     </section>
   </div>
@@ -142,6 +149,7 @@ import {
   AUTHOR_BIO,
   AUTHOR_PHOTO_ID,
   AUTHOR_ROLES,
+  DESATERO_PATH,
   OUTCOMES,
   PAIN_POINTS,
   TOOLS,
@@ -157,7 +165,7 @@ const PAIN_ICON_COLORS = [
   "var(--color-pale-blue)",
   "var(--color-light-lime)",
   "var(--color-peach)",
-  "color-mix(in srgb, var(--color-burgundy-red) 18%, white)",
+  "color-mix(in srgb, var(--color-brick-red) 18%, white)",
 ]
 
 useSeoMeta({
@@ -240,7 +248,7 @@ useSeoMeta({
     border: 1.5px solid currentcolor;
     border-radius: var(--radius-round);
     font-size: var(--font-size--1);
-    color: var(--color-burgundy-red);
+    color: var(--color-brick-red);
   }
 
   blockquote {
@@ -332,7 +340,7 @@ useSeoMeta({
   height: 3.25rem;
   border-radius: var(--radius-3);
   background-color: var(--icon-bg);
-  font-size: var(--font-size-3);
+  font-size: 1.5rem;
 }
 
 .pain-closing {
@@ -386,13 +394,18 @@ useSeoMeta({
     }
   }
 
+  /* As tall as the number circle, so the first line centres on it. */
   strong {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
     font-size: var(--font-size-2);
     font-weight: var(--font-weight-6);
+    line-height: 1.25;
   }
 
   span {
-    margin-top: var(--space-1);
+    grid-column: 2;
     color: var(--on-dark-muted);
   }
 }
@@ -570,5 +583,52 @@ useSeoMeta({
 
 .final-buy {
   margin-top: var(--space-7);
+}
+
+.desatero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  max-width: 46rem;
+  margin: var(--space-8) auto 0;
+  padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-4);
+  background-color: var(--color-light-lime);
+  color: var(--color-navy);
+  text-align: start;
+
+  > div {
+    flex: 1 1 16rem;
+  }
+
+  @media (--sm-n-below) {
+    padding: var(--space-5);
+  }
+}
+
+.desatero-title {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-7);
+  line-height: 1.3;
+}
+
+.desatero-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding-inline: var(--space-6);
+  border-radius: var(--radius-round);
+  background-color: var(--color-navy);
+  color: white;
+  font-size: 1rem;
+  font-weight: var(--font-weight-6);
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--brand-color-bright);
+  }
 }
 </style>

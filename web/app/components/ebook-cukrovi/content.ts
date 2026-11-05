@@ -198,12 +198,17 @@ export const AUTHOR_ROLES = [
 ]
 
 // CLAIM: page count, quick start, printable sheets, free updates
+/** `strong` is the phrase set in bold, `before` and `after` the plain text around it. */
 export const PACKAGE_ITEMS = [
-  "E-book v PDF, 61 stran, hned do e‑mailu",
-  "Rychlý start na 2 strany a tipy podle věku dítěte",
-  "Tisknutelné listy: plán mlsání, checklist před návštěvou, věty pro babičku",
-  "Čtení v mobilu, tabletu i vytištěné",
-  "Budoucí aktualizace zdarma",
+  { before: "E-book v PDF, 61 stran, ", strong: "hned do e‑mailu", after: "" },
+  { before: "", strong: "Rychlý start na 2 strany", after: " a tipy podle věku dítěte" },
+  {
+    before: "",
+    strong: "Tisknutelné listy:",
+    after: " plán mlsání, checklist před návštěvou, věty pro babičku",
+  },
+  { before: "Čtení v mobilu, tabletu i vytištěné", strong: "", after: "" },
+  { before: "Budoucí aktualizace ", strong: "zdarma", after: "" },
 ]
 
 // CLAIM: Mikuláš bonus dates
@@ -250,3 +255,5 @@ export const FAQ = [
     answer: "Ano. E-book vychází z reálných situací rodin, ne z ideálních podmínek.",
   },
 ]
+
+export const DESATERO_PATH = "/cukrovickove-desatero"

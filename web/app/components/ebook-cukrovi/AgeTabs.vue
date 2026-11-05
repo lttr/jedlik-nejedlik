@@ -31,7 +31,7 @@
       <p class="panel-title">{{ tip.title }}</p>
       <ul class="panel-list">
         <li v-for="item of tip.items" :key="item">
-          <Icon name="bi:check-circle-fill" class="check" aria-hidden="true" />
+          <CheckMark class="check" />
           <span>{{ item }}</span>
         </li>
       </ul>
@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import CheckMark from "./CheckMark.vue"
 import { AGE_TIPS } from "./content"
 
 const activeIndex = ref(0)

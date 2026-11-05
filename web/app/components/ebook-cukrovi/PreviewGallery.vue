@@ -131,7 +131,7 @@ useEventListener(lightboxDialog, "keydown", (event: KeyboardEvent) => {
   }
 
   &:focus-visible {
-    outline: 3px solid var(--color-burgundy-red);
+    outline: 3px solid var(--color-brick-red);
     outline-offset: 3px;
   }
 
@@ -208,7 +208,7 @@ useEventListener(lightboxDialog, "keydown", (event: KeyboardEvent) => {
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-burgundy-red);
+    outline: 2px solid var(--color-brick-red);
     outline-offset: 2px;
   }
 }

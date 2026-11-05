@@ -51,7 +51,7 @@ import { FAQ } from "./content"
   }
 
   &:hover {
-    color: var(--color-burgundy-red);
+    color: var(--color-brick-red);
   }
 
   &:focus-visible {

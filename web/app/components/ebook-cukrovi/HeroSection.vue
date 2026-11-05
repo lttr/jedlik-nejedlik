@@ -1,5 +1,6 @@
 <template>
   <section class="hero p-full-bg">
+    <div class="hero-circle" aria-hidden="true"></div>
     <div class="hero-grid">
       <div>
         <span class="pill">E-book pro rodiče · Vánoce 2026</span>
@@ -78,13 +79,33 @@ useIntersectionObserver(heroCta, ([entry]) => {
 
 <style scoped>
 .hero {
+  position: relative;
   margin-top: calc(-1 * var(--space-6));
   padding-block: var(--space-8) var(--space-9);
   background-color: var(--cream);
   overflow: hidden;
 }
 
+.hero-circle {
+  position: absolute;
+  top: var(--space-7);
+  right: -120px;
+  width: 640px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-round);
+  background-color: var(--color-peach);
+
+  @media (--lg-n-below) {
+    top: auto;
+    right: 50%;
+    bottom: var(--space-6);
+    width: 420px;
+    transform: translateX(50%);
+  }
+}
+
 .hero-grid {
+  position: relative;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: var(--space-8);

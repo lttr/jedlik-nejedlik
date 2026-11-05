@@ -9,9 +9,12 @@
       <div class="pricing-main">
         <h2 class="sub-title">Co přesně dostanete</h2>
         <ul class="package-list">
-          <li v-for="item of PACKAGE_ITEMS" :key="item">
-            <Icon name="bi:check-circle-fill" class="check" aria-hidden="true" />
-            <span>{{ item }}</span>
+          <li v-for="item of PACKAGE_ITEMS" :key="item.before + item.strong">
+            <CheckMark class="check" />
+            <span
+              >{{ item.before }}<strong v-if="item.strong">{{ item.strong }}</strong
+              >{{ item.after }}</span
+            >
           </li>
         </ul>
         <p class="bonus">
@@ -25,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import CheckMark from "./CheckMark.vue"
 import BuyLink from "./BuyLink.vue"
 import { BONUS, GIFTING, PACKAGE_ITEMS, PRICE } from "./content"
 import EbookCover from "./EbookCover.vue"
@@ -53,7 +57,7 @@ import EbookCover from "./EbookCover.vue"
   align-items: center;
   justify-content: center;
   padding: var(--space-7);
-  background-color: var(--color-burgundy-red);
+  background-color: var(--color-brick-red);
   color: var(--color-peach);
   text-align: center;
 }

@@ -37,6 +37,10 @@ const PDF_MAP: Record<string, { fileId: string; label: string }> = {
     fileId: "02e757ef-ed0a-4ba3-850d-7643c309d23e",
     label: "Zdravé svačinky pro mého školáka",
   },
+  "cukrovickove-desatero": {
+    fileId: "d5f38263-a202-4c27-b0aa-b15c4a8d8851",
+    label: "Cukrovíčkové desatero",
+  },
 }
 
 const directusUrl = useRuntimeConfig().public.directusUrl

@@ -22,3 +22,13 @@
 - **Media strip is plain text, no links** (spec: links later, area 00).
 - **Book cover is drawn in CSS** with the site's cookie illustration. Last
   year's page had no cover image to reuse.
+- **The nav button from area 02 shipped with this page** (review feedback):
+  „Cukroví s dětmi" in `MainNav.vue`, on every page, hardcoded. Remove or
+  swap it after Christmas until area 08 drives it from Directus. The top bar
+  from area 02 is still not built. The brick red moved to `main.css` as
+  `--color-brick-red` because the nav uses it too.
+- **Desatero is a newsletter sign-up** (user's call, overriding the spec's
+  „section 14 not rendered"): the „Ještě váháte?" box links to
+  `/cukrovickove-desatero`, whose form leads to the thank-you page with
+  last year's desatero PDF (Directus `d5f38263…`). Swap the file id if
+  Zdeňka updates it for 2026.
