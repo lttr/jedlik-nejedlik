@@ -107,7 +107,7 @@ SimpleShop's own pixel field is used for `Purchase`.
 
 ## 04 — Lead magnet: desatero + pop-up
 
-**Status:** not-started
+**Status:** done (pop-up shipped, no source tag by decision; see ../2026-11-05_desatero-popup/spec.md)
 Free „Cukrovíčkové desatero" delivered by e-mail for name + e-mail.
 Entry points: the „Ještě váháte?" block on 01, a timed/idle pop-up,
 newsletter block. Reuses the newsletter form plumbing
