@@ -4,181 +4,202 @@ Decomposition of [spec.md](spec.md). Each area gets its own
 `.aiwork/<date>_<slug>/` spec when its turn comes; this file fixes scope,
 boundaries and order only.
 
-## Dependency graph
+Renumbered 2026-11-05 by priority. Rule: **specific first, generic only
+once repetition shows.** The e-book is built as its own page; shared
+components, a Directus-driven offer and the landing template are extracted
+later, when a second page needs them.
+
+## Priority order
+
+1. **E-book**: 01 landing (live 9. 11. 2026) → 02 top bar + menu link →
+   03 funnel tracking → 04 desatero lead magnet.
+2. **Homepage**: 05, then 06 navigation and 07 offers hub it links to.
+3. **Rest**: 08 featured offer in Directus, 09 landing template, 10 topic
+   pages, 11 about + podcast.
+
+00 (client content) runs alongside everything.
 
 ```mermaid
 graph TD
     A0[00 content-intake]
-    A1[01 featured-offer]
-    A2[02 navigation]
-    A3[03 lead-magnet]
-    A4[04 homepage]
-    A5[05 product-landing-template]
-    A6[06 ebook-landing]
+    A1[01 ebook-landing]
+    A2[02 ebook-top-bar]
+    A3[03 ebook-funnel-tracking]
+    A4[04 lead-magnet]
+    A5[05 homepage]
+    A6[06 navigation]
     A7[07 offers-hub]
-    A8[08 ebook-funnel-tracking]
-    A9[09 topic-pages]
-    A10[10 about-podcast]
+    A8[08 featured-offer]
+    A9[09 product-landing-template]
+    A10[10 topic-pages]
+    A11[11 about-podcast]
 
-    A1 --> A2 & A3 & A4
-    A2 --> A4
-    A3 --> A4 & A6
-    A5 --> A6 & A9
-    A0 -.->|assets| A4 & A6 & A9 & A10
+    A1 --> A2 & A3
+    A4 -.->|fallback CTA| A1
+    A4 --> A5
+    A7 --> A5 & A6
+    A2 --> A8
     A6 --> A8
-    A7 --> A4
+    A1 --> A9
+    A9 --> A10
+    A0 -.->|assets| A1 & A5 & A10 & A11
 ```
 
-Waves: **1** = 00 (human, starts now) + 01 + 05 · **2** = 02, 03, 06, 07 ·
-**3** = 04, 08 · **4** = 09, 10.
-
-Christmas 2026 is the forcing date: the e-book sells now. If time is short,
-ship 01 → 03 → 06 → 08 first (bar, pop-up, landing, funnel), then the rest.
+Old numbers (spec of 2026-10-20): 06→01, 01→02 (e-book only) and 08
+(generic), 08→03, 03→04, 04→05, 02→06, 07→07, 05→09, 09→10, 10→11.
 
 ---
 
 ## 00 — Content intake (human)
 
-**Status:** not-started
-Assets only the client can provide. Tracked here so areas do not stall
-silently.
+**Status:** in-progress (Lukas confirms claims with Zdeňka)
+Assets only the client can provide. Missing assets never block a launch:
+the section that needs one does not render until it arrives.
 
-- **Deliverables:** portrait and event photos of Zdeňka and the team; a
-  60–120 s phone video for the e-book page; 3–6 testimonials with name,
-  role and permission (doctor, parents, special educator); media list with
-  article links (ČT24, iDNES, Český rozhlas, Deník N, Věda 24, …); numbers
-  for proof (families helped, years, buyers); the desatero PDF;
-  confirmation of nav labels and section copy.
-- **Depends on:** nothing.
-- **Verify:** assets in Directus files, list checked off in the area spec
-  that needs them.
+- **E-book (01, needed in the days after 9. 11.):** the e-book PDF (for
+  „Nahlédněte dovnitř" previews and the page count), the final author
+  photo, Zdeňka's 60–120 s phone video, the desatero PDF, confirmation of
+  the prototype claims listed in the 01 spec.
+- **Later:** portrait and event photos of the team; 2–3 new testimonials
+  with name, role and permission; media list with article links (ČT24,
+  iDNES, Český rozhlas, Deník N, …); numbers for proof (families helped,
+  years, buyers); nav labels and section copy.
+- **Verify:** assets committed or in Directus, checked off in the area
+  spec that needs them.
 
-## 01 — Featured offer + notification bar
+## 01 — E-book landing: Cukroví s dětmi a v pohodě
 
-**Status:** not-started
-One Directus singleton (or collection with an active window) describing
-the current offer: label, short pitch, price, target URL, nav-button text,
-active from/to. Drives a dismissible top bar on every page and the
-highlighted nav button. Empty → nothing renders.
+**Status:** in-progress → `../2026-11-05_ebook-landing/`
+Rewrite `ebook-vanocni-cukrovi.vue` after the prototype
+(`docs/prototype-ebook.txt`, source in `/tmp/jedlik-nejedlik-prototypes/`), merging its copy with last year's page.
+Specific to this product: no generic template. Checkout stays SimpleShop
+(`gN5Qq`) this season. Go-live **Monday 9. 11. 2026**.
 
-- **Deliverables:** Directus schema + permissions (snapshot committed),
-  typed fetch, `TopBar` component in the default and homepage layouts.
-- **Depends on:** nothing.
-- **Verify:** swap the offer in Directus, bar and button change without a
-  deploy; 375 px layout; bar hidden after dismiss for the session.
+- **Depends on:** nothing for launch; 00 for the video, previews, photo.
+- **Verify:** `verify` skill desktop + 375 px; buy button reaches
+  SimpleShop and fires `InitiateCheckout`.
 
-## 02 — Navigation
-
-**Status:** not-started
-New main nav: „Pro rodiče" dropdown (Moje dítě nejí / Moje dítě má
-nadváhu / Prevence, each with a one-line hint), „Kurzy a e-booky",
-Podcast, O nás, Kontakt, featured-offer button (01). „Pro odborníky" and
-social icons move to the top bar. Mobile menu equivalent.
-
-- **Deliverables:** reworked `MainNav.vue` / `Header.vue`, keyboard and
-  touch accessible dropdown, redirects for any renamed routes.
-- **Depends on:** 01 (button), 07 (route for „Kurzy a e-booky").
-- **Verify:** desktop + 375 px, keyboard navigation, no broken links
-  (crawl).
-
-## 03 — Lead magnet: desatero + pop-up
+## 02 — E-book top bar + menu link
 
 **Status:** not-started
-Free „Cukrovíčkové desatero" (or the current offer's taster) delivered by
-e-mail in exchange for name + e-mail. Entry points: timed/idle pop-up,
-newsletter block, landing-page fallback CTA („Ještě váháte?"). Reuses the
-newsletter form plumbing (`composables/forms`), tags the source.
+A top bar on every page („Vánoční e-book Cukroví s dětmi · 290 Kč · Chci
+e-book →"), hardcoded for the e-book and dismissible for the session, and
+a visible link to the e-book in the current menu. Not the new navigation
+(06), not Directus-driven (08). Ships with 01 if time allows.
 
-- **Deliverables:** pop-up with frequency cap and no-show on checkout and
-  auth pages, form variant, delivery (e-mail with PDF link), consent text.
-- **Depends on:** 01 (which magnet is current), 00 (PDF).
+- **Depends on:** 01 (target page).
+- **Verify:** desktop + 375 px, dismiss persists for the session, bar does
+  not fight the cookie banner.
+
+## 03 — E-book funnel tracking
+
+**Status:** not-started
+Meta funnel for the e-book on SimpleShop: `ViewContent` on the landing,
+`InitiateCheckout` on the buy button (pattern from
+`../2026-09-09_meta-pixel/`), `Purchase`. The e-book must keep SimpleShop's
+own post-payment page (its download lives there), so the thank-you
+redirect pattern does not apply; settle with the marketer whether
+SimpleShop's own pixel field is used for `Purchase`.
+
+- **Depends on:** 01.
+- **Verify:** Meta Events Manager shows each event once per action, with
+  consent only; a test purchase.
+
+## 04 — Lead magnet: desatero + pop-up
+
+**Status:** not-started
+Free „Cukrovíčkové desatero" delivered by e-mail for name + e-mail.
+Entry points: the „Ještě váháte?" block on 01, a timed/idle pop-up,
+newsletter block. Reuses the newsletter form plumbing
+(`composables/forms`), tags the source.
+
+- **Depends on:** 00 (desatero PDF).
 - **Verify:** signup lands in the list with the right tag, PDF arrives,
-  pop-up does not fight the cookie bar, 375 px.
+  pop-up has a frequency cap, skips checkout and auth pages, does not
+  fight the cookie bar, 375 px.
 
-## 04 — Homepage
-
-**Status:** not-started
-Rebuild `(homepage)/index.vue` after the homepage prototype: hero with Zdeňka's photo and two CTAs („S čím
-potřebujete pomoc?", the offer) + „Znáte nás z" media strip; featured-offer
-band; problem router (3 cards → topic pages); offer grid (from 07);
-testimonials with numbers; „Víme, jaké to je" about block; newsletter +
-podcast block. Retire homepage sections that no longer fit.
-
-- **Depends on:** 01, 02, 03, 07; 00 for photos, testimonials, media.
-- **Verify:** `verify` skill on desktop + 375 px, Lighthouse not worse
-  than today, every CTA reaches its target.
-
-## 05 — Product landing template
+## 05 — Homepage
 
 **Status:** not-started
-Reusable section components for selling one product, so the e-book,
-webinars and Live Courses share structure: hero with cover + price + CTA
-and a one-line proof quote, media strip, pain-point grid („Znáte to?"),
-outcomes + video, contents, tabbed „tips by age", reviews (2–3 + „more"),
-author medallion, what-you-get + bonus box, FAQ, final CTA with lead-magnet
-fallback. Sticky mobile buy button.
+Rebuild `(homepage)/index.vue` after `docs/prototype-homepage.txt` (source in `/tmp/jedlik-nejedlik-prototypes/`): hero with
+Zdeňka's photo and two CTAs, „Znáte nás z" media strip, current-offer band,
+problem router (3 cards → topic pages), offer grid, testimonials with
+numbers, „Víme, jaké to je" about block, newsletter + podcast. Hardcode
+what the homepage alone uses; extract only what 01 already has.
 
-- **Deliverables:** components in the right layer (check `fallow guard`),
-  a style-page entry, no product-specific copy inside components.
-- **Depends on:** nothing.
-- **Verify:** components render on `style.vue` at desktop + 375 px.
+- **Depends on:** 04 (newsletter/desatero block), 07 (offer grid
+  target); 00 for photos, testimonials, media.
+- **Verify:** `verify` skill desktop + 375 px, Lighthouse not worse than
+  today, every CTA reaches its target.
 
-## 06 — E-book landing: Cukroví s dětmi v pohodě
+## 06 — Navigation
 
 **Status:** not-started
-Rewrite `ebook-vanocni-cukrovi.vue` on the 05 template with the prototype
-copy. Copy goes through `writing:czech-typography`
-and the client's approval.
+„Pro rodiče" dropdown (Moje dítě nejí / Moje dítě má nadváhu / Prevence),
+„Kurzy a e-booky", Podcast, O nás, Kontakt, highlighted offer button.
+„Pro odborníky" and social icons move to the top bar. Mobile equivalent.
 
-- **Depends on:** 05, 03; 00 for video, reviews, media; spec decision on
-  checkout (SimpleShop vs. our shop).
-- **Verify:** `verify` skill; buy button reaches checkout; Christmas
-  deadline.
+- **Depends on:** 07 (route for „Kurzy a e-booky"), 02 (top bar).
+- **Verify:** desktop + 375 px, keyboard navigation, no broken links.
 
 ## 07 — Offers hub: „Kurzy a e-booky"
 
 **Status:** not-started
-One page listing current e-books, online courses, webinars and
-consultations, paid and free, as cards (type badge, title, teaser, price,
-detail link). Must coexist with
-the shop catalog at `/kurzy`: decide in the area spec whether it extends
-that catalog or is a separate marketing list that includes it.
+One page listing current e-books, courses, webinars and consultations,
+paid and free, as cards. Decide in its spec whether it extends the shop
+catalog at `/kurzy` or is a marketing list that includes it.
 
-- **Depends on:** nothing (content source decided in its spec).
+- **Depends on:** nothing.
 - **Verify:** every live offer appears once with the right link; empty
   states.
 
-## 08 — E-book funnel tracking
+## 08 — Featured offer in Directus
 
 **Status:** not-started
-Extend the Meta Pixel events (`../2026-09-09_meta-pixel/`) to the e-book:
-`ViewContent` on the landing, `InitiateCheckout` on the buy button,
-`Purchase` after payment. Settle with the marketer whether SimpleShop's own
-pixel field is used or the existing thank-you-redirect pattern. If the
-e-book moves to our checkout, `Purchase` comes from the order instead.
+Generalise 02 once the season's offer changes for the first time (after
+Christmas): one Directus record (label, pitch, price, URL, nav-button text,
+active from/to) drives the top bar, the nav button and the homepage band.
+Swap without a deploy.
 
-- **Depends on:** 06, checkout decision.
-- **Verify:** Meta Events Manager shows each event once per action, with
-  consent only; a test purchase.
+- **Depends on:** 02, 06.
+- **Verify:** swap the offer in Directus, bar and button change without a
+  deploy.
 
-## 09 — Topic pages: nejí / nadváha / prevence
+## 09 — Product landing template
 
 **Status:** not-started
-Restructure `nejedlik.vue`, `nadvaha.vue`, `prevence.vue` (and the old
-`pro-rodice.vue` hub) for a parent in a hurry: short recognition section,
-what helps, the relevant products and free materials, then the expert text
-below the fold or condensed. Authors review every copy change.
+Extract the sections of 01 into reusable components when a second product
+page (webinar, Live Course) needs them. Not before.
 
-- **Depends on:** 05 (sections), 02 (routes); 00 for approved copy.
+- **Depends on:** 01 and a second product page.
+- **Verify:** both pages render unchanged; style-page entry.
+
+## 10 — Topic pages: nejí / nadváha / prevence
+
+**Status:** not-started
+Restructure `nejedlik.vue`, `nadvaha.vue`, `prevence.vue` (and
+`pro-rodice.vue`) for a parent in a hurry: recognition, what helps, the
+relevant products and free materials, expert text condensed or below the
+fold. Authors review every copy change.
+
+- **Depends on:** 06 (routes); 00 for approved copy.
 - **Verify:** `verify` skill; each page links to at least one product and
   one free material.
 
-## 10 — About + podcast
+## 11 — About + podcast
 
 **Status:** not-started
 „O nás" split into scannable blocks (story, numbers, team, media
-appearances with links) and a podcast page/section with one-click Spotify
-playback. No paid tier (non-goal).
+appearances linking to the articles) and a podcast section with one-click
+Spotify playback. The O nás story may be tightened with AI, approved by
+Zdeňka. No paid tier.
 
 - **Depends on:** 00 for photos, media links.
 - **Verify:** `verify` skill; Spotify embed respects cookie consent.
+
+## Parked
+
+- Review counter and „more reviews" („koupilo 27 lidí"): needs a buyer
+  count source (SimpleShop export or our orders). Revisit with 09.
+- Audio version of the e-book, paid podcast tier: spec non-goals.
+- E-book on our own checkout instead of SimpleShop: after Christmas.

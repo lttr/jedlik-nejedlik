@@ -58,7 +58,19 @@ Contacts are collected through a free „desatero" lead magnet (pop-up,
 newsletter block, landing-page fallback CTA). The e-book funnel is
 measured end to end in Meta, extending the pattern of the Meta Pixel area.
 
-## Decisions to make before the first area
+## Decided 2026-11-05
+
+- **Priorities:** e-book first (landing live 9. 11. 2026), then the
+  homepage, then everything else. Order and renumbering in
+  [areas.md](areas.md).
+- **Specific first, generic later.** No shared template or Directus offer
+  until a second page needs it.
+- **Prototype is a guide, not a port.** Copy is merged with last year's,
+  by judgment per section; the implementation uses our stack and styles.
+- **E-book checkout stays SimpleShop** this season.
+- **Missing assets never block a launch;** the section waits for them.
+
+## Decisions to make before the first area (original framing)
 
 - **Adopt how much of the prototype.** The marketer offered "extract it and
   deploy" or "use it as a guide". Extraction is not literal: the site is

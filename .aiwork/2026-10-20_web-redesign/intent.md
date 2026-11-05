@@ -1,8 +1,9 @@
 ---
-status: proposed
+status: accepted
 references:
   - "Video walkthrough: ~/Downloads/Návrh nového webu a e-booku.webm (16 min, not copied, 275 MB)"
-  - "Transcript: ~/Downloads/Návrh nového webu a e-booku.transcript.txt (not copied; key points below)"
+  - "Transcript: ~/Downloads/Návrh nového webu a e-booku.transcript.md (not committed; key points below)"
+  - "Prototype exports (2026-11-05, not committed): /tmp/jedlik-nejedlik-prototypes/ (prototype-{ebook,homepage}.html, .source.html, images); rendered copy in docs/prototype-{ebook,homepage}.txt"
   - "Prototype, homepage + new menu: https://claude.ai/artifact/8rahNN4P9n5rCVyfw6GaoA#play-15dd8cd198dd"
   - "Prototype, e-book landing page: https://claude.ai/artifact/8rahNN4P9n5rCVyfw6GaoA#play-b8b84bfdfdc3"
 ---
