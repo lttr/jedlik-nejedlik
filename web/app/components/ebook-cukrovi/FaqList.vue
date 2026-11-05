@@ -19,7 +19,6 @@ import { FAQ } from "./content"
   border-top: 1px solid var(--surface-3);
 }
 
-/* Resets Puleo's pill-shaped details and summary. */
 .faq-item {
   padding: 0;
   border-bottom: 1px solid var(--surface-3);

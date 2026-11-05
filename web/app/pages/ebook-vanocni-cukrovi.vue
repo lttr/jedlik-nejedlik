@@ -243,7 +243,6 @@ useSeoMeta({
     color: var(--color-burgundy-red);
   }
 
-  /* Puleo indents, borders and italicises quotes and centres captions. */
   blockquote {
     padding: 0;
     border: 0;
