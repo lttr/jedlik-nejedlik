@@ -4,7 +4,7 @@
     class="desatero-popup"
     aria-labelledby="desatero-popup-title"
     @close="onClose"
-    @click="onDialogClick"
+    @click="closeOnBackdropClick"
   >
     <div class="content">
       <button type="button" class="close" aria-label="Zavřít" @click="close">
@@ -89,8 +89,7 @@ function onClose(): void {
   }
 }
 
-// A click on the dialog element itself, not its content, is the backdrop.
-function onDialogClick(event: MouseEvent): void {
+function closeOnBackdropClick(event: MouseEvent): void {
   if (event.target === dialog.value) {
     close()
   }
