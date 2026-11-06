@@ -25,13 +25,11 @@
             height="48"
             loading="lazy"
           />
-          <div>
-            <blockquote>„{{ DOCTOR_REVIEW.shortQuote }}“</blockquote>
-            <figcaption>
-              <strong>{{ DOCTOR_REVIEW.name }}</strong
-              >, dětská lékařka
-            </figcaption>
-          </div>
+          <blockquote>„{{ DOCTOR_REVIEW.shortQuote }}“</blockquote>
+          <figcaption>
+            <strong>{{ DOCTOR_REVIEW.name }}</strong
+            >, dětská lékařka
+          </figcaption>
         </figure>
       </div>
       <div class="hero-cover">
@@ -112,11 +110,17 @@ useIntersectionObserver(heroCta, ([entry]) => {
 }
 
 .hero-quote {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-content: center;
+  column-gap: var(--space-3);
   max-width: 35rem;
   margin: var(--space-6) 0 0;
+
+  .avatar {
+    grid-row: span 2;
+    align-self: center;
+  }
 
   blockquote {
     margin: 0;
