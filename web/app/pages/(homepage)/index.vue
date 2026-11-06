@@ -48,7 +48,7 @@
     <section class="offer-band p-full-bg" aria-label="Aktuální nabídka: e-book">
       <div class="offer-band-grid">
         <div class="offer-band-cover">
-          <EbookCover small />
+          <EbookCover />
         </div>
         <div>
           <span class="eyebrow">Na Vánoce 2026</span>
