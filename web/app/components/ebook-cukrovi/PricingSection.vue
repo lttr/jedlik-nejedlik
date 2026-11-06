@@ -2,7 +2,7 @@
   <section id="koupit" class="section cream p-full-bg">
     <div class="pricing">
       <div class="pricing-side">
-        <div class="pricing-cover"><EbookCover small /></div>
+        <div class="pricing-cover"><EbookCover /></div>
         <p class="price">{{ PRICE }}</p>
         <p class="price-note">Nákupem podpoříte neziskovou organizaci Jedlík-nejedlík</p>
       </div>

@@ -8,7 +8,7 @@
         aria-hidden="true"
         @click="convert"
       >
-        <EbookCover small />
+        <EbookCover />
       </NuxtLink>
       <div class="body">
         <p class="title">Chystáte se na Vánoce s&nbsp;dětmi?</p>
@@ -103,15 +103,13 @@ function dismiss(): void {
   }
 }
 
-/* The small cover is laid out for 10.5rem; zoom keeps its type in proportion. */
 .cover-link {
   display: block;
-  width: 10.5rem;
-  zoom: 0.5;
+  width: 5.25rem;
   text-decoration: none;
 
   @media (--sm-n-below) {
-    zoom: 0.4;
+    width: 4.2rem;
   }
 }
 
