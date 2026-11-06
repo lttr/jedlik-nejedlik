@@ -25,13 +25,11 @@
             height="48"
             loading="lazy"
           />
-          <div>
-            <blockquote>„{{ DOCTOR_REVIEW.shortQuote }}“</blockquote>
-            <figcaption>
-              <strong>{{ DOCTOR_REVIEW.name }}</strong
-              >, dětská lékařka
-            </figcaption>
-          </div>
+          <blockquote>„{{ DOCTOR_REVIEW.shortQuote }}“</blockquote>
+          <figcaption>
+            <strong>{{ DOCTOR_REVIEW.name }}</strong
+            >, dětská lékařka
+          </figcaption>
         </figure>
       </div>
       <div class="hero-cover">
@@ -43,14 +41,7 @@
     </div>
   </section>
 
-  <section class="media-strip p-full-bg" aria-label="Autorku znáte z">
-    <div class="media-row">
-      <span class="eyebrow">Autorku znáte z</span>
-      <ul class="media-list">
-        <li v-for="outlet of MEDIA" :key="outlet">{{ outlet }}</li>
-      </ul>
-    </div>
-  </section>
+  <MediaStrip label="Autorku znáte z" />
 
   <Transition name="slide-up">
     <div v-show="showStickyBar" class="sticky-bar">
@@ -64,8 +55,9 @@
 </template>
 
 <script setup lang="ts">
+import MediaStrip from "../MediaStrip.vue"
 import BuyLink from "./BuyLink.vue"
-import { COVER_BADGES, DOCTOR_REVIEW, MEDIA } from "./content"
+import { COVER_BADGES, DOCTOR_REVIEW } from "./content"
 import EbookCover from "./EbookCover.vue"
 
 // Shown once the hero CTA has scrolled up out of view; CSS keeps it mobile-only.
@@ -79,20 +71,15 @@ useIntersectionObserver(heroCta, ([entry]) => {
 
 <style scoped>
 .hero {
-  position: relative;
   margin-top: calc(-1 * var(--space-6));
   padding-block: var(--space-8) var(--space-9);
   background-color: var(--cream);
-  overflow: hidden;
 }
 
 .hero-circle {
-  position: absolute;
   top: var(--space-7);
   right: -120px;
   width: 640px;
-  aspect-ratio: 1;
-  border-radius: var(--radius-round);
   background-color: var(--color-peach);
 
   @media (--lg-n-below) {
@@ -102,31 +89,6 @@ useIntersectionObserver(heroCta, ([entry]) => {
     width: 420px;
     transform: translateX(50%);
   }
-}
-
-.hero-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: var(--space-8);
-  align-items: center;
-
-  @media (--lg-n-below) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.hero-title {
-  margin-block: var(--space-4);
-  font-size: clamp(2.4rem, 5.4vw, 4.1rem);
-  font-weight: var(--font-weight-7);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-
-.hero-lead {
-  max-width: 36rem;
 }
 
 .hero-cta {
@@ -148,11 +110,17 @@ useIntersectionObserver(heroCta, ([entry]) => {
 }
 
 .hero-quote {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-content: center;
+  column-gap: var(--space-3);
   max-width: 35rem;
   margin: var(--space-6) 0 0;
+
+  .avatar {
+    grid-row: span 2;
+    align-self: center;
+  }
 
   blockquote {
     margin: 0;
@@ -195,31 +163,6 @@ useIntersectionObserver(heroCta, ([entry]) => {
     background: white;
     font-size: var(--font-size--1);
     font-weight: var(--font-weight-6);
-  }
-}
-
-.media-strip {
-  padding-block: var(--space-6);
-  border-bottom: 1px solid var(--surface-2);
-}
-
-.media-row,
-.media-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2) var(--space-7);
-}
-
-.media-list {
-  padding: 0;
-  list-style: none;
-
-  li {
-    font-size: var(--font-size-1);
-    font-weight: var(--font-weight-7);
-    opacity: 0.75;
   }
 }
 

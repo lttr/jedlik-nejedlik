@@ -26,7 +26,6 @@
       class="tab-panel"
       role="tabpanel"
       :aria-labelledby="`age-tab-${index}`"
-      tabindex="0"
     >
       <p class="panel-title">{{ tip.title }}</p>
       <ul class="panel-list">
@@ -103,11 +102,6 @@ function onKeydown(event: KeyboardEvent) {
   padding: var(--space-5);
   border-radius: var(--radius-3);
   background-color: rgb(255 255 255 / 8%);
-
-  &:focus-visible {
-    outline: 3px solid var(--color-star);
-    outline-offset: 2px;
-  }
 }
 
 .panel-title {

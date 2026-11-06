@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  css: ["@lttr/puleo", "~/assets/css/main.css"],
+  css: ["@lttr/puleo", "~/assets/css/main.css", "~/assets/css/landing.css"],
 
   site: {
     url: SITE_URL,
@@ -150,7 +150,13 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
+      include: [
+        "@directus/sdk",
+        "@plausible-analytics/tracker",
+        "@vue/devtools-core",
+        "@vue/devtools-kit",
+        "zod",
+      ],
     },
   },
 

@@ -107,7 +107,7 @@ SimpleShop's own pixel field is used for `Purchase`.
 
 ## 04 — Lead magnet: desatero + pop-up
 
-**Status:** not-started
+**Status:** done (pop-up replaced by an e-book corner banner, no source tag, both by decision; see ../2026-11-05_desatero-popup/spec.md)
 Free „Cukrovíčkové desatero" delivered by e-mail for name + e-mail.
 Entry points: the „Ještě váháte?" block on 01, a timed/idle pop-up,
 newsletter block. Reuses the newsletter form plumbing
@@ -120,7 +120,7 @@ newsletter block. Reuses the newsletter form plumbing
 
 ## 05 — Homepage
 
-**Status:** not-started
+**Status:** in-progress → `../2026-11-05_homepage/`
 Rebuild `(homepage)/index.vue` after `docs/prototype-homepage.txt` (source in `/tmp/jedlik-nejedlik-prototypes/`): hero with
 Zdeňka's photo and two CTAs, „Znáte nás z" media strip, current-offer band,
 problem router (3 cards → topic pages), offer grid, testimonials with
