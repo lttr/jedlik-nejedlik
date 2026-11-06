@@ -6,39 +6,39 @@ references:
   - "Sign-up page: ../2026-11-05_ebook-landing/implementation-notes.md (desatero)"
 ---
 
-# Spec — Desatero pop-up
+# Spec — E-book corner banner (was: desatero pop-up)
 
 ## Goal
 
-A pop-up that sends visitors to `/cukrovickove-desatero`, the newsletter
-sign-up that hands out the free „Cukrovíčkové desatero". It must not annoy:
-one showing, then a long pause.
+A quiet nudge towards `/ebook-vanocni-cukrovi` on the rest of the site.
+
+**Changed 2026-11-06 (user):** the first version was a full-page modal for
+the desatero; „too distracting". Now it is a non-modal banner in the
+bottom-right corner about the e-book. The desatero stays reachable from the
+e-book page's „Ještě váháte?" box.
 
 ## Behaviour
 
-- **Trigger.** Opens after 30 s on the site in this tab, or sooner after 15 s
-  without interaction. The clock keeps running across client-side
+- **Trigger.** Slides in after 30 s on the site in this tab, or sooner after
+  15 s without interaction. The clock keeps running across client-side
   navigation; a full reload restarts it.
-- **Content.** Heading, one sentence, a CTA link to `/cukrovickove-desatero`
-  and a „Teď ne" button. No form inside: the sign-up page already has one,
-  and a link keeps the pop-up light at 375 px.
-- **Frequency cap** (localStorage `desatero-popup`):
-  - closed (button, Esc, backdrop) → not again for 14 days;
-  - CTA clicked, or `/cukrovickove-desatero` visited by any route → never again.
-- **Season.** Offered until 24. 12. 2026 inclusive; the desatero is about
-  Christmas baking. Area 08 will move this to Directus.
-- **Skipped routes** (pop-up neither opens nor stays open there):
-  checkout and shop (`/objednavka/*`, `/kurzy/*`, `/muj-ucet`), auth
-  (`/prihlaseni`, `/registrace`, `/obnova-hesla`, `/overeni-emailu`), the
-  sign-up funnel itself (`/cukrovickove-desatero`, `/dekujeme-*`), the e-book
-  page (it has its own „Ještě váháte?" box and the visitor is about to buy),
-  `/pro-odborniky/*` (not parents) and the privacy policy (the cookie bar
-  links to it).
-- **Cookie bar.** Never shown while the bar asks for a decision; the timer
-  still runs, so the pop-up may follow right after the visitor decides.
-- **Rendering.** Client-only, mounted next to the cookie bar in `app.vue`.
-  Native `<dialog>` with `showModal()`: top layer (no z-index war), focus
-  trap and Esc for free. At 375 px it fits without scrolling.
+- **Content** (layout from the user's mockup, offer flipped to the e-book):
+  small e-book cover, „Chystáte se na Vánoce s dětmi?", one line with the
+  price, a brick-red „Chci e-book" button, a secondary „Desatero zdarma →"
+  link and a close button in a peach circle. No backdrop, no focus steal.
+- **Frequency cap** (localStorage `ebook-banner`):
+  - closed → not again for 14 days;
+  - either link clicked, or the e-book or desatero page visited by any
+    route → never again.
+- **Season.** Offered until 24. 12. 2026 inclusive.
+- **Skipped routes:** `/` (the e-book band sits right under the hero), the
+  e-book page, `/cukrovickove-desatero` and `/dekujeme-*`, checkout and shop
+  (`/objednavka/*`, `/kurzy/*`, `/muj-ucet`), auth (`/prihlaseni`,
+  `/registrace`, `/obnova-hesla`, `/overeni-emailu`), `/pro-odborniky/*` and
+  the privacy policy.
+- **Cookie bar.** Never shown while the bar asks for a decision; it shares
+  the bottom edge.
+- **375 px.** Full width minus margins, price line hidden, about 170 px tall.
 
 ## Source tagging (decided: not now)
 

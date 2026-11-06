@@ -1,16 +1,19 @@
 import { DESATERO_PATH } from "../components/ebook-cukrovi/content"
+import { EBOOK_PATH } from "../components/home/content"
 
-/** Last day the pop-up is offered, inclusive, in Prague time. */
+/** Last day the banner is offered, inclusive, in Prague time. */
 const OFFER_LAST_DAY = "2026-12-24"
 
 const SNOOZE_DAYS = 14
 
 /**
- * Checkout, shop and auth, the sign-up funnel itself, the e-book page (it has
- * its own desatero box), the professionals' section and the privacy policy the
- * cookie bar links to.
+ * The homepage (its e-book band sits right under the hero), the e-book page and
+ * the desatero sign-up, checkout, shop and auth, the professionals' section and
+ * the privacy policy the cookie bar links to.
  */
 const SKIPPED_PATHS = [
+  "/",
+  EBOOK_PATH,
   "/objednavka",
   "/kurzy",
   "/muj-ucet",
@@ -19,12 +22,11 @@ const SKIPPED_PATHS = [
   "/obnova-hesla",
   "/overeni-emailu",
   DESATERO_PATH,
-  "/ebook-vanocni-cukrovi",
   "/pro-odborniky",
   "/zasady-zpracovani-osobnich-udaju",
 ]
 
-export interface DesateroPopupRecord {
+export interface EbookBannerRecord {
   /** `converted` caps forever, `dismissed` for {@link SNOOZE_DAYS}. */
   status: "dismissed" | "converted"
   at: string
@@ -37,7 +39,7 @@ export function isSkippedPath(path: string): boolean {
   return SKIPPED_PATHS.some((skipped) => path === skipped || path.startsWith(`${skipped}/`))
 }
 
-export function isCapped(record: DesateroPopupRecord | null, now: Date): boolean {
+export function isCapped(record: EbookBannerRecord | null, now: Date): boolean {
   if (!record) {
     return false
   }
@@ -53,10 +55,6 @@ export function isInSeason(now: Date): boolean {
   return pragueDay <= OFFER_LAST_DAY
 }
 
-export function canOfferDesatero(
-  path: string,
-  record: DesateroPopupRecord | null,
-  now: Date,
-): boolean {
+export function canOfferEbook(path: string, record: EbookBannerRecord | null, now: Date): boolean {
   return isInSeason(now) && !isSkippedPath(path) && !isCapped(record, now)
 }
