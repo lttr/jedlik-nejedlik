@@ -110,6 +110,7 @@ export default defineNuxtConfig({
   routeRules: {
     "/dekujeme-za-objednavku-kurzu": { robots: false },
     "/webinar-generace-alfa": { redirect: { to: "/pro-rodice", statusCode: 301 } },
+    "/webinar-deti-pitny-rezim": { redirect: { to: "/pro-rodice", statusCode: 301 } },
   },
 
   sourcemap: {
