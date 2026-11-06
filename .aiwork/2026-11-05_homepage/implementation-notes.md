@@ -2,8 +2,9 @@
 
 - **Section order follows the prototype**, not the spec table: hero, e-book
   band, problem router, „Znáte nás z" strip, offers, reviews, about,
-  podcast + newsletter. The hero's inline „Znáte nás z" line is dropped;
-  the strip below says the same.
+  podcast + newsletter. The hero keeps the prototype's inline „Znáte nás z"
+  line (genitive names) as well as the strip below; both read
+  `components/media-outlets.ts`.
 - **Open questions Q1–Q5 implemented with their defaults**, pending the
   user's answer, except Q1: no „Celá nabídka" link at all (user: nothing
   from `/kurzy` is promoted yet; add it with the offers hub, area 07); course card without a price,
