@@ -150,7 +150,13 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ["@plausible-analytics/tracker", "@vue/devtools-core", "@vue/devtools-kit"],
+      include: [
+        "@directus/sdk",
+        "@plausible-analytics/tracker",
+        "@vue/devtools-core",
+        "@vue/devtools-kit",
+        "zod",
+      ],
     },
   },
 
