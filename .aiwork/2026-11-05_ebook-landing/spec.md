@@ -16,7 +16,7 @@ references:
 
 Rewrite `/ebook-vanocni-cukrovi` (keep the URL, it is already shared) so a
 parent arriving from an ad or a reel understands the offer in one screen and
-gets persuaded below it. Live **Monday 9. 11. 2026**.
+gets persuaded below it. Live **Monday 9. 11. 2026**; on sale 9. 11. – 20. 12.
 
 ## Decisions (grill session 2026-11-05)
 
@@ -76,8 +76,8 @@ alongside if time allows), the prototype's header/footer/nav (06).
 - Tisknutelné listy: plán mlsání, checklist před návštěvou, věty pro
   babičku; „Rychlý start na 2 strany"
 - The 8 named tools and the age tips match the PDF
-- Bio wording: „Od dětství bojovala s vlastní obezitou", „Metodička
-  dětské sekce STOB"
+- Bio wording: „Od dětství bojovala s vlastní obezitou" (the STOB role
+  no longer holds and was dropped)
 - Media list (ČT24, iDNES.cz, Český rozhlas, Deník N)
 
 ## Assets to add later (00)

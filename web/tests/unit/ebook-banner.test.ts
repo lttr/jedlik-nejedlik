@@ -45,9 +45,14 @@ describe("isCapped", () => {
 })
 
 describe("isInSeason", () => {
-  it("runs through Christmas Eve in Prague", () => {
-    expect(isInSeason(new Date("2026-12-24T22:59:00Z"))).toBe(true)
-    expect(isInSeason(new Date("2026-12-24T23:00:00Z"))).toBe(false)
+  it("starts on 9. 11. in Prague", () => {
+    expect(isInSeason(new Date("2026-11-08T22:59:00Z"))).toBe(false)
+    expect(isInSeason(new Date("2026-11-08T23:00:00Z"))).toBe(true)
+  })
+
+  it("runs through 20. 12. in Prague", () => {
+    expect(isInSeason(new Date("2026-12-20T22:59:00Z"))).toBe(true)
+    expect(isInSeason(new Date("2026-12-20T23:00:00Z"))).toBe(false)
   })
 })
 

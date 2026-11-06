@@ -1,8 +1,9 @@
 import { DESATERO_PATH } from "../components/ebook-cukrovi/content"
 import { EBOOK_PATH } from "../components/home/content"
 
-/** Last day the banner is offered, inclusive, in Prague time. */
-const OFFER_LAST_DAY = "2026-12-24"
+/** The e-book's sale window, both days inclusive, in Prague time. */
+const OFFER_FIRST_DAY = "2026-11-09"
+const OFFER_LAST_DAY = "2026-12-20"
 
 const SNOOZE_DAYS = 14
 
@@ -52,7 +53,7 @@ export function isCapped(record: EbookBannerRecord | null, now: Date): boolean {
 
 export function isInSeason(now: Date): boolean {
   const pragueDay = now.toLocaleDateString("sv-SE", { timeZone: "Europe/Prague" })
-  return pragueDay <= OFFER_LAST_DAY
+  return pragueDay >= OFFER_FIRST_DAY && pragueDay <= OFFER_LAST_DAY
 }
 
 export function canOfferEbook(path: string, record: EbookBannerRecord | null, now: Date): boolean {

@@ -30,7 +30,7 @@ e-book page's „Ještě váháte?" box.
   - closed → not again for 14 days;
   - either link clicked, or the e-book or desatero page visited by any
     route → never again.
-- **Season.** Offered until 24. 12. 2026 inclusive.
+- **Season.** Offered during the e-book sale, 9. 11. – 20. 12. 2026 inclusive.
 - **Skipped routes:** `/` (the e-book band sits right under the hero), the
   e-book page, `/cukrovickove-desatero` and `/dekujeme-*`, checkout and shop
   (`/objednavka/*`, `/kurzy/*`, `/muj-ucet`), auth (`/prihlaseni`,
