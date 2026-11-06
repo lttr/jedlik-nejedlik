@@ -27,6 +27,16 @@
         <p class="pain-closing">
           Nejste v&nbsp;tom sami. A&nbsp;dá se to zvládnout jinak než hlídáním každého kousku.
         </p>
+        <!-- CLAIM: placeholder until Zdeňka's video arrives -->
+        <figure class="video">
+          <div class="video-frame">
+            <Icon name="bi:play-circle" class="video-play" aria-hidden="true" />
+            <span class="video-soon">Video připravujeme</span>
+          </div>
+          <figcaption>
+            Zdeňka o&nbsp;tom, proč e-book vznikl a&nbsp;co na něm rodiče chválí
+          </figcaption>
+        </figure>
       </div>
     </section>
 
@@ -271,6 +281,40 @@ useSeoMeta({
   font-size: var(--font-size-2);
   font-weight: var(--font-weight-6);
   line-height: 1.4;
+}
+
+/* Video */
+.video {
+  max-width: 48rem;
+  margin-top: var(--space-7);
+
+  figcaption {
+    margin-top: var(--space-3);
+    color: var(--muted);
+  }
+}
+
+.video-frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-4);
+  background-color: var(--color-navy);
+  color: white;
+  box-shadow: var(--card-shadow);
+}
+
+.video-play {
+  font-size: 4rem;
+  opacity: 0.85;
+}
+
+.video-soon {
+  font-weight: var(--font-weight-6);
+  color: var(--on-dark-muted);
 }
 
 /* Outcomes */
