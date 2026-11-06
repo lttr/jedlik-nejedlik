@@ -7,7 +7,7 @@
        bar would hydration-mismatch for everyone who already decided. -->
   <ClientOnly>
     <CookieConsentBar />
-    <DesateroPopup />
+    <EbookBanner />
   </ClientOnly>
 </template>
 
@@ -15,7 +15,7 @@
 import { SITE_URL } from "#layers/base/shared/utils/site"
 
 import CookieConsentBar from "./components/CookieConsentBar.vue"
-import DesateroPopup from "./components/DesateroPopup.vue"
+import EbookBanner from "./components/EbookBanner.vue"
 
 // nuxt-og-image is off (nuxt.config) and it was what made og:image absolute.
 // nuxt-seo-utils emits the static `public/og-image.png` relative, which

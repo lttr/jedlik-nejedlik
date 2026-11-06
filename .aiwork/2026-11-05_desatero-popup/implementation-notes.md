@@ -1,18 +1,16 @@
-# Implementation notes — desatero pop-up
+# Implementation notes — e-book corner banner
 
-- **Logic is a pure util** (`web/app/utils/desatero-popup.ts`, unit-tested):
+- **Replaced the desatero modal** on the user's call (too distracting) with
+  `EbookBanner.vue`: a fixed `<aside>`, not a `<dialog>`.
+- **Logic is a pure util** (`web/app/utils/ebook-banner.ts`, unit-tested):
   skipped paths, the 14-day snooze, the „converted" cap and the season end
-  (`OFFER_LAST_DAY = 2026-12-24`, Prague time). The component only wires
-  timers, storage and the `<dialog>`.
-- **`/kurzy/*` is skipped too**, not only `/objednavka/*`: course sales pages
-  lead straight into checkout. Also skipped beyond the brief: the e-book page,
-  `/pro-odborniky/*`, the privacy policy.
-- **Timer runs while the cookie bar is open**, so the pop-up can appear right
-  after the visitor decides. In dev the bar is hidden, so the pop-up shows
-  without it; force the bar with „Nastavení cookies" in the footer to test.
-- **Any close is a dismissal** (button, ×, Esc, backdrop, navigation to a
-  skipped route via back button). The record is written on the dialog's
-  `close` event, which fires a task after `close()`.
-- **Reset for testing:** `localStorage.removeItem("desatero-popup")`.
-- **No source tag** (user's call): see the spec for why and for the order
-  of changes if it is ever needed.
+  (`OFFER_LAST_DAY = 2026-12-24`, Prague time).
+- **Cover reuses `EbookCover small`** at its designed 10.5rem width and
+  shrinks it with `zoom`, so its type keeps its proportions. The banner's own
+  class must not be `.cover`: scoped styles reach the child's root element,
+  which has that class, and the zoom applied twice.
+- **`/` is skipped**: the homepage has the e-book band right under the hero.
+- **In dev the cookie bar is hidden**, so the banner shows without it; force
+  the bar with „Nastavení cookies" in the footer to test.
+- **Reset for testing:** `localStorage.removeItem("ebook-banner")`.
+- **No source tag** (user's call): see the spec.

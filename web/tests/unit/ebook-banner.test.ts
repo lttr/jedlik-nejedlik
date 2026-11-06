@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test"
-import { canOfferDesatero, isCapped, isInSeason, isSkippedPath } from "~/utils/desatero-popup"
+import { canOfferEbook, isCapped, isInSeason, isSkippedPath } from "~/utils/ebook-banner"
 
 const NOW = new Date("2026-11-20T10:00:00Z")
 
@@ -19,11 +19,12 @@ describe("isSkippedPath", () => {
     "/ebook-vanocni-cukrovi",
     "/pro-odborniky/lekari",
     "/zasady-zpracovani-osobnich-udaju",
+    "/",
   ])("skips %s", (path) => {
     expect(isSkippedPath(path)).toBe(true)
   })
 
-  it.each(["/", "/pro-rodice", "/nejedlik", "/kurzyx", "/podcast"])("offers on %s", (path) => {
+  it.each(["/pro-rodice", "/nejedlik", "/kurzyx", "/podcast"])("offers on %s", (path) => {
     expect(isSkippedPath(path)).toBe(false)
   })
 })
@@ -50,11 +51,13 @@ describe("isInSeason", () => {
   })
 })
 
-describe("canOfferDesatero", () => {
+describe("canOfferEbook", () => {
   it("needs season, an eligible path and no cap", () => {
-    expect(canOfferDesatero("/", null, NOW)).toBe(true)
-    expect(canOfferDesatero("/prihlaseni", null, NOW)).toBe(false)
-    expect(canOfferDesatero("/", { status: "converted", at: NOW.toISOString() }, NOW)).toBe(false)
-    expect(canOfferDesatero("/", null, new Date("2027-01-02T10:00:00Z"))).toBe(false)
+    expect(canOfferEbook("/pro-rodice", null, NOW)).toBe(true)
+    expect(canOfferEbook("/prihlaseni", null, NOW)).toBe(false)
+    expect(canOfferEbook("/pro-rodice", { status: "converted", at: NOW.toISOString() }, NOW)).toBe(
+      false,
+    )
+    expect(canOfferEbook("/pro-rodice", null, new Date("2027-01-02T10:00:00Z"))).toBe(false)
   })
 })
