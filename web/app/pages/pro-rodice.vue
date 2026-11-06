@@ -30,15 +30,6 @@
           <p class="webinar-meta"><strong>25.&nbsp;června od&nbsp;19:30</strong> na&nbsp;Zoomu</p>
           <p class="webinar-meta">Pro rodiče &middot; zdarma</p>
         </WebinarCard>
-        <WebinarCard to="/webinar-generace-alfa" badge="Aktuální webinář">
-          <h3>&bdquo;My jsme jedli všechno&hellip;&ldquo; aneb Generace alfa u&nbsp;stolu</h3>
-          <p>
-            Pochopte, proč vaše dítě reaguje u&nbsp;jídla jinak, než byste čekali, a&nbsp;získejte
-            konkrétní opěrné body pro každodenní situace u&nbsp;jídla.
-          </p>
-          <p class="webinar-meta"><strong>13.&nbsp;května od&nbsp;12:30</strong> na&nbsp;Zoomu</p>
-          <p class="webinar-meta">Pro rodiče dětí 1&ndash;15&nbsp;let &middot; 290&nbsp;Kč</p>
-        </WebinarCard>
       </div>
     </section>
 

@@ -528,7 +528,7 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
 /* Offers */
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   gap: var(--space-5);
   margin-top: var(--space-7);
   padding: 0;

@@ -109,6 +109,7 @@ export default defineNuxtConfig({
   // `robots.txt`'s allow list; the page's own `useRobotsRule` would do neither.
   routeRules: {
     "/dekujeme-za-objednavku-kurzu": { robots: false },
+    "/webinar-generace-alfa": { redirect: { to: "/pro-rodice", statusCode: 301 } },
   },
 
   sourcemap: {

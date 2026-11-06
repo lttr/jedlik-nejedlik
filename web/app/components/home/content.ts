@@ -58,14 +58,6 @@ export const OFFERS = [
     to: "/2026-online-kurz-deti",
   },
   {
-    kind: "Webinář",
-    color: "var(--color-star)",
-    title: "„My jsme jedli všechno…“ aneb Generace alfa u stolu",
-    text: "Proč dnešní děti reagují u jídla jinak a co s tím.",
-    price: "290 Kč",
-    to: "/webinar-generace-alfa",
-  },
-  {
     kind: "Konzultace",
     color: "var(--color-light-lime)",
     title: "Individuální konzultace",
