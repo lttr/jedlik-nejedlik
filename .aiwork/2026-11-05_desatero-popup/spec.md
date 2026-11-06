@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: done
 verified: [checks, behaviour, ux]
 references:
   - "Epic: ../2026-10-20_web-redesign/areas.md (area 04)"

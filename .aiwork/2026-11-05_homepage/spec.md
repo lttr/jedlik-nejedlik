@@ -1,5 +1,5 @@
 ---
-status: agent-done
+status: done
 verified: [checks, behaviour]
 references:
   - "Epic: ../2026-10-20_web-redesign/areas.md (area 05)"
