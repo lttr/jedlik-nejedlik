@@ -4,17 +4,27 @@
       <div class="hero-circle" aria-hidden="true"></div>
       <div class="hero-grid">
         <div>
-          <span class="pill green">Výživa a&nbsp;výchova v&nbsp;propojení</span>
-          <h1 class="hero-title">Aby jídlo doma nebylo bojem.</h1>
+          <h1 class="hero-title">Výživa a&nbsp;výchova v&nbsp;propojení</h1>
           <p class="lead hero-lead">
-            Pomáháme rodičům zvládat náročné situace kolem jídla – od nejedlíků přes nadváhu po
-            vánoční cukroví. Bez strašení, bez diet a&nbsp;s&nbsp;respektem k&nbsp;dítěti
+            Pomáháme rodičům zvládat náročné situace kolem jídla, ať jde o&nbsp;nejedlíka, nebo
+            o&nbsp;nadváhu. Bez strašení, bez diet a&nbsp;s&nbsp;respektem k&nbsp;dítěti
             i&nbsp;k&nbsp;realitě vaší rodiny.
           </p>
           <div class="hero-cta">
             <a :href="`#${PROBLEMS_ANCHOR}`" class="button">S&nbsp;čím potřebujete pomoct?</a>
             <NuxtLink :to="EBOOK_PATH" class="button outline">E-book Cukroví s&nbsp;dětmi</NuxtLink>
           </div>
+          <p class="hero-media">
+            <strong>Znáte nás z</strong>
+            <a
+              v-for="outlet of MEDIA_OUTLETS"
+              :key="outlet.name"
+              :href="outlet.href"
+              target="_blank"
+              rel="noopener"
+              >{{ outlet.fromName }}</a
+            >
+          </p>
         </div>
         <figure class="hero-photo">
           <NuxtImg
@@ -207,6 +217,7 @@ import {
   SPOTIFY_URL,
   ZDENKA_PHOTO_ID,
 } from "~/components/home/content"
+import { MEDIA_OUTLETS } from "~/components/media-outlets"
 import MediaStrip from "~/components/MediaStrip.vue"
 import NewsletterForm from "~/components/NewsletterForm.vue"
 
@@ -322,6 +333,35 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
   flex-wrap: wrap;
   gap: var(--space-3) var(--space-4);
   margin-top: var(--space-6);
+}
+
+.hero-media {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-5);
+  font-size: var(--font-size--1);
+  color: color-mix(in srgb, var(--color-navy) 72%, white);
+
+  strong {
+    color: var(--color-navy);
+  }
+
+  a + a::before {
+    content: "·" / "";
+    display: inline-block;
+    margin-right: var(--space-3);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .hero-photo {
