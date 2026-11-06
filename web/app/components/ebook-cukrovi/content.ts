@@ -100,8 +100,8 @@ export const AGE_TIPS = [
     title: "První Vánoce s miminkem",
     items: [
       "Jestli a kdy sladké vůbec nabídnout",
-      "Perníček bez medu pro ročáka",
-      "Jak to vysvětlit příbuzným bez dusna",
+      "Perníček bez medu pro miminko",
+      "Jak to v klidu vysvětlit příbuzným",
     ],
   },
   {
