@@ -21,7 +21,6 @@
           <strong>{{ BONUS.title }}</strong> {{ BONUS.text }}
         </p>
         <BuyLink size="big" class="buy-full" />
-        <p class="gifting">{{ GIFTING }}</p>
       </div>
     </div>
   </section>
@@ -30,7 +29,7 @@
 <script setup lang="ts">
 import CheckMark from "./CheckMark.vue"
 import BuyLink from "./BuyLink.vue"
-import { BONUS, GIFTING, PACKAGE_ITEMS, PRICE } from "./content"
+import { BONUS, PACKAGE_ITEMS, PRICE } from "./content"
 import EbookCover from "./EbookCover.vue"
 </script>
 
@@ -111,12 +110,5 @@ import EbookCover from "./EbookCover.vue"
 .buy-full {
   width: 100%;
   margin-top: var(--space-5);
-}
-
-.gifting {
-  margin-top: var(--space-3);
-  font-size: var(--font-size--1);
-  text-align: center;
-  color: var(--muted);
 }
 </style>

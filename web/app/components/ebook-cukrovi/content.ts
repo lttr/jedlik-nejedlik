@@ -204,7 +204,6 @@ export const PACKAGE_ITEMS = [
     after: " plán mlsání, checklist před návštěvou, věty pro babičku",
   },
   { before: "Čtení v mobilu, tabletu i vytištěné", strong: "", after: "" },
-  { before: "Budoucí aktualizace ", strong: "zdarma", after: "" },
 ]
 
 // CLAIM: Mikuláš bonus dates
@@ -212,9 +211,6 @@ export const BONUS = {
   title: "Bonus pro nákup do Mikuláše (6. 12.):",
   text: "živé Q&A se Zdeňkou 9. 12. Zeptáte se na to, co řešíte právě vy.",
 }
-
-// CLAIM: gifting through SimpleShop
-export const GIFTING = "Chcete ho darovat? Při objednávce zadejte e‑mail obdarovaného."
 
 export const FAQ = [
   {
@@ -231,10 +227,6 @@ export const FAQ = [
     question: "Jsem úplně vyřízená. Je to pro mě?",
     answer:
       "Ano. Začněte rychlým startem: pět kroků na tento týden na dvou stranách. Pomůže vám přípravy kolem cukroví nastavit tak, aby vám o Vánocích neutíkala energie oknem. Zbytek si dočtete, až budete mít chvilku. Jste-li ale silně přetížená, dopřejte si nejdřív odpočinek. I dobré informace jsou v tu chvíli další zátěž.",
-  },
-  {
-    question: "Můžu e-book někomu darovat?",
-    answer: "Ano. Při objednávce zadejte e‑mail obdarovaného, nebo mu PDF pošlete sami.",
   },
   {
     question: "Je to i pro rodiče nejedlíků?",
