@@ -91,9 +91,7 @@
     <section class="section p-full-bg">
       <div>
         <h2 class="section-title">Aktuální nabídka</h2>
-        <p class="lead section-lead">
-          Kurzy, webináře a&nbsp;e-booky na jednom místě. Placené i&nbsp;zdarma.
-        </p>
+        <p class="lead section-lead">Kurzy, e-booky a&nbsp;konzultace na jednom místě.</p>
         <ul class="offer-grid">
           <li v-for="offer of OFFERS" :key="offer.to">
             <NuxtLink :to="offer.to" class="offer-card" :style="{ '--card-bg': offer.color }">

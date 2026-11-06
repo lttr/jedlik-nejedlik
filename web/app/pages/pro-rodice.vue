@@ -17,22 +17,6 @@
       </NuxtLink>
     </nav>
 
-    <!-- Webinars Section -->
-    <section class="webinars-section">
-      <h2 class="section-title">Webináře</h2>
-      <div class="webinars-grid">
-        <WebinarCard to="/webinar-deti-pitny-rezim" badge="Webinář zdarma">
-          <h3>Děti a&nbsp;pitný režim</h3>
-          <p>
-            Získejte odborné informace, praktické tipy a&nbsp;větší klid kolem pitného režimu
-            u&nbsp;dětí &ndash; z&nbsp;pohledu výživy, návyků i&nbsp;výchovy.
-          </p>
-          <p class="webinar-meta"><strong>25.&nbsp;června od&nbsp;19:30</strong> na&nbsp;Zoomu</p>
-          <p class="webinar-meta">Pro rodiče &middot; zdarma</p>
-        </WebinarCard>
-      </div>
-    </section>
-
     <!-- Newsletter Section -->
     <section class="newsletter">
       <NewsletterForm />
@@ -42,7 +26,6 @@
 
 <script lang="ts" setup>
 import NewsletterForm from "../components/NewsletterForm.vue"
-import WebinarCard from "../components/WebinarCard.vue"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 </script>
 
@@ -116,29 +99,6 @@ import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 /* Newsletter Section */
 .newsletter {
   margin-top: var(--space-8);
-  max-width: var(--size-content-3);
-  margin-inline: auto;
-}
-
-/* Section Titles */
-.section-title {
-  font-size: var(--font-size-4);
-  text-align: center;
-  margin-bottom: var(--space-6);
-  position: relative;
-}
-
-/* Webinars Section */
-.webinars-section {
-  padding-block: var(--space-8);
-  background: transparent;
-  max-width: var(--size-content-3);
-  margin-inline: auto;
-}
-
-.webinars-grid {
-  display: grid;
-  gap: var(--space-5);
   max-width: var(--size-content-3);
   margin-inline: auto;
 }

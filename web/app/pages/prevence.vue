@@ -82,19 +82,6 @@
       </ul>
     </section>
 
-    <!-- Webinar promo -->
-    <section class="webinar-section">
-      <h2 class="section-title">Webinář zdarma</h2>
-      <WebinarCard to="/webinar-deti-pitny-rezim" badge="Webinář zdarma">
-        <h3>Děti a&nbsp;pitný režim</h3>
-        <p>
-          Praktické tipy a&nbsp;větší klid kolem pitného režimu u&nbsp;dětí &ndash; z&nbsp;pohledu
-          výživy, návyků i&nbsp;výchovy. Online, zdarma.
-        </p>
-        <p class="webinar-meta"><strong>16.&nbsp;června od&nbsp;18:30</strong> na&nbsp;Zoomu</p>
-      </WebinarCard>
-    </section>
-
     <!-- Newsletter download -->
     <section class="newsletter">
       <NewsletterForm
@@ -227,7 +214,6 @@
 <script lang="ts" setup>
 import ConsultationForm from "../components/ConsultationForm.vue"
 import NewsletterForm from "../components/NewsletterForm.vue"
-import WebinarCard from "../components/WebinarCard.vue"
 import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 </script>
 
@@ -341,17 +327,6 @@ import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 }
 
 /* Newsletter Section */
-.webinar-section {
-  margin-block: var(--space-8);
-  max-width: var(--size-content-3);
-  margin-inline: auto;
-}
-
-.webinar-section .section-title {
-  text-align: center;
-  margin-bottom: var(--space-5);
-}
-
 .newsletter {
   margin-block: var(--space-6);
   max-width: var(--size-content-3);
