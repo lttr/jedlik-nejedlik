@@ -184,13 +184,12 @@ export const PARENT_REVIEWS = [
 /** Directus file id; replace with the final author photo once it arrives. */
 export const AUTHOR_PHOTO_ID = "a64de3ab-044d-46c7-9e4c-64f3854e93d0"
 
-// CLAIM: bio wording („Od dětství bojovala s vlastní obezitou", STOB)
+// CLAIM: bio wording („Od dětství bojovala s vlastní obezitou")
 export const AUTHOR_BIO =
   "Od dětství bojovala s vlastní obezitou. Jako učitelka pak viděla, kolik dětí a rodin řeší totéž, a z pedagožky se stala nutriční poradkyní. Dnes vede poradnu Jedlík-nejedlík, studuje nutriční terapii, spolupracuje s lékaři a je mámou dvou holčiček. Opírá se o vědecky podložená data a ověřené postupy, bez strašení a bez nerealistických slibů."
 
 export const AUTHOR_ROLES = [
   "Nutriční poradkyně a pedagožka",
-  "Metodička dětské sekce STOB",
   "Zakladatelka neziskovky Jedlík-nejedlík",
 ]
 

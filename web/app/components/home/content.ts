@@ -75,11 +75,7 @@ export const OFFERS = [
   },
 ]
 
-// CLAIM: founding year, STOB role, consultations online
-export const ABOUT_FACTS = [
-  "Nezisková organizace od roku 2023",
-  "Metodička dětské sekce STOB",
-  "Poradna osobně i online",
-]
+// CLAIM: founding year, consultations online
+export const ABOUT_FACTS = ["Nezisková organizace od roku 2023", "Poradna osobně i online"]
 
 export const SPOTIFY_URL = "https://open.spotify.com/show/7DdV5v4nOSVHLWij5Y9a0p"
