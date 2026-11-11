@@ -24,19 +24,36 @@
             </div>
           </li>
         </ul>
-        <p class="pain-closing">
-          Nejste v&nbsp;tom sami. A&nbsp;dá se to zvládnout jinak než hlídáním každého kousku.
-        </p>
-        <!-- CLAIM: placeholder until Zdeňka's video arrives -->
-        <figure class="video">
-          <div class="video-frame">
-            <Icon name="bi:play-circle" class="video-play" aria-hidden="true" />
-            <span class="video-soon">Video připravujeme</span>
+        <div class="closing">
+          <div class="closing-text">
+            <p class="pain-closing">
+              Nejste v&nbsp;tom sami. A&nbsp;dá se to zvládnout jinak než hlídáním každého kousku.
+            </p>
+            <p class="video-note">
+              <span class="video-note-icon">
+                <Icon name="bi:play-circle-fill" class="video-note-glyph" aria-hidden="true" />
+              </span>
+              Zdeňka o&nbsp;tom, proč e-book vznikl a&nbsp;co na něm rodiče chválí
+            </p>
           </div>
-          <figcaption>
-            Zdeňka o&nbsp;tom, proč e-book vznikl a&nbsp;co na něm rodiče chválí
-          </figcaption>
-        </figure>
+          <iframe
+            class="video-frame"
+            src="https://www.youtube-nocookie.com/embed/0Mu0EeWbMkA"
+            title="Zdeňka o e-booku Cukroví s dětmi a v pohodě"
+            loading="lazy"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </section>
 
@@ -275,46 +292,66 @@ useSeoMeta({
   font-size: 1.5rem;
 }
 
-.pain-closing {
-  max-width: 45rem;
-  margin-top: var(--space-7);
-  font-size: var(--font-size-2);
-  font-weight: var(--font-weight-6);
-  line-height: 1.4;
-}
+/* Closing line next to the video */
+.closing {
+  display: grid;
+  grid-template-columns: 1fr 22rem;
+  gap: var(--space-8);
+  align-items: center;
+  margin-top: var(--space-8);
 
-/* Video */
-.video {
-  max-width: 48rem;
-  margin-top: var(--space-7);
-
-  figcaption {
-    margin-top: var(--space-3);
-    color: var(--muted);
+  @media (--md-n-below) {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-7);
   }
 }
 
-.video-frame {
+.closing-text {
+  max-width: 34rem;
+}
+
+.pain-closing {
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-6);
+  line-height: 1.3;
+
+  @media (--md-n-below) {
+    font-size: var(--font-size-2);
+  }
+}
+
+.video-note {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin-top: var(--space-5);
+  color: var(--muted);
+}
+
+/* One line tall, so the icon centres on the first line of the note. */
+.video-note-icon {
+  display: flex;
+  flex: none;
   align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 9;
+  height: 1lh;
+  color: var(--color-brick-red);
+}
+
+.video-note-glyph {
+  font-size: 1.5rem;
+}
+
+.video-frame {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  border: 0;
   border-radius: var(--radius-4);
   background-color: var(--color-navy);
-  color: white;
   box-shadow: var(--card-shadow);
-}
-
-.video-play {
-  font-size: 4rem;
-  opacity: 0.85;
-}
-
-.video-soon {
-  font-weight: var(--font-weight-6);
-  color: var(--on-dark-muted);
 }
 
 /* Outcomes */
