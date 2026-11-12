@@ -26,7 +26,7 @@
       </button>
       <button
         type="button"
-        class="lightbox-nav"
+        class="lightbox-nav prev"
         :disabled="currentIndex === 0"
         aria-label="Předchozí"
         @click="showImage(currentIndex - 1)"
@@ -44,7 +44,7 @@
       </div>
       <button
         type="button"
-        class="lightbox-nav"
+        class="lightbox-nav next"
         :disabled="currentIndex === PREVIEW_IMAGE_IDS.length - 1"
         aria-label="Další"
         @click="showImage(currentIndex + 1)"
@@ -172,9 +172,10 @@ useEventListener(lightboxDialog, "keydown", (event: KeyboardEvent) => {
   gap: var(--space-4);
   padding: var(--space-4);
 
-  @media (--sm-n-below) {
-    gap: var(--space-2);
-    padding: var(--space-2);
+  @media (--md-n-below) {
+    width: 100vw;
+    height: 100dvh;
+    padding: 0;
   }
 }
 
@@ -187,6 +188,15 @@ useEventListener(lightboxDialog, "keydown", (event: KeyboardEvent) => {
     max-width: 100%;
     max-height: 85vh;
     object-fit: contain;
+  }
+
+  @media (--md-n-below) {
+    max-width: 100vw;
+    max-height: 100dvh;
+
+    :deep(img) {
+      max-height: 100dvh;
+    }
   }
 }
 
@@ -232,10 +242,20 @@ useEventListener(lightboxDialog, "keydown", (event: KeyboardEvent) => {
     cursor: not-allowed;
   }
 
-  @media (--sm-n-below) {
-    width: 36px;
-    height: 36px;
-    font-size: var(--font-size-1);
+  /* On a phone the arrows sit over the image, beside the counter, so the
+     page can take the full width. */
+  @media (--md-n-below) {
+    position: absolute;
+    bottom: var(--space-2);
+    z-index: 1;
+
+    &.prev {
+      left: var(--space-2);
+    }
+
+    &.next {
+      right: var(--space-2);
+    }
   }
 }
 
