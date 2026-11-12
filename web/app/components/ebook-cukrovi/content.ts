@@ -181,7 +181,7 @@ export const PARENT_REVIEWS = [
   },
 ]
 
-/** Directus file id; replace with the final author photo once it arrives. */
+/** Directus file id of the author photo. */
 export const AUTHOR_PHOTO_ID = "a64de3ab-044d-46c7-9e4c-64f3854e93d0"
 
 // CLAIM: bio wording („Od dětství bojovala s vlastní obezitou")
@@ -193,7 +193,7 @@ export const AUTHOR_ROLES = [
   "Zakladatelka neziskovky Jedlík-nejedlík",
 ]
 
-// CLAIM: page count, quick start, printable sheets, free updates
+// CLAIM: page count, quick start, printable sheets
 export const PACKAGE_ITEMS = [
   { before: "E-book v PDF, 61 stran, ", strong: "hned do e‑mailu", after: "" },
   { before: "", strong: "Rychlý start na 2 strany", after: " a tipy podle věku dítěte" },

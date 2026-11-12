@@ -82,8 +82,9 @@ alongside if time allows), the prototype's header/footer/nav (06).
 
 ## Assets to add later (00)
 
-Video (section 4), final author photo (10), desatero PDF (14), new PDF
-preview pages if they differ from last year's (8).
+Video (section 4, added). Final author photo (10) and desatero PDF (14)
+confirmed as they are (2026-11-12). The PDF did not change, so last
+year's preview pages (8) stay.
 
 ## Acceptance
 
