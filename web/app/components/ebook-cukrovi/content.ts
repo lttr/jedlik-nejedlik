@@ -181,7 +181,6 @@ export const PARENT_REVIEWS = [
   },
 ]
 
-/** Directus file id of the author photo. */
 export const AUTHOR_PHOTO_ID = "a64de3ab-044d-46c7-9e4c-64f3854e93d0"
 
 // CLAIM: bio wording („Od dětství bojovala s vlastní obezitou")
