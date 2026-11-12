@@ -1,5 +1,6 @@
 ---
-status: done
+status: abandoned
+superseded_by: ../2026-11-12_ebook-top-bar/spec.md
 verified: [checks, behaviour, ux]
 references:
   - "Epic: ../2026-10-20_web-redesign/areas.md (area 04)"
@@ -7,6 +8,10 @@ references:
 ---
 
 # Spec — E-book corner banner (was: desatero pop-up)
+
+**Switched off 2026-11-12 (user):** with the promo top bar on every page the
+corner banner was one promo too many. Code removed in the top-bar commit;
+git history keeps it.
 
 ## Goal
 

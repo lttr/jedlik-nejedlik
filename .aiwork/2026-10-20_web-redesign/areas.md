@@ -81,7 +81,7 @@ Specific to this product: no generic template. Checkout stays SimpleShop
 
 ## 02 — E-book top bar + menu link
 
-**Status:** not-started
+**Status:** not-started → `../2026-11-12_ebook-top-bar/` (menu link shipped)
 A top bar on every page („Vánoční e-book Cukroví s dětmi · 290 Kč · Chci
 e-book →"), hardcoded for the e-book and dismissible for the session, and
 a visible link to the e-book in the current menu. Not the new navigation
