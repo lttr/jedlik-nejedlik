@@ -160,7 +160,7 @@
           <!-- CLAIM: bio -->
           <p class="lead">
             Zakladatelka Zdeňka Trummová od dětství bojovala s&nbsp;obezitou. Jako učitelka pak
-            viděla, kolik rodin řeší totéž – a&nbsp;z&nbsp;pedagožky se stala nutriční poradkyní.
+            viděla, kolik rodin řeší totéž, a&nbsp;z&nbsp;pedagožky se stala nutriční poradkyní.
             Dnes je Jedlík-nejedlík nezisková organizace, která přednáší rodičům, radí
             v&nbsp;poradně a&nbsp;vzdělává odborníky.
           </p>
@@ -188,7 +188,7 @@
             <NuxtLink to="/podcast" class="button outline-light">O&nbsp;podcastu</NuxtLink>
           </div>
         </div>
-        <div class="newsletter">
+        <div>
           <NewsletterForm
             title="Newsletter pro rodiče"
             description="Tipy, novinky a&nbsp;inspirace ze světa dětské výživy."
@@ -541,6 +541,8 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   border-radius: var(--radius-4);
   background: white;
@@ -678,7 +680,6 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-8);
-  align-items: center;
 
   @media (--lg-n-below) {
     grid-template-columns: 1fr;
@@ -688,14 +689,19 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
 
 .about-photo {
   width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 2;
+  height: 100%;
   object-fit: cover;
   border-radius: var(--radius-4);
+
+  @media (--lg-n-below) {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
 }
 
 .about-title {
   margin-top: var(--space-4);
+  font-size: var(--font-size-3);
 }
 
 .about-cta {
@@ -755,15 +761,5 @@ const PARENT_QUOTES = PARENT_REVIEWS.flatMap((review) => {
   flex-wrap: wrap;
   gap: var(--space-3);
   margin-top: var(--space-6);
-}
-
-.newsletter {
-  padding: var(--space-7);
-  border-radius: var(--radius-4);
-  background-color: var(--color-peach);
-
-  @media (--md-n-below) {
-    padding: var(--space-5);
-  }
 }
 </style>
