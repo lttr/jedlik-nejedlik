@@ -53,7 +53,6 @@ const { label } = defineProps<{ label: string }>()
 
     a {
       font-size: var(--font-size-0);
-      white-space: nowrap;
     }
   }
 
@@ -62,6 +61,7 @@ const { label } = defineProps<{ label: string }>()
     font-weight: var(--font-weight-7);
     color: var(--color-navy);
     text-decoration: none;
+    white-space: nowrap;
     opacity: 0.75;
 
     &:hover {
