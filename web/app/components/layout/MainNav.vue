@@ -74,8 +74,15 @@ const featuredTarget = computed(() =>
 
 .links {
   --cluster-space: var(--space-1);
+  row-gap: var(--space-3);
   list-style-type: none;
   padding-inline-start: 0;
+
+  /* The global link style trades padding for negative margin, so a wrapped
+     row's links would overlap the row-gap. */
+  > li > a {
+    margin-block: 0;
+  }
 
   .link {
     display: flex;
