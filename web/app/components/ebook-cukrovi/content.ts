@@ -225,7 +225,7 @@ export const FAQ = [
   {
     question: "Najdu uvnitř recepty?",
     answer:
-      "E-book sám kuchařka není. Je o tom, jak sladké s dětmi zvládat, ne o přísných návodech nebo zákazech. Jako bonus k němu ale dostanete oblíbené recepty našeho týmu. Další recepty na zdravější cukroví sdílíme zdarma na sociálních sítích.",
+      "V e-booku recepty nenajdete. Je o tom, jak sladké s dětmi zvládat, ne o přísných návodech nebo zákazech. Recepty na zdravější cukroví sdílíme zdarma na sociálních sítích. Od roku 2026 najdete recepty jako jeden z bonusů.",
   },
   {
     question: "Pomůže to, i když máme doma chaos?",
