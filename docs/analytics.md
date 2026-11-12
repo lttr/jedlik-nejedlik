@@ -71,7 +71,7 @@ The keys are the ids Meta sees as content name and SimpleShop passes back in the
 `kurz` query parameter. They are anchored on the course's start date, so they
 diverge from route slugs on purpose.
 
-The e-book (`/ebook-vanocni-cukrovi`, SimpleShop `gN5Qq`) is not a Live Course
+The e-book (`/ebook-vanocni-cukrovi`, SimpleShop `GXDmm`) is not a Live Course
 and is not in the table. Its buy buttons send `InitiateCheckout` with content
 name `ebook-cukrovi` (`web/app/components/ebook-cukrovi/BuyLink.vue`). It has
 no `Purchase` yet: SimpleShop's own post-payment page delivers the PDF, so the

@@ -4,7 +4,7 @@
  * .aiwork/2026-11-05_ebook-landing/spec.md, „Claims to confirm".
  */
 
-export const PURCHASE_URL = "https://form.simpleshop.cz/gN5Qq/buy/"
+export const PURCHASE_URL = "https://form.simpleshop.cz/GXDmm/buy/"
 
 /** The content name Meta sees on `InitiateCheckout`. */
 export const EBOOK_ID = "ebook-cukrovi"

@@ -23,7 +23,7 @@ gets persuaded below it. Live **Monday 9. 11. 2026**; on sale 9. 11. – 20. 12.
 - **Specific, not generic.** Components local to this page (sibling
   folder or inline), no reusable landing template. Extraction is area 09,
   when a second product page exists.
-- **Checkout stays SimpleShop** (`https://form.simpleshop.cz/gN5Qq/buy/`).
+- **Checkout stays SimpleShop** (`https://form.simpleshop.cz/GXDmm/buy/`).
   Buy buttons keep firing `InitiateCheckout` through
   `$trackMetaPixelEvent`; the full funnel is area 03.
 - **Structure from the prototype, copy merged.** Section order and layout
@@ -89,7 +89,7 @@ preview pages if they differ from last year's (8).
 
 - [x] All sections above render at 1440 and 375 px; section 4
       absent, no placeholder text anywhere.
-- [x] Every buy button opens SimpleShop `gN5Qq` and fires
+- [x] Every buy button opens SimpleShop `GXDmm` and fires
       `InitiateCheckout` once.
 - [x] Czech copy through `writing:czech-typography`.
 - [x] Tabs and FAQ keyboard-operable.
