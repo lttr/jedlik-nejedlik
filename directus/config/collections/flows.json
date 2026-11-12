@@ -80,6 +80,26 @@
     "trigger": "event"
   },
   {
+    "_syncId": "e817f3e8-815a-4b59-9c3c-5d353c7ac831",
+    "accountability": "all",
+    "color": "#2ECDA7",
+    "description": null,
+    "icon": "school",
+    "name": "Vyplněn formulář \"Přihláška na kurz\"",
+    "operation": "d77d82a0-084b-4ad7-b945-254325cdcd12",
+    "options": {
+      "collections": [
+        "waitlist_course_form"
+      ],
+      "scope": [
+        "items.create"
+      ],
+      "type": "action"
+    },
+    "status": "active",
+    "trigger": "event"
+  },
+  {
     "_syncId": "fe0e5400-9a3f-47c5-a5f1-e0ef752c219a",
     "accountability": "all",
     "color": null,

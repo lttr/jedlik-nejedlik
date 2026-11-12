@@ -126,7 +126,7 @@ export interface Schema {
   cooperation_form: FormSubmission[]
   newsletter_experts_form: FormSubmission[]
   podcast_question_form: FormSubmission[]
-  waitlist_obesity_course_form: FormSubmission[]
+  waitlist_course_form: FormSubmission[]
   consultation_form: FormSubmission[]
   newsletter_parents_form: FormSubmission[]
   webinar_signup_form: FormSubmission[]

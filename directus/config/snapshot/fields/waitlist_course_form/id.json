@@ -1,8 +1,8 @@
 {
-  "collection": "waitlist_obesity_course_form",
+  "collection": "waitlist_course_form",
   "field": "id",
   "meta": {
-    "collection": "waitlist_obesity_course_form",
+    "collection": "waitlist_course_form",
     "conditions": null,
     "display": null,
     "display_options": null,
@@ -38,7 +38,7 @@
     "name": "id",
     "numeric_precision": null,
     "numeric_scale": null,
-    "table": "waitlist_obesity_course_form"
+    "table": "waitlist_course_form"
   },
   "type": "integer"
 }

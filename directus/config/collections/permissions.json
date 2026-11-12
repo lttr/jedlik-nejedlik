@@ -228,11 +228,12 @@
     "validation": null
   },
   {
-    "_syncId": "6169ecb5-4245-4e77-bb65-0ba0a676c8f7",
+    "_syncId": "801d55c3-8c89-42f7-aa4f-be68a80de86f",
     "action": "create",
-    "collection": "waitlist_obesity_course_form",
+    "collection": "waitlist_course_form",
     "fields": [
-      "email"
+      "email",
+      "course"
     ],
     "permissions": null,
     "policy": "_sync_default_public_policy",

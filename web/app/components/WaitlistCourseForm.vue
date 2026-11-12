@@ -1,6 +1,7 @@
 <template>
   <div class="form-wrapper">
     <form class="form" @submit.prevent="onSubmit">
+      <input type="hidden" name="course" :value="course" />
       <div class="p-form-group">
         <label for="email">Váš e-mail *</label>
         <input
@@ -15,22 +16,31 @@
 
       <div class="p-center">
         <button type="submit" class="p-button-brand" :disabled="isPendingOrSuccess">
-          {{ isSuccess ? "Odesláno" : "Přihlásit se na čekací listinu" }}
+          {{ isSuccess ? "Odesláno" : submitLabel }}
         </button>
       </div>
 
       <div v-if="error" class="error-message">{{ error.message }}</div>
-      <div v-if="isSuccess" class="success-message">
-        Děkujeme! Budeme vás informovat, až se kurz otevře.
-      </div>
+      <div v-if="isSuccess" class="success-message">{{ successMessage }}</div>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useWaitlistObesityCourseForm } from "../composables/forms"
+import { useWaitlistCourseForm } from "../composables/forms"
 
-const { execute, error, isSuccess, isPendingOrSuccess } = useWaitlistObesityCourseForm()
+const {
+  course,
+  submitLabel = "Přihlásit se na čekací listinu",
+  successMessage = "Děkujeme! Budeme vás informovat, až se kurz otevře.",
+} = defineProps<{
+  // Stored with every signup so one collection serves every course, e.g. "obesity-2026".
+  course: string
+  submitLabel?: string
+  successMessage?: string
+}>()
+
+const { execute, error, isSuccess, isPendingOrSuccess } = useWaitlistCourseForm()
 
 async function onSubmit(event: Event) {
   const form = event.target as HTMLFormElement

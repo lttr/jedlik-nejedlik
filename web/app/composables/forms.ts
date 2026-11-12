@@ -22,8 +22,8 @@ export const useNewsletterExpertsForm = (): UseAsyncRequestResult<FormData> =>
   useDirectusForm("newsletter_experts_form")
 export const usePodcastQuestionForm = (): UseAsyncRequestResult<FormData> =>
   useDirectusForm("podcast_question_form")
-export const useWaitlistObesityCourseForm = (): UseAsyncRequestResult<FormData> =>
-  useDirectusForm("waitlist_obesity_course_form")
+export const useWaitlistCourseForm = (): UseAsyncRequestResult<FormData> =>
+  useDirectusForm("waitlist_course_form")
 export const useConsultationForm = (): UseAsyncRequestResult<FormData> =>
   useDirectusForm("consultation_form")
 export const useNewsletterParentsForm = (): UseAsyncRequestResult<FormData> =>
