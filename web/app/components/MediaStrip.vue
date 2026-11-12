@@ -44,6 +44,19 @@ const { label } = defineProps<{ label: string }>()
   padding: 0;
   list-style: none;
 
+  @media (--md-n-below) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-4);
+    width: 100%;
+    text-align: center;
+
+    a {
+      font-size: var(--font-size-0);
+      white-space: nowrap;
+    }
+  }
+
   a {
     font-size: var(--font-size-1);
     font-weight: var(--font-weight-7);
