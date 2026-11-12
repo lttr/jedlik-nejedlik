@@ -1,8 +1,8 @@
 # Implementation notes — e-book landing
 
 - **All copy and claims live in `web/app/components/ebook-cukrovi/content.ts`.**
-  Each claim on the „confirm with Zdeňka" list is marked `// CLAIM:` there,
-  so corrections after her review are one-line edits. The author photo is the
+  Zdeňka confirmed the claims on 2026-11-12, so their `// CLAIM:` markers
+  are gone, here and on the homepage. The author photo is the
   one `/kontakt` uses (`AUTHOR_PHOTO_ID`), confirmed final on 2026-11-12.
 - **`InitiateCheckout` is new, not kept.** Last year's page sent no pixel
   events (the meta-pixel spec excluded the e-book on purpose). The spec asked

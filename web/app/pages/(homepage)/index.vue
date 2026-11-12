@@ -157,7 +157,6 @@
         <div>
           <span class="pill green">O&nbsp;nás</span>
           <h2 class="section-title about-title">Víme, jaké to je. Zdeňka to zažila sama.</h2>
-          <!-- CLAIM: bio -->
           <p class="lead">
             Zakladatelka Zdeňka Trummová od dětství bojovala s&nbsp;obezitou. Jako učitelka pak
             viděla, kolik rodin řeší totéž, a&nbsp;z&nbsp;pedagožky se stala nutriční poradkyní.

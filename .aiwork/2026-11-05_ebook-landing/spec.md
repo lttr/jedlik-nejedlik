@@ -52,7 +52,7 @@ gets persuaded below it. Live **Monday 9. 11. 2026**; on sale 9. 11. – 20. 12.
 | 8   | „Nahlédněte dovnitř"                                                                                                                                                                              | last year's 3 Directus preview images + lightbox; prototype intro copy                      |
 | 9   | Reviews: doctor (long) + 3 parents                                                                                                                                                                | last year's full texts and photos; prototype pull-quotes as headings; no „new reviews" slot |
 | 10  | „Kdo e-book napsal" Zdeňka medallion + 3 roles                                                                                                                                                    | prototype bio; last year's photo until the final one arrives                                |
-| 11  | Pricing: 290 Kč, „Co přesně dostanete", Mikuláš bonus, gifting line, CTA                                                                                                                          | prototype                                                                                   |
+| 11  | Pricing: 290 Kč, „Co přesně dostanete", Purchase bonus, gifting line, CTA                                                                                                                         | prototype                                                                                   |
 | 12  | FAQ (7)                                                                                                                                                                                           | prototype `faqData` in the source; merge with last year's 5 answers                         |
 | 13  | Final CTA „Ať jsou letošní Vánoce hlavně o pohodě."                                                                                                                                               | prototype                                                                                   |
 | 14  | „Ještě váháte? Desatero zdarma"                                                                                                                                                                   | **rendered** (review): newsletter sign-up at `/cukrovickove-desatero`, last year's PDF      |
@@ -66,10 +66,10 @@ je" (covered by tips by age + FAQ), „Co v e-booku nenajdete?" (FAQ
 Out of scope for this spec: the top bar and menu link (area 02, ship
 alongside if time allows), the prototype's header/footer/nav (06).
 
-## Claims to confirm with Zdeňka (after launch)
+## Claims confirmed with Zdeňka (2026-11-12)
 
 - „61 stran" (last year's page says?) and the three cover badges
-- Mikuláš bonus: buy by 6. 12., live Q&A on 9. 12.
+- Purchase bonus: buy by 6. 12., live Q&A on 16. 12. at 18:30
 - Gifting: „při objednávce zadejte e-mail obdarovaného" (verify in
   SimpleShop)
 - „Budoucí aktualizace zdarma"

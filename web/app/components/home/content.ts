@@ -1,7 +1,4 @@
-/**
- * Copy of the homepage. Claims marked `CLAIM` wait for Zdeňka's
- * confirmation, as on the e-book landing.
- */
+/** Copy of the homepage. */
 
 export const EBOOK_PATH = "/ebook-vanocni-cukrovi"
 
@@ -67,7 +64,6 @@ export const OFFERS = [
   },
 ]
 
-// CLAIM: founding year, consultations online
 export const ABOUT_FACTS = ["Nezisková organizace od roku 2023", "Poradna osobně i online"]
 
 export const SPOTIFY_URL = "https://open.spotify.com/show/7DdV5v4nOSVHLWij5Y9a0p"

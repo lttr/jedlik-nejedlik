@@ -1,4 +1,3 @@
-// CLAIM: waits for Zdeňka to confirm the outlets.
 export const MEDIA_OUTLETS = [
   {
     name: "ČT24",

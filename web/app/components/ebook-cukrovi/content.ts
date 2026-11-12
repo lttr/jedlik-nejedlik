@@ -1,8 +1,4 @@
-/**
- * Copy of the e-book landing page (/ebook-vanocni-cukrovi). Claims marked
- * `CLAIM` wait for Zdeňka's confirmation, see
- * .aiwork/2026-11-05_ebook-landing/spec.md, „Claims to confirm".
- */
+/** Copy of the e-book landing page (/ebook-vanocni-cukrovi). */
 
 export const PURCHASE_URL = "https://form.simpleshop.cz/GXDmm/buy/"
 
@@ -11,7 +7,6 @@ export const EBOOK_ID = "ebook-cukrovi"
 
 export const PRICE = "290 Kč"
 
-// CLAIM: page count and the three cover badges
 export const COVER_BADGES = ["61 stran", "Tipy podle věku", "Tisknutelné listy"]
 
 export const PAIN_POINTS = [
@@ -57,7 +52,6 @@ export const OUTCOMES = [
   },
 ]
 
-// CLAIM: the eight tools match the PDF
 export const TOOLS = [
   {
     title: "Hodovní talířek",
@@ -93,7 +87,6 @@ export const TOOLS = [
   },
 ]
 
-// CLAIM: the age tips match the PDF
 export const AGE_TIPS = [
   {
     label: "Do 1 roku",
@@ -183,7 +176,6 @@ export const PARENT_REVIEWS = [
 
 export const AUTHOR_PHOTO_ID = "a64de3ab-044d-46c7-9e4c-64f3854e93d0"
 
-// CLAIM: bio wording („Od dětství bojovala s vlastní obezitou")
 export const AUTHOR_BIO =
   "Od dětství bojovala s vlastní obezitou. Jako učitelka pak viděla, kolik dětí a rodin řeší totéž, a z pedagožky se stala nutriční poradkyní. Dnes vede poradnu Jedlík-nejedlík, studuje nutriční terapii, spolupracuje s lékaři a je mámou dvou holčiček. Opírá se o vědecky podložená data a ověřené postupy, bez strašení a bez nerealistických slibů."
 
@@ -192,7 +184,6 @@ export const AUTHOR_ROLES = [
   "Zakladatelka neziskovky Jedlík-nejedlík",
 ]
 
-// CLAIM: page count, quick start, printable sheets
 export const PACKAGE_ITEMS = [
   { before: "E-book v PDF, 61 stran, ", strong: "hned do e‑mailu", after: "" },
   { before: "", strong: "Rychlý start na 2 strany", after: " a tipy podle věku dítěte" },
@@ -204,10 +195,9 @@ export const PACKAGE_ITEMS = [
   { before: "Čtení v mobilu, tabletu i vytištěné", strong: "", after: "" },
 ]
 
-// CLAIM: Mikuláš bonus dates
 export const BONUS = {
-  title: "Bonus pro nákup do Mikuláše (6. 12.):",
-  text: "živé Q&A se Zdeňkou 9. 12. Zeptáte se na to, co řešíte právě vy.",
+  title: "Bonus pro nákup do 6. 12.:",
+  text: "živé Q&A se Zdeňkou 16. 12. v 18:30. Zeptáte se na to, co řešíte právě vy.",
 }
 
 export const FAQ = [
