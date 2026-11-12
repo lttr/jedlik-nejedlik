@@ -73,8 +73,9 @@ alongside if time allows), the prototype's header/footer/nav (06).
 - Gifting: „při objednávce zadejte e-mail obdarovaného" (verify in
   SimpleShop)
 - „Budoucí aktualizace zdarma"
-- Tisknutelné listy: plán mlsání, checklist před návštěvou, věty pro
-  babičku; „Rychlý start na 2 strany"
+- Bonus: plán mlsání, checklist před návštěvou, věty pro babičku, the
+  team's favourite recipes and Cukrovíčkové desatero (2026-11-12; the
+  recipes FAQ now points to the bonus); „Rychlý start na 2 strany"
 - The 8 named tools and the age tips match the PDF
 - Bio wording: „Od dětství bojovala s vlastní obezitou" (the STOB role
   no longer holds and was dropped)

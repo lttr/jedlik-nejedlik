@@ -189,8 +189,9 @@ export const PACKAGE_ITEMS = [
   { before: "", strong: "Rychlý start na 2 strany", after: " a tipy podle věku dítěte" },
   {
     before: "",
-    strong: "Tisknutelné listy:",
-    after: " plán mlsání, checklist před návštěvou, věty pro babičku",
+    strong: "Bonus:",
+    after:
+      " plán mlsání, checklist před návštěvou, věty pro babičku, oblíbené recepty od týmu organizace Jedlík-nejedlík a Cukrovíčkové desatero",
   },
   { before: "Čtení v mobilu, tabletu i vytištěné", strong: "", after: "" },
 ]
@@ -224,7 +225,7 @@ export const FAQ = [
   {
     question: "Najdu uvnitř recepty?",
     answer:
-      "Ne, e-book není kuchařka. Je o tom, jak sladké s dětmi zvládat, ne o přísných návodech nebo zákazech. Recepty na zdravější cukroví sdílíme zdarma na sociálních sítích.",
+      "E-book sám kuchařka není. Je o tom, jak sladké s dětmi zvládat, ne o přísných návodech nebo zákazech. Jako bonus k němu ale dostanete oblíbené recepty našeho týmu. Další recepty na zdravější cukroví sdílíme zdarma na sociálních sítích.",
   },
   {
     question: "Pomůže to, i když máme doma chaos?",
