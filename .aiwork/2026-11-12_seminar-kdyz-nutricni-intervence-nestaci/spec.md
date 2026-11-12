@@ -1,7 +1,7 @@
 ---
 source: https://docs.google.com/document/d/1uTK5wlfVH81hwQJvqJT_wWoUe3axKLaw1FAZhyZ3vro/edit?tab=t.0
 imported: 2026-11-12
-status: in-progress
+status: done
 page: web/app/pages/pro-odborniky/seminar-kdyz-nutricni-intervence-nestaci.vue
 ---
 
