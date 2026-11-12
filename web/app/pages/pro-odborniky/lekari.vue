@@ -6,6 +6,20 @@
 
     <h1>Lékaři a&nbsp;nutriční terapeuté</h1>
 
+    <section class="seminar-teaser">
+      <h2>Seminář: Když nutriční intervence nestačí</h2>
+      <p>
+        Jednodenní seminář pro lékaře a&nbsp;nutriční terapeuty o&nbsp;vybíravém jedení, poruchách
+        příjmu potravy v&nbsp;mladším školním věku a&nbsp;tzv. nejedlících s&nbsp;obezitou.
+        <strong>19.&nbsp;února 2027, Hradec Králové.</strong>
+      </p>
+      <p>
+        <NuxtLink to="/pro-odborniky/seminar-kdyz-nutricni-intervence-nestaci">
+          Program a&nbsp;přihláška &rarr;
+        </NuxtLink>
+      </p>
+    </section>
+
     <p class="cta-highlight">
       Jste lékař nebo nutriční terapeut? Chcete pro sebe, skupinu kolegů nebo zařízení, ve kterém
       pracujete, přednášku na jedno z&nbsp;námi nabízených témat? Kontaktujte nás na
@@ -50,6 +64,17 @@ import PageWrapper from "#layers/base/app/components/PageWrapper.vue"
 </script>
 
 <style scoped>
+.seminar-teaser {
+  padding: var(--space-5);
+  border: var(--border-3);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-3);
+
+  & h2 {
+    margin-top: 0;
+  }
+}
+
 .cta-highlight {
   padding: var(--space-4);
   background: color-mix(in srgb, var(--color-forest-green) 8%, white);
