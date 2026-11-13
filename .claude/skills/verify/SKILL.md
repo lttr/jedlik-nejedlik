@@ -55,6 +55,13 @@ Nothing visual changed → SKIP; say so and name the routes.
    - layout broken or cramped at 375px
    - spacing and sizing off compared with neighbouring pages
    - error, focus, and loading states visible and legible
+   - every icon set beside text sits centred on the first line of that text.
+     A full-page shot is too small to show an offset of a few pixels, so take
+     an element screenshot of each icon-and-text row (`scale: 'device'`), and
+     compare the icon's vertical centre with the centre of a Range over the
+     first few characters of the text. A gap of more than 1px fails. Inside
+     `.p-prose`, the text after an icon also picks up the prose
+     `margin-block-start`. Opt the row out with `p-not-prose`.
 3. One sentence per screenshot saying what it looks like. An unread
    screenshot is not evidence.
 
