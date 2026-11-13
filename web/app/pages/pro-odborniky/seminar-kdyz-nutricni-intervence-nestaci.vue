@@ -248,10 +248,6 @@ const lecturers = [
 ]
 
 const practicalInfo = [
-  {
-    label: "Název",
-    value: `Když dítě nejí – rozpoznání obtíží a${nbsp}diferenciální diagnostika`,
-  },
   { label: "Termín", value: `19.${nbsp}února 2027` },
   { label: "Čas", value: "9.00–17.30" },
   { label: "Místo", value: "Hradec Králové (místo bude upřesněno)" },
