@@ -14,6 +14,8 @@ Three separate buckets — none replaces the others:
 
 Conventional Commits. The scope is a code area (`auth`, `consent`), never the branch. Subjects take a colon, not an em dash.
 
+Committing straight to `master` is fine; don't create a branch unless asked. Pushing is still a separate step, since it deploys.
+
 ## Shipping
 
 "Ship it" starts with the task folder: mark the spec `status: done` and commit it with the rest of the work.
