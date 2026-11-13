@@ -125,8 +125,8 @@
         </div>
       </dl>
 
-      <p class="question-note">
-        <Icon name="uil:envelope" />
+      <p class="question-note p-not-prose">
+        <Icon name="uil:envelope" class="question-note-icon" />
         <span>
           Chcete se k&nbsp;semináři na něco zeptat? Napište nám na
           <a href="mailto:info@jedlik-nejedlik.cz">info@jedlik-nejedlik.cz</a>.
@@ -486,9 +486,15 @@ useSeoMeta({
 
 .question-note {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: var(--space-2);
   font-weight: var(--font-weight-6);
+}
+
+/* Centres the 1em icon on the first line of a note that may wrap. */
+.question-note-icon {
+  flex: none;
+  margin-block: calc((1lh - 1em) / 2);
 }
 
 /* Signup */
