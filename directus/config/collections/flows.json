@@ -103,7 +103,7 @@
     "_syncId": "fe0e5400-9a3f-47c5-a5f1-e0ef752c219a",
     "accountability": "all",
     "color": null,
-    "description": "Blokuje vytvoření souhlasu k objednávce, kterou žadatel nesmí číst (tj. cizí objednávce)",
+    "description": "Pojistka: student si může uložit souhlasy z nákupu (podmínky, GDPR) jen ke své vlastní objednávce. Cizí objednávku nevidí, a proto Directus uložení odmítne.",
     "icon": "verified_user",
     "name": "Souhlas jen k vlastní objednávce",
     "operation": "caab183b-038c-4f27-8e00-029d91cf8ae0",
