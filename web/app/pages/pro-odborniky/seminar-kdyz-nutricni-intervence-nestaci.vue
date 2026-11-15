@@ -128,7 +128,7 @@
       <p class="question-note p-not-prose">
         <Icon name="uil:envelope" class="question-note-icon" />
         <span>
-          Chcete se k&nbsp;semináři na něco zeptat? Napište nám na
+          Chcete se na něco zeptat, nevyhovuje vám termín? Napište nám na
           <a href="mailto:info@jedlik-nejedlik.cz">info@jedlik-nejedlik.cz</a>.
         </span>
       </p>
